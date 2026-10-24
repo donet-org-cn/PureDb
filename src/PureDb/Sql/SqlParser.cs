@@ -264,6 +264,7 @@ internal sealed partial class SqlParser
                 var columns = new List<SqlColumn>();
                 var foreignKeys = new List<SqlForeignKey>();
                 var uniques = new List<string[]>();
+                var checks = new List<Expr>();
                 string? primary = null;
                 do
                 {
@@ -281,6 +282,14 @@ internal sealed partial class SqlParser
                     if (Eat("UNIQUE"))
                     {
                         uniques.Add(ReadNames());
+                        continue;
+                    }
+
+                    if (Eat("CHECK"))
+                    {
+                        Need("(");
+                        checks.Add(Expression());
+                        Need(")");
                         continue;
                     }
 
@@ -324,6 +333,12 @@ internal sealed partial class SqlParser
                             Name();
                         else if (Eat("REFERENCES"))
                             foreignKeys.Add(ReadReferences([column]));
+                        else if (Eat("CHECK"))
+                        {
+                            Need("(");
+                            checks.Add(Expression());
+                            Need(")");
+                        }
                         else if (Eat("DEFAULT"))
                         {
                             if (Eat("("))
@@ -360,11 +375,12 @@ internal sealed partial class SqlParser
 
                 if (columns.Count(c => c.Primary) != 1 || columns.Single(c => c.Primary).Type != "INTEGER")
                     throw Error("Exactly one INTEGER PRIMARY KEY is required");
-                if (_sqliteFile && (foreignKeys.Count > 0 || uniques.Count > 0 || columns.Any(c => c.Default is not null)))
+                if (_sqliteFile && (foreignKeys.Count > 0 || uniques.Count > 0 || checks.Count > 0 || columns.Any(c => c.Default is not null)))
                     throw new NotSupportedException("SQLite file foreign-key, table UNIQUE and DEFAULT schema support is not implemented yet");
                 return new CreateTable(name, columns, optional)
                 {
                     ForeignKeys = foreignKeys,
+                    Checks = checks,
                     UniqueColumns = uniques
                 };
             }
@@ -431,14 +447,11 @@ internal sealed partial class SqlParser
             }
 
             if (Is("SELECT") || Is("WITH"))
-                return new Insert(table, columns, [])
-                {
-                    Query = ReadQuery()
-                };
+                return ReadInsertTail(new Insert(table, columns, []) { Query = ReadQuery() });
             if (Eat("DEFAULT"))
             {
                 Need("VALUES");
-                return new Insert(table, [], [[]]);
+                return ReadInsertTail(new Insert(table, [], [[]]));
             }
 
             Need("VALUES");
@@ -456,7 +469,7 @@ internal sealed partial class SqlParser
                 values.Add(row.ToArray());
             }
             while (Eat(","));
-            return new Insert(table, columns, values);
+            return ReadInsertTail(new Insert(table, columns, values));
         }
 
         if (Eat("UPDATE"))

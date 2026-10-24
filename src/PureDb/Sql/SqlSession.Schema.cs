@@ -8,6 +8,12 @@ internal sealed partial class SqlSession
     /// <returns>直接受影响行数，不包含级联及触发器写入。</returns>
     internal int Execute(SqlStatement statement, IReadOnlyDictionary<string, object?> parameters)
     {
+        if (_executionDepth == 0 && _extendedState is { CheckGetters: not null } checkState && checkState.CheckEpoch != owner.FunctionEpoch)
+        {
+            checkState.CheckGetters.Clear();
+            checkState.CheckEpoch = owner.FunctionEpoch;
+        }
+
         if (statement is SqlWithStatement with)
             return ExecuteWith(with, parameters);
         if (!Catalog.ManagedWrites)

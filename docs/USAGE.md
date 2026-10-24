@@ -52,8 +52,8 @@ await db.ExecuteAsync("""
 ## SQL 支持范围
 
 - DDL：表、单列及复合索引、唯一与 JSON_EXTRACT 路径索引、外键、视图、行触发器；支持对应的删除及存在性子句。
-- 类型：INTEGER、REAL、TEXT、BLOB、JSON、JSONB，以及 NOT NULL、单列/复合 UNIQUE 和常量 DEFAULT。每张表需一个 INTEGER PRIMARY KEY，SQL 主键范围 `[0,2^40)`，表标识存于内部键高位。
-- DML：多行 INSERT VALUES、INSERT SELECT、DEFAULT VALUES、UPDATE SET、DELETE WHERE，支持 WITH 前缀。
+- 类型：INTEGER、REAL、TEXT、BLOB、JSON、JSONB，以及 NOT NULL、单列/复合 UNIQUE、常量 DEFAULT 和 CHECK。每张表需一个 INTEGER PRIMARY KEY，SQL 主键范围 `[0,2^40)`，表标识存于内部键高位。
+- DML：多行 INSERT VALUES、INSERT SELECT、DEFAULT VALUES、UPDATE SET、DELETE WHERE，支持 WITH 前缀及单分支 ON CONFLICT DO NOTHING / DO UPDATE。详细冲突目标与限制见 [SQL 支持清单](SQL-SUPPORT.md)。
 - 查询：列/表达式、别名、星号、参数、WHERE、DISTINCT、GROUP BY、HAVING、ORDER BY、LIMIT/OFFSET、投影别名及排序序号、无 FROM 的常量查询。
 - 连接：INNER、LEFT、RIGHT、FULL OUTER、CROSS，多表与自连接。可提取等值条件时使用哈希/缓存索引查找，否则使用嵌套循环；NULL 键不互相匹配。
 - 表达式：算术、比较、AND/OR/NOT、BETWEEN、IN、IS NULL、LIKE、字符串拼接和 NULL 三值逻辑。
@@ -131,7 +131,7 @@ SQLite DLL 位于 `artifacts/sqlite/3.54.1/sqlite3.dll`，可通过 `SQLITE_LIBR
 
 本项目仍需长期故障压力测试、超内存调优及更完整的 SQL 验证，适合先进行评估与受控使用。全面报告会同时列出优势、退步和限制。
 
-自动脚本运行 67 组原有回归、134 条 SQL/JSON/JOIN、160 条排序及 218 条新增 SQL 扩展差分（共 512 条），并检查约束、保存点、重开及文件保护。平台验证见 [开发记录](DEVELOPMENT-VALIDATION.md)。旧版全面基准和报告脚本仍保留其构建标识，不作为本轮扩展构建成绩。
+自动脚本运行 69 组回归、134 条 SQL/JSON/JOIN、160 条排序及 230 条 SQL 扩展差分（共 524 条），并检查约束、保存点、重开及文件保护。平台验证见 [开发记录](DEVELOPMENT-VALIDATION.md)。全面基准、排序专项及优化前后报告已使用本轮相同 DLL 在 Windows 与 Linux ARM64 重测。
 
 ## ADO.NET 接入
 

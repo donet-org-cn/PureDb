@@ -238,15 +238,92 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
             _file.Dispose();
             _file = OpenFile();
         }
-        else if (force && _file.Length == _scanOffset)
+        else
         {
-            _file.Position = _scanOffset;
+            long length = _file.Length;
+            if (length != _scanOffset)
+                ReplaySharedTail(length);
+            else
+                _file.Position = _scanOffset;
+            PublishCoordination();
             return;
         }
 
         _file.Position = 0;
         Recover();
         PublishCoordination();
+    }
+
+    /// <summary>在文件代次已确认且持有进程锁时，只重放新增日志，避免每次追赶预读整块文件头。</summary>
+    /// <param name = "length">在进程锁内读取的实际数据文件长度；协调戳不作为恢复真值。</param>
+    private void ReplaySharedTail(long length)
+    {
+        if (length < _scanOffset)
+            throw new InvalidDataException("Committed database prefix was truncated.");
+        if (length == _scanOffset)
+            return;
+        byte[] buffer = System.Buffers.ArrayPool<byte>.Shared.Rent((int)Math.Min(65536, Math.Max(FrameHeader, length - _scanOffset)));
+        long offset = _scanOffset;
+        int position = 0, available = 0;
+        try
+        {
+            while (length - offset >= FrameHeader)
+            {
+                if (available - position < FrameHeader)
+                {
+                    available = (int)Math.Min(buffer.Length, length - offset);
+                    position = 0;
+                    ReadAt(_handle, buffer.AsSpan(0, available), offset);
+                }
+
+                var header = buffer.AsSpan(position, FrameHeader);
+                int size = BinaryPrimitives.ReadInt32LittleEndian(header);
+                if (size < 4 || size > MaxFrame || BinaryPrimitives.ReadInt32LittleEndian(header[8..]) != ~size)
+                    throw new InvalidDataException($"Invalid frame header at {offset}.");
+                if (length - offset - FrameHeader < size)
+                    break;
+                int total = FrameHeader + size;
+                ReadOnlySpan<byte> frame;
+                if (total <= buffer.Length)
+                {
+                    if (available - position < total)
+                    {
+                        available = (int)Math.Min(buffer.Length, length - offset);
+                        position = 0;
+                        ReadAt(_handle, buffer.AsSpan(0, available), offset);
+                    }
+
+                    frame = buffer.AsSpan(position, total);
+                    position += total;
+                }
+                else
+                {
+                    var large = GC.AllocateUninitializedArray<byte>(total);
+                    ReadAt(_handle, large, offset);
+                    frame = large;
+                    available = position = 0;
+                }
+
+                if (Crc32.Compute(frame[FrameHeader..]) != BinaryPrimitives.ReadUInt32LittleEndian(frame[4..]))
+                    throw new InvalidDataException($"Checksum mismatch at {offset}; refusing silent data loss.");
+                ValidateFrame(frame);
+                Apply(frame, offset);
+                offset += total;
+            }
+
+            if (offset != length)
+            {
+                _file.SetLength(offset);
+                _file.Flush(true);
+            }
+
+            _file.Position = offset;
+            _scanOffset = offset;
+        }
+        finally
+        {
+            System.Buffers.ArrayPool<byte>.Shared.Return(buffer);
+        }
     }
 
     /// <summary>取得当前有效文件的读取句柄，避免文件替换后继续使用错误路径。</summary>

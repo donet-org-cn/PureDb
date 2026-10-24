@@ -510,6 +510,7 @@ internal sealed partial class SqlSession
 
         int offset = Number(select.Offset, 0), limit = Number(select.Limit, int.MaxValue);
         bool topSorted = false;
+        int[]? directProjection = null;
         IEnumerable<Output> outputs;
         if (grouped)
         {
@@ -547,7 +548,9 @@ internal sealed partial class SqlSession
                 int[]? columns = projections.All(p => p.Expr.Op == "column") ? projections.Select(p => binding.Resolve((string)p.Expr.Value!)).ToArray() : null;
                 int[]? orderColumns = columns is null ? null : select.Order.Select((o, i) => orderIndexes[i] >= 0 ? columns[orderIndexes[i]] : o.Expr.Op == "column" ? binding.Resolve((string)o.Expr.Value!) : -1).ToArray();
                 bool columnSort = orderColumns is not null && orderColumns.All(c => c >= 0);
-                outputs = columnSort ? TopSortedColumns(source, columns!, orderColumns!, descending, offset + limit) : TopSortedRows(source, selectors, orderFunctions, orderIndexes, descending, offset + limit);
+                outputs = columnSort ? TopSortedColumns(source, orderColumns!, descending, offset + limit) : TopSortedRows(source, selectors, orderFunctions, orderIndexes, descending, offset + limit);
+                if (columnSort)
+                    directProjection = columns;
                 topSorted = true;
                 plan += (columnSort ? " -> TopSortColumns(" : " -> TopSort(") + (offset + limit) + ")";
             }
@@ -595,8 +598,24 @@ internal sealed partial class SqlSession
             return n < 0 ? fallback : (int)Math.Min(n, int.MaxValue);
         }
 
-        var rows = outputs.Skip(offset).Take(limit).Select(o => o.Values.Select(v => v is byte[] b ? b.ToArray() : SqlJsonFunctions.Unwrap(v)).ToArray()).ToArray();
+        var rows = outputs.Skip(offset).Take(limit).Select(o => CopyProjection(o.Values, directProjection)).ToArray();
         return new(names, rows, plan + (select.Limit is not null ? " -> Limit" : ""));
+    }
+
+    /// <summary>仅为实际返回的行复制投影，并将 BLOB 与内部缓存隔离，避免逐行 LINQ 中间对象。</summary>
+    /// <param name = "row">内部只读行或已经求值的投影。</param>
+    /// <param name = "columns">需要选择的列位置；null 表示复制所有投影值。</param>
+    /// <returns>由调用方独立持有的公开结果行。</returns>
+    private static object?[] CopyProjection(object?[] row, int[]? columns = null)
+    {
+        var result = new object?[columns?.Length ?? row.Length];
+        for (int i = 0; i < result.Length; i++)
+        {
+            object? value = row[columns is null ? i : columns[i]];
+            result[i] = value is byte[] bytes ? bytes.ToArray() : SqlJsonFunctions.Unwrap(value);
+        }
+
+        return result;
     }
 }
 

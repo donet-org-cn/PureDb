@@ -59,7 +59,7 @@ public sealed partial class SqlDatabase
     /// <param name = "applicationId">SQLite 文件头中的应用 ID。</param>
     internal static void WriteSqliteSnapshot(ISqlSnapshot snapshot, SqlCatalog catalog, string temp, CancellationToken cancellationToken = default, uint changeCounter = 1, uint schemaCookie = 1, uint userVersion = 0, uint applicationId = 0)
     {
-        if (catalog.Views.Count > 0 || catalog.Triggers.Count > 0 || catalog.Tables.Any(t => t.ForeignKeys.Count > 0 || t.Columns.Any(c => c.Default is not null) || t.Indexes.Any(i => i.Expression?.Op == "composite")))
+        if (catalog.Views.Count > 0 || catalog.Triggers.Count > 0 || catalog.Tables.Any(t => t.Checks.Count > 0 || t.ForeignKeys.Count > 0 || t.Columns.Any(c => c.Default is not null) || t.Indexes.Any(i => i.Expression?.Op == "composite")))
             throw new NotSupportedException("SQLite file schema encoding for views/triggers/foreign keys/defaults/composite indexes is not implemented; use native PureDb format for these schema features");
         using var writer = new SqliteFileWriter(temp);
         var schema = new List<object?[]>();
@@ -166,7 +166,7 @@ public sealed partial class SqlDatabase
                     throw new NotSupportedException("Unsupported SQLite schema.");
                 if ((string)item[0]! == "table" && parsed[0] is CreateTable create)
                 {
-                    if (create.ForeignKeys.Count > 0 || create.UniqueColumns.Count > 0 || create.Columns.Any(c => c.Default is not null))
+                    if (create.Checks.Count > 0 || create.ForeignKeys.Count > 0 || create.UniqueColumns.Count > 0 || create.Columns.Any(c => c.Default is not null))
                         throw new NotSupportedException("Import of foreign-key, table UNIQUE and DEFAULT schema requires explicit migration");
                     tables.Add((item, create));
                 }

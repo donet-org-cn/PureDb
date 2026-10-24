@@ -642,6 +642,27 @@ await Test("cached sorted group counts preserve NULL, BLOB ownership, ordering a
     await db.ExecuteAsync("UPDATE t SET b=X'02' WHERE id=2;DELETE FROM t WHERE id=1");
     Assert(Shape(db.Query("SELECT b,COUNT(*) FROM t GROUP BY b ORDER BY b")) == Shape(db.Query("SELECT b,COUNT(*) FROM t WHERE 1=1 GROUP BY b ORDER BY b")), "sorted group invalidation");
 });
+await Test("weak JSON trees survive collection, alternating paths and concurrent readers", async () =>
+{
+    using var db = new SqlDatabase(FileFor("json-weak"));
+    await db.ExecuteAsync("CREATE TABLE t(id INTEGER PRIMARY KEY,j JSON);INSERT INTO t VALUES(1,'{\"a\":1,\"b\":2,\"c\":[3,4]}')");
+    for (int pass = 0; pass < 3; pass++)
+    {
+        Parallel.For(0, 100, i =>
+        {
+            string path = i % 3 == 0 ? "$.a" : i % 3 == 1 ? "$.b" : "$.c[0]";
+            long expected = i % 3 + 1;
+            Assert(Equals(db.Query($"SELECT json_extract(j,'{path}') FROM t").Rows[0][0], expected), "concurrent JSON tree lifetime");
+            var blob = (byte[])db.Query("SELECT jsonb(j) FROM t").Rows[0][0]!;
+            Array.Fill(blob, (byte)0xff);
+        });
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
+        Assert(Equals(db.Query("SELECT json_extract(j,'$.c[1]') FROM t").Rows[0][0], 4L), "JSON tree reparse after collection");
+        Assert(Equals(db.Query("SELECT json_extract(jsonb(j),'$.b') FROM t").Rows[0][0], 2L), "cached JSONB buffer ownership");
+    }
+});
 Console.WriteLine($"{passed} SQL/shared test groups passed: {root}");
 Process Start(params string[] values)
 {

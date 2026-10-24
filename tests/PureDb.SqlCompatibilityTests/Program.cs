@@ -402,6 +402,8 @@ using (var managed = PureDb.SqliteCompatibility.SqliteCompatibility.Open(compati
 {
     await managed.ExecuteAsync("CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER); INSERT INTO t VALUES(1,10),(2,20)");
     Check(Equals(managed.Query("WITH x AS (SELECT id,n FROM t) SELECT SUM(n) OVER () FROM x ORDER BY id LIMIT 1").Rows[0][0], 30L), "SQLite 文件复用扩展查询执行器");
+    await managed.ExecuteAsync("INSERT INTO t VALUES(1,5) ON CONFLICT(id) DO UPDATE SET n=n+excluded.n");
+    Check(Equals(managed.Query("SELECT n FROM t WHERE id=1").Rows[0][0], 15L), "SQLite 文件后端 UPSERT");
 }
 
 byte[] originalBytes = File.ReadAllBytes(compatible);
@@ -439,6 +441,7 @@ using (var original = new Sqlite(compatible, Durability.Buffered))
 
 foreach (string ddl in new[]
 {
+    "CREATE TABLE t(id INTEGER PRIMARY KEY,a INTEGER CHECK(a>0))",
     "CREATE TABLE t(id INTEGER PRIMARY KEY,a INTEGER DEFAULT 1)",
     "CREATE TABLE t(id INTEGER PRIMARY KEY,a INTEGER,b INTEGER,UNIQUE(a,b))",
     "CREATE TABLE t(id INTEGER PRIMARY KEY,a INTEGER REFERENCES t(id))",
@@ -524,9 +527,115 @@ await Both("DELETE FROM drop_child;DROP TABLE drop_parent;DROP TABLE drop_child"
 await Both("CREATE TABLE nullable_parent(id INTEGER PRIMARY KEY);CREATE TABLE nullable_child(id INTEGER PRIMARY KEY,p INTEGER REFERENCES nullable_parent(id) ON DELETE SET NULL);INSERT INTO nullable_parent VALUES(1);INSERT INTO nullable_child VALUES(1,1);DROP TABLE nullable_parent");
 Check(db.Query("SELECT p FROM nullable_child").Rows[0][0] is null, "DROP TABLE 的 SET NULL 动作应允许保留空引用");
 await Both("DROP TABLE nullable_child");
+await Both("CREATE TABLE checked_rows(id INTEGER PRIMARY KEY,n INTEGER CHECK(n>=0),max_n INTEGER,CONSTRAINT max_check CHECK(max_n IS NULL OR n<=max_n));INSERT INTO checked_rows VALUES(1,5,10),(2,NULL,10)");
+foreach (string sql in new[]
+{
+    "INSERT INTO checked_rows VALUES(3,-1,10)",
+    "UPDATE checked_rows SET n=11 WHERE id=1",
+    "INSERT INTO checked_rows VALUES(4,1,10),(5,12,10)"
+}
+
+)
+{
+    try
+    {
+        await db.ExecuteAsync(sql);
+        throw new Exception("CHECK 未拒绝不合法行");
+    }
+    catch (SqlException)
+    {
+    }
+
+    try
+    {
+        sqlite.Exec(sql);
+        throw new Exception("SQLite CHECK 未拒绝不合法行");
+    }
+    catch (IOException)
+    {
+    }
+}
+
+Compare("SELECT id,n,max_n FROM checked_rows ORDER BY id");
+await Both("CREATE TABLE upserts(id INTEGER PRIMARY KEY,code TEXT UNIQUE,a INTEGER,b TEXT,n INTEGER CHECK(n>=0),UNIQUE(a,b));INSERT INTO upserts VALUES(1,'one',10,'a',1),(2,'two',20,'b',2)");
+foreach (string sql in new[]
+{
+    "INSERT INTO upserts VALUES(1,'ignored',11,'x',3) ON CONFLICT(id) DO UPDATE SET n=n+excluded.n",
+    "INSERT INTO upserts VALUES(3,'two',30,'c',8) ON CONFLICT(code) DO UPDATE SET n=excluded.n WHERE excluded.n>n",
+    "INSERT INTO upserts VALUES(4,'four',10,'a',9) ON CONFLICT(b,a) DO UPDATE SET n=upserts.n+1",
+    "INSERT INTO upserts VALUES(1,'ignored',1,'i',1),(5,'five',50,'e',5) ON CONFLICT DO NOTHING",
+    "INSERT INTO upserts VALUES(6,'six',NULL,'e',6),(7,'seven',NULL,'e',7) ON CONFLICT(a,b) DO UPDATE SET n=excluded.n",
+    "INSERT INTO upserts(id,code,a,b,n) SELECT 1,'new',1,'q',3 WHERE 1 ON CONFLICT(id) DO UPDATE SET n=excluded.n",
+    "WITH input AS (SELECT 1 AS id,2 AS n) INSERT INTO upserts(id,n) SELECT id,n FROM input WHERE 1 ON CONFLICT(id) DO UPDATE SET n=n+excluded.n"
+}
+
+)
+{
+    await Both(sql);
+    Compare("SELECT id,code,a,b,n FROM upserts ORDER BY id");
+}
+
+foreach (string sql in new[]
+{
+    "INSERT INTO upserts VALUES(9,'one',9,'i',1) ON CONFLICT(id) DO NOTHING",
+    "INSERT INTO upserts VALUES(1,'one',10,'a',-1) ON CONFLICT DO NOTHING",
+    "INSERT INTO upserts(id,n) VALUES(10,1),(1,2) ON CONFLICT(id) DO UPDATE SET n=-1",
+    "INSERT INTO upserts(id,n) VALUES(10,1) ON CONFLICT(id) DO UPDATE SET missing=1",
+    "INSERT INTO upserts(id,n) VALUES(10,1) ON CONFLICT(n) DO NOTHING"
+}
+
+)
+{
+    try
+    {
+        await db.ExecuteAsync(sql);
+        throw new Exception("无效 UPSERT 被接受: " + sql);
+    }
+    catch (SqlException)
+    {
+    }
+
+    try
+    {
+        sqlite.Exec(sql);
+        throw new Exception("SQLite 无效 UPSERT 被接受: " + sql);
+    }
+    catch (IOException)
+    {
+    }
+}
+
+Compare("SELECT id,code,a,b,n FROM upserts ORDER BY id");
+await Both("CREATE TABLE upsert_audit(id INTEGER PRIMARY KEY,event TEXT,row_id INTEGER);CREATE TRIGGER upsert_before BEFORE INSERT ON upserts BEGIN INSERT INTO upsert_audit(event,row_id) VALUES('before',NEW.id);END;CREATE TRIGGER upsert_update AFTER UPDATE ON upserts BEGIN INSERT INTO upsert_audit(event,row_id) VALUES('update',NEW.id);END;INSERT INTO upserts(id,n) VALUES(1,20) ON CONFLICT(id) DO UPDATE SET n=excluded.n");
+Compare("SELECT id,event,row_id FROM upsert_audit ORDER BY id");
+await Both("INSERT INTO upserts(code,n) VALUES('one',1),('one',1),('auto-new',1) ON CONFLICT(code) DO UPDATE SET n=n+1");
+Compare("SELECT id,code,n FROM upserts ORDER BY id");
+db.CreateFunction<long, bool>("valid_n", n => n > 0);
+await db.ExecuteAsync("CREATE TABLE function_check(id INTEGER PRIMARY KEY,n INTEGER CHECK(valid_n(n)));BEGIN;INSERT INTO function_check VALUES(1,1)");
+db.CreateFunction<long, bool>("valid_n", n => n > 10);
+try
+{
+    await db.ExecuteAsync("INSERT INTO function_check VALUES(2,2)");
+    throw new Exception("CHECK 继续使用已替换的函数");
+}
+catch (SqlException)
+{
+}
+
+await db.ExecuteAsync("ROLLBACK;DROP TABLE function_check");
 db.Dispose();
 using (var reopened = new SqlDatabase(Path.Combine(root, "test.puredb"), new() { Storage = new() { Durability = Durability.Buffered } }))
 {
+    Compare("SELECT id,n,max_n FROM checked_rows ORDER BY id", reopened);
+    try
+    {
+        await reopened.ExecuteAsync("INSERT INTO checked_rows VALUES(999,-1,1)");
+        throw new Exception("重开后 CHECK 丢失");
+    }
+    catch (SqlException)
+    {
+    }
+
     Compare("SELECT key,amount FROM big_rows ORDER BY key", reopened);
     Compare("SELECT id,n FROM t WHERE n=10 ORDER BY id DESC", reopened);
     await reopened.ExecuteAsync("INSERT INTO t VALUES(900,90,'reopened')");

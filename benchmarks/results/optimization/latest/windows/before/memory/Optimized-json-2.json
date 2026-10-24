@@ -1,0 +1,13 @@
+﻿{
+  "Engine": "Optimized",
+  "Scenario": "json",
+  "Repeat": 2,
+  "ManagedLiveBytes": 9092544,
+  "PrivateBytes": 39235584,
+  "WorkingSetBytes": 61042688,
+  "PeakWorkingSetBytes": 63655936,
+  "LibrarySHA256": "57F0A827BC683100C486E5508E416F22A28C6C6B0BFD68103ED78896E17F7069",
+  "DatabaseInstances": 1,
+  "PageCacheBytes": 67108864,
+  "SqlCacheBudget": 67108864
+}

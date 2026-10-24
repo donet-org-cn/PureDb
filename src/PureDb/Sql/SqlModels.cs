@@ -85,6 +85,8 @@ internal sealed class SqlTable
     public List<SqlIndex> Indexes { get; set; } = [];
     /// <summary>当前表声明的外键约束。</summary>
     public List<SqlForeignKey> ForeignKeys { get; set; } = [];
+    /// <summary>列级及表级 CHECK 表达式，返回 NULL 时不违反约束。</summary>
+    public List<Expr> Checks { get; set; } = [];
     /// <summary>整数主键列在行数组中的序号。</summary>
     public int Primary => Columns.FindIndex(c => c.Primary);
     /// <summary>是否存在主键之外的唯一约束或唯一索引。</summary>
@@ -171,6 +173,8 @@ internal abstract record SqlStatement;
 /// <param name = "IfNotExists">目标存在时是否忽略创建。</param>
 internal sealed record CreateTable(string Name, List<SqlColumn> Columns, bool IfNotExists) : SqlStatement
 {
+    /// <summary>建表时声明的列级及表级检查约束。</summary>
+    public List<Expr> Checks { get; init; } = [];
     /// <summary>表级和列级外键定义。</summary>
     public List<SqlForeignKey> ForeignKeys { get; init; } = [];
     /// <summary>表级 UNIQUE 约束的列名。</summary>
@@ -203,6 +207,11 @@ internal sealed record Drop(string Kind, string Name, bool IfExists) : SqlStatem
 /// <param name = "Values">列值、行列表或唯一键映射；具体形态由当前记录的字段类型决定。</param>
 internal sealed record Insert(string Table, string[]? Columns, List<Expr[]> Values) : SqlStatement
 {
+    /// <summary>可选的单个 ON CONFLICT 分支，不改变持久化模式。</summary>
+    public SqlUpsert? Upsert
+    {
+        get; init;
+    }
     /// <summary>INSERT SELECT 的源查询；VALUES 插入为 null。</summary>
     public Select? Query
     {
@@ -210,6 +219,11 @@ internal sealed record Insert(string Table, string[]? Columns, List<Expr[]> Valu
     }
 }
 
+/// <summary>插入冲突处理，只对指定唯一键或省略目标时的任意唯一键生效。</summary>
+/// <param name = "Columns">冲突目标列；null 表示任意唯一键。</param>
+/// <param name = "Assignments">DO UPDATE 的赋值；空集合表示 DO NOTHING。</param>
+/// <param name = "Where">DO UPDATE 的可选过滤条件。</param>
+internal sealed record SqlUpsert(string[]? Columns, List<(string Column, Expr Value)> Assignments, Expr? Where);
 /// <summary>更新语句节点，赋值表达式基于更新前的原始行计算。</summary>
 /// <param name = "Table">目标表名。</param>
 /// <param name = "Assignments">目标列序号及赋值表达式。</param>
@@ -315,6 +329,8 @@ internal static class SqlAst
         var catalog = System.Text.Json.JsonSerializer.Deserialize(bytes, SqlCatalogJsonContext.Default.SqlCatalog) ?? throw new InvalidDataException("Invalid catalog");
         foreach (var table in catalog.Tables)
         {
+            for (int i = 0; i < table.Checks.Count; i++)
+                table.Checks[i] = Normalize(table.Checks[i]);
             for (int i = 0; i < table.Columns.Count; i++)
                 if (table.Columns[i].Default is { } d)
                     table.Columns[i] = table.Columns[i] with

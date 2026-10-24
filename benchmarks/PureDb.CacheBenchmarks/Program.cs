@@ -5,7 +5,7 @@ using PureDb;
 using PureDb.Benchmarks;
 
 string engine=args[0],dataset=Path.GetFullPath(args[1]),output=args[2];
-if(OperatingSystem.IsWindows()) Environment.SetEnvironmentVariable("SQLITE_LIBRARY",Path.GetFullPath("artifacts/sqlite/3.54.1/sqlite3.dll"));
+if(OperatingSystem.IsWindows()&&Environment.GetEnvironmentVariable("SQLITE_LIBRARY")is null) Environment.SetEnvironmentVariable("SQLITE_LIBRARY",Path.GetFullPath("artifacts/sqlite/3.54.1/sqlite3.dll"));
 bool pure=engine!="SQLite";
 using var db=pure?new SqlDatabase(Path.Combine(dataset,"sql.pdb")):null;
 using var sqlite=pure?null:new Sqlite(Path.Combine(dataset,"reference.sqlite"),Durability.Buffered);

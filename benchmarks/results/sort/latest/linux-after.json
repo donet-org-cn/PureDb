@@ -3,72 +3,72 @@
   "OS": "Ubuntu 20.04.5 LTS",
   "Architecture": "Arm64",
   "SQLiteVersion": "3.54.1",
-  "CoreSHA256": "64752891034FCCA617220A24051A59D3B7F8F0F5BA6673D75F1C3C0BD0BB3906",
+  "CoreSHA256": "F57A192E23B4467BAEAF12D40B4A5849C3E09E80A8D408120B55E8F517DCC41B",
   "Samples": [
     {
       "Engine": "PureDb",
       "Scenario": "sort_limit_20",
       "Round": 1,
-      "Repetitions": 194,
+      "Repetitions": 250,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.952,
-      "CpuMilliseconds": 751.257,
-      "AllocatedBytes": 1820536
+      "ElapsedMilliseconds": 751.2122,
+      "CpuMilliseconds": 752.738,
+      "AllocatedBytes": 1540040
     },
     {
       "Engine": "SQLite",
       "Scenario": "sort_limit_20",
       "Round": 1,
-      "Repetitions": 90,
+      "Repetitions": 89,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 753.0964,
-      "CpuMilliseconds": 771.555,
-      "AllocatedBytes": 169960
+      "ElapsedMilliseconds": 753.3405,
+      "CpuMilliseconds": 757.229,
+      "AllocatedBytes": 168072
     },
     {
       "Engine": "SQLite",
       "Scenario": "sort_limit_20",
       "Round": 2,
-      "Repetitions": 90,
+      "Repetitions": 89,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 756.513,
-      "CpuMilliseconds": 756.705,
-      "AllocatedBytes": 169960
+      "ElapsedMilliseconds": 753.5718,
+      "CpuMilliseconds": 756.207,
+      "AllocatedBytes": 168072
     },
     {
       "Engine": "PureDb",
       "Scenario": "sort_limit_20",
       "Round": 2,
-      "Repetitions": 192,
+      "Repetitions": 258,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 751.2024,
-      "CpuMilliseconds": 754.244,
-      "AllocatedBytes": 1801768
+      "ElapsedMilliseconds": 750.6484,
+      "CpuMilliseconds": 754.626,
+      "AllocatedBytes": 1589320
     },
     {
       "Engine": "PureDb",
       "Scenario": "sort_limit_20",
       "Round": 3,
-      "Repetitions": 194,
+      "Repetitions": 249,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.3657,
-      "CpuMilliseconds": 750.947,
-      "AllocatedBytes": 1820536
+      "ElapsedMilliseconds": 750.2246,
+      "CpuMilliseconds": 750.637,
+      "AllocatedBytes": 1533880
     },
     {
       "Engine": "SQLite",
@@ -79,35 +79,35 @@
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 751.0234,
-      "CpuMilliseconds": 752.641,
+      "ElapsedMilliseconds": 751.4625,
+      "CpuMilliseconds": 755.07,
       "AllocatedBytes": 168072
     },
     {
       "Engine": "PureDb",
       "Scenario": "sort_offset_100",
       "Round": 1,
-      "Repetitions": 162,
+      "Repetitions": 199,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.46,
-      "CpuMilliseconds": 750.67,
-      "AllocatedBytes": 3849160
+      "ElapsedMilliseconds": 752.8307,
+      "CpuMilliseconds": 752.877,
+      "AllocatedBytes": 2380080
     },
     {
       "Engine": "SQLite",
       "Scenario": "sort_offset_100",
       "Round": 1,
-      "Repetitions": 84,
+      "Repetitions": 83,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 752.2523,
-      "CpuMilliseconds": 752.731,
-      "AllocatedBytes": 198952
+      "ElapsedMilliseconds": 752.2275,
+      "CpuMilliseconds": 753.176,
+      "AllocatedBytes": 196584
     },
     {
       "Engine": "SQLite",
@@ -118,35 +118,35 @@
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 753.9598,
-      "CpuMilliseconds": 760.354,
+      "ElapsedMilliseconds": 758.0184,
+      "CpuMilliseconds": 764.367,
       "AllocatedBytes": 201320
     },
     {
       "Engine": "PureDb",
       "Scenario": "sort_offset_100",
       "Round": 2,
-      "Repetitions": 169,
+      "Repetitions": 201,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 751.9409,
-      "CpuMilliseconds": 752.014,
-      "AllocatedBytes": 4015480
+      "ElapsedMilliseconds": 752.5107,
+      "CpuMilliseconds": 752.676,
+      "AllocatedBytes": 2404000
     },
     {
       "Engine": "PureDb",
       "Scenario": "sort_offset_100",
       "Round": 3,
-      "Repetitions": 155,
+      "Repetitions": 205,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 752.9744,
-      "CpuMilliseconds": 753.737,
-      "AllocatedBytes": 3682840
+      "ElapsedMilliseconds": 752.5273,
+      "CpuMilliseconds": 753.084,
+      "AllocatedBytes": 2451840
     },
     {
       "Engine": "SQLite",
@@ -157,22 +157,22 @@
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 756.986,
-      "CpuMilliseconds": 788.525,
+      "ElapsedMilliseconds": 753.5036,
+      "CpuMilliseconds": 762.605,
       "AllocatedBytes": 196584
     },
     {
       "Engine": "PureDb",
       "Scenario": "sort_limit_4096",
       "Round": 1,
-      "Repetitions": 37,
+      "Repetitions": 55,
       "RowsPerQuery": 100000,
       "ResultRows": 4096,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 773.1882,
-      "CpuMilliseconds": 778.587,
-      "AllocatedBytes": 36521408
+      "ElapsedMilliseconds": 764.3964,
+      "CpuMilliseconds": 764.549,
+      "AllocatedBytes": 23655760
     },
     {
       "Engine": "SQLite",
@@ -183,8 +183,8 @@
       "ResultRows": 4096,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 769.9598,
-      "CpuMilliseconds": 770.091,
+      "ElapsedMilliseconds": 760.8065,
+      "CpuMilliseconds": 760.875,
       "AllocatedBytes": 12461912
     },
     {
@@ -196,35 +196,35 @@
       "ResultRows": 4096,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 767.5461,
-      "CpuMilliseconds": 775.181,
+      "ElapsedMilliseconds": 767.8763,
+      "CpuMilliseconds": 774.512,
       "AllocatedBytes": 12461912
     },
     {
       "Engine": "PureDb",
       "Scenario": "sort_limit_4096",
       "Round": 2,
-      "Repetitions": 35,
+      "Repetitions": 48,
       "RowsPerQuery": 100000,
       "ResultRows": 4096,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 760.7676,
-      "CpuMilliseconds": 768.166,
-      "AllocatedBytes": 34547280
+      "ElapsedMilliseconds": 756.9126,
+      "CpuMilliseconds": 766.519,
+      "AllocatedBytes": 20645032
     },
     {
       "Engine": "PureDb",
       "Scenario": "sort_limit_4096",
       "Round": 3,
-      "Repetitions": 35,
+      "Repetitions": 50,
       "RowsPerQuery": 100000,
       "ResultRows": 4096,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 754.0734,
-      "CpuMilliseconds": 754.063,
-      "AllocatedBytes": 34547280
+      "ElapsedMilliseconds": 764.28,
+      "CpuMilliseconds": 764.28,
+      "AllocatedBytes": 21505240
     },
     {
       "Engine": "SQLite",
@@ -235,87 +235,87 @@
       "ResultRows": 4096,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 768.92,
-      "CpuMilliseconds": 768.992,
+      "ElapsedMilliseconds": 765.5175,
+      "CpuMilliseconds": 765.601,
       "AllocatedBytes": 12461912
     },
     {
       "Engine": "PureDb",
       "Scenario": "indexed_range_control",
       "Round": 1,
-      "Repetitions": 115872,
+      "Repetitions": 115580,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.0048,
-      "CpuMilliseconds": 750.078,
-      "AllocatedBytes": 530230312
+      "ElapsedMilliseconds": 750.0038,
+      "CpuMilliseconds": 749.914,
+      "AllocatedBytes": 529818760
     },
     {
       "Engine": "SQLite",
       "Scenario": "indexed_range_control",
       "Round": 1,
-      "Repetitions": 71904,
+      "Repetitions": 72583,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.0011,
-      "CpuMilliseconds": 749.935,
-      "AllocatedBytes": 166817320
+      "ElapsedMilliseconds": 750.0067,
+      "CpuMilliseconds": 750.139,
+      "AllocatedBytes": 168392600
     },
     {
       "Engine": "SQLite",
       "Scenario": "indexed_range_control",
       "Round": 2,
-      "Repetitions": 74587,
+      "Repetitions": 74619,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750,
-      "CpuMilliseconds": 750.809,
-      "AllocatedBytes": 173041880
+      "ElapsedMilliseconds": 750.0067,
+      "CpuMilliseconds": 750.339,
+      "AllocatedBytes": 173116120
     },
     {
       "Engine": "PureDb",
       "Scenario": "indexed_range_control",
       "Round": 2,
-      "Repetitions": 117463,
+      "Repetitions": 119258,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.0021,
-      "CpuMilliseconds": 750.025,
-      "AllocatedBytes": 537510728
+      "ElapsedMilliseconds": 750.0029,
+      "CpuMilliseconds": 750.132,
+      "AllocatedBytes": 546678712
     },
     {
       "Engine": "PureDb",
       "Scenario": "indexed_range_control",
       "Round": 3,
-      "Repetitions": 116962,
+      "Repetitions": 118848,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.0024,
-      "CpuMilliseconds": 750.051,
-      "AllocatedBytes": 535218152
+      "ElapsedMilliseconds": 750.0017,
+      "CpuMilliseconds": 750.028,
+      "AllocatedBytes": 544799272
     },
     {
       "Engine": "SQLite",
       "Scenario": "indexed_range_control",
       "Round": 3,
-      "Repetitions": 71732,
+      "Repetitions": 74624,
       "RowsPerQuery": 100000,
       "ResultRows": 20,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.0074,
-      "CpuMilliseconds": 751.458,
-      "AllocatedBytes": 166418280
+      "ElapsedMilliseconds": 750.0029,
+      "CpuMilliseconds": 750.525,
+      "AllocatedBytes": 173127720
     }
   ]
 }

@@ -6,18 +6,21 @@ namespace PureDb;
 internal static partial class JsonReadCache
 {
     /// <summary>一个 JSON 字符串对应的只读解析根及按路径缓存的派生表示。</summary>
-    /// <param name = "root">只读 JSON 文档的根元素。</param>
-    private sealed class Parsed(JsonElement root)
+    private sealed class Parsed
     {
-        /// <summary>当前 JSON 文档的只读解析根。</summary>
-        public JsonElement Root => root;
-
+        /// <summary>完整语法树只弱引用保留，已提取标量不会使整棵树永久存活。</summary>
+        public WeakReference<ParsedRoot>? Root;
         /// <summary>最近一次路径提取的缓存条目。</summary>
         public Extraction? Last;
+        /// <summary>另一个常用路径，交替查询两个字段时无需反复解析。</summary>
+        public Extraction? Previous;
         /// <summary>由该文档派生的只读 PureDb JSONB 编码缓存。</summary>
         public byte[]? Binary;
     }
 
+    /// <summary>可被垃圾回收器独立回收的完整 JSON 语法树。</summary>
+    /// <param name = "Value">拥有独立存储的只读 JSON 根元素。</param>
+    private sealed record ParsedRoot(JsonElement Value);
     /// <summary>一个 JSON 路径与已提取标量的缓存条目。</summary>
     /// <param name = "Path">用于提取值的 JSON 路径。</param>
     /// <param name = "Value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
@@ -27,15 +30,21 @@ internal static partial class JsonReadCache
     /// <summary>按原始字符串弱引用取得或创建只读 JSON 解析表示。</summary>
     /// <param name = "text">待匹配的词法文本或 JSON 文本。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
-    private static Parsed Document(string text)
+    private static Parsed Document(string text) => Documents.GetValue(text, static _ => new());
+    /// <summary>需要遍历时才取得完整语法树；标量缓存命中无需让整棵树继续存活。</summary>
+    /// <param name = "parsed">字符串对应的派生结果缓存。</param>
+    /// <param name = "text">仍由当前调用持有的不可变 JSON 文本。</param>
+    /// <returns>本次调用期间保持有效的只读根元素。</returns>
+    private static JsonElement ParsedRootValue(Parsed parsed, string text)
     {
+        if (Volatile.Read(ref parsed.Root)?.TryGetTarget(out var existing) == true)
+            return existing.Value;
         try
         {
-            return Documents.GetValue(text, static key =>
-            {
-                using var document = SqlJson5.Document(key);
-                return new(document.RootElement.Clone());
-            });
+            using var document = SqlJson5.Document(text);
+            var root = new ParsedRoot(document.RootElement.Clone());
+            Volatile.Write(ref parsed.Root, new WeakReference<ParsedRoot>(root));
+            return root.Value;
         }
         catch (JsonException e)
         {
@@ -46,7 +55,7 @@ internal static partial class JsonReadCache
     /// <summary>取得缓存 JSON 文档的只读根元素。</summary>
     /// <param name = "text">待匹配的词法文本或 JSON 文本。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
-    public static JsonElement Root(string text) => Document(text).Root;
+    public static JsonElement Root(string text) => ParsedRootValue(Document(text), text);
     /// <summary>按需生成并复用文档的 PureDb JSONB 表示。</summary>
     /// <param name = "text">待匹配的词法文本或 JSON 文本。</param>
     /// <param name = "encode">将已解析 JSON 根编码为二进制表示的回调。</param>
@@ -57,7 +66,7 @@ internal static partial class JsonReadCache
         var binary = Volatile.Read(ref parsed.Binary);
         if (binary is null)
         {
-            binary = encode(parsed.Root);
+            binary = encode(ParsedRootValue(parsed, text));
             binary = Interlocked.CompareExchange(ref parsed.Binary, binary, null) ?? binary;
         }
 
@@ -75,7 +84,11 @@ internal static partial class JsonReadCache
         var cached = Volatile.Read(ref parsed.Last);
         if (cached is not null && cached.Path == path)
             return cached.Value;
-        object? value = get(parsed.Root, path);
+        var previous = Volatile.Read(ref parsed.Previous);
+        if (previous is not null && previous.Path == path)
+            return previous.Value;
+        object? value = get(ParsedRootValue(parsed, text), path);
+        Volatile.Write(ref parsed.Previous, cached);
         Volatile.Write(ref parsed.Last, new Extraction(path, value));
         return value;
     }

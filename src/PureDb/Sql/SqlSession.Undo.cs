@@ -85,6 +85,7 @@ internal sealed partial class SqlSession
             extended.MutatedTables = null;
             extended.ForeignKeys?.Clear();
             extended.IndexGetters?.Clear();
+            extended.CheckGetters?.Clear();
         }
     }
 
@@ -105,6 +106,7 @@ internal sealed partial class SqlSession
             extended.MutatedTables = null;
             extended.ForeignKeys?.Clear();
             extended.IndexGetters?.Clear();
+            extended.CheckGetters?.Clear();
         }
     }
 }

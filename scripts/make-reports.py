@@ -31,6 +31,8 @@ for platform,name in [('Windows x64','windows'),('Linux ARM64','linux')]:
  p=base/name;env=read(p/'environment.json');cpus=env['CPUs']
  reports=[read(f) for f in sorted((p/'raw').glob('*.json')) if f.name.startswith(('Optimized-','SQLite-'))];assert len(reports)==18
  samples=[s for r in reports for s in r['Samples']];assert len(samples)==246
+ with (p/'samples.csv').open('w',encoding='utf-8-sig',newline='') as output:
+  writer=csv.DictWriter(output,fieldnames=list(dict.fromkeys(k for s in samples for k in s)));writer.writeheader();writer.writerows(samples)
  assert len({r['LibrarySHA256'] for r in reports if r['Engine']=='Optimized'})==1
  metrics={}
  for scenario in dict.fromkeys(s['Scenario'] for s in samples):
@@ -79,7 +81,7 @@ for platform,name in [('Windows x64','windows'),('Linux ARM64','linux')]:
      r=read(p/'logs'/f'{engine}-{mode}-{repeat}.host.json');device,a=counters(r['DiskBefore']);_,b=counters(r['DiskAfter']);d=[y-x for x,y in zip(a,b)];vals.append([d[9]/r['Seconds']/10,d[2]*512/1048576,d[6]*512/1048576])
     io.append([mode,engine,device,*[f'{med(v[i] for v in vals):.2f}' for i in range(3)]])
   parts.append(table(['套件','引擎','设备','设备忙碌率 %','设备读 MiB','设备写 MiB'],io))
- else:
+ elif (p/'physical/windows.json').exists():
   windows=read(p/'physical/windows.json')
   for r in windows:
    start=datetime.datetime.fromisoformat(r['StartUtc'].replace('Z','+00:00'));end=datetime.datetime.fromisoformat(r['EndUtc'].replace('Z','+00:00'))
@@ -89,7 +91,10 @@ for platform,name in [('Windows x64','windows'),('Linux ARM64','linux')]:
     def values(suffix):return [s['Value'] for s in active if s['Instance']==device and s['Path'].lower().endswith(suffix)]
     io.append([r['Engine'],device,f'{statistics.mean(max(0,min(100,100-v)) for v in values("% idle time")):.2f}',f'{statistics.mean(values("disk read bytes/sec"))/1048576:.2f}',f'{statistics.mean(values("disk write bytes/sec"))/1048576:.2f}'])
   parts.append(table(['引擎','全机设备','忙碌率 %','读 MiB/s','写 MiB/s'],io))
- parts.append('设备计数包括系统服务与延迟回写，不等于引擎独占 I/O。Windows 每引擎一次写入套件补测；Linux 为三轮套件期间 diskstats 增量。进程逻辑读写字节、次数、CPU 和关闭后文件列表保留在 raw JSON。')
+  parts.append('Windows 物理设备数据为每引擎一次独立写入套件补测，不是三轮主样本的 I/O，也不纳入主成绩。')
+ else:
+  parts.append('本轮 Windows 未采集物理磁盘设备计数，不沿用旧构建的忙碌率。进程逻辑 I/O 和文件体积仍在本轮样本中。')
+ parts.append('设备计数包括系统服务与延迟回写，不等于引擎独占 I/O。Linux 为三轮套件期间 diskstats 增量；若内核未提供有效计数则不能排名。进程逻辑读写字节、次数、CPU 和关闭后文件列表保留在 raw JSON。')
  readme+=['### '+platform,table(['项目','PureDb','SQLite','谁更低'],[[labels[s]+'（µs/'+metrics[s]['Optimized']['Unit']+'）',f'{metrics[s]["Optimized"]["Us"]:,.3f}',f'{metrics[s]["SQLite"]["Us"]:,.3f}',winner(metrics[s]['Optimized']['Us'],metrics[s]['SQLite']['Us'])] for s in ['sql_point','sql_range20','sql_join','json_index','json_scan','Full_single','Full_update','Full_delete','Full_batch1000','Full_batch_update','Full_batch_delete','Buffered_batch1000','Buffered_batch_update','Buffered_batch_delete','shared_read','shared_update','reopen_and_first_range']]),table(['内存场景','PureDb RSS MiB','SQLite RSS MiB','谁更高、高多少'],[r[:4] for r in rows])]
  readme.append(table(['主键查询 CPU 指标','PureDb','SQLite','谁更高、高多少'],[['占整机 CPU %',f'{metrics["sql_point"]["Optimized"]["CPU"]:.3f}',f'{metrics["sql_point"]["SQLite"]["CPU"]:.3f}',higher(metrics['sql_point']['Optimized']['CPU'],metrics['sql_point']['SQLite']['CPU'],'个百分点',3)],['每次查询 CPU µs',f'{metrics["sql_point"]["Optimized"]["CpuUs"]:.3f}',f'{metrics["sql_point"]["SQLite"]["CpuUs"]:.3f}',higher(metrics['sql_point']['Optimized']['CpuUs'],metrics['sql_point']['SQLite']['CpuUs'],'µs',3)]]))
  if name=='windows':
@@ -99,8 +104,8 @@ for platform,name in [('Windows x64','windows'),('Linux ARM64','linux')]:
  parts.append(stamp);resources.append(stamp)
 parts.insert(2,table(['平台','PureDb 耗时胜','SQLite 耗时胜','接近'],overview))
 readme.insert(0,table(['平台','PureDb 耗时胜','SQLite 耗时胜','接近'],overview))
-readme.insert(0,'最新预览版原生格式 vs SQLite 3.54.1，同机三轮中位数。CPU 为满吞吐进程占用，内存为单库独立测量。使用率高不代表每次查询更费 CPU。以下是代表场景，全部 41 项、ADO、CPU 和文件数据见完整报告。')
-parts+=['## 解释和限制','精确的 SQLite 计划保存在最新结果目录。CPU、内存、耗时没有全面领先；胜负计数不是业务加权总分。Full/Buffered、关闭维护、缓存初建、接口与 SQL 支持范围会影响结果。测量为同版本源码的本地预览版构建，GitHub 发布流水线会从提交重新构建，构建元数据可能改变 DLL 哈希。']
+readme.insert(0,f'主分支 `{version}` 开发构建原生格式 vs SQLite 3.54.1，同机三轮中位数。该版本尚未发布至 NuGet。CPU 为满吞吐进程占用，内存为单库独立测量。使用率高不代表每次查询更费 CPU。以下是代表场景，全部 41 项、ADO、CPU 和文件数据见完整报告。')
+parts+=['## 解释和限制','精确的 SQLite 计划保存在最新结果目录。CPU、内存、耗时没有全面领先；胜负计数不是业务加权总分。Full/Buffered、关闭维护、缓存初建、接口与 SQL 支持范围会影响结果。测量为同版本源码的本地预览版构建；测后空白格式化的方法 IL、签名及类型属性指纹一致，DLL 哈希变化见 [构建一致性记录](../benchmarks/results/optimization/latest/build-equivalence.json)。GitHub 从提交重新构建时，路径和构建元数据也可能改变 DLL 哈希。']
 for name,items in [('PERFORMANCE.md',parts),('RESOURCES.md',resources)]:
  (root/'docs'/name).write_text('\n\n'.join(items)+'\n',encoding='utf-8-sig')
 (base/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf-8')

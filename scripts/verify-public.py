@@ -69,3 +69,27 @@ for platform,key in [('Windows x64','windows'),('Linux ARM64','linux')]:
     if field!='AllocatedBytes' or engine=='PureDb':
      assert format(value,',.0f' if field=='AllocatedBytes' else ',.3f') in sort_report
 print('PASS sort evidence: paired Windows/Linux hashes, 96 samples, CPU/time/allocation arithmetic and report.')
+optimization=root/'benchmarks/results/optimization/latest'
+paired=read(optimization/'summary.json')
+optimization_report=(root/'docs/OPTIMIZATION.md').read_text(encoding='utf-8-sig')
+assert paired['BeforeCommit']=='804f6ef35d5d9c9a486db890b688b137e9bd9ad8'
+for platform,key in [('Windows x64','windows'),('Linux ARM64','linux')]:
+ result=paired['Platforms'][platform]
+ assert result['AfterSHA256']==summary['Platforms'][platform]['MeasuredCoreSHA256']
+ assert result['BeforeSHA256']==sort_results[key+'-before']['CoreSHA256']
+ reports=[read(p) for p in (optimization/key/'before/raw').glob('*.json')]
+ assert len(reports)==18 and sum(len(r['Samples']) for r in reports)==246
+ assert len(list((optimization/key/'before/memory').glob('*.json')))==18
+ for scenario,engines in result['Before'].items():
+  for engine,metrics in engines.items():
+   samples=[s for r in reports for s in r['Samples'] if s['Scenario']==scenario and s['Engine']==engine]
+   assert len(samples)==3
+   assert abs(statistics.median(s['Milliseconds']*1000/s['Operations'] for s in samples)-metrics['Us'])<1e-8
+   assert abs(statistics.median((s['CpuMilliseconds']+s.get('WorkerCpuMilliseconds',0))*1000/s['Operations'] for s in samples)-metrics['CpuUs'])<1e-8
+   if engine=='Optimized':assert f"{metrics['Us']:,.3f}" in optimization_report
+ assert all(result['After'][s][e]['Us']==summary['Platforms'][platform]['Metrics'][s][e]['Us'] for s in result['After'] for e in ['Optimized','SQLite'])
+ assert read(base/key/'validation.json')['TestGroups']==69
+ assert read(base/key/'validation.json')['DifferentialQueries']==524
+equivalence=read(optimization/'build-equivalence.json')
+assert equivalence['MethodILAndSignaturesMatch'] and equivalence['MeasuredCoreSHA256']==paired['Platforms']['Windows x64']['AfterSHA256']
+print('PASS paired optimization evidence: 984 main and 72 memory samples, build boundaries, arithmetic and validation counts.')

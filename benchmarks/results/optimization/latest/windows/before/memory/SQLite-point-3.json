@@ -1,0 +1,13 @@
+﻿{
+  "Engine": "SQLite",
+  "Scenario": "point",
+  "Repeat": 3,
+  "ManagedLiveBytes": 277872,
+  "PrivateBytes": 62394368,
+  "WorkingSetBytes": 82640896,
+  "PeakWorkingSetBytes": 82640896,
+  "LibrarySHA256": "57F0A827BC683100C486E5508E416F22A28C6C6B0BFD68103ED78896E17F7069",
+  "DatabaseInstances": 1,
+  "PageCacheBytes": 67108864,
+  "SqlCacheBudget": 0
+}

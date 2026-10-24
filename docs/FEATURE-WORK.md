@@ -12,16 +12,18 @@
 - [x] 视图、触发器、外键：模式持久化、语句原子撤销、外键五种动作及延迟检查、行触发器和 INSTEAD OF；SQLite 文件后端显式拒绝尚未接入的模式。
 - [x] 事务语法：BEGIN / COMMIT / END / ROLLBACK，嵌套 SAVEPOINT / ROLLBACK TO / RELEASE，ADO.NET 保存点、DDL 回滚；Shared 使用乐观 DEFERRED，不能称为 SQLite 的完整锁模型。
 - [x] JSON5 输入及 json_valid 标志 2，json_each / json_tree，可见列、隐藏列、路径及左侧相关 JSON 连接。
-- [x] 中文 API 与实现注释、格式化、独立 SQL 支持文档及 README 矩阵更新。源码检查覆盖 922 个类型和成员声明；见 [代码规范](CODE-STYLE.md)。
-- [x] Windows / Linux 回归与 SQLite 差分。各平台原有 67 组、294 条差分及新增扩展查询验证，具体数量见 [开发验证](DEVELOPMENT-VALIDATION.md)。历史性能报告保留构建标识，不冒充本轮扩展成绩。
+- [x] 中文 API 与实现注释、格式化、独立 SQL 支持文档及 README 矩阵更新。源码检查覆盖 944 个类型和成员声明；见 [代码规范](CODE-STYLE.md)。
+- [x] Windows / Linux 回归与 SQLite 差分。各平台 69 组、524 条 SQLite 差分查询验证，具体数量见 [开发验证](DEVELOPMENT-VALIDATION.md)。完整性能及排序报告均已以本轮构建重新采集，优化前基线和最终构建标识分开保留。
 
 后续仍需实现或完善：
 
 - [ ] 分页持久化、增量维护的复合索引，降低首次构建和写后重建成本。
 - [ ] 通用子查询去相关、CTE / 视图展开及谓词下推、同窗排序共享、临时结果磁盘溢出。
 - [ ] 将新增模式安全接入 SQLite 文件页读写、导入导出及故障恢复；完整 WAL 和锁协议仍未实现。
-- [ ] ALTER TABLE、CHECK、UPSERT / RETURNING、COLLATE、聚合 FILTER、完整内置函数等清单中的缺项。
-- [ ] 本轮扩展构建的全面性能、CPU、RSS 和落盘对比重测；不能沿用旧构建成绩宣称全面领先。
+- [x] CHECK 约束及单分支 UPSERT；限制见 SQL 清单。
+- [ ] ALTER TABLE、完整 UPSERT / RETURNING、COLLATE、聚合 FILTER、完整内置函数等清单中的缺项。
+- [x] 本轮扩展构建的全面性能、CPU、RSS 和文件对比重测；实测仍有落后项，不能宣称全面领先。
+- [x] Shared 日志尾部追赶、紧凑排序堆及 JSON 弱树缓存，恢复方案和测试见 [Shared 方案](SHARED-REPLAY-PLAN.md)，结果见 [优化报告](OPTIMIZATION.md)。
 
 用户函数预期示例：
 

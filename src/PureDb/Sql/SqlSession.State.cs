@@ -48,6 +48,10 @@ internal sealed partial class SqlSession
         internal Dictionary<string, HashSet<SqlCompositeKey>>? ForeignKeys;
         /// <summary>无需逐行重新绑定的非唯一表达式索引委托。</summary>
         internal Dictionary<string, Func<object?[], object?>>? IndexGetters;
+        /// <summary>按表编译并在当前事务复用的 CHECK 委托。</summary>
+        internal Dictionary<int, Func<object?[], object?>[]>? CheckGetters;
+        /// <summary>检查约束委托最后绑定的函数注册代次。</summary>
+        internal int CheckEpoch;
         /// <summary>自动主键分配缓存。</summary>
         internal Dictionary<int, long>? AutomaticIds;
     }

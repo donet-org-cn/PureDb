@@ -2,8 +2,8 @@
   "Platform": "Windows-11-10.0.26300-SP0",
   "Machine": "AMD64",
   "CPUs": 12,
-  "Date": "2026-10-24T14:36:53+0800",
-  "Dotnet": "10.0.402",
-  "ComprehensiveSHA256": "7771C8D70089EAE9DCF000F952F31D93B92F30F237708A9E5F5F3E266C0DD744",
-  "AdoHarnessSHA256": "5A1297984F510374D222A914C4B0F9BD7EA35EFE1A26F65CB6E56A6E6081800B"
+  "Date": "2026-10-24T19:23:22+0800",
+  "Dotnet": "Microsoft.AspNetCore.App 6.0.36 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.32 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.21 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.13 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 11.0.0-rc.1.26425.128 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 6.0.36 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.32 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.21 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.13 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 11.0.0-rc.1.26425.128 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.WindowsDesktop.App 6.0.36 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 8.0.32 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 9.0.21 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 10.0.13 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 11.0.0-rc.1.26425.128 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]",
+  "ComprehensiveSHA256": "A888F8C5C0FF6CDB72F9E12FA7E656BE9A606EA04692A2F3C4275AEAFC345269",
+  "AdoHarnessSHA256": "619015E1104C4BBBCFD301815C487018A92C7B805DF4A8869DD9DAC2358A2CDB"
 }

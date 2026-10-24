@@ -18,8 +18,8 @@ var rows = db.Query("SELECT id FROM users LIMIT 20");
 | 多进程同时访问 | 本预览版兼容后端要求独占使用；Linux 需显式设置 `LinuxExclusiveProcess=true` |
 | WAL / UTF-16 / 任意页尺寸 / 任意 SQLite schema | 不支持，明确拒绝 |
 | JSONB 二进制互通 | 不支持；使用 JSON 文本交换 |
-| preview.2 扩展查询 | 原有受支持表可执行 CTE、集合、子查询、窗口、JSON5 和 JSON 表函数 |
-| preview.2 新增持久化模式 | 复合索引、外键、默认值、视图和触发器尚未接入页写入；明确拒绝，原版格式支持 |
+| preview.2 扩展查询和写入 | 原有受支持表可执行 CTE、集合、子查询、窗口、JSON5、JSON 表函数及单分支 UPSERT |
+| preview.2 新增持久化模式 | 复合索引、外键、默认值、CHECK、视图和触发器尚未接入页写入；明确拒绝，原版格式支持 |
 
 `LinuxExclusiveProcess` 与 `EnableIncrementalUpdates` 也可通过兼容 ADO.NET 连接属性在 Open 前设置，不属于连接字符串参数。原生格式 Shared 模式与这里的 SQLite 兼容独占模式是两个不同后端。
 

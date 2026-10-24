@@ -158,7 +158,8 @@ internal sealed class RowKey(object?[] values) : IEquatable<RowKey>
 /// <summary>将列名、参数、内置表达式及连接级用户函数绑定为逐行执行的委托。</summary>
 /// <param name = "owner">拥有函数注册和计划缓存的 SQL 数据库。</param>
 /// <param name = "context">当前执行上下文，用于绑定相关子查询和外层列。</param>
-internal sealed class SqlBinding(SqlDatabase? owner = null, SqlSession? context = null)
+/// <param name = "preferFirst">UPSERT 中的非限定列名优先绑定第一数据源，普通查询保持含糊引用报错。</param>
+internal sealed class SqlBinding(SqlDatabase? owner = null, SqlSession? context = null, bool preferFirst = false)
 {
     internal readonly List<(SqlTable Table, string Alias, int Offset)> Sources = [];
     /// <summary>当前已绑定数据源的总列数。</summary>
@@ -195,6 +196,8 @@ internal sealed class SqlBinding(SqlDatabase? owner = null, SqlSession? context 
             if (found >= 0)
                 throw new SqlException($"Ambiguous column: {name}");
             found = s.Offset + i;
+            if (preferFirst && parts.Length == 1)
+                return found;
         }
 
         return found;

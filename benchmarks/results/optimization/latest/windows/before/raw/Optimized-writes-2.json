@@ -1,0 +1,963 @@
+﻿{
+  "Engine": "Optimized",
+  "Mode": "writes",
+  "Runtime": "10.0.13",
+  "SQLite": "3.54.1",
+  "CPUs": 12,
+  "QueryWarmupMilliseconds": 500,
+  "QueryMeasurementMilliseconds": 750,
+  "LibrarySHA256": "57F0A827BC683100C486E5508E416F22A28C6C6B0BFD68103ED78896E17F7069",
+  "DateUtc": "2026-10-24T10:56:58.911081Z",
+  "Samples": [
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Full_single",
+      "Repeat": 2,
+      "Operations": 100,
+      "Unit": "rows",
+      "Milliseconds": 2716.8508,
+      "OpsPerSecond": 36.80732118230416,
+      "P50Microseconds": 17093.4,
+      "P95Microseconds": 67205.2,
+      "P99Microseconds": 91210.2,
+      "LatencySamples": 100,
+      "AllocatedBytes": 397784,
+      "WorkingSetBytes": 53309440,
+      "PrivateBytes": 25616384,
+      "PeakWorkingSetBytes": 53309440,
+      "ManagedLiveBytes": 957200,
+      "CpuMilliseconds": 359.375,
+      "CpuOneCorePercent": 13.227631049890556,
+      "CpuMachinePercent": 1.1023025874908796,
+      "ReadBytes": 575,
+      "WriteBytes": 32300,
+      "ReadOperations": 1,
+      "WriteOperations": 100,
+      "StorageBeforeBytes": 575,
+      "StorageAfterBytes": 32875,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Full_concurrent8",
+      "Repeat": 2,
+      "Operations": 100,
+      "Unit": "rows",
+      "Milliseconds": 630.4667,
+      "OpsPerSecond": 158.61265947908112,
+      "P50Microseconds": 0,
+      "P95Microseconds": 0,
+      "P99Microseconds": 0,
+      "LatencySamples": 0,
+      "AllocatedBytes": 364160,
+      "WorkingSetBytes": 55947264,
+      "PrivateBytes": 25899008,
+      "PeakWorkingSetBytes": 55947264,
+      "ManagedLiveBytes": 997544,
+      "CpuMilliseconds": 78.125,
+      "CpuOneCorePercent": 12.391614021803214,
+      "CpuMachinePercent": 1.0326345018169345,
+      "ReadBytes": 575,
+      "WriteBytes": 32300,
+      "ReadOperations": 1,
+      "WriteOperations": 100,
+      "StorageBeforeBytes": 575,
+      "StorageAfterBytes": 32875,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Full_batch1000",
+      "Repeat": 2,
+      "Operations": 10000,
+      "Unit": "rows",
+      "Milliseconds": 632.1064,
+      "OpsPerSecond": 15820.121422595943,
+      "P50Microseconds": 40741.9,
+      "P95Microseconds": 91241.3,
+      "P99Microseconds": 91241.3,
+      "LatencySamples": 10,
+      "AllocatedBytes": 19658984,
+      "WorkingSetBytes": 66850816,
+      "PrivateBytes": 36204544,
+      "PeakWorkingSetBytes": 66850816,
+      "ManagedLiveBytes": 8873256,
+      "CpuMilliseconds": 78.125,
+      "CpuOneCorePercent": 12.35946986140308,
+      "CpuMachinePercent": 1.02995582178359,
+      "ReadBytes": 575,
+      "WriteBytes": 3030200,
+      "ReadOperations": 1,
+      "WriteOperations": 10,
+      "StorageBeforeBytes": 575,
+      "StorageAfterBytes": 3030775,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Full_compact",
+      "Repeat": 2,
+      "Operations": 1,
+      "Unit": "compactions",
+      "Milliseconds": 94.9253,
+      "OpsPerSecond": 10.534599311247897,
+      "P50Microseconds": 0,
+      "P95Microseconds": 0,
+      "P99Microseconds": 0,
+      "LatencySamples": 0,
+      "AllocatedBytes": 3657840,
+      "WorkingSetBytes": 68661248,
+      "PrivateBytes": 37851136,
+      "PeakWorkingSetBytes": 68661248,
+      "ManagedLiveBytes": 7877232,
+      "CpuMilliseconds": 0,
+      "CpuOneCorePercent": 0,
+      "CpuMachinePercent": 0,
+      "ReadBytes": 1511424,
+      "WriteBytes": 1515595,
+      "ReadOperations": 369,
+      "WriteOperations": 3,
+      "StorageBeforeBytes": 3150795,
+      "StorageAfterBytes": 1515595,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Full_batch_unique",
+      "Repeat": 2,
+      "Operations": 1000,
+      "Unit": "rows",
+      "Milliseconds": 41.6646,
+      "OpsPerSecond": 24001.190459046768,
+      "P50Microseconds": 41660.5,
+      "P95Microseconds": 41660.5,
+      "P99Microseconds": 41660.5,
+      "LatencySamples": 1,
+      "AllocatedBytes": 2156848,
+      "WorkingSetBytes": 68018176,
+      "PrivateBytes": 36917248,
+      "PeakWorkingSetBytes": 69140480,
+      "ManagedLiveBytes": 3824536,
+      "CpuMilliseconds": 15.625,
+      "CpuOneCorePercent": 37.50186009226057,
+      "CpuMachinePercent": 3.125155007688381,
+      "ReadBytes": 652,
+      "WriteBytes": 303020,
+      "ReadOperations": 1,
+      "WriteOperations": 1,
+      "StorageBeforeBytes": 652,
+      "StorageAfterBytes": 303672,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Full_batch_update",
+      "Repeat": 2,
+      "Operations": 10000,
+      "Unit": "rows",
+      "Milliseconds": 328.0849,
+      "OpsPerSecond": 30479.915412138747,
+      "P50Microseconds": 25436.3,
+      "P95Microseconds": 35932.1,
+      "P99Microseconds": 35932.1,
+      "LatencySamples": 10,
+      "AllocatedBytes": 20174224,
+      "WorkingSetBytes": 76009472,
+      "PrivateBytes": 45240320,
+      "PeakWorkingSetBytes": 82604032,
+      "ManagedLiveBytes": 24777360,
+      "CpuMilliseconds": 78.125,
+      "CpuOneCorePercent": 23.812433915733397,
+      "CpuMachinePercent": 1.984369492977783,
+      "ReadBytes": 3031040,
+      "WriteBytes": 3030200,
+      "ReadOperations": 740,
+      "WriteOperations": 10,
+      "StorageBeforeBytes": 3030595,
+      "StorageAfterBytes": 6060795,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Full_batch_delete",
+      "Repeat": 2,
+      "Operations": 10000,
+      "Unit": "rows",
+      "Milliseconds": 340.7836,
+      "OpsPerSecond": 29344.135105093083,
+      "P50Microseconds": 25431.1,
+      "P95Microseconds": 66133,
+      "P99Microseconds": 66133,
+      "LatencySamples": 10,
+      "AllocatedBytes": 13537824,
+      "WorkingSetBytes": 89718784,
+      "PrivateBytes": 60198912,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 22353096,
+      "CpuMilliseconds": 62.5,
+      "CpuOneCorePercent": 18.340084440683178,
+      "CpuMachinePercent": 1.5283403700569316,
+      "ReadBytes": 3031040,
+      "WriteBytes": 240200,
+      "ReadOperations": 740,
+      "WriteOperations": 10,
+      "StorageBeforeBytes": 3030595,
+      "StorageAfterBytes": 3270795,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Full_update",
+      "Repeat": 2,
+      "Operations": 100,
+      "Unit": "rows",
+      "Milliseconds": 3312.8935,
+      "OpsPerSecond": 30.18509348398915,
+      "P50Microseconds": 25489.7,
+      "P95Microseconds": 74511.4,
+      "P99Microseconds": 96577.3,
+      "LatencySamples": 100,
+      "AllocatedBytes": 356384,
+      "WorkingSetBytes": 80572416,
+      "PrivateBytes": 50020352,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 4141856,
+      "CpuMilliseconds": 46.875,
+      "CpuOneCorePercent": 1.4149262570619912,
+      "CpuMachinePercent": 0.1179105214218326,
+      "ReadBytes": 32768,
+      "WriteBytes": 32300,
+      "ReadOperations": 8,
+      "WriteOperations": 100,
+      "StorageBeforeBytes": 30895,
+      "StorageAfterBytes": 63195,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Full_delete",
+      "Repeat": 2,
+      "Operations": 100,
+      "Unit": "rows",
+      "Milliseconds": 1363.9521,
+      "OpsPerSecond": 73.31635766387984,
+      "P50Microseconds": 8852.9,
+      "P95Microseconds": 17228.5,
+      "P99Microseconds": 58839.7,
+      "LatencySamples": 100,
+      "AllocatedBytes": 282080,
+      "WorkingSetBytes": 72441856,
+      "PrivateBytes": 41545728,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 4076800,
+      "CpuMilliseconds": 78.125,
+      "CpuOneCorePercent": 5.727840442490613,
+      "CpuMachinePercent": 0.4773200368742177,
+      "ReadBytes": 32768,
+      "WriteBytes": 4400,
+      "ReadOperations": 8,
+      "WriteOperations": 100,
+      "StorageBeforeBytes": 30895,
+      "StorageAfterBytes": 35295,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Full_mixed",
+      "Repeat": 2,
+      "Operations": 100,
+      "Unit": "write\u002B5reads",
+      "Milliseconds": 2826.9436,
+      "OpsPerSecond": 35.37389285021463,
+      "P50Microseconds": 24632.7,
+      "P95Microseconds": 49051.4,
+      "P99Microseconds": 120258.5,
+      "LatencySamples": 100,
+      "AllocatedBytes": 1020328,
+      "WorkingSetBytes": 73846784,
+      "PrivateBytes": 42901504,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 4810368,
+      "CpuMilliseconds": 62.5,
+      "CpuOneCorePercent": 2.2108683031384144,
+      "CpuMachinePercent": 0.18423902526153454,
+      "ReadBytes": 264202,
+      "WriteBytes": 32300,
+      "ReadOperations": 115,
+      "WriteOperations": 100,
+      "StorageBeforeBytes": 30895,
+      "StorageAfterBytes": 63195,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Buffered_single",
+      "Repeat": 2,
+      "Operations": 1000,
+      "Unit": "rows",
+      "Milliseconds": 5.2811,
+      "OpsPerSecond": 189354.49054174317,
+      "P50Microseconds": 3.9,
+      "P95Microseconds": 8.8,
+      "P99Microseconds": 23.3,
+      "LatencySamples": 1000,
+      "AllocatedBytes": 2953296,
+      "WorkingSetBytes": 73990144,
+      "PrivateBytes": 42909696,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 6855528,
+      "CpuMilliseconds": 0,
+      "CpuOneCorePercent": 0,
+      "CpuMachinePercent": 0,
+      "ReadBytes": 575,
+      "WriteBytes": 323000,
+      "ReadOperations": 1,
+      "WriteOperations": 1000,
+      "StorageBeforeBytes": 575,
+      "StorageAfterBytes": 323575,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Buffered_concurrent8",
+      "Repeat": 2,
+      "Operations": 1000,
+      "Unit": "rows",
+      "Milliseconds": 7.3284,
+      "OpsPerSecond": 136455.43365536816,
+      "P50Microseconds": 0,
+      "P95Microseconds": 0,
+      "P99Microseconds": 0,
+      "LatencySamples": 0,
+      "AllocatedBytes": 2943816,
+      "WorkingSetBytes": 74067968,
+      "PrivateBytes": 42975232,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 6866552,
+      "CpuMilliseconds": 0,
+      "CpuOneCorePercent": 0,
+      "CpuMachinePercent": 0,
+      "ReadBytes": 575,
+      "WriteBytes": 323000,
+      "ReadOperations": 1,
+      "WriteOperations": 1000,
+      "StorageBeforeBytes": 575,
+      "StorageAfterBytes": 323575,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Buffered_batch1000",
+      "Repeat": 2,
+      "Operations": 10000,
+      "Unit": "rows",
+      "Milliseconds": 11.5246,
+      "OpsPerSecond": 867709.0745015012,
+      "P50Microseconds": 788.7,
+      "P95Microseconds": 2338.3,
+      "P99Microseconds": 2338.3,
+      "LatencySamples": 10,
+      "AllocatedBytes": 19650336,
+      "WorkingSetBytes": 77848576,
+      "PrivateBytes": 46833664,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 14344048,
+      "CpuMilliseconds": 15.625,
+      "CpuOneCorePercent": 135.57954289085956,
+      "CpuMachinePercent": 11.298295240904963,
+      "ReadBytes": 575,
+      "WriteBytes": 3030200,
+      "ReadOperations": 1,
+      "WriteOperations": 10,
+      "StorageBeforeBytes": 575,
+      "StorageAfterBytes": 3030775,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Buffered_compact",
+      "Repeat": 2,
+      "Operations": 1,
+      "Unit": "compactions",
+      "Milliseconds": 83.837,
+      "OpsPerSecond": 11.927907725705834,
+      "P50Microseconds": 0,
+      "P95Microseconds": 0,
+      "P99Microseconds": 0,
+      "LatencySamples": 0,
+      "AllocatedBytes": 3658552,
+      "WorkingSetBytes": 78368768,
+      "PrivateBytes": 46686208,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 11021192,
+      "CpuMilliseconds": 78.125,
+      "CpuOneCorePercent": 93.18677910707682,
+      "CpuMachinePercent": 7.765564925589735,
+      "ReadBytes": 1511424,
+      "WriteBytes": 1515595,
+      "ReadOperations": 369,
+      "WriteOperations": 3,
+      "StorageBeforeBytes": 3150795,
+      "StorageAfterBytes": 1515595,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Buffered_batch_unique",
+      "Repeat": 2,
+      "Operations": 1000,
+      "Unit": "rows",
+      "Milliseconds": 1.4585,
+      "OpsPerSecond": 685635.9273225918,
+      "P50Microseconds": 1456.3,
+      "P95Microseconds": 1456.3,
+      "P99Microseconds": 1456.3,
+      "LatencySamples": 1,
+      "AllocatedBytes": 2152512,
+      "WorkingSetBytes": 77922304,
+      "PrivateBytes": 46202880,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 8998992,
+      "CpuMilliseconds": 31.25,
+      "CpuOneCorePercent": 2142.612272883099,
+      "CpuMachinePercent": 178.55102274025828,
+      "ReadBytes": 652,
+      "WriteBytes": 303020,
+      "ReadOperations": 1,
+      "WriteOperations": 1,
+      "StorageBeforeBytes": 652,
+      "StorageAfterBytes": 303672,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Buffered_batch_update",
+      "Repeat": 2,
+      "Operations": 10000,
+      "Unit": "rows",
+      "Milliseconds": 20.5187,
+      "OpsPerSecond": 487360.3103510456,
+      "P50Microseconds": 1390.2,
+      "P95Microseconds": 3456.6,
+      "P99Microseconds": 3456.6,
+      "LatencySamples": 10,
+      "AllocatedBytes": 20105304,
+      "WorkingSetBytes": 83918848,
+      "PrivateBytes": 52133888,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 15160984,
+      "CpuMilliseconds": 15.625,
+      "CpuOneCorePercent": 76.15004849235089,
+      "CpuMachinePercent": 6.345837374362574,
+      "ReadBytes": 3031040,
+      "WriteBytes": 3030200,
+      "ReadOperations": 740,
+      "WriteOperations": 10,
+      "StorageBeforeBytes": 3030595,
+      "StorageAfterBytes": 6060795,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Buffered_batch_delete",
+      "Repeat": 2,
+      "Operations": 10000,
+      "Unit": "rows",
+      "Milliseconds": 14.0256,
+      "OpsPerSecond": 712981.9758156515,
+      "P50Microseconds": 951.7,
+      "P95Microseconds": 1662.8,
+      "P99Microseconds": 1662.8,
+      "LatencySamples": 10,
+      "AllocatedBytes": 13532816,
+      "WorkingSetBytes": 90173440,
+      "PrivateBytes": 58073088,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 17106992,
+      "CpuMilliseconds": 0,
+      "CpuOneCorePercent": 0,
+      "CpuMachinePercent": 0,
+      "ReadBytes": 3031040,
+      "WriteBytes": 240200,
+      "ReadOperations": 740,
+      "WriteOperations": 10,
+      "StorageBeforeBytes": 3030595,
+      "StorageAfterBytes": 3270795,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Buffered_update",
+      "Repeat": 2,
+      "Operations": 1000,
+      "Unit": "rows",
+      "Milliseconds": 5.1088,
+      "OpsPerSecond": 195740.6827435014,
+      "P50Microseconds": 4.4,
+      "P95Microseconds": 8.4,
+      "P99Microseconds": 17.3,
+      "LatencySamples": 1000,
+      "AllocatedBytes": 3051504,
+      "WorkingSetBytes": 83435520,
+      "PrivateBytes": 50954240,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 10015584,
+      "CpuMilliseconds": 0,
+      "CpuOneCorePercent": 0,
+      "CpuMachinePercent": 0,
+      "ReadBytes": 307200,
+      "WriteBytes": 323000,
+      "ReadOperations": 75,
+      "WriteOperations": 1000,
+      "StorageBeforeBytes": 303595,
+      "StorageAfterBytes": 626595,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Buffered_delete",
+      "Repeat": 2,
+      "Operations": 1000,
+      "Unit": "rows",
+      "Milliseconds": 4.5867,
+      "OpsPerSecond": 218021.6713541326,
+      "P50Microseconds": 3.6,
+      "P95Microseconds": 7.8,
+      "P99Microseconds": 19.9,
+      "LatencySamples": 1000,
+      "AllocatedBytes": 2329512,
+      "WorkingSetBytes": 77090816,
+      "PrivateBytes": 44572672,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 9292184,
+      "CpuMilliseconds": 0,
+      "CpuOneCorePercent": 0,
+      "CpuMachinePercent": 0,
+      "ReadBytes": 307200,
+      "WriteBytes": 44000,
+      "ReadOperations": 75,
+      "WriteOperations": 1000,
+      "StorageBeforeBytes": 303595,
+      "StorageAfterBytes": 347595,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "writes",
+      "Scenario": "Buffered_mixed",
+      "Repeat": 2,
+      "Operations": 1000,
+      "Unit": "write\u002B5reads",
+      "Milliseconds": 10.7836,
+      "OpsPerSecond": 92733.40999295225,
+      "P50Microseconds": 9.3,
+      "P95Microseconds": 13.7,
+      "P99Microseconds": 18.4,
+      "LatencySamples": 1000,
+      "AllocatedBytes": 9654752,
+      "WorkingSetBytes": 77512704,
+      "PrivateBytes": 45010944,
+      "PeakWorkingSetBytes": 104751104,
+      "ManagedLiveBytes": 10784912,
+      "CpuMilliseconds": 0,
+      "CpuOneCorePercent": 0,
+      "CpuMachinePercent": 0,
+      "ReadBytes": 2633780,
+      "WriteBytes": 323000,
+      "ReadOperations": 1142,
+      "WriteOperations": 1000,
+      "StorageBeforeBytes": 303595,
+      "StorageAfterBytes": 626595,
+      "WorkerCpuMilliseconds": 0,
+      "WorkerPeakBytesSum": 0,
+      "WorkerPrivateBytesSum": 0,
+      "WorkerReadBytes": 0,
+      "WorkerWriteBytes": 0
+    }
+  ],
+  "Files": [
+    {
+      "Path": "Buffered-batch1000.pdb",
+      "Bytes": 1515595
+    },
+    {
+      "Path": "Buffered-batch1000.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Buffered-batch1000.pdb.pidx",
+      "Bytes": 172032
+    },
+    {
+      "Path": "Buffered-batch1000.pdb.sidx-1-1",
+      "Bytes": 172032
+    },
+    {
+      "Path": "Buffered-batch_delete.pdb",
+      "Bytes": 3270795
+    },
+    {
+      "Path": "Buffered-batch_delete.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Buffered-batch_delete.pdb.pidx",
+      "Bytes": 12288
+    },
+    {
+      "Path": "Buffered-batch_delete.pdb.sidx-1-1",
+      "Bytes": 8192
+    },
+    {
+      "Path": "Buffered-batch_unique.pdb",
+      "Bytes": 303672
+    },
+    {
+      "Path": "Buffered-batch_unique.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Buffered-batch_unique.pdb.pidx",
+      "Bytes": 40960
+    },
+    {
+      "Path": "Buffered-batch_unique.pdb.sidx-1-1",
+      "Bytes": 40960
+    },
+    {
+      "Path": "Buffered-batch_update.pdb",
+      "Bytes": 6060795
+    },
+    {
+      "Path": "Buffered-batch_update.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Buffered-batch_update.pdb.pidx",
+      "Bytes": 331776
+    },
+    {
+      "Path": "Buffered-batch_update.pdb.sidx-1-1",
+      "Bytes": 331776
+    },
+    {
+      "Path": "Buffered-concurrent8.pdb",
+      "Bytes": 323575
+    },
+    {
+      "Path": "Buffered-concurrent8.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Buffered-concurrent8.pdb.pidx",
+      "Bytes": 40960
+    },
+    {
+      "Path": "Buffered-concurrent8.pdb.sidx-1-1",
+      "Bytes": 40960
+    },
+    {
+      "Path": "Buffered-delete.pdb",
+      "Bytes": 347595
+    },
+    {
+      "Path": "Buffered-delete.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Buffered-delete.pdb.pidx",
+      "Bytes": 12288
+    },
+    {
+      "Path": "Buffered-delete.pdb.sidx-1-1",
+      "Bytes": 8192
+    },
+    {
+      "Path": "Buffered-mixed.pdb",
+      "Bytes": 626595
+    },
+    {
+      "Path": "Buffered-mixed.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Buffered-mixed.pdb.pidx",
+      "Bytes": 40960
+    },
+    {
+      "Path": "Buffered-mixed.pdb.sidx-1-1",
+      "Bytes": 40960
+    },
+    {
+      "Path": "Buffered-single.pdb",
+      "Bytes": 323575
+    },
+    {
+      "Path": "Buffered-single.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Buffered-single.pdb.pidx",
+      "Bytes": 40960
+    },
+    {
+      "Path": "Buffered-single.pdb.sidx-1-1",
+      "Bytes": 40960
+    },
+    {
+      "Path": "Buffered-update.pdb",
+      "Bytes": 626595
+    },
+    {
+      "Path": "Buffered-update.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Buffered-update.pdb.pidx",
+      "Bytes": 40960
+    },
+    {
+      "Path": "Buffered-update.pdb.sidx-1-1",
+      "Bytes": 40960
+    },
+    {
+      "Path": "Full-batch1000.pdb",
+      "Bytes": 1515595
+    },
+    {
+      "Path": "Full-batch1000.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Full-batch1000.pdb.pidx",
+      "Bytes": 172032
+    },
+    {
+      "Path": "Full-batch1000.pdb.sidx-1-1",
+      "Bytes": 172032
+    },
+    {
+      "Path": "Full-batch_delete.pdb",
+      "Bytes": 3270795
+    },
+    {
+      "Path": "Full-batch_delete.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Full-batch_delete.pdb.pidx",
+      "Bytes": 12288
+    },
+    {
+      "Path": "Full-batch_delete.pdb.sidx-1-1",
+      "Bytes": 8192
+    },
+    {
+      "Path": "Full-batch_unique.pdb",
+      "Bytes": 303672
+    },
+    {
+      "Path": "Full-batch_unique.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Full-batch_unique.pdb.pidx",
+      "Bytes": 40960
+    },
+    {
+      "Path": "Full-batch_unique.pdb.sidx-1-1",
+      "Bytes": 40960
+    },
+    {
+      "Path": "Full-batch_update.pdb",
+      "Bytes": 6060795
+    },
+    {
+      "Path": "Full-batch_update.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Full-batch_update.pdb.pidx",
+      "Bytes": 331776
+    },
+    {
+      "Path": "Full-batch_update.pdb.sidx-1-1",
+      "Bytes": 331776
+    },
+    {
+      "Path": "Full-concurrent8.pdb",
+      "Bytes": 32875
+    },
+    {
+      "Path": "Full-concurrent8.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Full-concurrent8.pdb.pidx",
+      "Bytes": 12288
+    },
+    {
+      "Path": "Full-concurrent8.pdb.sidx-1-1",
+      "Bytes": 12288
+    },
+    {
+      "Path": "Full-delete.pdb",
+      "Bytes": 35295
+    },
+    {
+      "Path": "Full-delete.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Full-delete.pdb.pidx",
+      "Bytes": 12288
+    },
+    {
+      "Path": "Full-delete.pdb.sidx-1-1",
+      "Bytes": 8192
+    },
+    {
+      "Path": "Full-mixed.pdb",
+      "Bytes": 63195
+    },
+    {
+      "Path": "Full-mixed.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Full-mixed.pdb.pidx",
+      "Bytes": 12288
+    },
+    {
+      "Path": "Full-mixed.pdb.sidx-1-1",
+      "Bytes": 12288
+    },
+    {
+      "Path": "Full-single.pdb",
+      "Bytes": 32875
+    },
+    {
+      "Path": "Full-single.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Full-single.pdb.pidx",
+      "Bytes": 12288
+    },
+    {
+      "Path": "Full-single.pdb.sidx-1-1",
+      "Bytes": 12288
+    },
+    {
+      "Path": "Full-update.pdb",
+      "Bytes": 63195
+    },
+    {
+      "Path": "Full-update.pdb.lock",
+      "Bytes": 0
+    },
+    {
+      "Path": "Full-update.pdb.pidx",
+      "Bytes": 12288
+    },
+    {
+      "Path": "Full-update.pdb.sidx-1-1",
+      "Bytes": 12288
+    }
+  ]
+}

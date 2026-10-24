@@ -751,7 +751,8 @@ internal sealed partial class SqlSession(SqlDatabase owner, ISqlSnapshot snapsho
     /// <summary>一个唯一约束的取值函数和当前事务可见的值到主键映射。</summary>
     /// <param name = "Get">从一行计算唯一约束键的委托。</param>
     /// <param name = "Values">列值、行列表或唯一键映射；具体形态由当前记录的字段类型决定。</param>
-    private sealed record UniqueMap(Func<object?[], object?> Get, Dictionary<object, long> Values);
+    /// <param name = "Columns">普通列唯一约束的完整列序号；表达式索引为 null。</param>
+    private sealed record UniqueMap(Func<object?[], object?> Get, Dictionary<object, long> Values, int[]? Columns = null);
     private Dictionary<int, List<UniqueMap>>? _uniqueMaps;
     /// <summary>构建或复用当前事务可见的唯一键到主键映射，SQL NULL 不参与冲突。</summary>
     /// <param name = "table">当前操作的不可变表模式。</param>
@@ -764,12 +765,12 @@ internal sealed partial class SqlSession(SqlDatabase owner, ISqlSnapshot snapsho
         maps = [];
         var cols = table.Columns.Select((c, i) => (c, i)).Where(p => p.c.Unique && !p.c.Primary).Select(p => p.i).Concat(table.Indexes.Where(i => i.Unique && i.Expression is null && table.Column(i.Column) != table.Primary).Select(i => table.Column(i.Column))).Distinct();
         foreach (int column in cols)
-            maps.Add(new(r => r[column], new(SqlValueComparer.Instance)));
+            maps.Add(new(r => r[column], new(SqlValueComparer.Instance), [column]));
         foreach (var index in table.Indexes.Where(i => i.Unique && i.Expression is not null))
         {
             var binding = new SqlBinding(owner, this);
             binding.Add(table, table.Name);
-            maps.Add(new(binding.Bind(index.Expression!, SqlDatabase.EmptyParameters), new(SqlValueComparer.Instance)));
+            maps.Add(new(binding.Bind(index.Expression!, SqlDatabase.EmptyParameters), new(SqlValueComparer.Instance), IndexColumns(table, index)));
         }
 
         if (maps.Count > 0)
@@ -790,6 +791,7 @@ internal sealed partial class SqlSession(SqlDatabase owner, ISqlSnapshot snapsho
         for (int i = 0; i < row.Length; i++)
             row[i] = Coerce(table.Columns[i], row[i]);
         long id = (long)row[table.Primary]!;
+        ValidateChecks(table, row);
         long key = StorageId(table, id);
         if (replacing != id && Get(key) is not null)
             throw new SqlException("PRIMARY KEY constraint failed");
@@ -889,6 +891,21 @@ internal sealed partial class SqlSession(SqlDatabase owner, ISqlSnapshot snapsho
                     foreach (string column in foreign.Columns)
                         if (!c.Columns.Any(col => col.Name.Equals(column, StringComparison.OrdinalIgnoreCase)))
                             throw new SqlException("Unknown foreign-key column");
+                var checkSchema = new SqlTable
+                {
+                    Name = c.Name,
+                    Columns = c.Columns
+                };
+                foreach (var check in c.Checks)
+                {
+                    static bool InvalidCheck(Expr expression) => expression.Op == "parameter" || expression.Subquery is not null || expression.Window is not null || expression.Args.Any(InvalidCheck);
+                    if (InvalidCheck(check) || SqlBinding.Aggregate(check))
+                        throw new SqlException("CHECK cannot contain parameters, subqueries, aggregates or windows");
+                    var checkBinding = new SqlBinding(owner, this);
+                    checkBinding.Add(checkSchema, c.Name);
+                    _ = checkBinding.Bind(check, SqlDatabase.EmptyParameters);
+                }
+
                 ChangeCatalog(catalog =>
                 {
                     if (catalog.NextId >= 1 << 23)
@@ -898,7 +915,8 @@ internal sealed partial class SqlSession(SqlDatabase owner, ISqlSnapshot snapsho
                         Id = catalog.NextId++,
                         Name = c.Name,
                         Columns = c.Columns,
-                        ForeignKeys = c.ForeignKeys
+                        ForeignKeys = c.ForeignKeys,
+                        Checks = c.Checks
                     });
                     var table = catalog.Table(c.Name);
                     for (int i = 0; i < c.UniqueColumns.Count; i++)
@@ -980,8 +998,14 @@ internal sealed partial class SqlSession(SqlDatabase owner, ISqlSnapshot snapsho
                 return 0;
             case Insert insert:
                 if (Catalog.Views.Any(v => v.Name.Equals(insert.Table, StringComparison.OrdinalIgnoreCase)))
+                {
+                    if (insert.Upsert is not null)
+                        throw new SqlException("UPSERT requires a real table");
                     return WriteView(insert, parameters);
+                }
+
                 var target = Catalog.Table(insert.Table);
+                var upsertActions = insert.Upsert is null ? null : PrepareUpsert(target, insert.Upsert, parameters);
                 int[] columns = owner.InsertColumns(insert, target);
                 int inserted = 0;
                 var queryRows = insert.Query is null ? null : Query(insert.Query, parameters).Rows;
@@ -1005,7 +1029,8 @@ internal sealed partial class SqlSession(SqlDatabase owner, ISqlSnapshot snapsho
                             "parameter" => SqlPrimaryPlan.Parameter(expressions[i], parameters),
                             _ => new SqlBinding(owner, this).Bind(expressions[i], parameters)([])
                         };
-                    if (row[target.Primary] is null)
+                    bool automatic = row[target.Primary] is null;
+                    if (automatic)
                     {
                         _automaticIds ??= [];
                         if (!_automaticIds.TryGetValue(target.Id, out long cachedMaximum))
@@ -1014,8 +1039,13 @@ internal sealed partial class SqlSession(SqlDatabase owner, ISqlSnapshot snapsho
                         _automaticIds[target.Id] = cachedMaximum + 1;
                     }
 
-                    WriteRow(target, row, null, changedColumns);
-                    inserted++;
+                    if (insert.Upsert is null)
+                    {
+                        WriteRow(target, row, null, changedColumns);
+                        inserted++;
+                    }
+                    else
+                        inserted += UpsertRow(target, row, changedColumns, insert.Upsert, upsertActions!, automatic);
                 }
 
                 return inserted;

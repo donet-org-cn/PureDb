@@ -2,49 +2,49 @@
   {
     "Scenario": "point",
     "Engine": "Optimized",
-    "WorkingSetBytes": 91086848,
-    "PrivateBytes": 66490368,
-    "ManagedLiveBytes": 35752072,
-    "PeakWorkingSetBytes": 91844608
+    "WorkingSetBytes": 90550272,
+    "PrivateBytes": 65441792,
+    "ManagedLiveBytes": 35796128,
+    "PeakWorkingSetBytes": 92233728
   },
   {
     "Scenario": "point",
     "Engine": "SQLite",
-    "WorkingSetBytes": 82583552,
-    "PrivateBytes": 62410752,
-    "ManagedLiveBytes": 274576,
-    "PeakWorkingSetBytes": 82583552
+    "WorkingSetBytes": 82759680,
+    "PrivateBytes": 62533632,
+    "ManagedLiveBytes": 277840,
+    "PeakWorkingSetBytes": 82759680
   },
   {
     "Scenario": "range",
     "Engine": "Optimized",
-    "WorkingSetBytes": 58720256,
-    "PrivateBytes": 34021376,
-    "ManagedLiveBytes": 7493104,
-    "PeakWorkingSetBytes": 61861888
+    "WorkingSetBytes": 59432960,
+    "PrivateBytes": 34353152,
+    "ManagedLiveBytes": 7537256,
+    "PeakWorkingSetBytes": 62541824
   },
   {
     "Scenario": "range",
     "Engine": "SQLite",
-    "WorkingSetBytes": 59232256,
-    "PrivateBytes": 38526976,
-    "ManagedLiveBytes": 274576,
-    "PeakWorkingSetBytes": 59232256
+    "WorkingSetBytes": 59248640,
+    "PrivateBytes": 38518784,
+    "ManagedLiveBytes": 277816,
+    "PeakWorkingSetBytes": 59248640
   },
   {
     "Scenario": "json",
     "Engine": "Optimized",
-    "WorkingSetBytes": 60583936,
-    "PrivateBytes": 39170048,
-    "ManagedLiveBytes": 9049536,
-    "PeakWorkingSetBytes": 62980096
+    "WorkingSetBytes": 64364544,
+    "PrivateBytes": 38125568,
+    "ManagedLiveBytes": 6278264,
+    "PeakWorkingSetBytes": 68747264
   },
   {
     "Scenario": "json",
     "Engine": "SQLite",
-    "WorkingSetBytes": 47665152,
-    "PrivateBytes": 26894336,
-    "ManagedLiveBytes": 274576,
-    "PeakWorkingSetBytes": 47665152
+    "WorkingSetBytes": 47652864,
+    "PrivateBytes": 26943488,
+    "ManagedLiveBytes": 277840,
+    "PeakWorkingSetBytes": 47652864
   }
 ]

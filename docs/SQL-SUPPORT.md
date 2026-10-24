@@ -7,12 +7,13 @@
 | 语句或能力 | PureDb 原版文件 | 关键边界 |
 | --- | --- | --- |
 | CREATE TABLE / DROP TABLE | ✅ | 每表必须有一个 INTEGER PRIMARY KEY |
-| NOT NULL / UNIQUE / DEFAULT | ⚠️ | 支持复合 UNIQUE；DEFAULT 为受支持的常量表达式 |
+| NOT NULL / UNIQUE / DEFAULT / CHECK | ⚠️ | 复合 UNIQUE、常量 DEFAULT、列级及表级 CHECK |
 | CREATE INDEX / CREATE UNIQUE INDEX / DROP INDEX | ✅ | 单列、复合列、受支持的 JSON 路径表达式；支持 ASC / DESC |
 | FOREIGN KEY / REFERENCES | ⚠️ | 主键或完整唯一键、五种引用动作、立即及延迟检查 |
 | CREATE VIEW / DROP VIEW | ✅ | 普通视图；写入需要 INSTEAD OF 触发器 |
 | CREATE TRIGGER / DROP TRIGGER | ⚠️ | BEFORE / AFTER / INSTEAD OF 行触发器；RAISE 仅 ABORT |
 | INSERT VALUES / INSERT SELECT / DEFAULT VALUES | ✅ | 支持一次插入多行、指定列和自动分配整数主键 |
+| INSERT ON CONFLICT | ⚠️ | 单分支 DO NOTHING / DO UPDATE；更新需显式主键或唯一列目标 |
 | UPDATE / DELETE | ✅ | 支持表达式、WHERE、子查询和 WITH 前缀 |
 | SELECT / DISTINCT / GROUP BY / HAVING | ✅ | 支持的标量表达式和五种聚合函数 |
 | INNER / LEFT / RIGHT / FULL / CROSS JOIN | ✅ | 普通表支持；相关 JSON 表函数支持 CROSS / INNER / LEFT |
@@ -27,10 +28,10 @@
 | BEGIN / COMMIT / END / ROLLBACK | ⚠️ | 乐观 Serializable；Shared 模式只接受 BEGIN DEFERRED |
 | SAVEPOINT / ROLLBACK TO / RELEASE | ✅ | 支持嵌套、同名保存点、DDL 回滚及 ADO.NET 保存点 |
 | C# 用户函数 | ⚠️ | 连接级标量函数；不支持自定义聚合、窗口及表值回调 |
-| ALTER TABLE / CHECK / RETURNING / UPSERT | ❌ | 尚未实现，不能依赖这些语法 |
+| ALTER TABLE / RETURNING / INSERT OR ... | ❌ | 尚未实现，不能依赖这些语法 |
 | PRAGMA / ATTACH / VACUUM / FTS / RTree | ❌ | SQL 入口尚未实现；维护操作使用对应 C# API |
 
-**文件格式范围：**上表主要针对 `new SqlDatabase(...)` 使用的 PureDb 原版文件。可选的 `PureDb.SqliteCompatibility` 使用相同查询执行器，可在其已有表上执行受支持的 CTE、子查询、集合、窗口和 JSON 查询；但本轮新增的复合索引、外键、默认值、视图和触发器尚未接入 SQLite 页格式写入及导入导出，兼容包明确拒绝这些持久化模式，避免丢失定义或生成不正确的文件。该后端仍不支持 SQLite WAL 和任意模式；详见 [SQLite 文件兼容](SQLITE-COMPATIBILITY.md)。
+**文件格式范围：**上表主要针对 `new SqlDatabase(...)` 使用的 PureDb 原版文件。可选的 `PureDb.SqliteCompatibility` 使用相同查询执行器，可在其已有表上执行受支持的 CTE、子查询、集合、窗口和 JSON 查询；但本轮新增的复合索引、外键、默认值、CHECK、视图和触发器尚未接入 SQLite 页格式写入及导入导出，兼容包明确拒绝这些持久化模式，避免丢失定义或生成不正确的文件。该后端仍不支持 SQLite WAL 和任意模式；详见 [SQLite 文件兼容](SQLITE-COMPATIBILITY.md)。
 
 ## 建表、约束与索引
 
@@ -57,6 +58,7 @@ DROP INDEX IF EXISTS employees_age;
 - 主键可在列内或表级声明，但必须且只能是单列 INTEGER，值范围 `[0, 2^40)`。省略或传入 NULL 时，从当前最大值加一分配，空表从 1 开始；不提供 AUTOINCREMENT 的永不复用保证。复合主键、隐式 rowid 表、WITHOUT ROWID 均不支持。
 - 支持列级及表级 UNIQUE，复合唯一键中任一分量为 NULL 时不产生唯一冲突。支持带名称的 `CONSTRAINT` 语法，名称不作为独立可操作对象。
 - DEFAULT 支持数字、文本、NULL 及受支持的常量表达式；不支持 BLOB 字面量默认值、业务函数、列引用或子查询默认值。没有 DEFAULT 的省略列为 NULL，再执行非空校验。
+- CHECK 支持列内、表级及带名称的约束，插入与更新统一执行；数值结果为 0 时失败，非零或 NULL 通过。沿用严格谓词类型，文本或 BLOB 结果报错，不执行 SQLite 的宽松数值转换。表达式不支持参数、子查询、聚合或窗口。可调用已注册的 C# 标量函数；函数不持久化，重开后须重新注册，替换注册后后续语句重新绑定。语句、显式事务和保存点均保留约束与原子撤销。
 - 索引项支持列和受支持的 `JSON_EXTRACT` 路径表达式，可组合 ASC / DESC。支持左前缀等值、下一项范围、匹配排序和反向扫描；不支持任意函数索引、部分索引 WHERE、COLLATE 或 INCLUDE。
 - 复合索引**定义持久化**，排序键与行引用按数据版本在内存中惰性构建、二分定位并复用。第一次访问可能扫描并排序整表；增删改后需要重建。它还不是分页持久化的增量复合 B-tree，不应把热缓存查询表现外推到首次查询或超内存场景。
 - 支持 `IF NOT EXISTS` / `IF EXISTS` 的对应建删语句。不支持 `CREATE TABLE AS SELECT`、TEMP 表、生成列、CHECK、ALTER TABLE。
@@ -128,6 +130,20 @@ WHERE EXISTS(SELECT 1 FROM departments d WHERE d.id=e.department_id);
 - FROM 派生表须有别名，当前物化后查询；普通 FROM 派生表不支持相关 LATERAL。大型中间结果会占用额外内存。
 - UNION 去重，UNION ALL 保留重复，INTERSECT 求交，EXCEPT 求差；同层从左至右结合，NULL 在集合去重中视为相等。分支列数必须相同，列名来自最左侧查询，混合结果类型的 ADO.NET 元数据为 Object。
 - 集合结果最终的 ORDER BY 必须引用输出列名、序号或匹配的输出表达式；不支持括号直接改变集合结合顺序，可通过 FROM 派生查询分层。独立 VALUES 查询和 INTERSECT ALL / EXCEPT ALL 未实现。
+
+## UPSERT 冲突写入
+
+```sql
+CREATE TABLE stock(id INTEGER PRIMARY KEY,code TEXT UNIQUE,qty INTEGER CHECK(qty>=0));
+INSERT INTO stock VALUES(1,'A',10)
+ON CONFLICT(code) DO UPDATE SET qty=stock.qty+excluded.qty
+WHERE excluded.qty>0;
+INSERT INTO stock VALUES(2,'A',5) ON CONFLICT DO NOTHING;
+```
+
+支持 VALUES 多行、INSERT SELECT / WITH 输入上的单个 ON CONFLICT 分支。DO UPDATE 必须给出显式列目标，匹配整数主键、列 UNIQUE 或完整复合唯一索引；不能使用普通非唯一索引、表达式或部分索引目标。DO NOTHING 可省略目标，捕获任一唯一冲突；NULL 唯一键不产生冲突。`excluded.column` 为待插入值，无前缀列为旧行值；WHERE 不成立时不更新。未冲突插入或实际更新影响数为 1，跳过为 0。
+
+复用会话内的唯一键映射；冲突更新进入标准 UPDATE 流程，执行 CHECK、外键和更新触发器，保留 BEFORE INSERT 行为。NOT NULL、CHECK、外键或触发器异常不能被 DO NOTHING 吞掉；更新产生其他唯一冲突也报错并撤销语句。兼容包可在其已有受支持表上执行 UPSERT。尚不支持多分支、无目标 DO UPDATE、INSERT OR / REPLACE、RETURNING 和视图 UPSERT。
 
 ## 窗口函数
 
@@ -234,8 +250,8 @@ var result = db.Query("SELECT * FROM Awards WHERE RELIGIBLE(User)");
 
 | 分类 | 不支持的语句或能力 |
 | --- | --- |
-| 表结构 | ALTER TABLE、CHECK、生成列、TEMP、WITHOUT ROWID、AUTOINCREMENT、复合主键、CREATE TABLE AS SELECT |
-| 写入扩展 | UPSERT / ON CONFLICT、INSERT OR ...、REPLACE、RETURNING、UPDATE FROM、UPDATE / DELETE ORDER BY LIMIT |
+| 表结构 | ALTER TABLE、生成列、TEMP、WITHOUT ROWID、AUTOINCREMENT、复合主键、CREATE TABLE AS SELECT |
+| 写入扩展 | 多分支 UPSERT、无目标 DO UPDATE、INSERT OR ...、REPLACE、RETURNING、UPDATE FROM、UPDATE / DELETE ORDER BY LIMIT |
 | 表达式及查询 | CAST、COLLATE、自定义排序规则、USING / NATURAL JOIN、普通 LATERAL、独立 VALUES、聚合 DISTINCT / FILTER |
 | 内置函数 | SQLite 完整的数学、字符串、日期、JSON 聚合及格式诊断函数集合 |
 | 模式及维护 SQL | PRAGMA、ATTACH / DETACH、VACUUM、REINDEX、ANALYZE、EXPLAIN SQL、sqlite_schema 系统表查询 |
@@ -246,7 +262,7 @@ var result = db.Query("SELECT * FROM Awards WHERE RELIGIBLE(User)");
 
 ## 验证与代码入口
 
-新增测试 [PureDb.SqlCompatibilityTests](../tests/PureDb.SqlCompatibilityTests/Program.cs) 与原生 SQLite 3.54.1 逐行逐值比较，覆盖集合、普通和递归 CTE、相关子查询、JSON5 和 JSON 表函数、窗口帧、随机复合索引、外键级联及保存点；另检查约束失败、重开恢复、ADO.NET 保存点、Shared 冲突和拒绝不完整 SQLite 导出。它已接入 [自动测试脚本](../scripts/test.py)，与原有存储、SQL、ADO.NET、兼容和排序测试共同执行。平台和实际数量见 [开发验证](DEVELOPMENT-VALIDATION.md)。
+新增测试 [PureDb.SqlCompatibilityTests](../tests/PureDb.SqlCompatibilityTests/Program.cs) 与原生 SQLite 3.54.1 逐行逐值比较，覆盖 CHECK、UPSERT、集合、普通和递归 CTE、相关子查询、JSON5 和 JSON 表函数、窗口帧、随机复合索引、外键级联及保存点；另检查约束失败、重开恢复、ADO.NET 保存点、Shared 冲突和拒绝不完整 SQLite 导出。它已接入 [自动测试脚本](../scripts/test.py)，与原有存储、SQL、ADO.NET、兼容和排序测试共同执行。平台和实际数量见 [开发验证](DEVELOPMENT-VALIDATION.md)。
 
 ```bash
 dotnet build PureDb.slnx -c Release
@@ -257,4 +273,4 @@ dotnet run --project tools/PureDb.SourceCheck -c Release --no-build
 
 主要实现位于 [解析器](../src/PureDb/Sql/SqlParser.Query.cs)、[扩展查询](../src/PureDb/Sql/SqlQuery.Extended.cs)、[窗口执行](../src/PureDb/Sql/SqlQuery.Windows.cs)、[复合索引](../src/PureDb/Sql/SqlCompositeIndex.cs)、[外键](../src/PureDb/Sql/SqlSession.ForeignKeys.cs)、[触发器与视图](../src/PureDb/Sql/SqlSession.Schema.cs)、[事务控制](../src/PureDb/Sql/SqlTransactions.cs)、[JSON5](../src/PureDb/Sql/SqlJson5.cs)。所有扩展保留纯 .NET 实现，原生 SQLite 仅用于验证。
 
-语义对照参考 SQLite 官方 [WITH](https://www.sqlite.org/lang_with.html)、[窗口函数](https://www.sqlite.org/windowfunctions.html)、[JSON](https://www.sqlite.org/json1.html) 和 [保存点](https://www.sqlite.org/lang_savepoint.html)；这些链接描述 SQLite，PureDb 的实际支持范围以本文为准。
+语义对照参考 SQLite 官方 [WITH](https://www.sqlite.org/lang_with.html)、[窗口函数](https://www.sqlite.org/windowfunctions.html)、[JSON](https://www.sqlite.org/json1.html) 和 [保存点](https://www.sqlite.org/lang_savepoint.html)、[UPSERT](https://www.sqlite.org/lang_upsert.html) 和 [CHECK](https://www.sqlite.org/lang_createtable.html#check_constraints)；这些链接描述 SQLite，PureDb 的实际支持范围以本文为准。
