@@ -9,7 +9,10 @@ artifacts/
 *.log
 *.nupkg
 *.snupkg
-*.sqlite*
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
 *.pidx
 *.sidx-*
 .env
