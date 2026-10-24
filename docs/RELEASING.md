@@ -26,3 +26,9 @@ git push origin v1.0.0-preview.2
 测试失败会阻止发布。NuGet 已发布的版本不可覆盖；流水线使用 skip-duplicate 支持失败后重试。两个包依次上传，部分上传成功时需要排查后重跑；它们不是一个原子操作。NuGet 完成上传后还需平台验证及索引，搜索结果可能稍后出现。
 
 仓库的基准记录标明实测构建哈希、运行时和硬件。GitHub 流水线从同一提交重新构建发布包，文件哈希可能因构建环境和元数据不同而变化；不把本地实测 DLL 哈希冒充托管流水线包的哈希。
+
+## Native AOT 发布门禁
+
+`aot.yml` 在 Windows x64、Linux x64、Linux ARM64 实际编译运行 7 组功能和 230 条扩展差分，拒绝 IL 裁剪 / AOT 编译警告，并检查动态代码不可用。发布任务等待常规测试和全部 AOT 作业；对打出的两个实际 NuGet 包执行 `package-aot-smoke.py --rid linux-x64` 后才上传，推送命令显式传入仓库 secret `NUGET_API_KEY`。
+
+手动重跑发布时，workflow_dispatch 必须选择对应版本标签（如 v1.0.0-preview.2），不能选择 main；版本检查会拒绝非版本标签。API 密钥只存 GitHub Actions secret，不进入源码或日志。

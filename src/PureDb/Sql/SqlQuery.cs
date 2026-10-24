@@ -598,8 +598,41 @@ internal sealed partial class SqlSession
             return n < 0 ? fallback : (int)Math.Min(n, int.MaxValue);
         }
 
-        var rows = outputs.Skip(offset).Take(limit).Select(o => CopyProjection(o.Values, directProjection)).ToArray();
+        var rows = MaterializeOutputs(outputs, offset, limit, directProjection);
         return new(names, rows, plan + (select.Limit is not null ? " -> Limit" : ""));
+    }
+
+    /// <summary>按最终分页复制结果，不在查询绑定作用域捕获投影列或创建逐行 LINQ 委托。</summary>
+    /// <param name="outputs">已经排序和去重的候选结果。</param>
+    /// <param name="offset">需要跳过的行数。</param>
+    /// <param name="limit">最多返回的行数。</param>
+    /// <param name="columns">纯列路径的原始列位置；null 表示已经求值的投影。</param>
+    /// <returns>与内部缓存隔离的结果数组。</returns>
+    private static object?[][] MaterializeOutputs(IEnumerable<Output> outputs, int offset, int limit, int[]? columns)
+    {
+        if (limit == 0)
+            return [];
+        if (outputs is Output[] array)
+        {
+            int count = Math.Min(limit, Math.Max(0, array.Length - offset));
+            var result = new object?[count][];
+            for (int i = 0; i < count; i++)
+                result[i] = CopyProjection(array[offset + i].Values, columns);
+            return result;
+        }
+        var rows = new List<object?[]>();
+        foreach (var output in outputs)
+        {
+            if (offset > 0)
+            {
+                offset--;
+                continue;
+            }
+            rows.Add(CopyProjection(output.Values, columns));
+            if (rows.Count == limit)
+                break;
+        }
+        return rows.ToArray();
     }
 
     /// <summary>仅为实际返回的行复制投影，并将 BLOB 与内部缓存隔离，避免逐行 LINQ 中间对象。</summary>

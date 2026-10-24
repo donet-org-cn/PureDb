@@ -1,15 +1,16 @@
 {
   "Passed": true,
-  "TestGroups": 69,
+  "TestGroups": 77,
   "DifferentialQueries": 524,
   "Groups": {
     "PureDb.Tests": "11 test groups passed",
     "PureDb.SqlTests": "17 SQL/shared test groups passed",
-    "PureDb.AdoNetTests": "10 ADO.NET/cache test groups passed",
+    "PureDb.AdoNetTests": "11 ADO.NET/cache test groups passed",
     "PureDb.StorageTests": "12 storage/exchange groups passed",
     "PureDb.CompatibilityTests": "10 managed SQLite compatibility test groups passed",
     "PureDb.FeatureTests": "7 feature test groups passed",
     "PureDb.SortTests": "160",
-    "PureDb.SqlCompatibilityTests": "230 extended SQL differential queries"
+    "PureDb.SqlCompatibilityTests": "230 extended SQL differential queries",
+    "PureDb.AotTests": "7 AOT feature groups; dynamic code=True"
   }
 }

@@ -11,4 +11,7 @@ namespace PureDb;
 [JsonSerializable(typeof(double))]
 [JsonSerializable(typeof(string))]
 [JsonSerializable(typeof(JsonElement))]
+[JsonSerializable(typeof(System.Text.Json.Nodes.JsonNode))]
+[JsonSerializable(typeof(bool))]
+[JsonSerializable(typeof(byte[]))]
 internal partial class SqlCatalogJsonContext : JsonSerializerContext;

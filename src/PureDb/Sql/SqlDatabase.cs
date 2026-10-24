@@ -194,20 +194,22 @@ public sealed partial class SqlDatabase : IDisposable, IAsyncDisposable
                 return cached.Data;
             var rows = new object?[snapshot.CountKey(table.Id)][];
             int at = 0;
-            long bytes = 0;
+            long bytes = 24L + rows.Length * (long)IntPtr.Size;
             if (snapshot.HasPersistentIndexes)
                 foreach (var entry in snapshot.TableEntries(table.Id))
                 {
                     var value = snapshot.IndexMemory(entry);
-                    rows[at++] = SqlCodec.DecodeCached(value, table.Columns.Count);
-                    bytes += value.Length + table.Columns.Count * 80L + 96;
+                    var row = SqlCodec.DecodeCached(value, table.Columns.Count);
+                    rows[at++] = row;
+                    bytes += SqlCodec.CacheRowBytes(row, value.Length);
                 }
             else
                 foreach (long id in snapshot.Ids(table.Id))
                 {
                     var value = snapshot.ValueMemory(id);
-                    rows[at++] = SqlCodec.DecodeCached(value, table.Columns.Count);
-                    bytes += value.Length + table.Columns.Count * 80L + 96;
+                    var row = SqlCodec.DecodeCached(value, table.Columns.Count);
+                    rows[at++] = row;
+                    bytes += SqlCodec.CacheRowBytes(row, value.Length);
                 }
 
             var data = new SqlTableData(table, rows, bytes);

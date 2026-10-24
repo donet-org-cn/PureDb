@@ -36,3 +36,9 @@ python scripts/verify-public.py
 ```
 
 只发布结果 JSON、CSV 和必要的环境/验证信息；不提交数据文件、SSH 信息、API 密钥或历史比较目录。
+
+## AOT、部署体积与启动复现
+
+在对应操作系统与架构上运行 `python scripts/publish-deployment.py artifacts/deployment --rid win-x64 --sqlite <SQLite动态库路径>`（Linux ARM64 使用 linux-arm64），再运行 `python scripts/run-deployment.py --help` 查看测量参数。脚本发布独立 PureDb / SQLite 宿主的框架依赖、自包含 JIT 和 Native AOT，文件清单区分运行文件与符号 / 文档，SQLite 行包含原生库。
+
+[AOT 完整报告](AOT-PERFORMANCE.md) 使用相同 .NET 10.0.13、10 万行 BLOB / JSON 数据，三轮 15 项热查询及写入、独立 RSS 和每组合 21 次新进程启动；与原有 41 项全面报告的工作负载不同，不可混算名次。Linux 全面报告运行时为 10.0.1，AOT / 自包含 JIT 配对为 10.0.13，报告分别列出。首轮缓存构建、操作系统热页缓存与 Full / Buffered 的边界也分别说明。

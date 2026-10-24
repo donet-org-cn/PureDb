@@ -2,16 +2,16 @@
   "Platform": "Linux-5.10.110-g1cf46ce40714-dirty-aarch64-with-glibc2.29",
   "Machine": "aarch64",
   "CPUs": 8,
-  "Date": "2026-10-24T19:23:19+0800",
+  "Date": "2026-10-24T23:17:06+0800",
   "Dotnet": "Microsoft.AspNetCore.App 8.0.8 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.1 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.8 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.1 [/usr/share/dotnet/shared/Microsoft.NETCore.App]",
-  "ComprehensiveSHA256": "A888F8C5C0FF6CDB72F9E12FA7E656BE9A606EA04692A2F3C4275AEAFC345269",
-  "AdoHarnessSHA256": "619015E1104C4BBBCFD301815C487018A92C7B805DF4A8869DD9DAC2358A2CDB",
+  "ComprehensiveSHA256": "E6ECFC707B6AFFCDD714441D759EB42772AD308446049E6525B13410842F551E",
+  "AdoHarnessSHA256": "C6F5BF7E6E77A6C821D4ADBA9BAC5945FA3B453BD1768F1863DBA4593C479677",
   "Device": [
     179,
     6
   ],
-  "Load": "1.11 0.72 0.67 1/869 2471680\n",
-  "MemInfo": "MemTotal:        8109588 kB\nMemFree:         3022240 kB\nMemAvailable:    3783292 kB\nBuffers:           58156 kB\nCached:           891476 kB\nSwapCached:        49192 kB\nActive:           819608 kB\nInactive:        3980716 kB\nActive(anon):     390148 kB\nInactive(anon):  3645896 kB\nActive(file):     429460 kB\nInactive(file):   334820 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       8388604 kB\nSwapFree:        6580988 kB\nDirty:               472 kB\nWriteback:           100 kB\nAnonPages:       3812756 kB\nMapped:           321708 kB\nShmem:            185052 kB\nKReclaimable:      80068 kB\nSlab:             169704 kB\nSReclaimable:      80068 kB\nSUnreclaim:        89636 kB\nKernelStack:       14032 kB\nPageTables:        28360 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    12443396 kB\nCommitted_AS:   10723520 kB\nVmallocTotal:   262930368 kB\nVmallocUsed:       22348 kB\nVmallocChunk:          0 kB\nPercpu:             8256 kB\nCmaTotal:         131072 kB\nCmaAllocated:       4256 kB\nCmaReleased:      126816 kB\nCmaFree:           10148 kB\n",
+  "Load": "1.20 1.20 1.03 1/902 2504777\n",
+  "MemInfo": "MemTotal:        8109588 kB\nMemFree:         1055752 kB\nMemAvailable:    3443776 kB\nBuffers:           62736 kB\nCached:          2623160 kB\nSwapCached:        49256 kB\nActive:          1411156 kB\nInactive:        5313460 kB\nActive(anon):     427700 kB\nInactive(anon):  3946712 kB\nActive(file):     983456 kB\nInactive(file):  1366748 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       8388604 kB\nSwapFree:        6580988 kB\nDirty:              1568 kB\nWriteback:           100 kB\nAnonPages:       4000372 kB\nMapped:           588908 kB\nShmem:            335664 kB\nKReclaimable:     121116 kB\nSlab:             212004 kB\nSReclaimable:     121116 kB\nSUnreclaim:        90888 kB\nKernelStack:       14560 kB\nPageTables:        30608 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    12443396 kB\nCommitted_AS:   11454148 kB\nVmallocTotal:   262930368 kB\nVmallocUsed:       22848 kB\nVmallocChunk:          0 kB\nPercpu:             8256 kB\nCmaTotal:         131072 kB\nCmaAllocated:       4256 kB\nCmaReleased:      126816 kB\nCmaFree:             992 kB\n",
   "ProcessIoAvailable": false,
   "Affinity": [
     4,

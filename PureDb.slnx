@@ -1,5 +1,7 @@
 <Solution>
   <Folder Name="/benchmarks/">
+    <Project Path="benchmarks/PureDb.DeploymentBenchmarks/PureDbHost/PureDb.Deployment.PureDb.csproj" />
+    <Project Path="benchmarks/PureDb.DeploymentBenchmarks/SqliteHost/PureDb.Deployment.Sqlite.csproj" />
     <Project Path="benchmarks/PureDb.CacheBenchmarks/PureDb.CacheBenchmarks.csproj" />
     <Project Path="benchmarks/PureDb.AdoBenchmarks/PureDb.AdoBenchmarks.csproj" />
     <Project Path="benchmarks/PureDb.Benchmarks/PureDb.Benchmarks.csproj" />
@@ -13,6 +15,7 @@
     <Project Path="src/PureDb/PureDb.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/PureDb.AotTests/PureDb.AotTests.csproj" />
     <Project Path="tests/PureDb.AdoNetTests/PureDb.AdoNetTests.csproj" />
     <Project Path="tests/PureDb.CompatibilityTests/PureDb.CompatibilityTests.csproj" />
     <Project Path="tests/PureDb.FeatureTests/PureDb.FeatureTests.csproj" />

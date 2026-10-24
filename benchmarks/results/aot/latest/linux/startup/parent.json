@@ -1,0 +1,590 @@
+[
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 0,
+    "ProcessMilliseconds": 429.1139040142298,
+    "Result": "PureDb-jit-0.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 0,
+    "ProcessMilliseconds": 50.78899604268372,
+    "Result": "PureDb-aot-0.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 0,
+    "ProcessMilliseconds": 197.2260158509016,
+    "Result": "SQLite-jit-0.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 0,
+    "ProcessMilliseconds": 34.51957693323493,
+    "Result": "SQLite-aot-0.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 1,
+    "ProcessMilliseconds": 16.884261975064874,
+    "Result": "SQLite-aot-1.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 1,
+    "ProcessMilliseconds": 225.35245190374553,
+    "Result": "SQLite-jit-1.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 1,
+    "ProcessMilliseconds": 24.021747056394815,
+    "Result": "PureDb-aot-1.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 1,
+    "ProcessMilliseconds": 538.4386801160872,
+    "Result": "PureDb-jit-1.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 2,
+    "ProcessMilliseconds": 430.7439271360636,
+    "Result": "PureDb-jit-2.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 2,
+    "ProcessMilliseconds": 51.553173922002316,
+    "Result": "PureDb-aot-2.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 2,
+    "ProcessMilliseconds": 293.8858871348202,
+    "Result": "SQLite-jit-2.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 2,
+    "ProcessMilliseconds": 34.554868936538696,
+    "Result": "SQLite-aot-2.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 3,
+    "ProcessMilliseconds": 38.76222507096827,
+    "Result": "SQLite-aot-3.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 3,
+    "ProcessMilliseconds": 261.78676495328546,
+    "Result": "SQLite-jit-3.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 3,
+    "ProcessMilliseconds": 57.131385896354914,
+    "Result": "PureDb-aot-3.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 3,
+    "ProcessMilliseconds": 458.1490980926901,
+    "Result": "PureDb-jit-3.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 4,
+    "ProcessMilliseconds": 395.195621997118,
+    "Result": "PureDb-jit-4.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 4,
+    "ProcessMilliseconds": 43.388421880081296,
+    "Result": "PureDb-aot-4.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 4,
+    "ProcessMilliseconds": 220.98625707440078,
+    "Result": "SQLite-jit-4.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 4,
+    "ProcessMilliseconds": 33.992233918979764,
+    "Result": "SQLite-aot-4.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 5,
+    "ProcessMilliseconds": 29.507789993658662,
+    "Result": "SQLite-aot-5.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 5,
+    "ProcessMilliseconds": 203.54436011984944,
+    "Result": "SQLite-jit-5.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 5,
+    "ProcessMilliseconds": 49.2641378659755,
+    "Result": "PureDb-aot-5.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 5,
+    "ProcessMilliseconds": 373.482032911852,
+    "Result": "PureDb-jit-5.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 6,
+    "ProcessMilliseconds": 388.3815968874842,
+    "Result": "PureDb-jit-6.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 6,
+    "ProcessMilliseconds": 51.16845900192857,
+    "Result": "PureDb-aot-6.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 6,
+    "ProcessMilliseconds": 195.8014890551567,
+    "Result": "SQLite-jit-6.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 6,
+    "ProcessMilliseconds": 18.039278918877244,
+    "Result": "SQLite-aot-6.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 7,
+    "ProcessMilliseconds": 21.47195697762072,
+    "Result": "SQLite-aot-7.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 7,
+    "ProcessMilliseconds": 204.80625401251018,
+    "Result": "SQLite-jit-7.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 7,
+    "ProcessMilliseconds": 49.42922294139862,
+    "Result": "PureDb-aot-7.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 7,
+    "ProcessMilliseconds": 427.3671149276197,
+    "Result": "PureDb-jit-7.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 8,
+    "ProcessMilliseconds": 604.8111100681126,
+    "Result": "PureDb-jit-8.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 8,
+    "ProcessMilliseconds": 18.927416997030377,
+    "Result": "PureDb-aot-8.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 8,
+    "ProcessMilliseconds": 115.79637485556304,
+    "Result": "SQLite-jit-8.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 8,
+    "ProcessMilliseconds": 12.755363946780562,
+    "Result": "SQLite-aot-8.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 9,
+    "ProcessMilliseconds": 11.660723015666008,
+    "Result": "SQLite-aot-9.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 9,
+    "ProcessMilliseconds": 114.91902777925134,
+    "Result": "SQLite-jit-9.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 9,
+    "ProcessMilliseconds": 17.837735125795007,
+    "Result": "PureDb-aot-9.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 9,
+    "ProcessMilliseconds": 311.81399105116725,
+    "Result": "PureDb-jit-9.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 10,
+    "ProcessMilliseconds": 442.2103411052376,
+    "Result": "PureDb-jit-10.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 10,
+    "ProcessMilliseconds": 22.12559198960662,
+    "Result": "PureDb-aot-10.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 10,
+    "ProcessMilliseconds": 219.21455790288746,
+    "Result": "SQLite-jit-10.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 10,
+    "ProcessMilliseconds": 17.0770559925586,
+    "Result": "SQLite-aot-10.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 11,
+    "ProcessMilliseconds": 34.9932499229908,
+    "Result": "SQLite-aot-11.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 11,
+    "ProcessMilliseconds": 169.53445505350828,
+    "Result": "SQLite-jit-11.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 11,
+    "ProcessMilliseconds": 24.49454483576119,
+    "Result": "PureDb-aot-11.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 11,
+    "ProcessMilliseconds": 435.94599212519825,
+    "Result": "PureDb-jit-11.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 12,
+    "ProcessMilliseconds": 481.3924031332135,
+    "Result": "PureDb-jit-12.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 12,
+    "ProcessMilliseconds": 51.514963153749704,
+    "Result": "PureDb-aot-12.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 12,
+    "ProcessMilliseconds": 258.36028601042926,
+    "Result": "SQLite-jit-12.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 12,
+    "ProcessMilliseconds": 29.715459095314145,
+    "Result": "SQLite-aot-12.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 13,
+    "ProcessMilliseconds": 23.512779967859387,
+    "Result": "SQLite-aot-13.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 13,
+    "ProcessMilliseconds": 214.96611507609487,
+    "Result": "SQLite-jit-13.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 13,
+    "ProcessMilliseconds": 51.97521997615695,
+    "Result": "PureDb-aot-13.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 13,
+    "ProcessMilliseconds": 404.1197469923645,
+    "Result": "PureDb-jit-13.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 14,
+    "ProcessMilliseconds": 432.2837218642235,
+    "Result": "PureDb-jit-14.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 14,
+    "ProcessMilliseconds": 41.962731862440705,
+    "Result": "PureDb-aot-14.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 14,
+    "ProcessMilliseconds": 239.8488731123507,
+    "Result": "SQLite-jit-14.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 14,
+    "ProcessMilliseconds": 18.120070919394493,
+    "Result": "SQLite-aot-14.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 15,
+    "ProcessMilliseconds": 35.08570906706154,
+    "Result": "SQLite-aot-15.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 15,
+    "ProcessMilliseconds": 220.59136698953807,
+    "Result": "SQLite-jit-15.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 15,
+    "ProcessMilliseconds": 49.86089491285384,
+    "Result": "PureDb-aot-15.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 15,
+    "ProcessMilliseconds": 385.2273270022124,
+    "Result": "PureDb-jit-15.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 16,
+    "ProcessMilliseconds": 337.37517101690173,
+    "Result": "PureDb-jit-16.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 16,
+    "ProcessMilliseconds": 19.302797969430685,
+    "Result": "PureDb-aot-16.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 16,
+    "ProcessMilliseconds": 136.56131690368056,
+    "Result": "SQLite-jit-16.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 16,
+    "ProcessMilliseconds": 39.84928200952709,
+    "Result": "SQLite-aot-16.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 17,
+    "ProcessMilliseconds": 35.14433489181101,
+    "Result": "SQLite-aot-17.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 17,
+    "ProcessMilliseconds": 207.66724878922105,
+    "Result": "SQLite-jit-17.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 17,
+    "ProcessMilliseconds": 25.17280518077314,
+    "Result": "PureDb-aot-17.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 17,
+    "ProcessMilliseconds": 417.79832798056304,
+    "Result": "PureDb-jit-17.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 18,
+    "ProcessMilliseconds": 407.0300350431353,
+    "Result": "PureDb-jit-18.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 18,
+    "ProcessMilliseconds": 53.735454101115465,
+    "Result": "PureDb-aot-18.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 18,
+    "ProcessMilliseconds": 211.64631005376577,
+    "Result": "SQLite-jit-18.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 18,
+    "ProcessMilliseconds": 32.842756947502494,
+    "Result": "SQLite-aot-18.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 19,
+    "ProcessMilliseconds": 38.047628942877054,
+    "Result": "SQLite-aot-19.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 19,
+    "ProcessMilliseconds": 250.08365302346647,
+    "Result": "SQLite-jit-19.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 19,
+    "ProcessMilliseconds": 29.81171105057001,
+    "Result": "PureDb-aot-19.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 19,
+    "ProcessMilliseconds": 434.9627969786525,
+    "Result": "PureDb-jit-19.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "jit",
+    "Round": 20,
+    "ProcessMilliseconds": 490.557987941429,
+    "Result": "PureDb-jit-20.json"
+  },
+  {
+    "Engine": "PureDb",
+    "Mode": "aot",
+    "Round": 20,
+    "ProcessMilliseconds": 43.428962118923664,
+    "Result": "PureDb-aot-20.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "jit",
+    "Round": 20,
+    "ProcessMilliseconds": 180.59170385822654,
+    "Result": "SQLite-jit-20.json"
+  },
+  {
+    "Engine": "SQLite",
+    "Mode": "aot",
+    "Round": 20,
+    "ProcessMilliseconds": 38.13279699534178,
+    "Result": "SQLite-aot-20.json"
+  }
+]

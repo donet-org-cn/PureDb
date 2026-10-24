@@ -1,6 +1,13 @@
-﻿# 1.0.0-preview.2（main 源码版，NuGet 未发布）
+﻿# 1.0.0-preview.2
 
-2026-10-24：已合并到 `main`，核心包和兼容包源码版本同步为 `1.0.0-preview.2`。
+2026-10-24：核心包和纯托管兼容包同步发布 `1.0.0-preview.2`。
+
+- 修复 BLOB / JSON 表缓存容量过度估算导致的重复整表解码；不扩大默认预算，增加缓存复用、写后失效和关闭缓存回归。
+- 核心与兼容库声明 IsAotCompatible；JSON 与目录使用源生成元数据，ADO.NET 类型与模式表通过实际 AOT 验证。
+- 查询最终物化独立为小方法，已知结果长度时一次分配；保留函数求值及 BLOB 所有权语义。
+- 新增实际 Native AOT 的 7 组功能及 230 条差分测试，Windows x64 / Linux ARM64 同时测量三轮查询、写入、CPU、RSS、部署体积及 21 次新进程启动。
+- CI / 发布增加 Windows x64、Linux x64、Linux ARM64 AOT 门禁；发布前用实际 NuGet 包编译并运行 AOT。
+- 更新 [AOT 对比](docs/AOT-PERFORMANCE.md)、[缓存配对报告](docs/CACHE-BUDGET-PERFORMANCE.md) 和全部最新完整对照，保留 SQLite 更好的项目。
 
 - SQL / ADO.NET 连接级 C# 标量函数，支持固定数量重载、可变参数、NULL 和 BLOB 所有权隔离。
 - 未注册函数时延迟分配注册表；强类型调用避免反射及逐行参数数组。

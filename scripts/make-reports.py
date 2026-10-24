@@ -104,8 +104,8 @@ for platform,name in [('Windows x64','windows'),('Linux ARM64','linux')]:
  parts.append(stamp);resources.append(stamp)
 parts.insert(2,table(['平台','PureDb 耗时胜','SQLite 耗时胜','接近'],overview))
 readme.insert(0,table(['平台','PureDb 耗时胜','SQLite 耗时胜','接近'],overview))
-readme.insert(0,f'主分支 `{version}` 开发构建原生格式 vs SQLite 3.54.1，同机三轮中位数。该版本尚未发布至 NuGet。CPU 为满吞吐进程占用，内存为单库独立测量。使用率高不代表每次查询更费 CPU。以下是代表场景，全部 41 项、ADO、CPU 和文件数据见完整报告。')
-parts+=['## 解释和限制','精确的 SQLite 计划保存在最新结果目录。CPU、内存、耗时没有全面领先；胜负计数不是业务加权总分。Full/Buffered、关闭维护、缓存初建、接口与 SQL 支持范围会影响结果。测量为同版本源码的本地预览版构建；测后空白格式化的方法 IL、签名及类型属性指纹一致，DLL 哈希变化见 [构建一致性记录](../benchmarks/results/optimization/latest/build-equivalence.json)。GitHub 从提交重新构建时，路径和构建元数据也可能改变 DLL 哈希。']
+readme.insert(0,f'`{version}` 本轮发布构建原生格式 vs SQLite 3.54.1，同机三轮中位数。CPU 为满吞吐进程占用，内存为单库独立测量。使用率高不代表每次查询更费 CPU。以下是代表场景，全部 41 项、ADO、CPU 和文件数据见完整报告。')
+parts+=['## 解释和限制','精确的 SQLite 计划保存在最新结果目录。CPU、内存、耗时没有全面领先；胜负计数不是业务加权总分。Full/Buffered、关闭维护、缓存初建、接口与 SQL 支持范围会影响结果。测量为冻结源码的本地发布构建；两平台使用同一份实测 DLL。GitHub 从提交重新构建时，路径和构建元数据可能改变 DLL 哈希。']
 for name,items in [('PERFORMANCE.md',parts),('RESOURCES.md',resources)]:
  (root/'docs'/name).write_text('\n\n'.join(items)+'\n',encoding='utf-8-sig')
 (base/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf-8')

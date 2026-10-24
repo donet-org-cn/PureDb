@@ -74,7 +74,7 @@ await transaction.CommitAsync();
 
 默认隔离级别和显式 Serializable 均可用；其他隔离级别和嵌套 BeginTransaction 不受支持。显式事务中所有命令必须设置 `command.Transaction`。普通约束或触发器错误回滚当前语句，事务可修正后继续；延迟外键检查失败的 Commit 也保留事务。版本冲突仍要求整体回滚重试。Dispose 未提交事务、关闭连接均回滚。发生 I/O 故障时提交结果可能不确定，需重新打开并核查，不能盲目重试非幂等外部副作用。
 
-源码 `preview.2` 支持 `SupportsSavepoints`、`Save(name)`、`Rollback(name)`、`Release(name)` 及异步对应方法。SQL SAVEPOINT / ROLLBACK TO / RELEASE 也可在该事务中执行；通过 BeginTransaction 创建的事务应由事务对象 Commit / Rollback 结束，内部 SQL BEGIN / COMMIT / 完整 ROLLBACK 会报错。没有 ADO.NET 显式事务时，可用命令执行 SQL BEGIN / COMMIT；Shared 只支持 DEFERRED。完整语法和边界见 [SQL 清单](SQL-SUPPORT.md)。
+`preview.2` 支持 `SupportsSavepoints`、`Save(name)`、`Rollback(name)`、`Release(name)` 及异步对应方法。SQL SAVEPOINT / ROLLBACK TO / RELEASE 也可在该事务中执行；通过 BeginTransaction 创建的事务应由事务对象 Commit / Rollback 结束，内部 SQL BEGIN / COMMIT / 完整 ROLLBACK 会报错。没有 ADO.NET 显式事务时，可用命令执行 SQL BEGIN / COMMIT；Shared 只支持 DEFERRED。完整语法和边界见 [SQL 清单](SQL-SUPPORT.md)。
 
 批量写入应分成合理大小的事务（例如每笔 1000 行），复用命令和参数，尽量提供主键。原生 `SqlDatabase.ExecuteTransactionAsync` 仍可用于一次性提交命令集合。当前不提供 SqlBulkCopy 类；单笔事务受默认 64 MiB 日志帧限制。
 
@@ -107,4 +107,4 @@ dotnet run -c Release --project tests/PureDb.AdoNetTests
 
 接口约定参考 [.NET DbConnection](https://learn.microsoft.com/en-us/dotnet/api/system.data.common.dbconnection?view=net-10.0)。Full/Buffered 与 SQLite WAL 同步行为的对比参考 [SQLite WAL 文档](https://www.sqlite.org/wal.html)；两者的 Buffered 持久化过程不同，不能将吞吐倍率当成相同断电保证。
 
-首个公开预览版：`1.0.0-preview.1`。最新接口开销见 [全面性能报告](PERFORMANCE.md)。
+当前预览版：`1.0.0-preview.2`。GetFieldType 与 GetSchemaTable 通过真实 Native AOT 测试；用户提供的反射或动态代码仍需满足 AOT 约束。最新接口开销见 [全面性能报告](PERFORMANCE.md)。

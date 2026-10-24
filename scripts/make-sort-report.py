@@ -47,12 +47,12 @@ def generate():
             json.dumps(data, indent=2, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
     assert results['windows_before']['CoreSHA256'] == results['linux_before']['CoreSHA256']
     assert results['windows_after']['CoreSHA256'] == results['linux_after']['CoreSHA256']
-    summary = {'BeforeCommit': '804f6ef35d5d9c9a486db890b688b137e9bd9ad8', 'Platforms': {}}
+    summary = {'BeforeCommit': '21571bcf875303db7002f82f36a0eaa96f712940', 'Platforms': {}}
     lines = ['# 小分页排序：优化前后与 SQLite 对比', '',
-             '日期：2026-10-24。PureDb `1.0.0-preview.2` 开发构建，尚未发布。本次测排序分页及一个索引对照项，同一构建的 [完整对比](PERFORMANCE.md) 另外覆盖查询、写入、CPU 和 RSS。', '',
+             '日期：2026-10-24。PureDb `1.0.0-preview.2` 本轮发布构建。本次测排序分页及一个索引对照项，同一构建的 [完整对比](PERFORMANCE.md) 另外覆盖查询、写入、CPU 和 RSS。', '',
              '## 测量方法', '',
              '- 相同的 100,000 行数据：整数主键，未建索引的整数 n（每 13 行一个 NULL）、文本和 BLOB。n 使用固定排列 `(id * 7919) % 100000`。',
-             '- 优化前基于提交 `804f6ef`，已含有界 PriorityQueue；本轮改为紧凑二叉堆、整数内联比较、仅为最终返回行复制投影。两平台分别运行完全相同的前后 DLL，校验值见下文。',
+             '- 优化前基于提交 `21571bc`，已含紧凑堆及整数比较；本轮将分页结果复制移出绑定闭包，并对候选数组直接一次分配结果。两平台分别运行完全相同的前后 DLL，校验值见下文。',
              '- Release 构建，缓存预热后，每项每引擎预热 500 ms，测量至少 750 ms，三轮交替 PureDb / SQLite 顺序，取归一化指标中位数。每台主机的前后测量串行运行。',
              '- PureDb 复用 SQL 解析缓存，SQLite 复用 prepared statement；双方均生成结果行数组，并核对全部结果。数据创建、JIT 和首次表缓存加载不在热查询时间内。',
              '- 测量连接在语义检查后保留相同的用户函数注册状态；测量 SQL 不调用这些函数。',
@@ -92,10 +92,10 @@ def generate():
         faster = sum(v['SQLite']['Us'] / v['After']['Us'] > 1.05 for v in sorts)
         less_cpu = sum(v['SQLite']['CpuUs'] / v['After']['CpuUs'] > 1.05 for v in sorts)
         speedups = [v['Before']['Us'] / v['After']['Us'] for v in sorts]
-        lines += [f'{platform} 的三类排序相对优化前加速 **{min(speedups):.2f}–{max(speedups):.2f}×**；与同轮 SQLite 相比，耗时领先 **{faster}/3** 项，CPU 时间更低 **{less_cpu}/3** 项。逐项的领先、接近及落后均保留在表格中。', '']
-    lines += ['三类排序的托管分配均显著低于优化前；此结论只涉及托管分配。当前没有测量本次排序的独立进程 RSS 或 SQLite 原生堆，不能据此认定总内存领先，也不能推导所有 SQL、写入或落盘都已超过 SQLite。', '',
+        lines += [f'{platform} 的三类排序相对优化前耗时倍率 **{min(speedups):.2f}–{max(speedups):.2f}×**（大于 1 变快，小于 1 变慢）；与同轮 SQLite 相比，耗时领先 **{faster}/3** 项，CPU 时间更低 **{less_cpu}/3** 项。逐项的领先、接近及落后均保留在表格中。', '']
+    lines += ['各场景托管分配的前后变化均已列出。当前没有测量本次排序的独立进程 RSS 或 SQLite 原生堆，不能据此认定总内存领先，也不能推导所有 SQL、写入或落盘都已超过 SQLite。', '',
               '## 原理与适用范围', '',
-              '本轮基线已经使用有界堆；优化将纯列路径的 PriorityQueue 替换为紧凑二叉堆，每个候选只存一份行引用和序号，首批候选自底向上建堆。整数和 NULL 使用小型内联比较，其余类型仍进入完整 SQL 比较器。仅为经过 OFFSET / LIMIT 的最终返回行生成投影并复制 BLOB，省去中间投影数组和逐行 LINQ 复制。候选空间仍为 O(K)，比较工作仍为 O(N log K)，K = OFFSET + LIMIT。含表达式路径继续复用工作缓冲区，不减少用户函数求值。', '',
+              '本轮基线已有紧凑二叉堆、整数比较和延迟投影。新的变化是将最终结果物化移出绑定作用域，避免捕获投影列；已知候选数组按最终分页一次分配结果，省去中间迭代及列表。候选空间仍为 O(K)，比较工作仍为 O(N log K)，K = OFFSET + LIMIT。含表达式路径继续复用工作缓冲区，不减少用户函数求值。', '',
               '此路径只处理输入尚未有序、无分组和 DISTINCT、K 在 1 到 4096 之间的查询。已满足索引排序的查询保留原路径；大分页、分组、去重回退。SQL 比较器和原始行序号共同保留 NULL、混合数值、BLOB、升降序及相等键的稳定语义。', '',
               '含表达式的路径仍为所有行执行投影及排序键求值，别名只复用已求值结果，避免改变易变用户函数的调用次数或隐藏未入选行异常。纯列路径只跳过没有副作用的列复制，列位置仍提前解析和验证。表达式装箱、函数产生的对象、连接输入、表缓存及最终返回数据仍会占用内存，不能把 O(K) 解释为数据库总内存上限。', '',
               '新增 160 条 SQLite 差分查询，覆盖随机排序、NULL、文本、BLOB、多列方向、表达式、别名、序号、JOIN、分组/去重回退和大分页；另测函数异常、易变别名、参数重用、并发缓冲区、稳定顺序及结果 BLOB 所有权。正确性检查进入 Windows / Linux CI，计时不作为 CI 阈值。', '',

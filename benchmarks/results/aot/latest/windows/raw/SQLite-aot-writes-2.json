@@ -1,0 +1,107 @@
+{
+  "Engine": "SQLite",
+  "Runtime": ".NET 10.0.13",
+  "Architecture": "X64",
+  "DynamicCodeSupported": false,
+  "Mode": "writes",
+  "Round": 2,
+  "SQLite": "3.54.1",
+  "Samples": [
+    {
+      "Scenario": "Buffered_single",
+      "Operations": 1000,
+      "Milliseconds": 575.6058,
+      "CpuMilliseconds": 15.625,
+      "AllocatedBytes": 178872,
+      "WorkingSetBytes": 14303232,
+      "PrivateBytes": 5746688,
+      "PeakWorkingSetBytes": 14303232,
+      "ManagedLiveBytes": 245376,
+      "StorageBytes": 4501008
+    },
+    {
+      "Scenario": "Buffered_batch_insert",
+      "Operations": 5000,
+      "Milliseconds": 13.8841,
+      "CpuMilliseconds": 15.625,
+      "AllocatedBytes": 870392,
+      "WorkingSetBytes": 16187392,
+      "PrivateBytes": 7716864,
+      "PeakWorkingSetBytes": 16187392,
+      "ManagedLiveBytes": 948368,
+      "StorageBytes": 2068056
+    },
+    {
+      "Scenario": "Buffered_batch_update",
+      "Operations": 5000,
+      "Milliseconds": 14.3224,
+      "CpuMilliseconds": 15.625,
+      "AllocatedBytes": 1896,
+      "WorkingSetBytes": 17100800,
+      "PrivateBytes": 8736768,
+      "PeakWorkingSetBytes": 17100800,
+      "ManagedLiveBytes": 76112,
+      "StorageBytes": 3662496
+    },
+    {
+      "Scenario": "Buffered_batch_delete",
+      "Operations": 5000,
+      "Milliseconds": 16.7562,
+      "CpuMilliseconds": 15.625,
+      "AllocatedBytes": 1816,
+      "WorkingSetBytes": 17178624,
+      "PrivateBytes": 8716288,
+      "PeakWorkingSetBytes": 17178624,
+      "ManagedLiveBytes": 76272,
+      "StorageBytes": 3711936
+    },
+    {
+      "Scenario": "Full_single",
+      "Operations": 50,
+      "Milliseconds": 1138.7883,
+      "CpuMilliseconds": 15.625,
+      "AllocatedBytes": 7192,
+      "WorkingSetBytes": 15790080,
+      "PrivateBytes": 8089600,
+      "PeakWorkingSetBytes": 17178624,
+      "ManagedLiveBytes": 80376,
+      "StorageBytes": 708456
+    },
+    {
+      "Scenario": "Full_batch_insert",
+      "Operations": 5000,
+      "Milliseconds": 150.4797,
+      "CpuMilliseconds": 15.625,
+      "AllocatedBytes": 870392,
+      "WorkingSetBytes": 18096128,
+      "PrivateBytes": 10354688,
+      "PeakWorkingSetBytes": 18096128,
+      "ManagedLiveBytes": 940768,
+      "StorageBytes": 2068056
+    },
+    {
+      "Scenario": "Full_batch_update",
+      "Operations": 5000,
+      "Milliseconds": 137.8613,
+      "CpuMilliseconds": 15.625,
+      "AllocatedBytes": 1896,
+      "WorkingSetBytes": 17268736,
+      "PrivateBytes": 9428992,
+      "PeakWorkingSetBytes": 18366464,
+      "ManagedLiveBytes": 76752,
+      "StorageBytes": 3662496
+    },
+    {
+      "Scenario": "Full_batch_delete",
+      "Operations": 5000,
+      "Milliseconds": 150.635,
+      "CpuMilliseconds": 31.25,
+      "AllocatedBytes": 1816,
+      "WorkingSetBytes": 17268736,
+      "PrivateBytes": 9428992,
+      "PeakWorkingSetBytes": 18366464,
+      "ManagedLiveBytes": 76904,
+      "StorageBytes": 3711936
+    }
+  ]
+}

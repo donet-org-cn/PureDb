@@ -31,9 +31,12 @@ void Compare(string sql, SqlDatabase? database = null)
         expected.Add(statement.Values());
     Check(actual.Rows.Count == expected.Count, "行数不一致: " + sql);
     for (int i = 0; i < expected.Count; i++)
-        Check(actual.Rows[i].Length == expected[i].Length && actual.Rows[i].Zip(expected[i]).All(p => p.First is byte[] a && p.Second is byte[] b ? a.SequenceEqual(b) : p.First is double x && p.Second is double y ? Math.Abs(x - y) < 1e-10 : Equals(p.First, p.Second)), "结果不一致: " + sql + " at " + i + " actual=" + System.Text.Json.JsonSerializer.Serialize(actual.Rows[i]) + " expected=" + System.Text.Json.JsonSerializer.Serialize(expected[i]));
+        Check(actual.Rows[i].Length == expected[i].Length && actual.Rows[i].Zip(expected[i]).All(p => p.First is byte[] a && p.Second is byte[] b ? a.SequenceEqual(b) : p.First is double x && p.Second is double y ? Math.Abs(x - y) < 1e-10 : Equals(p.First, p.Second)), "结果不一致: " + sql + " at " + i + " actual=" + FormatRow(actual.Rows[i]) + " expected=" + FormatRow(expected[i]));
     comparisons++;
 }
+
+// 差分失败诊断也必须能在 AOT 中运行，不在消息格式化时请求反射 JSON 元数据。
+string FormatRow(object?[] row) => string.Join(";", row.Select(v => v is byte[] bytes ? Convert.ToHexString(bytes) : Convert.ToString(v, System.Globalization.CultureInfo.InvariantCulture)));
 
 await Both("CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER,s TEXT); INSERT INTO t VALUES(1,10,'a'),(2,10,'b'),(3,NULL,'c'),(4,30,'d')");
 foreach (string sql in new[]

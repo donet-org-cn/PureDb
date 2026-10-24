@@ -1,0 +1,23 @@
+{
+  "Engine": "SQLite",
+  "Runtime": ".NET 10.0.13",
+  "Architecture": "Arm64",
+  "DynamicCodeSupported": true,
+  "Mode": "memory",
+  "Round": 1,
+  "SQLite": "3.54.1",
+  "Samples": [
+    {
+      "Scenario": "json_index",
+      "Operations": 1000,
+      "Milliseconds": 0,
+      "CpuMilliseconds": 0,
+      "AllocatedBytes": 0,
+      "WorkingSetBytes": 34123776,
+      "PrivateBytes": 61677568,
+      "PeakWorkingSetBytes": 34123776,
+      "ManagedLiveBytes": 72432,
+      "StorageBytes": 33873920
+    }
+  ]
+}

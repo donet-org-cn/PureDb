@@ -169,17 +169,25 @@ public sealed class PureDbDataReader : DbDataReader
     /// <summary>获取列的 CLR 类型；优先使用模式信息，再检查实际值，未知类型返回 object。</summary>
     /// <param name="ordinal">从 0 开始的列序号。</param>
     /// <returns>指定列的名称、值或类型信息，具体形式由返回类型确定。</returns>
+    [return: System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicProperties | System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicFields)]
     public override Type GetFieldType(int ordinal)
     {
         if (ordinal < 0 || ordinal >= FieldCount)
             throw new IndexOutOfRangeException();
         if (Current.FieldTypes.Count == FieldCount && Current.FieldTypes[ordinal] != typeof(object))
-            return Current.FieldTypes[ordinal];
+            return PreservedFieldType(Current.FieldTypes[ordinal]);
         foreach (var row in Current.Rows)
             if (row[ordinal] is { } value)
-                return value.GetType();
+                return PreservedFieldType(value.GetType());
         return typeof(object);
     }
+
+    /// <summary>将 SQL 支持的 CLR 类型映射为编译器可证明保留元数据的常量，避免 AOT 反射推断。</summary>
+    /// <param name="type">结果模式或实际 SQL 标量的 CLR 类型。</param>
+    /// <returns>已保留公共字段及属性的 SQL 标量类型；未知类型返回 object。</returns>
+    [return: System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicProperties | System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicFields)]
+    private static Type PreservedFieldType(Type type)
+        => type == typeof(long) ? typeof(long) : type == typeof(double) ? typeof(double) : type == typeof(string) ? typeof(string) : type == typeof(byte[]) ? typeof(byte[]) : typeof(object);
 
     /// <summary>获取列对应的 SQL 存储类型名称，如 INTEGER、REAL、TEXT 或 BLOB。</summary>
     /// <param name="ordinal">从 0 开始的列序号。</param>
@@ -302,7 +310,7 @@ public sealed class PureDbDataReader : DbDataReader
         t.Columns.Add(SchemaTableColumn.ColumnName, typeof(string));
         t.Columns.Add(SchemaTableColumn.ColumnOrdinal, typeof(int));
         t.Columns.Add(SchemaTableColumn.ColumnSize, typeof(int));
-        t.Columns.Add(SchemaTableColumn.DataType, typeof(Type));
+        t.Columns.Add(SchemaTypeColumn());
         t.Columns.Add(SchemaTableColumn.AllowDBNull, typeof(bool));
         t.Columns.Add(SchemaTableColumn.IsUnique, typeof(bool));
         t.Columns.Add(SchemaTableColumn.IsKey, typeof(bool));
@@ -310,6 +318,11 @@ public sealed class PureDbDataReader : DbDataReader
             t.Rows.Add(GetName(i), i, -1, GetFieldType(i), true, false, false);
         return t;
     }
+
+    /// <summary>创建存放 Type 对象的模式列，仅按对象存取，不通过反射读取 Type 的属性。</summary>
+    /// <returns>保持 ADO.NET 约定为 System.Type 的 DataType 模式列。</returns>
+    [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2111", Justification = "此列仅保存 Type 对象，不反射其公共属性，不调用 Type.TypeInitializer；AOT 模式测试验证模式表读取。")]
+    private static DataColumn SchemaTypeColumn() => new(SchemaTableColumn.DataType, typeof(Type));
 
     /// <summary>创建按行遍历当前读取器的 DbEnumerator。</summary>
     /// <returns>按当前顺序遍历数据的枚举器。</returns>

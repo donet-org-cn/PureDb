@@ -1,0 +1,95 @@
+{
+  "Engine": "PureDb",
+  "Runtime": ".NET 10.0.13",
+  "Architecture": "Arm64",
+  "DynamicCodeSupported": false,
+  "Mode": "queries",
+  "Round": 2,
+  "SQLite": null,
+  "Samples": [
+    {
+      "Scenario": "point",
+      "Operations": 528010,
+      "Milliseconds": 750.0025,
+      "CpuMilliseconds": 749.8650000000001,
+      "AllocatedBytes": 366316184,
+      "WorkingSetBytes": 67366912,
+      "PrivateBytes": 73928704,
+      "PeakWorkingSetBytes": 69881856,
+      "ManagedLiveBytes": 40759760,
+      "StorageBytes": 40753572
+    },
+    {
+      "Scenario": "range20",
+      "Operations": 73533,
+      "Milliseconds": 750.0097,
+      "CpuMilliseconds": 749.9979999999998,
+      "AllocatedBytes": 635843032,
+      "WorkingSetBytes": 69468160,
+      "PrivateBytes": 75960320,
+      "PeakWorkingSetBytes": 71413760,
+      "ManagedLiveBytes": 41007256,
+      "StorageBytes": 40753572
+    },
+    {
+      "Scenario": "json_index",
+      "Operations": 55456,
+      "Milliseconds": 750.0021,
+      "CpuMilliseconds": 750.0050000000001,
+      "AllocatedBytes": 78034840,
+      "WorkingSetBytes": 129765376,
+      "PrivateBytes": 135913472,
+      "PeakWorkingSetBytes": 132468736,
+      "ManagedLiveBytes": 93124080,
+      "StorageBytes": 40753572
+    },
+    {
+      "Scenario": "json_scan",
+      "Operations": 7758,
+      "Milliseconds": 753.7002,
+      "CpuMilliseconds": 753.6799999999994,
+      "AllocatedBytes": 23522296,
+      "WorkingSetBytes": 129064960,
+      "PrivateBytes": 135540736,
+      "PeakWorkingSetBytes": 132468736,
+      "ManagedLiveBytes": 93888592,
+      "StorageBytes": 40753572
+    },
+    {
+      "Scenario": "sort20",
+      "Operations": 113,
+      "Milliseconds": 751.996,
+      "CpuMilliseconds": 751.9870000000001,
+      "AllocatedBytes": 662672,
+      "WorkingSetBytes": 125333504,
+      "PrivateBytes": 131518464,
+      "PeakWorkingSetBytes": 132468736,
+      "ManagedLiveBytes": 92247856,
+      "StorageBytes": 40753572
+    },
+    {
+      "Scenario": "sort4096",
+      "Operations": 36,
+      "Milliseconds": 759.6766,
+      "CpuMilliseconds": 759.6639999999998,
+      "AllocatedBytes": 15473128,
+      "WorkingSetBytes": 133996544,
+      "PrivateBytes": 140500992,
+      "PeakWorkingSetBytes": 133996544,
+      "ManagedLiveBytes": 93887000,
+      "StorageBytes": 40753572
+    },
+    {
+      "Scenario": "sum_scan",
+      "Operations": 389,
+      "Milliseconds": 750.785,
+      "CpuMilliseconds": 750.7729999999992,
+      "AllocatedBytes": 301904,
+      "WorkingSetBytes": 130199552,
+      "PrivateBytes": 136445952,
+      "PeakWorkingSetBytes": 134254592,
+      "ManagedLiveBytes": 91888880,
+      "StorageBytes": 40753572
+    }
+  ]
+}

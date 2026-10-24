@@ -167,7 +167,7 @@ internal sealed class SqliteStorage : ISqlStorage, ISqlSnapshot
         }
 
         _catalog = catalog;
-        _catalogBytes = JsonSerializer.SerializeToUtf8Bytes(catalog);
+        _catalogBytes = JsonSerializer.SerializeToUtf8Bytes(catalog, SqlCatalogJsonContext.Default.SqlCatalog);
         _lastValue = null;
         _lastId = long.MinValue;
         _version++;

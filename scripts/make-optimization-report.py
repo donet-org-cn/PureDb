@@ -44,18 +44,18 @@ def verdict(a, b):
 
 
 lines = ['# 本轮优化前后及 SQLite 对照',
-         '2026-10-24，主分支 `1.0.0-preview.2` 开发构建，尚未发布至 NuGet。优化前基于 `804f6ef`，已含上一轮 SQL 扩展；优化后增加 CHECK、单分支 UPSERT，以及本页所述性能优化。两平台使用同一组前后 DLL，各场景三轮中位数；同一台机器串行测量，轮换引擎次序。保留本轮一组前后证据，旧全面对比已替换。',
+         '2026-10-24，`1.0.0-preview.2` 本轮发布构建。优化前基于 `21571bc`，已含 CHECK、UPSERT 和上一轮优化；本轮修复缓存计量并增加 Native AOT 支持及分页物化优化。两平台使用同一组前后 DLL，各场景三轮中位数；同一台机器串行测量，轮换引擎次序。保留本轮一组前后证据，旧全面对比已替换。',
          '[完整 41 场景与 ADO.NET](PERFORMANCE.md) · [CPU / RSS 谁更高](RESOURCES.md) · [排序专项](SORT-PERFORMANCE.md) · [SQL 支持清单](SQL-SUPPORT.md)',
          '## 改了什么，为什么可能更快',
-         '1. Shared 日志追赶：已确认同一代文件并持有进程锁时，从本地提交偏移读取真实新增尾部。使用独立随机读句柄及池化缓冲区，避免为几十字节更新重新预读 64 KiB 文件头。CRC、帧及操作边界逐项验证；异常协调戳、文件换代或锁遗弃仍走完整恢复。没有减少刷盘或合并原本独立的事务。',
-         '2. 非索引小分页排序：基线已有有界堆，本轮进一步以紧凑二叉堆取代纯列 PriorityQueue，候选只存一份行引用和序号。首批自底向上建堆，整数 / NULL 内联比较；仅对经过 OFFSET / LIMIT 的最终结果复制投影与 BLOB。计算表达式继续逐行求值，保留业务函数和异常语义。',
-         '3. JSON 内存：完整解析树使用弱引用，源文本仍缓存时也可被 GC 回收；保留两个常用标量路径，交替查字段时避免重复解析。再次遍历且树已回收时会重新解析，因此是保留空间与重解析成本的取舍。JSONB 返回值仍复制，防止修改结果污染缓存。',
-         '4. 新增 CHECK 和 UPSERT：CHECK 在统一 Store 入口检查，事务内复用已绑定委托，函数注册变化后按语句失效。UPSERT 复用唯一键映射，冲突后进入标准 UPDATE 流程，避免逐行整表扫描并保留外键、触发器和原子撤销。',
+         '1. 表缓存计量：原先统一按每列 80 字节预留，含 BLOB/JSON 的可容纳表会被误判超预算，每次查询都解码整表。现在按数组、装箱数值、UTF-16 文本、BLOB 视图与源编码估算；默认预算未扩大。新增测试覆盖复用、写后失效与零缓存。',
+         '2. 分页物化：将最终结果复制移出查询绑定作用域，避免捕获投影列的闭包；已知候选数组直接按分页一次分配结果。BLOB 仍复制，表达式仍保持逐行求值。',
+         '3. Native AOT：JSON 与可选兼容库目录序列化统一使用源生成元数据；ADO.NET 保留 SQL 标量的必要元数据。真正编译运行 AOT、7 组功能及 230 条差分；AOT、JIT、SQLite 的体积、启动、CPU、RSS 和写入见 [独立报告](AOT-PERFORMANCE.md)。',
+         '4. 缓存阈值专项使用同一个自包含 JIT 宿主和运行时，只替换前后 PureDb.dll；三轮交替测量，专门验证重解码瓶颈，见 [缓存专项](CACHE-BUDGET-PERFORMANCE.md)。本页的旧 41 场景也已完整重测，收益与退化均列出。',
          '本轮没有新增 SIMD 指令路径。现有 CRC 使用 ARM CRC32 硬件指令，指定整数 JSON 计数路径使用可用的向量指令；这些已存在于基线，不能冒充本轮 SIMD 收益。排序的比较、分支和共享锁成本不适合直接用 SIMD 替代。',
          '## 测量边界',
-         '计时完成后仅执行代码空白格式化。格式化构建与实测构建的方法 IL、签名和类型属性指纹一致；DLL 本身因调试及构建元数据而不同，具体 SHA256 和校验结果见 [构建一致性记录](../benchmarks/results/optimization/latest/build-equivalence.json)。报告保留实际计时 DLL 的哈希，不将格式化构建伪装成重新测量。',
+         '源码在冻结测量前完成核心格式检查。两平台使用同一份实测 DLL；GitHub 从提交重新构建包时，路径及构建元数据可能改变哈希。AOT/JIT 发布对比使用同一运行时的独立宿主，详见 [AOT 报告](AOT-PERFORMANCE.md)。',
          '同机前后差值包含调度、JIT、GC、页缓存、温度和存储状态变化，三轮中位数不是因果或统计显著性证明；小于 5% 只标为接近。下列 CPU 是完成同样单位工作消耗的时间，RSS 是独立进程单库 GC 后驻留量，累计托管分配不是 RSS。SQLite 的原生堆不计入托管分配。Full / Buffered、关闭维护、缓存初建和接口差异详见全面报告。']
-output = {'BeforeCommit': '804f6ef35d5d9c9a486db890b688b137e9bd9ad8', 'Platforms': {}}
+output = {'BeforeCommit': '21571bcf875303db7002f82f36a0eaa96f712940', 'Platforms': {}}
 before_hashes, after_hashes = set(), set()
 for key, platform in [('windows', 'Windows x64'), ('linux', 'Linux ARM64')]:
     bpath, apath = base / key / 'before', final / key
@@ -87,7 +87,7 @@ for key, platform in [('windows', 'Windows x64'), ('linux', 'Linux ARM64')]:
     name = 'shared_update'
     b, a = before[name]['Optimized']['WorkerReadBytes'], after[name]['Optimized']['WorkerReadBytes']
     if min(a, b) >= 0:
-        lines += [f'Shared 更新工作进程逻辑读取字节三轮中位数：{b:,.0f} → {a:,.0f}，减少 {(1 - a / b) * 100:.1f}%。这是操作系统进程逻辑 I/O，不是物理盘读取，也不等于相同比例的耗时降低。']
+        lines += [f'沿用上一轮 Shared 协议，本轮工作进程逻辑读取字节三轮中位数：{b:,.0f} → {a:,.0f}，减少 {(1 - a / b) * 100:.1f}%。这是操作系统进程逻辑 I/O，不是物理盘读取，也不等于相同比例的耗时降低。']
     else:
         lines += ['该 Linux 内核不提供有效的进程逻辑 I/O 字节，不能从 -1 推断为零；不发布该指标的前后降低比例。']
     losses = sorted(((v['Optimized']['Us'] / v['SQLite']['Us'], n, v) for n, v in after.items()

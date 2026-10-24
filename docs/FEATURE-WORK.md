@@ -2,7 +2,7 @@
 
 本次目标：继续完善性能与 SQLite 语义兼容，补齐复合索引、外键、视图、触发器、CTE、窗口函数、子查询、UNION、JSON5、json_each/json_tree、SAVEPOINT 和事务语法，以及 C# 用户函数。新旧公开 API 需中文 XML 注释（类、属性、方法、参数、返回值、重要异常），并统一代码格式。
 
-源码版本为 `1.0.0-preview.2`，NuGet 仍为 preview.1。本轮已实现下列扩展，详细语法、示例、原理及限制集中在 [SQL 支持清单](SQL-SUPPORT.md)。这些勾选表示所列范围完成，不表示完整 SQLite SQL 或文件协议兼容。已发布版本 `v1.0.0-preview.1` 保留，不重写标签。
+源码与 NuGet 版本统一为 `1.0.0-preview.2`。本轮已实现下列扩展，详细语法、示例、原理及限制集中在 [SQL 支持清单](SQL-SUPPORT.md)。这些勾选表示所列范围完成，不表示完整 SQLite SQL 或文件协议兼容。已发布版本 `v1.0.0-preview.1` 保留，不重写标签。
 
 - [x] C# 标量函数：SqlDatabase / ADO.NET 注册，按名称和参数数量解析，NULL、类型、异常、缓存失效和并发验证。实现及边界见 [用户函数](USER-FUNCTIONS.md)。
 - [x] 小分页排序优化：有界堆、纯列延迟投影、表达式候选缓冲区复用、整数比较快路径、稳定顺序、别名及易变函数语义保护；Windows / Linux 优化前后和 SQLite 专项见 [排序报告](SORT-PERFORMANCE.md)。分组、DISTINCT、大分页保留原路径。
@@ -12,8 +12,10 @@
 - [x] 视图、触发器、外键：模式持久化、语句原子撤销、外键五种动作及延迟检查、行触发器和 INSTEAD OF；SQLite 文件后端显式拒绝尚未接入的模式。
 - [x] 事务语法：BEGIN / COMMIT / END / ROLLBACK，嵌套 SAVEPOINT / ROLLBACK TO / RELEASE，ADO.NET 保存点、DDL 回滚；Shared 使用乐观 DEFERRED，不能称为 SQLite 的完整锁模型。
 - [x] JSON5 输入及 json_valid 标志 2，json_each / json_tree，可见列、隐藏列、路径及左侧相关 JSON 连接。
-- [x] 中文 API 与实现注释、格式化、独立 SQL 支持文档及 README 矩阵更新。源码检查覆盖 944 个类型和成员声明；见 [代码规范](CODE-STYLE.md)。
-- [x] Windows / Linux 回归与 SQLite 差分。各平台 69 组、524 条 SQLite 差分查询验证，具体数量见 [开发验证](DEVELOPMENT-VALIDATION.md)。完整性能及排序报告均已以本轮构建重新采集，优化前基线和最终构建标识分开保留。
+- [x] 核心及纯托管兼容库 Native AOT，JSON 源生成元数据及 ADO.NET 模式表；实机 AOT 功能、差分、体积及性能报告。
+- [x] BLOB / JSON 行缓存预算估算修复及关闭缓存、写后失效验证。
+- [x] 中文 API 与实现注释、格式化、独立 SQL 支持文档及 README 矩阵更新。源码检查覆盖 948 个类型和成员声明；见 [代码规范](CODE-STYLE.md)。
+- [x] Windows / Linux 回归与 SQLite 差分。各平台 77 组、524 条 SQLite 差分查询验证，具体数量见 [开发验证](DEVELOPMENT-VALIDATION.md)。完整性能及排序报告均已以本轮构建重新采集，优化前基线和最终构建标识分开保留。
 
 后续仍需实现或完善：
 

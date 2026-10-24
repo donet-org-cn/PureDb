@@ -1,504 +1,408 @@
-﻿{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.983175325976831,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":99.983304060975229,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":99.983353574436165,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":99.983274352898675,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:51.5229257Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00297257258465,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":97.855257448135347,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":96.960360430263265,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":98.272863483661084,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":100236.71692422283,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":176563.75825184205,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":276800.47517606488,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":9.8785468585727063,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":15.26684514506691,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":25.145392003639614,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00021920000000000002,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0018739647058823531,"Status":0}
-{"Utc":"2026-10-24T11:29:52.6364393Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.0012238785714285716,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.996499644146922,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":99.996479923832254,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.3803902768594,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":99.457789948279526,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":16155.354877947892,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":16155.354877947892,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":133281.67774307009,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":133281.67774307009,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":21.692981403494482,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":21.692981403494482,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0014693318181818182,"Status":0}
-{"Utc":"2026-10-24T11:29:53.6506219Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.0014693318181818182,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.999674740590834,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":99.976758736763415,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.009510979377765,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":99.328644866795429,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":11102.092632099771,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":117076.61321123395,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":128178.70584333374,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":1.9712522429154424,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":20.698148550612146,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":22.66940079352759,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00020205,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0007832,"Status":0}
-{"Utc":"2026-10-24T11:29:54.6651967Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00073266521739130436,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.99844253223101,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":23.814573568753239,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.452748827760615,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":74.0885948398448,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":4012.2180660109789,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":4012.2180660109789,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":332011.04496240849,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":32097.744528087831,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":364108.78949049633,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":68.568179839054821,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":0.97954542627221164,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":69.547725265327031,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00037670428571428568,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0157603,"Status":0}
-{"Utc":"2026-10-24T11:29:55.6860846Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.000593374647887324,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00029893736735,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":1.037531885406944,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":97.8750336179981,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":66.304288146924122,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":369883.62118058041,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":130607.18209962564,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":500490.80328020605,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":79.716297668228535,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":22.918435579615704,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":102.63473324784424,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.0006251625,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.00087860000000000011,"Status":0}
-{"Utc":"2026-10-24T11:29:56.6896393Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00068175533980582522,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00100343894265,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":10.095579526815577,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":97.88268480517003,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":69.32641603188496,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":4029.5732902252944,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":4029.5732902252944,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":531903.6743097388,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":539962.82089018938,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":1071866.4951999283,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":85.589081115625149,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":15.740520664942556,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":101.3296017805677,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.000260616091954023,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0012766875,"Status":0}
-{"Utc":"2026-10-24T11:29:57.7061436Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00041845242718446606,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00100095561821,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":5.4440504081249337,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.434868504852972,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":67.959979831725619,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":4019.3785860147996,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":4019.3785860147996,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":3470733.4090237794,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":48232.543032177593,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":3518965.9520559572,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":91.260304809418059,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":8.8316424009114254,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":100.09194721032948,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00033675053763440859,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":2.9433333333333332E-05,"Status":0}
-{"Utc":"2026-10-24T11:29:58.7251698Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00030963431372549018,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.0003881075874,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":24.942928281698435,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":96.864289723309156,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":73.935868704198327,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":12228.541164296837,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":12228.541164296837,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":24457.082328593675,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":9536224.0179574843,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":130437.77241916627,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":9666661.79037665,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":90.559671708252949,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":2.9854836826896576,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":93.545155390942611,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00062114725274725277,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.010504933333333334,"Status":0}
-{"Utc":"2026-10-24T11:29:59.7300458Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00093658723404255314,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.997507576817526,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":8.44381338363725,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":99.529090898077669,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":69.323463999528926,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":3503001.0076013478,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":3503001.0076013478,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":3740432.2805403648,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":398599.82437727961,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":4139032.1049176445,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":89.3703767586973,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":25.818108841401443,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":115.18848560009874,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.0041052222222222228,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.00014225384615384614,"Status":0}
-{"Utc":"2026-10-24T11:30:00.7370979Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.0032169706896551724,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00237024436531,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":0.90160751743162282,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.419332224465478,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":66.441106607100437,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":370607.35302014428,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":177246.9949226777,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":547854.347942822,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":80.6454944050713,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":16.719187864466004,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":97.364682269537312,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00014120121951219513,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0047903882352941171,"Status":0}
-{"Utc":"2026-10-24T11:30:01.7538707Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00093954646464646473,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.999330269117564,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":0.84666787218225492,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.346759467729413,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":66.397582586681892,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":436702.28865084436,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":44376.2140892313,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":481078.50274007564,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":80.762818610550568,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":10.834036642878734,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":91.5968552534293,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00017845,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0014439727272727272,"Status":0}
-{"Utc":"2026-10-24T11:30:02.7692039Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00032813548387096778,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.996899855287211,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":2.1745300771119171,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.457623875877687,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":66.8763512694256,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":4031.3274297088951,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":4031.3274297088951,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":501396.34907004383,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":4031.3274297088951,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":505427.67649975274,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":87.594761045920819,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":0.98421079826877322,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":88.5789718441896,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00077074831460674151,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0156389,"Status":0}
-{"Utc":"2026-10-24T11:30:03.7852855Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00093595000000000006,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00217083495191,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":0.81901221234071864,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.313709350493156,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":66.3782974659286,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":359429.69214273308,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":134594.94854706601,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":494024.6406897991,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":78.665075574235132,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":7.9660836024541908,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":86.631159176689323,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00023489873417721518,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0019908375,"Status":0}
-{"Utc":"2026-10-24T11:30:04.7895074Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00039636436781609194,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00057624810621,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":2.1409802914205898,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":100.00058618341838,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":67.380720864523184,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":4069.4800126535392,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":4069.4800126535392,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":484268.12150577118,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":484268.12150577118,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":84.449658465710655,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":84.449658465710655,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00015099294117647057,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:05.7960183Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00015099294117647057,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00041309743108,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":1.3112892741317503,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":100.00040326177798,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":67.104028654011529,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":371644.55587975925,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":371644.55587975925,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":80.652030355850528,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":80.652030355850528,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00042976585365853663,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:06.8127276Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00042976585365853663,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.996594412269587,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":0.97672256108094335,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.114271781694924,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":66.362536165861,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":64695.323093592626,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":64695.323093592626,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":428101.08328338241,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":32347.661546796313,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":460448.74483017874,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":80.948127650064009,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":1.9743445768308296,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":82.92247222689484,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00020238170731707317,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.00953435,"Status":0}
-{"Utc":"2026-10-24T11:30:07.8257686Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00042457142857142856,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00652077506149,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":14.359759716815427,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":96.802154865358787,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":70.389475173993063,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":12085.169761819479,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":12085.169761819479,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":2892383.9629954621,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":88624.578253342843,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":2981008.5412488049,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":91.464907865332975,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":4.9174681648028482,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":96.382376030135816,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":2,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":2,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00026630967741935482,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.009440500000000001,"Status":0}
-{"Utc":"2026-10-24T11:30:08.8425189Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.000734380612244898,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.99489282342843,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":18.509076576927985,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.47573553275943,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":72.3265650806929,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":19847.640287104645,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":19847.640287104645,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":14783514.867849896,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":289775.54819172784,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":15073290.416041624,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":109.51090588099731,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":3.8764922435751261,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":113.38739812457244,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.0044991044247787611,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.009998375,"Status":0}
-{"Utc":"2026-10-24T11:30:09.8744002Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.0046871136752136755,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00672913364039,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":73.008761153613335,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.101125697837915,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":90.37220532836389,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":8118.3366487502344,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":64946.693190001875,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":73065.0298387521,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":1287263.7548674589,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":73065.0298387521,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":1360328.7847062112,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":36.667291992646319,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":3.9640315667725754,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":40.631323559418895,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00023364054054054054,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0048076,"Status":0}
-{"Utc":"2026-10-24T11:30:10.8834454Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00067988048780487809,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.994950348077381,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":99.950967581035457,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.330079113205429,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":99.425335667394663,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":52014.268068295023,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":8159.1008734580428,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":60173.36894175307,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":3.9839359733681849,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":0.99598399334204624,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":4.9799199667102316,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.000210825,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0155927,"Status":0}
-{"Utc":"2026-10-24T11:30:11.8874750Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.0032871999999999997,"Status":0}
+﻿{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.982968409446229,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":99.983018355459592,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.281987000251419,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":99.415991255052418,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":135050.88387350488,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":135050.88387350488,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":10.990469065226634,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":10.990469065226634,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0043008090909090911,"Status":0}
+{"Utc":"2026-10-24T15:30:27.3532032Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.0043008090909090911,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.999427917250628,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":98.99408475664292,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":96.666492273699518,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":98.55333190681732,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":3779.5925440524152,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":7559.18508810483,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":11338.777632157246,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":59528.582568825535,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":118584.71606964452,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":178113.29863847006,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":12.918529203304153,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":13.84128128925445,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":26.759810492558604,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.0011218642857142858,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0035151,"Status":0}
+{"Utc":"2026-10-24T15:30:28.4369625Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.0023597448275862066,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00416233785165,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":99.983929841832136,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":100.00411325367888,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":99.9973985388427,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":7538.7405866357367,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":7538.7405866357367,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":1.9632136944363898,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":1.9632136944363898,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.0001465,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:29.4556208Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.0001465,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00651280335229,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":97.900250223503022,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":97.258729104339707,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":98.388500706719071,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":101765.78946343336,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":323195.87407482357,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":424961.66353825695,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":3.9952021617239857,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":10.986805944740961,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":14.982008106464948,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.0001577,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0036349454545454548,"Status":0}
+{"Utc":"2026-10-24T15:30:30.4567258Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.0027076799999999996,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.987546931395684,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":44.860714001508335,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.164756064944427,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":81.004338999282822,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":4029.56020832905,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":4029.56020832905,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":334453.49729131116,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":120886.8062498715,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":455340.30354118266,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":74.767230427980422,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":17.708028259258523,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":92.475258687238949,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00012567105263157894,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0012739833333333334,"Status":0}
+{"Utc":"2026-10-24T15:30:31.4733427Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00034556063829787237,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.99944083064608,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":1.4825776309292544,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":96.719972480879662,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":66.067326985762648,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":611967.4676598782,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":204500.4069038858,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":816467.87456376408,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":119.82445717024558,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":17.973668575536838,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":137.79812574578241,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00041472833333333338,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0035043555555555558,"Status":0}
+{"Utc":"2026-10-24T15:30:32.4748282Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00081772318840579706,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.01042323636193,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":10.429752133840351,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.008182490381984,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":69.48279261587156,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":8185.8499709168509,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":8185.8499709168509,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":1578334.1975174053,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":306969.37390938192,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":1885303.5714267872,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":115.91291462724057,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":6.994744848195551,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":122.90765947543612,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00035867241379310344,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0022844999999999996,"Status":0}
+{"Utc":"2026-10-24T15:30:33.4754771Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00046827235772357726,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.988785831836367,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":26.268091451341835,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":119.41841967028948,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":81.891762325483256,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":8174.0701770666046,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":8174.0701770666046,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":11376262.168932447,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":65392.561416532837,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":11441654.73034898,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":97.785507489322171,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":12.97154691184886,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":110.75705440117103,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00057950102040816328,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.00079427692307692318,"Status":0}
+{"Utc":"2026-10-24T15:30:34.4777806Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.000604654954954955,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00356312153463,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":9.4358938823663969,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":96.449437976635181,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":68.629628379219682,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":8063.0048236296434,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":20157.51205907411,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":28220.516882703752,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":4136321.4745220072,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":294299.676062482,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":4430621.1505844891,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":110.23639407306153,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":17.716563333170605,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":127.95295740623214,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00024699464285714284,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0045493833333333338,"Status":0}
+{"Utc":"2026-10-24T15:30:35.4937437Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00084271,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.993476071168175,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":1.1721292165510777,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":99.4962088280646,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":66.887274702162173,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":554015.33629423112,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":286471.4573635913,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":840486.79365782242,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":120.89511140134817,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":13.987864129081608,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":134.88297553042977,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00033152809917355374,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.00095440714285714289,"Status":0}
+{"Utc":"2026-10-24T15:30:36.4946743Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00039612296296296295,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00864444248792,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":2.6071738479331636,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":100.0087643653895,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":67.541527551936866,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":4093.0378684945704,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":4093.0378684945704,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":743398.00286532636,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":743398.00286532636,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":126.90815656709239,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":126.90815656709239,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00017648503937007872,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:37.4953172Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00017648503937007872,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.994095281770456,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":1.1890064337450152,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":99.537643577819651,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":66.906911767424035,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":536128.97566009453,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":45018.463605046105,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":581147.43926514068,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":119.90002735718956,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":8.9925020517892165,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":128.89252940897879,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00014591833333333333,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0003947888888888889,"Status":0}
+{"Utc":"2026-10-24T15:30:38.4962117Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.0001632813953488372,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.4325302179932,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":3.2268430303024247,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":99.6106257824904,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":67.423339671526392,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":702383.32894703455,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":4092.5467090868729,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":706475.87565612141,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":700848.6239311269,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":388791.93736325292,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":1089640.5612943799,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":10.990726025379786,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":125.89377083616844,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":6.9940983797871361,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":143.87859524133538,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0.00051913636363636365,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00020731825396825396,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0022006142857142856,"Status":0}
+{"Utc":"2026-10-24T15:30:39.4970227Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00032803402777777774,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.908294203228323,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":6.22771997324673,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.282632329106391,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":68.139545504192512,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":130476.48200386931,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":4093.3798275723707,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":134569.8618314417,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":734250.006570794,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":114614.63517202638,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":848864.64174282039,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":1.9987206189318216,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":118.92387682644339,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":15.989764951454573,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":136.91236239682979,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0.0004328,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00038254453781512605,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0010674875,"Status":0}
+{"Utc":"2026-10-24T15:30:40.4977228Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00046327153284671534,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.72128727801099,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":27.669214082256598,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.293532546780156,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":75.228011302349245,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":20144.099160901878,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":64461.117314886011,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":84605.216475787893,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":76547.576811427134,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":13466833.891541928,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":124893.41479759164,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":13668274.883150946,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":2.9507957755227361,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":108.19584510250033,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":8.85238732656821,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":119.99902820459127,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":1,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0.00064063333333333331,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.002138000909090909,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0018045444444444443,"Status":0}
+{"Utc":"2026-10-24T15:30:41.5143610Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.0020765811475409834,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":99.740716376194825,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":52.4599307711938,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.259361086458938,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":83.486672688044521,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":16105.779108217193,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":128846.23286573755,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":144952.01197395474,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":128846.23286573755,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":2113883.5079535064,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":555649.37923349312,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":2798379.1200527372,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":19.66037488796044,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":56.032068430687254,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":57.015087175085277,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":132.70753049373297,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":8.449E-05,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00022364912280701757,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.00027557758620689655,"Status":0}
+{"Utc":"2026-10-24T15:30:42.5316254Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.00022534296296296296,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\% idle time","Value":100.00122056818827,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\% idle time","Value":99.94251517564912,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\% idle time","Value":98.446639957878588,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\% idle time","Value":99.46345200504409,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk read bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk write bytes/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk write bytes/sec","Value":65516.53130914551,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk write bytes/sec","Value":76603.944299923984,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk write bytes/sec","Value":142120.47560906949,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\disk transfers/sec","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\disk transfers/sec","Value":6.8902602037863367,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\disk transfers/sec","Value":7.8745830900415275,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\disk transfers/sec","Value":14.764843293827864,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\current disk queue length","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"0 d:","Path":"\\\\desktop-fisftl4\\physicaldisk(0 d:)\\avg. disk sec/transfer","Value":0,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"1","Path":"\\\\desktop-fisftl4\\physicaldisk(1)\\avg. disk sec/transfer","Value":0.00021894285714285714,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"2 c:","Path":"\\\\desktop-fisftl4\\physicaldisk(2 c:)\\avg. disk sec/transfer","Value":0.0096976125,"Status":0}
+{"Utc":"2026-10-24T15:30:43.5475457Z","Instance":"_total","Path":"\\\\desktop-fisftl4\\physicaldisk(_total)\\avg. disk sec/transfer","Value":0.0052742333333333337,"Status":0}

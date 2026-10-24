@@ -167,7 +167,7 @@ internal static partial class SqlJsonFunctions
                 JsonValueKind.True => 1L,
                 JsonValueKind.False => 0L,
                 JsonValueKind.Number => element.TryGetInt64(out long n) ? n : (object)element.GetDouble(),
-                _ => new SqlJson(JsonSerializer.Serialize(element))
+                _ => new SqlJson(JsonSerializer.Serialize(element, SqlCatalogJsonContext.Default.JsonElement))
             };
         });
     }
@@ -248,7 +248,7 @@ internal static partial class SqlJsonFunctions
                 SqlJson j => SqlJson5.Node(j.Text),
                 string s => SqlJson5.Node(s),
                 byte[] b => ReadBinary(b),
-                long or double => JsonSerializer.SerializeToNode(value),
+                long or double => JsonSerializer.SerializeToNode(value, SqlCatalogJsonContext.Default.Object),
                 null => null,
                 _ => throw new SqlException("Expected JSON text or PureDb JSONB")
             };
@@ -296,7 +296,7 @@ internal static partial class SqlJsonFunctions
             return;
         }
 
-        var element = JsonSerializer.SerializeToElement(node);
+        var element = JsonSerializer.SerializeToElement(node, SqlCatalogJsonContext.Default.JsonNode);
         switch (element.ValueKind)
         {
             case JsonValueKind.False:
@@ -449,7 +449,7 @@ internal static partial class SqlJsonFunctions
                     string name;
                     try
                     {
-                        name = JsonSerializer.Deserialize<string>(text[start..++p])!;
+                        name = JsonSerializer.Deserialize(text[start..++p], SqlCatalogJsonContext.Default.String)!;
                     }
                     catch (JsonException)
                     {
@@ -525,7 +525,7 @@ internal static partial class SqlJsonFunctions
     private static JsonNode? FromSql(object? value) => value switch
     {
         SqlJson or byte[] => Parse(value)?.DeepClone(),
-        _ => JsonSerializer.SerializeToNode(value)
+        _ => JsonSerializer.SerializeToNode(value, SqlCatalogJsonContext.Default.Object)
     };
     /// <summary>将 JSON 节点转换为 SQL 标量；对象和数组保留文档子类型。</summary>
     /// <param name = "node">JSON 根节点或节点值；null 表示 JSON null。</param>
@@ -537,7 +537,7 @@ internal static partial class SqlJsonFunctions
             return null;
         if (node is JsonArray or JsonObject)
             return Output(node, binary);
-        var element = JsonSerializer.SerializeToElement(node);
+        var element = JsonSerializer.SerializeToElement(node, SqlCatalogJsonContext.Default.JsonNode);
         return element.ValueKind switch
         {
             JsonValueKind.String => element.GetString(),
@@ -564,7 +564,7 @@ internal static partial class SqlJsonFunctions
             return "object";
         if (node is JsonArray)
             return "array";
-        var e = JsonSerializer.SerializeToElement(node);
+        var e = JsonSerializer.SerializeToElement(node, SqlCatalogJsonContext.Default.JsonNode);
         return e.ValueKind switch
         {
             JsonValueKind.True => "true",
@@ -722,7 +722,7 @@ internal static partial class SqlJsonFunctions
         if (op == "JSON_ARRAY_LENGTH")
             return element.ValueKind == JsonValueKind.Array ? (long)element.GetArrayLength() : 0L;
         if (op == "->")
-            return new SqlJson(JsonSerializer.Serialize(element));
+            return new SqlJson(JsonSerializer.Serialize(element, SqlCatalogJsonContext.Default.JsonElement));
         object? result = element.ValueKind switch
         {
             JsonValueKind.Null => null,
@@ -730,7 +730,7 @@ internal static partial class SqlJsonFunctions
             JsonValueKind.True => 1L,
             JsonValueKind.False => 0L,
             JsonValueKind.Number => element.TryGetInt64(out long n) ? n : (object)element.GetDouble(),
-            _ => new SqlJson(JsonSerializer.Serialize(element))
+            _ => new SqlJson(JsonSerializer.Serialize(element, SqlCatalogJsonContext.Default.JsonElement))
         };
         return op == "->>" ? Unwrap(result) : result;
     }
@@ -764,7 +764,7 @@ internal static partial class SqlJsonFunctions
                     return 0L;
                 else if ((flags & 2) == 0)
                 {
-                    using var strict = JsonDocument.Parse(args[0] is SqlJson json ? json.Text : args[0] is string text ? text : JsonSerializer.Serialize(args[0]), DocumentOptions);
+                    using var strict = JsonDocument.Parse(args[0] is SqlJson json ? json.Text : args[0] is string text ? text : JsonSerializer.Serialize(args[0], SqlCatalogJsonContext.Default.Object), DocumentOptions);
                     return 1L;
                 }
 
@@ -781,7 +781,7 @@ internal static partial class SqlJsonFunctions
         {
             if (args[0] is byte[])
                 throw new SqlException("JSON_QUOTE does not accept BLOB values");
-            return args[0] is SqlJson j ? j : new SqlJson(JsonSerializer.Serialize(args[0]));
+            return args[0] is SqlJson j ? j : new SqlJson(JsonSerializer.Serialize(args[0], SqlCatalogJsonContext.Default.Object));
         }
 
         if (name == "JSON_ARRAY")

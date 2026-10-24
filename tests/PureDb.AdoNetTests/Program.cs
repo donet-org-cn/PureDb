@@ -291,4 +291,29 @@ await Test("page-backed cached BLOBs never leak and retain comparison/constraint
     await Reject<SqlException>(async () => await db.ExecuteAsync("INSERT INTO t VALUES(3,3,X'0102',NULL)"));
     Assert(((byte[])db.Query("SELECT b FROM t WHERE k=3").Rows[0][0]!)[0] == 1, "cached BLOB update");
 });
+await Test("type-aware table budget retains fitting BLOB/JSON rows and honors zero cache", async () =>
+{
+    string path = Path.Combine(folder, "typed-budget.pdb");
+    using (var db = new SqlDatabase(path, new() { CacheBytes = 2 * 1024 * 1024, Storage = new() { Durability = Durability.Buffered } }))
+    {
+        await db.ExecuteAsync("CREATE TABLE t(id INTEGER PRIMARY KEY,k INTEGER,n INTEGER,v BLOB,j JSON);CREATE INDEX ix ON t(json_extract(j,'$.age'))");
+        byte[] blob = new byte[256];
+        await db.ExecuteTransactionAsync(Enumerable.Range(0, 2600).Select(i => new SqlCommand("INSERT INTO t VALUES(@id,1,2,@v,@j)", new Dictionary<string, object?> { ["id"] = (long)i, ["v"] = blob, ["j"] = "{\"age\":" + i % 100 + ",\"name\":\"user" + i + "\"}" })).ToArray());
+        const string query = "SELECT id FROM t WHERE json_extract(j,'$.age')=3 ORDER BY id LIMIT 20";
+        Assert(db.Query(query).Rows.Count == 20, "budget warmup");
+        long before = GC.GetAllocatedBytesForCurrentThread();
+        for (int i = 0; i < 10; i++) Assert(db.Query(query).Rows.Count == 20, "cached budget rows");
+        Assert(GC.GetAllocatedBytesForCurrentThread() - before < 512 * 1024, "fitting BLOB/JSON table was decoded repeatedly");
+        await db.ExecuteAsync("UPDATE t SET j=json_set(j,'$.age',200) WHERE id=3");
+        Assert(db.Query("SELECT id FROM t WHERE json_extract(j,'$.age')=200").Rows.Count == 1, "budget invalidation");
+    }
+    using (var db = new SqlDatabase(path, new() { CacheBytes = 0 }))
+    {
+        const string query = "SELECT id FROM t WHERE json_extract(j,'$.age')=3 ORDER BY id LIMIT 20";
+        db.Query(query);
+        long before = GC.GetAllocatedBytesForCurrentThread();
+        for (int i = 0; i < 3; i++) Assert(db.Query(query).Rows.Count == 20, "uncached budget rows");
+        Assert(GC.GetAllocatedBytesForCurrentThread() - before > 1024 * 1024, "zero cache budget unexpectedly retained a table");
+    }
+});
 Console.WriteLine($"{passed} ADO.NET/cache test groups passed: {folder}");

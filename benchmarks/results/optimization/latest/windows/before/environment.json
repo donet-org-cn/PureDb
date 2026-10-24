@@ -2,8 +2,8 @@
   "Platform": "Windows-11-10.0.26300-SP0",
   "Machine": "AMD64",
   "CPUs": 12,
-  "Date": "2026-10-24T18:54:03+0800",
+  "Date": "2026-10-24T19:23:22+0800",
   "Dotnet": "Microsoft.AspNetCore.App 6.0.36 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.32 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.21 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.13 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 11.0.0-rc.1.26425.128 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 6.0.36 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.32 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.21 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.13 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 11.0.0-rc.1.26425.128 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.WindowsDesktop.App 6.0.36 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 8.0.32 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 9.0.21 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 10.0.13 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 11.0.0-rc.1.26425.128 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]",
-  "ComprehensiveSHA256": "84CDA1870DF402056A1B6C30934DA69E96A515B0190249BC1C35BEBAFAE41905",
-  "AdoHarnessSHA256": "F55365FA87A4F2D2E2B513437A1A4F73492BA05334B11C4E8C5243330D13AB9F"
+  "ComprehensiveSHA256": "A888F8C5C0FF6CDB72F9E12FA7E656BE9A606EA04692A2F3C4275AEAFC345269",
+  "AdoHarnessSHA256": "619015E1104C4BBBCFD301815C487018A92C7B805DF4A8869DD9DAC2358A2CDB"
 }

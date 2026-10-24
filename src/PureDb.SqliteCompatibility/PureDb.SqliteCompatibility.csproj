@@ -1,4 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup><TargetFramework>net10.0</TargetFramework><IsPackable>true</IsPackable><Description>Optional, fully managed SQLite format 3 compatibility for PureDb. Preview: exclusive rollback journal access; WAL is not supported.</Description></PropertyGroup>
+  <PropertyGroup><TargetFramework>net10.0</TargetFramework><IsPackable>true</IsPackable><IsAotCompatible>true</IsAotCompatible><Description>Optional, fully managed SQLite format 3 compatibility for PureDb. Preview: exclusive rollback journal access; WAL is not supported.</Description></PropertyGroup>
   <ItemGroup><ProjectReference Include="../PureDb/PureDb.csproj" /></ItemGroup>
 </Project>

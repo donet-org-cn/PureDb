@@ -1,0 +1,23 @@
+{
+  "Engine": "SQLite",
+  "Runtime": ".NET 10.0.13",
+  "Architecture": "Arm64",
+  "DynamicCodeSupported": false,
+  "Mode": "startup",
+  "Round": 16,
+  "SQLite": "3.54.1",
+  "Samples": [
+    {
+      "Scenario": "open_first_range_close",
+      "Operations": 1,
+      "Milliseconds": 2.8677,
+      "CpuMilliseconds": 2.8909999999999982,
+      "AllocatedBytes": 8904,
+      "WorkingSetBytes": 9289728,
+      "PrivateBytes": 11268096,
+      "PeakWorkingSetBytes": 9289728,
+      "ManagedLiveBytes": 80016,
+      "StorageBytes": 33841152
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework><IsAotCompatible>true</IsAotCompatible><EnableDefaultCompileItems>false</EnableDefaultCompileItems><DefineConstants>$(DefineConstants);STANDALONE_SQLITE</DefineConstants></PropertyGroup>
+  <ItemGroup><Compile Include="../Program.cs" /><Compile Include="../Engine.Sqlite.cs" /><Compile Include="../Report.cs" /><Compile Include="../Sqlite.Types.cs" /><Compile Include="../../PureDb.Benchmarks/Sqlite.cs" Link="Sqlite.cs" /></ItemGroup>
+</Project>

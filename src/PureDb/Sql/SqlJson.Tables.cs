@@ -24,7 +24,7 @@ internal static partial class SqlJsonFunctions
         var rows = new List<object?[]>();
         long nextId = 0;
         string original = value is SqlJson json ? json.Text : value is string text ? text : Canonical(value);
-        string Property(string prefix, string name) => prefix + "." + (name.Length > 0 && (char.IsLetter(name[0]) || name[0] == '_') && name.All(c => char.IsLetterOrDigit(c) || c == '_') ? name : JsonSerializer.Serialize(name));
+        string Property(string prefix, string name) => prefix + "." + (name.Length > 0 && (char.IsLetter(name[0]) || name[0] == '_') && name.All(c => char.IsLetterOrDigit(c) || c == '_') ? name : JsonSerializer.Serialize(name, SqlCatalogJsonContext.Default.String));
         void Visit(JsonNode? node, object? key, long? parent, string fullkey, string parentPath, bool descend)
         {
             string type;
@@ -134,7 +134,7 @@ internal static partial class SqlJsonFunctions
         {
             string key = path[(dot + 1)..];
             if (key.StartsWith('"'))
-                key = key.EndsWith('"') ? JsonSerializer.Deserialize<string>(key)! : key[1..^1];
+                key = key.EndsWith('"') ? JsonSerializer.Deserialize(key, SqlCatalogJsonContext.Default.String)! : key[1..^1];
             return (key, path[..dot]);
         }
 

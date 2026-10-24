@@ -1,0 +1,23 @@
+{
+  "Engine": "PureDb",
+  "Runtime": ".NET 10.0.13",
+  "Architecture": "X64",
+  "DynamicCodeSupported": false,
+  "Mode": "memory",
+  "Round": 1,
+  "SQLite": null,
+  "Samples": [
+    {
+      "Scenario": "point",
+      "Operations": 100000,
+      "Milliseconds": 0,
+      "CpuMilliseconds": 0,
+      "AllocatedBytes": 0,
+      "WorkingSetBytes": 58712064,
+      "PrivateBytes": 50221056,
+      "PeakWorkingSetBytes": 61497344,
+      "ManagedLiveBytes": 39827496,
+      "StorageBytes": 40753572
+    }
+  ]
+}

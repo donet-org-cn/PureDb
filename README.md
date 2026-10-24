@@ -6,23 +6,23 @@
 
 PureDb 使用 C# 和 .NET 10 标准库实现嵌入式数据库，提供 KV、SQL、JOIN、JSON、事务、多线程写入、多进程访问和 ADO.NET。核心与可选 SQLite 文件兼容库均无原生库和第三方 NuGet 依赖。
 
-**主分支源码版本：`1.0.0-preview.2`；NuGet 已发布版本：`1.0.0-preview.1`。** 当前主分支包含 SQL 扩展及性能优化，`preview.2` 尚未发布至 NuGet。SQL、文件协议和事务能力有明确边界；当前没有在所有性能、CPU、内存指标上超过 SQLite。
+**当前预览版：`1.0.0-preview.2`，主库与可选兼容包版本一致。** 本版包含 SQL 扩展、缓存优化和 Native AOT 支持。SQL、文件协议和事务能力有明确边界；当前没有在所有性能、CPU、内存指标上超过 SQLite。
 
 [SQL 支持与不支持清单](docs/SQL-SUPPORT.md) · [安装与使用](docs/USAGE.md) · [ADO.NET](docs/ADO.NET.md) · [SQLite 文件兼容](docs/SQLITE-COMPATIBILITY.md) · [全面性能表](docs/PERFORMANCE.md) · [CPU / 内存谁更高](docs/RESOURCES.md) · [可筛选性能面板](docs/PERFORMANCE.html) · [原始结果](benchmarks/results/latest) · [自动发布](docs/RELEASING.md)
 
-主分支已包含 **复合索引、外键、CHECK、UPSERT、视图、行触发器、CTE、窗口、相关子查询、集合运算、JSON5 / JSON 表函数、SQL 事务和保存点**，以及 C# 用户函数、查询快路径和中文注释。各项限制、示例和未支持语法集中见 [SQL 清单](docs/SQL-SUPPORT.md)。下面的功能矩阵对应 `main` 源码；全面性能表已使用本轮冻结的 `preview.2` 构建在 Windows 和 Linux ARM64 完整重测，另有 [排序专项报告](docs/SORT-PERFORMANCE.md) 和 [本轮优化前后对照](docs/OPTIMIZATION.md)。[开发验证](docs/DEVELOPMENT-VALIDATION.md) 与 [扩展进度](docs/FEATURE-WORK.md) 记录实际验证和剩余工作。
+主分支已包含 **复合索引、外键、CHECK、UPSERT、视图、行触发器、CTE、窗口、相关子查询、集合运算、JSON5 / JSON 表函数、SQL 事务和保存点**，以及 C# 用户函数、查询快路径和中文注释。各项限制、示例和未支持语法集中见 [SQL 清单](docs/SQL-SUPPORT.md)。下面的功能矩阵对应 `main` 源码；全面性能表已使用本轮冻结的 `preview.2` 构建在 Windows 和 Linux ARM64 完整重测，另有 [排序专项报告](docs/SORT-PERFORMANCE.md) 和 [本轮优化前后对照](docs/OPTIMIZATION.md)、[缓存阈值修复](docs/CACHE-BUDGET-PERFORMANCE.md) 和 [AOT 完整报告](docs/AOT-PERFORMANCE.md)。[开发验证](docs/DEVELOPMENT-VALIDATION.md) 与 [扩展进度](docs/FEATURE-WORK.md) 记录实际验证和剩余工作。
 
 ## 安装
 
 安装已发布的 NuGet 版本：
 
 ```bash
-dotnet add package PureDb --version 1.0.0-preview.1
+dotnet add package PureDb --version 1.0.0-preview.2
 # 需要原地读取/修改受支持的 SQLite 文件时额外安装：
-dotnet add package PureDb.SqliteCompatibility --version 1.0.0-preview.1
+dotnet add package PureDb.SqliteCompatibility --version 1.0.0-preview.2
 ```
 
-使用 `preview.2` 的新增 API 和优化时，请从 `main` 构建源码；构建及本地打包命令见文末。两个包的版本统一由 [Directory.Build.props](Directory.Build.props) 定义，变更见 [CHANGELOG](CHANGELOG.md)。
+也可从 `main` 构建源码；构建及本地打包命令见文末。两个包的版本统一由 [Directory.Build.props](Directory.Build.props) 定义，变更见 [CHANGELOG](CHANGELOG.md)。
 
 ```csharp
 using PureDb;
@@ -41,18 +41,18 @@ Console.WriteLine(result.Rows[0][0]);
 
 KV 使用 `Database`，SQL 使用 `SqlDatabase`，各自使用独立文件。SQL 表需要 `INTEGER PRIMARY KEY`，主键范围 `[0, 2^40)`。
 
-主分支 `preview.2` 支持将 C# 方法注册为 SQL 标量函数，`SqlDatabase` 和 ADO.NET 连接都提供相同入口：
+`preview.2` 支持将 C# 方法注册为 SQL 标量函数，`SqlDatabase` 和 ADO.NET 连接都提供相同入口：
 
 ```csharp
 db.CreateFunction<string?, bool>("RELIGIBLE", user => user is "Alice" or "小明");
 var eligible = db.Query("SELECT * FROM users WHERE RELIGIBLE(name)");
 ```
 
-函数按连接、名称和参数数量注册，可替换或移除。强类型入口直接调用委托，布尔结果复用 SQL 0/1 对象，省去逐行参数数组和布尔装箱；NULL、BLOB 复制和业务异常仍经过边界检查。上述 API 尚不在 NuGet 的 `preview.1` 中，使用方法及限制见 [用户函数](docs/USER-FUNCTIONS.md)。
+函数按连接、名称和参数数量注册，可替换或移除。强类型入口直接调用委托，布尔结果复用 SQL 0/1 对象，省去逐行参数数组和布尔装箱；NULL、BLOB 复制和业务异常仍经过边界检查。使用方法及限制见 [用户函数](docs/USER-FUNCTIONS.md)。
 
 ## 与 SQLite 功能对比
 
-基准：PureDb `1.0.0-preview.2` **主分支源码** / SQLite `3.54.1`。✅ 已实现，⚠️ 有限制或需额外组件，❌ 尚未实现。功能标记表示支持范围，不表示相同的实现、成熟度或性能。
+基准：PureDb `1.0.0-preview.2` **预览版** / SQLite `3.54.1`。✅ 已实现，⚠️ 有限制或需额外组件，❌ 尚未实现。功能标记表示支持范围，不表示相同的实现、成熟度或性能。
 
 | 功能 | PureDb | SQLite |
 | :--- | :--- | :--- |
@@ -81,9 +81,23 @@ var eligible = db.Query("SELECT * FROM users WHERE RELIGIBLE(name)");
 | 启动恢复、校验、压缩 | ✅ 检查点、CRC32、日志恢复、Compact | ✅ 日志恢复、integrity_check、VACUUM |
 | 原地读写 SQLite 文件 | ⚠️ 可选纯 .NET 兼容包；UTF-8 / 4096 页 / 独占回滚日志子集 | ✅ 原生完整协议 |
 | SQLite WAL 文件协议兼容 | ❌ 兼容包拒绝 WAL | ✅ 支持 |
-| 跨平台验证 | ✅ Windows x64、Linux ARM64 | ✅ 多平台 |
+| Native AOT | ✅ 核心与纯托管兼容库；Windows x64、Linux x64、Linux ARM64 流水线实际运行 | ⚠️ C 内核可编译为本机代码，.NET 宿主取决于绑定 |
+| 跨平台验证 | ✅ Windows x64、Linux ARM64 实测；Linux x64 CI | ✅ 多平台 |
 
 SQLite 能力依据官方 [SQL 文档](https://www.sqlite.org/lang.html)、[自定义函数](https://www.sqlite.org/appfunc.html)、[JSON 文档](https://www.sqlite.org/json1.html)、[WAL 文档](https://www.sqlite.org/wal.html)；其 .NET 提供程序见 [Microsoft.Data.Sqlite](https://learn.microsoft.com/en-us/dotnet/standard/data/sqlite/)。PureDb 的逐类语法、例子、原理和限制见 [SQL 支持清单](docs/SQL-SUPPORT.md)。
+
+## Native AOT 发布对比
+
+<!-- AOT:START -->
+
+| 平台 | AOT 运行文件 MiB：PureDb / SQLite | PureDb 全进程启动 ms：JIT → AOT | AOT 耗时：领先 / 落后 / 接近 |
+| --- | --- | --- | --- |
+| Windows x64 | 6.13 / 5.72 | 216.72 → 33.74 | 10 / 3 / 2 |
+| Linux ARM64 | 6.06 / 3.79 | 429.11 → 43.43 | 10 / 5 / 0 |
+
+SQLite 体积包含其原生库；AOT 体积是本次应用发布闭包。详细 CPU、RSS、增删改及方法见 [AOT 完整报告](docs/AOT-PERFORMANCE.md)。
+
+<!-- AOT:END -->
 
 ## 主分支 preview.2 排序专项
 
@@ -93,14 +107,14 @@ SQLite 能力依据官方 [SQL 文档](https://www.sqlite.org/lang.html)、[自�
 
 | 平台 | 场景 | PureDb 耗时 µs | SQLite 耗时 µs | 耗时谁更低 | PureDb CPU µs | SQLite CPU µs | CPU 谁更低 |
 | --- | --- | ---: | ---: | --- | ---: | ---: | --- |
-| Windows x64 | 排序取 20 行 | 1,470.331 | 5,458.272 | 🟩 PureDb 3.71× | 1,467.710 | 5,434.783 | 🟩 PureDb 3.70× |
-| Windows x64 | 降序取 20 行，跳过 100 行 | 1,584.021 | 5,909.214 | 🟩 PureDb 3.73× | 1,572.327 | 5,769.231 | 🟩 PureDb 3.67× |
-| Windows x64 | 排序取 4096 行 | 5,827.236 | 12,769.402 | 🟩 PureDb 2.19× | 5,813.953 | 12,711.864 | 🟩 PureDb 2.19× |
-| Windows x64 | 主键范围取 20 行（对照） | 2.719 | 7.093 | 🟩 PureDb 2.61× | 2.719 | 7.093 | 🟩 PureDb 2.61× |
-| Linux ARM64 | 排序取 20 行 | 3,004.849 | 8,464.500 | 🟩 PureDb 2.82× | 3,010.952 | 8,496.708 | 🟩 PureDb 2.82× |
-| Linux ARM64 | 降序取 20 行，跳过 100 行 | 3,743.834 | 9,062.982 | 🟩 PureDb 2.42× | 3,744.657 | 9,074.410 | 🟩 PureDb 2.42× |
-| Linux ARM64 | 排序取 4096 行 | 15,285.600 | 20,145.197 | 🟩 PureDb 1.32× | 15,285.600 | 20,147.395 | 🟩 PureDb 1.32× |
-| Linux ARM64 | 主键范围取 20 行（对照） | 6.311 | 10.051 | 🟩 PureDb 1.59× | 6.311 | 10.057 | 🟩 PureDb 1.59× |
+| Windows x64 | 排序取 20 行 | 1,449.195 | 5,627.981 | 🟩 PureDb 3.88× | 1,436.782 | 5,713.619 | 🟩 PureDb 3.98× |
+| Windows x64 | 降序取 20 行，跳过 100 行 | 1,694.444 | 5,937.747 | 🟩 PureDb 3.50× | 1,693.002 | 6,000.000 | 🟩 PureDb 3.54× |
+| Windows x64 | 排序取 4096 行 | 5,803.245 | 12,982.000 | 🟩 PureDb 2.24× | 5,889.423 | 12,931.034 | 🟩 PureDb 2.20× |
+| Windows x64 | 主键范围取 20 行（对照） | 2.501 | 6.934 | 🟩 PureDb 2.77× | 2.501 | 6.920 | 🟩 PureDb 2.77× |
+| Linux ARM64 | 排序取 20 行 | 3,157.254 | 8,361.190 | 🟩 PureDb 2.65× | 3,157.471 | 8,495.033 | 🟩 PureDb 2.69× |
+| Linux ARM64 | 降序取 20 行，跳过 100 行 | 3,620.882 | 8,837.429 | 🟩 PureDb 2.44× | 3,623.558 | 8,853.988 | 🟩 PureDb 2.44× |
+| Linux ARM64 | 排序取 4096 行 | 14,692.658 | 20,157.053 | 🟩 PureDb 1.37× | 14,747.231 | 20,160.579 | 🟩 PureDb 1.37× |
+| Linux ARM64 | 主键范围取 20 行（对照） | 6.572 | 10.016 | 🟩 PureDb 1.52× | 6.573 | 10.032 | 🟩 PureDb 1.53× |
 
 托管分配相对优化前的变化、全部四个场景及方法见 [排序专项报告](docs/SORT-PERFORMANCE.md)。分配减少不等于 RSS 降低；此专项不代表全部 SQL 已超过 SQLite。
 
@@ -108,82 +122,82 @@ SQLite 能力依据官方 [SQL 文档](https://www.sqlite.org/lang.html)、[自�
 
 ## 主分支 preview.2 与 SQLite 全面对比
 
-**下方完整对比对应本轮 `preview.2` 开发构建，尚未发布至 NuGet。** Windows 与 Linux ARM64 使用同一份 DLL；旧的全面对比记录已替换。本轮优化的收益与仍落后项目见 [优化报告](docs/OPTIMIZATION.md)。
+**下方完整对比对应本轮 `preview.2` 发布构建。** Windows 与 Linux ARM64 使用同一份 DLL；旧的全面对比记录已替换。本轮优化的收益与仍落后项目见 [优化报告](docs/OPTIMIZATION.md)。
 
 <!-- PERFORMANCE:START -->
 
-主分支 `1.0.0-preview.2` 开发构建原生格式 vs SQLite 3.54.1，同机三轮中位数。该版本尚未发布至 NuGet。CPU 为满吞吐进程占用，内存为单库独立测量。使用率高不代表每次查询更费 CPU。以下是代表场景，全部 41 项、ADO、CPU 和文件数据见完整报告。
+`1.0.0-preview.2` 本轮发布构建原生格式 vs SQLite 3.54.1，同机三轮中位数。CPU 为满吞吐进程占用，内存为单库独立测量。使用率高不代表每次查询更费 CPU。以下是代表场景，全部 41 项、ADO、CPU 和文件数据见完整报告。
 
 | 平台 | PureDb 耗时胜 | SQLite 耗时胜 | 接近 |
 | --- | --- | --- | --- |
-| Windows x64 | 33 | 6 | 2 |
-| Linux ARM64 | 27 | 13 | 1 |
+| Windows x64 | 34 | 6 | 1 |
+| Linux ARM64 | 25 | 16 | 0 |
 
 ### Windows x64
 
 | 项目 | PureDb | SQLite | 谁更低 |
 | --- | --- | --- | --- |
-| SQL 主键完整行（µs/queries） | 0.387 | 5.205 | 🟩 PureDb 13.44× |
-| SQL 范围 20 行（µs/queries） | 2.903 | 14.665 | 🟩 PureDb 5.05× |
-| INNER JOIN（µs/queries） | 1.241 | 10.242 | 🟩 PureDb 8.25× |
-| JSON 表达式索引（µs/queries） | 2.553 | 21.555 | 🟩 PureDb 8.44× |
-| JSON 整数取余计数（µs/queries） | 3.887 | 492.965 | 🟩 PureDb 126.81× |
-| Full 逐条新增（µs/rows） | 24,428.963 | 24,174.499 | 🟨 接近 |
-| Full 逐条更新（µs/rows） | 25,795.701 | 28,820.095 | 🟩 PureDb 1.12× |
-| Full 逐条删除（µs/rows） | 26,060.507 | 23,710.411 | 🟥 SQLite 1.10× |
-| Full 批量新增（µs/rows） | 30.731 | 36.436 | 🟩 PureDb 1.19× |
-| Full 批量更新（µs/rows） | 28.249 | 53.217 | 🟩 PureDb 1.88× |
-| Full 批量删除（µs/rows） | 25.974 | 52.419 | 🟩 PureDb 2.02× |
-| Buffered 批量新增（µs/rows） | 2.209 | 1.744 | 🟥 SQLite 1.27× |
-| Buffered 批量更新（µs/rows） | 1.663 | 18.352 | 🟩 PureDb 11.04× |
-| Buffered 批量删除（µs/rows） | 1.464 | 15.869 | 🟩 PureDb 10.84× |
-| 四进程读取（µs/queries） | 32.935 | 15.908 | 🟥 SQLite 2.07× |
-| 四进程原子更新（µs/updates） | 205.403 | 110.762 | 🟥 SQLite 1.85× |
-| 重开并首次范围查询（µs/opens） | 677.960 | 610.100 | 🟥 SQLite 1.11× |
+| SQL 主键完整行（µs/queries） | 0.399 | 5.227 | 🟩 PureDb 13.11× |
+| SQL 范围 20 行（µs/queries） | 3.143 | 14.465 | 🟩 PureDb 4.60× |
+| INNER JOIN（µs/queries） | 1.246 | 10.198 | 🟩 PureDb 8.19× |
+| JSON 表达式索引（µs/queries） | 2.353 | 21.730 | 🟩 PureDb 9.24× |
+| JSON 整数取余计数（µs/queries） | 4.335 | 509.308 | 🟩 PureDb 117.49× |
+| Full 逐条新增（µs/rows） | 18,341.519 | 15,602.437 | 🟥 SQLite 1.18× |
+| Full 逐条更新（µs/rows） | 19,950.198 | 21,077.293 | 🟩 PureDb 1.06× |
+| Full 逐条删除（µs/rows） | 16,723.946 | 15,977.901 | 🟨 接近 |
+| Full 批量新增（µs/rows） | 23.231 | 30.431 | 🟩 PureDb 1.31× |
+| Full 批量更新（µs/rows） | 21.898 | 45.006 | 🟩 PureDb 2.06× |
+| Full 批量删除（µs/rows） | 17.140 | 38.168 | 🟩 PureDb 2.23× |
+| Buffered 批量新增（µs/rows） | 1.352 | 1.669 | 🟩 PureDb 1.23× |
+| Buffered 批量更新（µs/rows） | 1.814 | 17.560 | 🟩 PureDb 9.68× |
+| Buffered 批量删除（µs/rows） | 1.999 | 16.245 | 🟩 PureDb 8.13× |
+| 四进程读取（µs/queries） | 31.869 | 15.548 | 🟥 SQLite 2.05× |
+| 四进程原子更新（µs/updates） | 206.377 | 108.771 | 🟥 SQLite 1.90× |
+| 重开并首次范围查询（µs/opens） | 698.760 | 642.960 | 🟥 SQLite 1.09× |
 
 | 内存场景 | PureDb RSS MiB | SQLite RSS MiB | 谁更高、高多少 |
 | --- | --- | --- | --- |
-| point | 86.36 | 78.93 | **PureDb 更高**：多 7.43 MiB，高 9.4% |
-| range | 56.68 | 56.50 | **PureDb 更高**：多 0.18 MiB，高 0.3% |
-| json | 61.38 | 45.45 | **PureDb 更高**：多 15.94 MiB，高 35.1% |
+| point | 86.47 | 78.86 | **PureDb 更高**：多 7.62 MiB，高 9.7% |
+| range | 56.53 | 56.52 | **PureDb 更高**：多 0.02 MiB，高 0.0% |
+| json | 61.30 | 45.36 | **PureDb 更高**：多 15.95 MiB，高 35.2% |
 
 | 主键查询 CPU 指标 | PureDb | SQLite | 谁更高、高多少 |
 | --- | --- | --- | --- |
-| 占整机 CPU % | 8.333 | 8.507 | **SQLite 更高**：多 0.174 个百分点，高 2.1% |
-| 每次查询 CPU µs | 0.387 | 5.313 | **SQLite 更高**：多 4.926 µs，高 1271.7% |
+| 占整机 CPU % | 8.333 | 8.333 | 显示精度内相同 |
+| 每次查询 CPU µs | 0.399 | 5.227 | **SQLite 更高**：多 4.828 µs，高 1210.7% |
 
 ### Linux ARM64
 
 | 项目 | PureDb | SQLite | 谁更低 |
 | --- | --- | --- | --- |
-| SQL 主键完整行（µs/queries） | 1.127 | 3.579 | 🟩 PureDb 3.18× |
-| SQL 范围 20 行（µs/queries） | 6.564 | 19.315 | 🟩 PureDb 2.94× |
-| INNER JOIN（µs/queries） | 6.064 | 12.247 | 🟩 PureDb 2.02× |
-| JSON 表达式索引（µs/queries） | 5.711 | 30.097 | 🟩 PureDb 5.27× |
-| JSON 整数取余计数（µs/queries） | 12.967 | 668.052 | 🟩 PureDb 51.52× |
-| Full 逐条新增（µs/rows） | 2,113.026 | 1,035.954 | 🟥 SQLite 2.04× |
-| Full 逐条更新（µs/rows） | 1,113.355 | 1,362.941 | 🟩 PureDb 1.22× |
-| Full 逐条删除（µs/rows） | 1,368.571 | 1,484.841 | 🟩 PureDb 1.08× |
-| Full 批量新增（µs/rows） | 41.431 | 17.647 | 🟥 SQLite 2.35× |
-| Full 批量更新（µs/rows） | 32.696 | 13.798 | 🟥 SQLite 2.37× |
-| Full 批量删除（µs/rows） | 11.885 | 9.678 | 🟥 SQLite 1.23× |
-| Buffered 批量新增（µs/rows） | 9.179 | 7.372 | 🟥 SQLite 1.25× |
-| Buffered 批量更新（µs/rows） | 9.507 | 14.225 | 🟩 PureDb 1.50× |
-| Buffered 批量删除（µs/rows） | 10.673 | 6.917 | 🟥 SQLite 1.54× |
-| 四进程读取（µs/queries） | 68.317 | 31.979 | 🟥 SQLite 2.14× |
-| 四进程原子更新（µs/updates） | 297.658 | 60.261 | 🟥 SQLite 4.94× |
-| 重开并首次范围查询（µs/opens） | 1,244.560 | 407.920 | 🟥 SQLite 3.05× |
+| SQL 主键完整行（µs/queries） | 1.095 | 3.561 | 🟩 PureDb 3.25× |
+| SQL 范围 20 行（µs/queries） | 6.608 | 19.494 | 🟩 PureDb 2.95× |
+| INNER JOIN（µs/queries） | 6.313 | 12.466 | 🟩 PureDb 1.97× |
+| JSON 表达式索引（µs/queries） | 5.840 | 30.493 | 🟩 PureDb 5.22× |
+| JSON 整数取余计数（µs/queries） | 12.927 | 672.055 | 🟩 PureDb 51.99× |
+| Full 逐条新增（µs/rows） | 2,628.761 | 1,091.539 | 🟥 SQLite 2.41× |
+| Full 逐条更新（µs/rows） | 1,072.193 | 983.539 | 🟥 SQLite 1.09× |
+| Full 逐条删除（µs/rows） | 1,829.338 | 1,094.972 | 🟥 SQLite 1.67× |
+| Full 批量新增（µs/rows） | 32.761 | 20.767 | 🟥 SQLite 1.58× |
+| Full 批量更新（µs/rows） | 37.544 | 11.724 | 🟥 SQLite 3.20× |
+| Full 批量删除（µs/rows） | 18.984 | 10.698 | 🟥 SQLite 1.77× |
+| Buffered 批量新增（µs/rows） | 14.027 | 7.498 | 🟥 SQLite 1.87× |
+| Buffered 批量更新（µs/rows） | 12.880 | 9.619 | 🟥 SQLite 1.34× |
+| Buffered 批量删除（µs/rows） | 5.711 | 8.796 | 🟩 PureDb 1.54× |
+| 四进程读取（µs/queries） | 59.753 | 33.189 | 🟥 SQLite 1.80× |
+| 四进程原子更新（µs/updates） | 332.048 | 51.106 | 🟥 SQLite 6.50× |
+| 重开并首次范围查询（µs/opens） | 655.900 | 422.380 | 🟥 SQLite 1.55× |
 
 | 内存场景 | PureDb RSS MiB | SQLite RSS MiB | 谁更高、高多少 |
 | --- | --- | --- | --- |
-| point | 100.54 | 77.62 | **PureDb 更高**：多 22.91 MiB，高 29.5% |
-| range | 69.75 | 56.95 | **PureDb 更高**：多 12.79 MiB，高 22.5% |
-| json | 74.88 | 51.09 | **PureDb 更高**：多 23.79 MiB，高 46.6% |
+| point | 101.19 | 77.94 | **PureDb 更高**：多 23.25 MiB，高 29.8% |
+| range | 70.64 | 58.20 | **PureDb 更高**：多 12.44 MiB，高 21.4% |
+| json | 75.63 | 50.05 | **PureDb 更高**：多 25.59 MiB，高 51.1% |
 
 | 主键查询 CPU 指标 | PureDb | SQLite | 谁更高、高多少 |
 | --- | --- | --- | --- |
-| 占整机 CPU % | 15.675 | 12.541 | **PureDb 更高**：多 3.134 个百分点，高 25.0% |
-| 每次查询 CPU µs | 1.413 | 3.585 | **SQLite 更高**：多 2.172 µs，高 153.6% |
+| 占整机 CPU % | 15.636 | 12.525 | **PureDb 更高**：多 3.111 个百分点，高 24.8% |
+| 每次查询 CPU µs | 1.370 | 3.568 | **SQLite 更高**：多 2.199 µs，高 160.5% |
 
 <!-- PERFORMANCE:END -->
 

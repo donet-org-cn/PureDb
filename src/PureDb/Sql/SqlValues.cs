@@ -632,6 +632,27 @@ internal static class SqlCodec
         return row;
     }
 
+    /// <summary>按实际解码类型估算缓存行，不再为每列统一预留 80 字节而错误拒绝可容纳的整表。</summary>
+    /// <param name="row">已经解码的内部缓存行。</param>
+    /// <param name="encodedBytes">行的源编码长度，保守计入 BLOB 可能保留的只读后备数据。</param>
+    /// <returns>行数组、装箱数值、UTF-16 文本、BLOB 视图和源编码的保守字节估算；不含辅助索引。</returns>
+    internal static long CacheRowBytes(object?[] row, int encodedBytes)
+    {
+        // 源页可能由多行共享，仍按各行源编码及一个数组头计费，避免把保留的 BLOB 页视为免费。
+        long bytes = encodedBytes + 32L + 24L + row.Length * (long)IntPtr.Size;
+        foreach (object? value in row)
+            bytes += value switch
+            {
+                long or double => 24L,
+                string text => (24L + text.Length * 2L + 7) & ~7L,
+                CachedBlob => 32L,
+                byte[] blob => (24L + blob.Length + 7) & ~7L,
+                null => 0,
+                _ => throw new InvalidDataException("Unexpected cached SQL value")
+            };
+        return bytes;
+    }
+
     /// <summary>扫描编码行并只物化请求列，重复 BLOB 投影分别复制以隔离结果。</summary>
     /// <param name = "bytes">待校验或解码的只读编码字节。</param>
     /// <param name = "columns">行编码中预期存在的列数量。</param>

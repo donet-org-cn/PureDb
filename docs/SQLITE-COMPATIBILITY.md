@@ -1,6 +1,6 @@
 ﻿# 可选的纯 .NET SQLite 文件兼容库
 
-安装 `PureDb.SqliteCompatibility` `1.0.0-preview.1`；它依赖同版本 PureDb，核心不反向依赖兼容库。两个包均无原生依赖。
+安装 `PureDb.SqliteCompatibility` `1.0.0-preview.2`；它依赖同版本 PureDb，核心不反向依赖兼容库。两个包均无原生依赖。
 
 ```csharp
 using var db = PureDb.SqliteCompatibility.SqliteCompatibility.Open("existing.sqlite");
