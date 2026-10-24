@@ -1,0 +1,74 @@
+{
+  "Runtime": "10.0.1",
+  "OS": "Ubuntu 20.04.5 LTS",
+  "Architecture": "Arm64",
+  "CoreSHA256": "B1C917A7C5E8E1C8FFE1A65E0190723261FE1C58A117B94F566975A5005E064B",
+  "Samples": [
+    {
+      "Function": "typed_reject",
+      "Round": 1,
+      "RowsPerQuery": 20000,
+      "Repetitions": 914,
+      "WarmupMilliseconds": 500,
+      "MeasurementMilliseconds": 750,
+      "ElapsedMilliseconds": 750.4659,
+      "CpuMilliseconds": 1068.506,
+      "AllocatedBytes": 2657848
+    },
+    {
+      "Function": "array_reject",
+      "Round": 1,
+      "RowsPerQuery": 20000,
+      "Repetitions": 446,
+      "WarmupMilliseconds": 500,
+      "MeasurementMilliseconds": 750,
+      "ElapsedMilliseconds": 751.0029,
+      "CpuMilliseconds": 757.269,
+      "AllocatedBytes": 714859544
+    },
+    {
+      "Function": "array_reject",
+      "Round": 2,
+      "RowsPerQuery": 20000,
+      "Repetitions": 464,
+      "WarmupMilliseconds": 500,
+      "MeasurementMilliseconds": 750,
+      "ElapsedMilliseconds": 750.8115,
+      "CpuMilliseconds": 768.359,
+      "AllocatedBytes": 743710376
+    },
+    {
+      "Function": "typed_reject",
+      "Round": 2,
+      "RowsPerQuery": 20000,
+      "Repetitions": 1184,
+      "WarmupMilliseconds": 500,
+      "MeasurementMilliseconds": 750,
+      "ElapsedMilliseconds": 750.4731,
+      "CpuMilliseconds": 755.102,
+      "AllocatedBytes": 3381544
+    },
+    {
+      "Function": "typed_reject",
+      "Round": 3,
+      "RowsPerQuery": 20000,
+      "Repetitions": 1186,
+      "WarmupMilliseconds": 500,
+      "MeasurementMilliseconds": 750,
+      "ElapsedMilliseconds": 750.0122,
+      "CpuMilliseconds": 750.019,
+      "AllocatedBytes": 3387256
+    },
+    {
+      "Function": "array_reject",
+      "Round": 3,
+      "RowsPerQuery": 20000,
+      "Repetitions": 435,
+      "WarmupMilliseconds": 500,
+      "MeasurementMilliseconds": 750,
+      "ElapsedMilliseconds": 751.4417,
+      "CpuMilliseconds": 766.227,
+      "AllocatedBytes": 697228480
+    }
+  ]
+}

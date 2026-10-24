@@ -1,6 +1,6 @@
 ﻿# PureDb 使用与支持范围
 
-版本：`1.0.0-preview.1`。安装与功能矩阵见 [README](../README.md)。
+主分支源码版本：`1.0.0-preview.2`；NuGet 已发布版本：`1.0.0-preview.1`。本页的基本用法两者均支持，用户函数等主分支新增能力见 [README](../README.md) 和 [用户函数](USER-FUNCTIONS.md)。
 
 ## SQL、JSON 和 JOIN 示例
 

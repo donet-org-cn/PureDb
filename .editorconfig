@@ -3,6 +3,15 @@
 charset = utf-8
 indent_style = space
 indent_size = 4
+end_of_line = lf
 insert_final_newline = true
 [*.{md,csv,ps1}]
 charset = utf-8-bom
+
+[*.cs]
+end_of_line = lf
+csharp_new_line_before_open_brace = all
+csharp_preserve_single_line_blocks = false
+csharp_preserve_single_line_statements = false
+csharp_space_after_comma = true
+csharp_space_around_binary_operators = before_and_after
