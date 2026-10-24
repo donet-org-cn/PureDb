@@ -18,7 +18,11 @@ var rows = db.Query("SELECT id FROM users LIMIT 20");
 | 多进程同时访问 | 本预览版兼容后端要求独占使用；Linux 需显式设置 `LinuxExclusiveProcess=true` |
 | WAL / UTF-16 / 任意页尺寸 / 任意 SQLite schema | 不支持，明确拒绝 |
 | JSONB 二进制互通 | 不支持；使用 JSON 文本交换 |
+| preview.2 扩展查询 | 原有受支持表可执行 CTE、集合、子查询、窗口、JSON5 和 JSON 表函数 |
+| preview.2 新增持久化模式 | 复合索引、外键、默认值、视图和触发器尚未接入页写入；明确拒绝，原版格式支持 |
 
 `LinuxExclusiveProcess` 与 `EnableIncrementalUpdates` 也可通过兼容 ADO.NET 连接属性在 Open 前设置，不属于连接字符串参数。原生格式 Shared 模式与这里的 SQLite 兼容独占模式是两个不同后端。
+
+完整 SQL 分类见 [SQL 支持清单](SQL-SUPPORT.md)。主库新增执行器能力不代表 SQLite 页格式已支持相应持久化模式。导入导出也拒绝尚未接入的新模式；测试检查失败时原文件字节不变、不发布残缺文件，并通过原生 integrity_check。
 
 默认 `new SqlDatabase("app.pdb")` 始终使用 PureDb 文件格式。最新性能表只评价原生格式，不将其成绩用于声称兼容后端也有相同速度。现有回归包含 SQLite integrity_check、跨引擎读取/写入、overflow、索引和进程强杀恢复验证。

@@ -17,6 +17,7 @@
     <Project Path="tests/PureDb.CompatibilityTests/PureDb.CompatibilityTests.csproj" />
     <Project Path="tests/PureDb.FeatureTests/PureDb.FeatureTests.csproj" />
     <Project Path="tests/PureDb.SortTests/PureDb.SortTests.csproj" />
+    <Project Path="tests/PureDb.SqlCompatibilityTests/PureDb.SqlCompatibilityTests.csproj" />
     <Project Path="tests/PureDb.SqlTests/PureDb.SqlTests.csproj" />
     <Project Path="tests/PureDb.StorageTests/PureDb.StorageTests.csproj" />
     <Project Path="tests/PureDb.Tests/PureDb.Tests.csproj" />

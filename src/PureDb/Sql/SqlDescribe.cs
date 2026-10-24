@@ -1,5 +1,4 @@
 namespace PureDb;
-
 /// <remarks>本部分根据模式及表达式推断结果类型，不执行用户函数探测类型。</remarks>
 internal sealed partial class SqlSession
 {
@@ -9,19 +8,21 @@ internal sealed partial class SqlSession
     internal bool SchemaChanged => _mutations is not null && _mutations.ContainsKey(-1);
 
     /// <summary>仅根据模式和表达式推断结果 CLR 类型，不执行用户函数来探测类型。</summary>
-    /// <param name="select">当前已解析的 SELECT 查询结构。</param>
-    /// <param name="parameters">本次调用的参数值或编译期间收集的参数名称。</param>
+    /// <param name = "select">当前已解析的 SELECT 查询结构。</param>
+    /// <param name = "parameters">本次调用的参数值或编译期间收集的参数名称。</param>
     /// <returns>按方法规定的顺序和可见性组织的结果集合。</returns>
     internal IReadOnlyList<Type> Describe(Select select, IReadOnlyDictionary<string, object?> parameters)
     {
-        var binding = new SqlBinding(owner);
-        if (select.From.Table.Length != 0)
-            binding.Add(Catalog.Table(select.From.Table), select.From.Alias);
+        var binding = new SqlBinding(owner, this);
+        if (select.From.Table.Length != 0 || select.From.Query is not null || select.From.Arguments is not null)
+            binding.Add(SourceTable(select.From, parameters), select.From.Alias);
         foreach (var join in select.Joins)
-            binding.Add(Catalog.Table(join.Source.Table), join.Source.Alias);
+            binding.Add(SourceTable(join.Source, parameters), join.Source.Alias);
         Type Column(string name)
         {
-            int ordinal = binding.Resolve(name);
+            int ordinal = binding.FindColumn(name);
+            if (ordinal < 0)
+                return OuterColumn(name)?.Value?.GetType() ?? typeof(object);
             foreach (var source in binding.Sources)
                 if (ordinal >= source.Offset && ordinal < source.Offset + source.Table.Columns.Count)
                     return source.Table.Columns[ordinal - source.Offset].Type switch
@@ -42,6 +43,9 @@ internal sealed partial class SqlSession
             "parameter" => SqlPrimaryPlan.Parameter(e, parameters)?.GetType() ?? typeof(object),
             "COUNT" or "LENGTH" or "JSON_VALID" or "JSONB_VALID" or "JSON_ARRAY_LENGTH" or "JSONB_ARRAY_LENGTH" or "=" or "!=" or "<>" or "<" or ">" or "<=" or ">=" or "AND" or "OR" or "NOT" or "IS NULL" or "IS NOT NULL" => typeof(long),
             "AVG" => typeof(double),
+            "ROW_NUMBER" or "RANK" or "DENSE_RANK" or "NTILE" => typeof(long),
+            "PERCENT_RANK" or "CUME_DIST" => typeof(double),
+            "LAG" or "LEAD" or "FIRST_VALUE" or "LAST_VALUE" or "NTH_VALUE" => Expression(e.Args[0]),
             "SUM" or "MIN" or "MAX" or "negate" => Expression(e.Args[0]),
             "+" or "-" or "*" or "/" or "%" => e.Args.All(a => Expression(a) == typeof(long)) ? typeof(long) : typeof(double),
             "LOWER" or "UPPER" or "||" or "JSON_TYPE" or "JSONB_TYPE" => typeof(string),
@@ -56,7 +60,7 @@ internal sealed partial class SqlSession
                 types.Add(Expression(p.Expr));
             else
                 foreach (var source in binding.Sources.Where(s => p.Expr.Value is null || s.Alias.Equals((string)p.Expr.Value, StringComparison.OrdinalIgnoreCase)))
-                    foreach (var column in source.Table.Columns)
+                    foreach (var column in source.Table.Columns.Where(c => !c.Hidden))
                         types.Add(Column(source.Alias + "." + column.Name));
         }
 

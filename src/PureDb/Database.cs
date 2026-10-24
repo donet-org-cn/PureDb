@@ -33,6 +33,8 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     private int _generation;
     /// <summary>当前已提交版本，用于 SQL 表缓存失效和乐观事务校验。</summary>
     internal long Version => _version;
+    /// <summary>当前文件的实例访问方式，供 SQL 事务验证锁定能力。</summary>
+    internal DatabaseAccess Access => _options.Access;
 
     private FileStream _file = null!;
     private SafeFileHandle _handle = null!;
@@ -60,16 +62,16 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     private readonly object _disposeSync = new();
     private Task? _disposeTask;
     /// <summary>记录在追加日志中的位置、索引键和按需校验信息。</summary>
-    /// <param name="Key">索引键或查询主键表达式。</param>
-    /// <param name="Offset">数据在文件中的字节偏移，或查询的 OFFSET 表达式。</param>
-    /// <param name="Length">编码值的字节长度。</param>
-    /// <param name="Crc">IEEE CRC-32 校验和。</param>
-    /// <param name="Verify">首次读取时是否需要校验数据。</param>
+    /// <param name = "Key">索引键或查询主键表达式。</param>
+    /// <param name = "Offset">数据在文件中的字节偏移，或查询的 OFFSET 表达式。</param>
+    /// <param name = "Length">编码值的字节长度。</param>
+    /// <param name = "Crc">IEEE CRC-32 校验和。</param>
+    /// <param name = "Verify">首次读取时是否需要校验数据。</param>
     private readonly record struct Entry(long Key, long Offset, int Length, uint Crc = 0, bool Verify = false);
     /// <summary>写入队列中的事务、变换或压缩请求；完成信号对应明确的最终结果。</summary>
-    /// <param name="frame">已编码事务帧；变换或压缩请求可为 null。</param>
-    /// <param name="compact">是否请求压缩数据库。</param>
-    /// <param name="completion">发布最终提交结果的完成信号。</param>
+    /// <param name = "frame">已编码事务帧；变换或压缩请求可为 null。</param>
+    /// <param name = "compact">是否请求压缩数据库。</param>
+    /// <param name = "completion">发布最终提交结果的完成信号。</param>
     private sealed class Request(byte[]? frame, bool compact, TaskCompletionSource completion)
     {
         /// <summary>准入前已经编码的事务帧；变换请求可在消费时生成。</summary>
@@ -85,8 +87,8 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>打开或创建原生格式数据库，并恢复已提交事务；访问方式由选项指定。</summary>
-    /// <param name="path">当前数据库或索引文件路径。</param>
-    /// <param name="options">可选配置；为 null 时使用默认值。</param>
+    /// <param name = "path">当前数据库或索引文件路径。</param>
+    /// <param name = "options">可选配置；为 null 时使用默认值。</param>
     /// <exception cref = "System.IO.InvalidDataException">文件头、已提交日志或恢复数据不合法。</exception>
     public Database(string path, DatabaseOptions? options = null)
     {
@@ -188,7 +190,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>读取协调标记并校验其稳定性；标记不是数据恢复依据。</summary>
-    /// <param name="stamp">成功时返回通过稳定性校验的协调标记。</param>
+    /// <param name = "stamp">成功时返回通过稳定性校验的协调标记。</param>
     private void ReadCoordination(Span<byte> stamp)
     {
         BinaryPrimitives.WriteInt64LittleEndian(stamp, _coordView!.ReadInt64(0));
@@ -208,7 +210,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>重新定位必要的数据文件并恢复其他进程的提交，丢弃失效缓存。</summary>
-    /// <param name="force">是否忽略快速协调提示，强制检查真实数据文件。</param>
+    /// <param name = "force">是否忽略快速协调提示，强制检查真实数据文件。</param>
     private void RefreshShared(bool force = false)
     {
         if (_processMutex is null)
@@ -262,7 +264,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
         private readonly Database _db;
         private readonly bool _readLock;
         /// <summary>取得数据库读取保护，并在需要时刷新其他进程的已提交变更。</summary>
-        /// <param name="db">提供存储状态和读取保护的所属数据库。</param>
+        /// <param name = "db">提供存储状态和读取保护的所属数据库。</param>
         public ReadLease(Database db)
         {
             _db = db;
@@ -313,13 +315,13 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>在读取租约内调用快照回调；回调不能将受保护的内存视图泄露到租约之外。</summary>
-    /// <param name="action">只在读取保护期内执行的快照回调。</param>
-    /// <typeparam name="T">回调返回值或请求转换的结果类型。</typeparam>
+    /// <param name = "action">只在读取保护期内执行的快照回调。</param>
+    /// <typeparam name = "T">回调返回值或请求转换的结果类型。</typeparam>
     /// <returns>回调或类型转换得到的结果。</returns>
     T ISqlStorage.Read<T>(Func<ISqlSnapshot, T> action) => Read(action);
     /// <summary>在读取租约内调用快照回调；回调不能将受保护的内存视图泄露到租约之外。</summary>
-    /// <param name="action">只在读取保护期内执行的快照回调。</param>
-    /// <typeparam name="T">回调返回值或请求转换的结果类型。</typeparam>
+    /// <param name = "action">只在读取保护期内执行的快照回调。</param>
+    /// <typeparam name = "T">回调返回值或请求转换的结果类型。</typeparam>
     /// <returns>回调或类型转换得到的结果。</returns>
     internal T Read<T>(Func<ISqlSnapshot, T> action)
     {
@@ -328,10 +330,10 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>在读取租约内调用快照回调；回调不能将受保护的内存视图泄露到租约之外。</summary>
-    /// <param name="action">只在读取保护期内执行的快照回调。</param>
-    /// <param name="state">传给快照回调的调用状态；避免额外捕获闭包。</param>
-    /// <typeparam name="T">回调返回值或请求转换的结果类型。</typeparam>
-    /// <typeparam name="TState">传给快照回调的调用状态类型。</typeparam>
+    /// <param name = "action">只在读取保护期内执行的快照回调。</param>
+    /// <param name = "state">传给快照回调的调用状态；避免额外捕获闭包。</param>
+    /// <typeparam name = "T">回调返回值或请求转换的结果类型。</typeparam>
+    /// <typeparam name = "TState">传给快照回调的调用状态类型。</typeparam>
     /// <returns>回调或类型转换得到的结果。</returns>
     internal T Read<T, TState>(Func<ISqlSnapshot, TState, T> action, TState state)
     {
@@ -340,7 +342,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>受数据库读取保护约束的存储快照外观，不独立延长文件或锁的生命周期。</summary>
-    /// <param name="db">提供读取保护和存储状态的所属数据库。</param>
+    /// <param name = "db">提供读取保护和存储状态的所属数据库。</param>
     internal sealed class Snapshot(Database db) : ISqlSnapshot
     {
         /// <summary>是否支持原生持久化索引；兼容或叠加快照可关闭专用路径。</summary>
@@ -355,8 +357,8 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
         public long SourceTime => File.GetLastWriteTimeUtc(db._path).Ticks;
 
         /// <summary>取得指定记录对应的日志位置及校验信息。</summary>
-        /// <param name="id">原生记录 ID 或受支持的整数主键。</param>
-        /// <param name="key">用于查询或统计的内部表键或索引键。</param>
+        /// <param name = "id">原生记录 ID 或受支持的整数主键。</param>
+        /// <param name = "key">用于查询或统计的内部表键或索引键。</param>
         /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
         public DiskIndex.Item IndexItem(long id, long key)
         {
@@ -365,7 +367,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
         }
 
         /// <summary>读取一个索引项对应的只读记录字节。</summary>
-        /// <param name="entry">已定位的日志索引项，包含偏移、长度及校验和。</param>
+        /// <param name = "entry">已定位的日志索引项，包含偏移、长度及校验和。</param>
         /// <returns>受当前读取保护期约束的只读字节片段。</returns>
         public ReadOnlySpan<byte> IndexValue(DiskIndex.Item entry)
         {
@@ -375,11 +377,11 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
         }
 
         /// <summary>读取索引项对应的只读记录内存，供 SQL 缓存在版本约束下使用。</summary>
-        /// <param name="entry">已定位的日志索引项，包含偏移、长度及校验和。</param>
+        /// <param name = "entry">已定位的日志索引项，包含偏移、长度及校验和。</param>
         /// <returns>只读字节内存；不得修改，且必须遵守所属存储的生命周期。</returns>
         public ReadOnlyMemory<byte> IndexMemory(DiskIndex.Item entry) => db.ReadMemory(new(0, entry.Offset, entry.Length, entry.Crc, true), entry.Id);
         /// <summary>按原生记录 ID 枚举指定表的索引项。</summary>
-        /// <param name="tableId">表在模式目录中的内部 ID。</param>
+        /// <param name = "tableId">表在模式目录中的内部 ID。</param>
         /// <returns>按方法规定的顺序和可见性组织的结果集合。</returns>
         public IEnumerable<DiskIndex.Item> TableEntries(int tableId)
         {
@@ -388,9 +390,9 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
         }
 
         /// <summary>按原生记录 ID 的闭区间枚举指定表的索引项。</summary>
-        /// <param name="tableId">表在模式目录中的内部 ID。</param>
-        /// <param name="min">查询闭区间的下界，包含该值。</param>
-        /// <param name="max">查询闭区间的上界，包含该值。</param>
+        /// <param name = "tableId">表在模式目录中的内部 ID。</param>
+        /// <param name = "min">查询闭区间的下界，包含该值。</param>
+        /// <param name = "max">查询闭区间的上界，包含该值。</param>
         /// <returns>按方法规定的顺序和可见性组织的结果集合。</returns>
         public IEnumerable<DiskIndex.Item> TableEntriesRange(int tableId, long min, long max)
         {
@@ -403,15 +405,15 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
         public long Version => db.Version;
 
         /// <summary>获取指定表或键空间的变化版本，用于缓存失效。</summary>
-        /// <param name="key">用于查询或统计的内部表键或索引键。</param>
+        /// <param name = "key">用于查询或统计的内部表键或索引键。</param>
         /// <returns>按方法规定计算的数量、位置、版本或比较结果。</returns>
         public long KeyVersion(long key) => db._keyVersions.GetValueOrDefault(key, db._resetVersion);
         /// <summary>统计指定表或键空间中的有效记录数。</summary>
-        /// <param name="key">用于查询或统计的内部表键或索引键。</param>
+        /// <param name = "key">用于查询或统计的内部表键或索引键。</param>
         /// <returns>按方法规定计算的数量、位置、版本或比较结果。</returns>
         public int CountKey(long key) => db._keyCounts.GetValueOrDefault(key);
         /// <summary>枚举指定表或键空间内的有效记录 ID。</summary>
-        /// <param name="key">用于查询或统计的内部表键或索引键。</param>
+        /// <param name = "key">用于查询或统计的内部表键或索引键。</param>
         /// <returns>按方法规定的顺序和可见性组织的结果集合。</returns>
         public IEnumerable<long> Ids(long key)
         {
@@ -429,27 +431,27 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
         }
 
         /// <summary>取得记录的只读字节片段；仅在读取保护期间有效，不得修改。</summary>
-        /// <param name="id">原生记录 ID 或受支持的整数主键。</param>
+        /// <param name = "id">原生记录 ID 或受支持的整数主键。</param>
         /// <returns>受当前读取保护期约束的只读字节片段。</returns>
         public ReadOnlySpan<byte> Value(long id) => db._primary.TryGetValue(id, out var entry) ? db.ReadValue(entry, id) : default;
         /// <summary>取得记录的只读内存；不得修改或越过所属读取保护期持有。</summary>
-        /// <param name="id">原生记录 ID 或受支持的整数主键。</param>
+        /// <param name = "id">原生记录 ID 或受支持的整数主键。</param>
         /// <returns>只读字节内存；不得修改，且必须遵守所属存储的生命周期。</returns>
         public ReadOnlyMemory<byte> ValueMemory(long id) => db._primary.TryGetValue(id, out var entry) ? db.ReadMemory(entry, id) : default;
         /// <summary>当前快照中的有效记录总数。</summary>
         public long Count => db._primary.Count;
 
         /// <summary>按记录 ID 读取独立记录；不存在时返回 null。</summary>
-        /// <param name="id">原生记录 ID 或受支持的整数主键。</param>
+        /// <param name = "id">原生记录 ID 或受支持的整数主键。</param>
         /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
         public DbRecord? Get(long id) => db._primary.TryGetValue(id, out var e) ? db.ReadRecord(id, e) : null;
         /// <summary>判断当前视图是否存在指定记录 ID。</summary>
-        /// <param name="id">原生记录 ID 或受支持的整数主键。</param>
+        /// <param name = "id">原生记录 ID 或受支持的整数主键。</param>
         /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
         public bool Contains(long id) => db._primary.TryGetValue(id, out _);
         /// <summary>按索引键闭区间枚举当前视图中的有效记录。</summary>
-        /// <param name="min">查询闭区间的下界，包含该值。</param>
-        /// <param name="max">查询闭区间的上界，包含该值。</param>
+        /// <param name = "min">查询闭区间的下界，包含该值。</param>
+        /// <param name = "max">查询闭区间的上界，包含该值。</param>
         /// <returns>按方法规定的顺序和可见性组织的结果集合。</returns>
         public IEnumerable<DbRecord> Range(long min, long max)
         {
@@ -471,7 +473,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>按记录 ID 读取一条记录；返回的数据与内部页缓存独立。</summary>
-    /// <param name="id">记录的唯一 ID。</param>
+    /// <param name = "id">记录的唯一 ID。</param>
     /// <returns>找到的独立记录；不存在时为 null。</returns>
     public DbRecord? Get(long id)
     {
@@ -480,9 +482,9 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>按 IndexKey 的闭区间查询记录，并按索引键及记录 ID 升序返回。</summary>
-    /// <param name="min">查询闭区间的下界，包含该值。</param>
-    /// <param name="max">查询闭区间的上界，包含该值。</param>
-    /// <param name="limit">返回记录的最大数量。</param>
+    /// <param name = "min">查询闭区间的下界，包含该值。</param>
+    /// <param name = "max">查询闭区间的上界，包含该值。</param>
+    /// <param name = "limit">返回记录的最大数量。</param>
     /// <returns>按索引顺序排列、最多包含 limit 条记录的列表。</returns>
     public IReadOnlyList<DbRecord> Query(long min, long max, int limit = 1000)
     {
@@ -502,8 +504,8 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>取得满足所需前缀长度的数据页缓存；不会读取尚未提交的尾部。</summary>
-    /// <param name="page">当前数据页或热点页；具体类型由当前签名确定。</param>
-    /// <param name="required">本次读取需要的页内有效前缀长度。</param>
+    /// <param name = "page">当前数据页或热点页；具体类型由当前签名确定。</param>
+    /// <param name = "required">本次读取需要的页内有效前缀长度。</param>
     /// <returns>本次编码或复制得到的字节数组。</returns>
     [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
     private byte[] Page(long page, int required)
@@ -514,7 +516,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>从当前提交范围读取一个数据页并加入受预算限制的缓存。</summary>
-    /// <param name="page">当前数据页或热点页；具体类型由当前签名确定。</param>
+    /// <param name = "page">当前数据页或热点页；具体类型由当前签名确定。</param>
     /// <returns>本次编码或复制得到的字节数组。</returns>
     private byte[] LoadPage(long page)
     {
@@ -535,8 +537,8 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>读取、校验并复制一条记录，返回的数据可交给公开调用方。</summary>
-    /// <param name="id">原生记录 ID 或受支持的整数主键。</param>
-    /// <param name="e">已定位记录的日志偏移、长度、索引键及 CRC 信息。</param>
+    /// <param name = "id">原生记录 ID 或受支持的整数主键。</param>
+    /// <param name = "e">已定位记录的日志偏移、长度、索引键及 CRC 信息。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     private DbRecord ReadRecord(long id, Entry e)
     {
@@ -562,8 +564,8 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>读取记录的只读字节片段并按需校验；片段仅在读取保护期内有效。</summary>
-    /// <param name="e">已定位记录的日志偏移、长度、索引键及 CRC 信息。</param>
-    /// <param name="id">原生记录 ID 或受支持的整数主键。</param>
+    /// <param name = "e">已定位记录的日志偏移、长度、索引键及 CRC 信息。</param>
+    /// <param name = "id">原生记录 ID 或受支持的整数主键。</param>
     /// <returns>受当前读取保护期约束的只读字节片段。</returns>
     private ReadOnlySpan<byte> ReadValue(Entry e, long? id = null)
     {
@@ -580,8 +582,8 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>取得可缓存的只读记录内存；跨页记录使用独立副本。</summary>
-    /// <param name="e">已定位记录的日志偏移、长度、索引键及 CRC 信息。</param>
-    /// <param name="id">原生记录 ID 或受支持的整数主键。</param>
+    /// <param name = "e">已定位记录的日志偏移、长度、索引键及 CRC 信息。</param>
+    /// <param name = "id">原生记录 ID 或受支持的整数主键。</param>
     /// <returns>只读字节内存；不得修改，且必须遵守所属存储的生命周期。</returns>
     private ReadOnlyMemory<byte> ReadMemory(Entry e, long? id = null)
     {
@@ -598,20 +600,20 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>原子写入或替换一条记录；返回的任务完成时可确定提交结果。</summary>
-    /// <param name="id">记录的唯一 ID。</param>
-    /// <param name="indexKey">用于范围查询的索引键。</param>
-    /// <param name="value">要写入的数据；写入接口在准入前复制，构造 Mutation 本身不复制。</param>
-    /// <param name="cancellationToken">取消请求；已准入写入不会因取消而返回不明确的提交结果。</param>
+    /// <param name = "id">记录的唯一 ID。</param>
+    /// <param name = "indexKey">用于范围查询的索引键。</param>
+    /// <param name = "value">要写入的数据；写入接口在准入前复制，构造 Mutation 本身不复制。</param>
+    /// <param name = "cancellationToken">取消请求；已准入写入不会因取消而返回不明确的提交结果。</param>
     /// <returns>完成时表示该操作结束的任务。</returns>
     public ValueTask PutAsync(long id, long indexKey, ReadOnlyMemory<byte> value, CancellationToken cancellationToken = default) => WriteAsync([Mutation.Put(id, indexKey, value)], cancellationToken);
     /// <summary>原子删除指定 ID 的记录；删除不存在的记录不会失败。</summary>
-    /// <param name="id">记录的唯一 ID。</param>
-    /// <param name="cancellationToken">取消请求；已准入写入不会因取消而返回不明确的提交结果。</param>
+    /// <param name = "id">记录的唯一 ID。</param>
+    /// <param name = "cancellationToken">取消请求；已准入写入不会因取消而返回不明确的提交结果。</param>
     /// <returns>完成时表示该操作结束的任务。</returns>
     public ValueTask DeleteAsync(long id, CancellationToken cancellationToken = default) => WriteAsync([Mutation.Delete(id)], cancellationToken);
     /// <summary>复制输入后将整批操作作为一个原子事务提交；取消仅影响队列准入，已准入事务等待明确的提交结果。</summary>
-    /// <param name="mutations">按顺序执行的写入和删除操作。</param>
-    /// <param name="cancellationToken">取消请求；已准入写入不会因取消而返回不明确的提交结果。</param>
+    /// <param name = "mutations">按顺序执行的写入和删除操作。</param>
+    /// <param name = "cancellationToken">取消请求；已准入写入不会因取消而返回不明确的提交结果。</param>
     /// <returns>完成时表示该操作结束的任务。</returns>
     /// <exception cref = "System.ArgumentException">编码事务超过配置允许的最大大小。</exception>
     public ValueTask WriteAsync(IReadOnlyList<Mutation> mutations, CancellationToken cancellationToken = default)
@@ -624,7 +626,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>在准入前编码完整原子事务帧，并检查事务大小限制和校验和。</summary>
-    /// <param name="mutations">按事务顺序排列的写入和删除操作。</param>
+    /// <param name = "mutations">按事务顺序排列的写入和删除操作。</param>
     /// <returns>本次编码或复制得到的字节数组。</returns>
     private byte[] Encode(IReadOnlyList<Mutation> mutations)
     {
@@ -653,13 +655,13 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>在写入保护期间运行 SQL 变换并提交生成的变更，防止约束校验与写入之间发生竞态。</summary>
-    /// <param name="transform">在存储保护期内从一致快照生成原子变更的回调。</param>
-    /// <param name="token">取消请求；原子提交开始后需完成提交或回滚。</param>
+    /// <param name = "transform">在存储保护期内从一致快照生成原子变更的回调。</param>
+    /// <param name = "token">取消请求；原子提交开始后需完成提交或回滚。</param>
     /// <returns>完成时提供直接受影响行数的任务。</returns>
     ValueTask<int> ISqlStorage.TransformAsync(Func<ISqlSnapshot, (Mutation[] Mutations, int Affected)> transform, CancellationToken token) => TransformAsync(transform, token);
     /// <summary>在写入保护期间运行 SQL 变换并提交生成的变更，防止约束校验与写入之间发生竞态。</summary>
-    /// <param name="transform">在存储保护期内从一致快照生成原子变更的回调。</param>
-    /// <param name="token">取消请求；原子提交开始后需完成提交或回滚。</param>
+    /// <param name = "transform">在存储保护期内从一致快照生成原子变更的回调。</param>
+    /// <param name = "token">取消请求；原子提交开始后需完成提交或回滚。</param>
     /// <returns>完成时提供直接受影响行数的任务。</returns>
     internal async ValueTask<int> TransformAsync(Func<ISqlSnapshot, (Mutation[] Mutations, int Affected)> transform, CancellationToken token)
     {
@@ -675,8 +677,8 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>在写锁内校验并编码 SQL 变更，追加成功后发布版本；错误将写入器置为故障状态。</summary>
-    /// <param name="transform">在存储保护期内从一致快照生成原子变更的回调。</param>
-    /// <param name="token">取消请求；原子提交开始后需完成提交或回滚。</param>
+    /// <param name = "transform">在存储保护期内从一致快照生成原子变更的回调。</param>
+    /// <param name = "token">取消请求；原子提交开始后需完成提交或回滚。</param>
     /// <returns>按方法规定计算的数量、位置、版本或比较结果。</returns>
     private int TransformBuffered(Func<ISqlSnapshot, (Mutation[] Mutations, int Affected)> transform, CancellationToken token)
     {
@@ -728,7 +730,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>排队重写有效记录以回收日志空间，原子替换文件并重建索引。</summary>
-    /// <param name="cancellationToken">取消请求；已准入写入不会因取消而返回不明确的提交结果。</param>
+    /// <param name = "cancellationToken">取消请求；已准入写入不会因取消而返回不明确的提交结果。</param>
     /// <returns>完成时表示该操作结束的任务。</returns>
     public ValueTask CompactAsync(CancellationToken cancellationToken = default)
     {
@@ -737,8 +739,8 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>等待写入队列准入，然后等待请求的明确最终结果；准入后的取消不改变提交结果。</summary>
-    /// <param name="request">等待准入或执行的写入请求。</param>
-    /// <param name="token">取消请求；原子提交开始后需完成提交或回滚。</param>
+    /// <param name = "request">等待准入或执行的写入请求。</param>
+    /// <param name = "token">取消请求；原子提交开始后需完成提交或回滚。</param>
     /// <returns>表示操作最终完成的任务。</returns>
     private async ValueTask Enqueue(Request request, CancellationToken token)
     {
@@ -878,8 +880,8 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>将已提交帧中的操作应用到主索引、计数和缓存版本。</summary>
-    /// <param name="frame">包含完整事务头及操作的编码帧。</param>
-    /// <param name="offset">文件或缓冲区中的字节偏移。</param>
+    /// <param name = "frame">包含完整事务头及操作的编码帧。</param>
+    /// <param name = "offset">文件或缓冲区中的字节偏移。</param>
     private void Apply(ReadOnlySpan<byte> frame, long offset)
     {
         _version++;
@@ -915,8 +917,8 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>写入原生文件头和代次，用于识别格式及原子替换后的新文件。</summary>
-    /// <param name="stream">接收原生文件头的输出流。</param>
-    /// <param name="generation">数据文件代次，用于识别原子替换。</param>
+    /// <param name = "stream">接收原生文件头的输出流。</param>
+    /// <param name = "generation">数据文件代次，用于识别原子替换。</param>
     private void WriteHeader(Stream stream, int? generation = null)
     {
         Span<byte> header = stackalloc byte[HeaderSize];
@@ -1000,7 +1002,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>验证事务帧内操作数量、长度和边界，不允许越过帧结尾。</summary>
-    /// <param name="frame">包含完整事务头及操作的编码帧。</param>
+    /// <param name = "frame">包含完整事务头及操作的编码帧。</param>
     private static void ValidateFrame(ReadOnlySpan<byte> frame)
     {
         int count = BinaryPrimitives.ReadInt32LittleEndian(frame[FrameHeader..]);
@@ -1022,9 +1024,9 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     }
 
     /// <summary>从指定文件位置完整读取目标缓冲区；意外结束时抛出异常。</summary>
-    /// <param name="handle">本操作使用的安全文件句柄。</param>
-    /// <param name="destination">接收文件读取结果的目标缓冲区，必须完整填满。</param>
-    /// <param name="offset">文件或缓冲区中的字节偏移。</param>
+    /// <param name = "handle">本操作使用的安全文件句柄。</param>
+    /// <param name = "destination">接收文件读取结果的目标缓冲区，必须完整填满。</param>
+    /// <param name = "offset">文件或缓冲区中的字节偏移。</param>
     private static void ReadAt(SafeFileHandle handle, Span<byte> destination, long offset)
     {
         while (!destination.IsEmpty)

@@ -1,41 +1,42 @@
 namespace PureDb;
-
 /// <summary>普通列索引范围计划，包含边界、投影、排序方向和分页。</summary>
-/// <param name="Supported">该语句结构是否可使用当前专用计划。</param>
-/// <param name="Column">普通索引列名或已解析列序号。</param>
-/// <param name="Op">操作符名称。</param>
-/// <param name="Low">可选 SQL 表达式；null 表示未提供该子句。</param>
-/// <param name="High">可选 SQL 表达式；null 表示未提供该子句。</param>
-/// <param name="Columns">目标列集合或结果投影，具体结构由字段类型确定。</param>
-/// <param name="Names">按结果列序号排列的列名。</param>
-/// <param name="Limit">可选 SQL 表达式；null 表示未提供该子句。</param>
-/// <param name="Offset">可选 SQL 表达式；null 表示未提供该子句。</param>
-/// <param name="Descending">是否按降序输出。</param>
+/// <param name = "Supported">该语句结构是否可使用当前专用计划。</param>
+/// <param name = "Column">普通索引列名或已解析列序号。</param>
+/// <param name = "Op">操作符名称。</param>
+/// <param name = "Low">可选 SQL 表达式；null 表示未提供该子句。</param>
+/// <param name = "High">可选 SQL 表达式；null 表示未提供该子句。</param>
+/// <param name = "Columns">目标列集合或结果投影，具体结构由字段类型确定。</param>
+/// <param name = "Names">按结果列序号排列的列名。</param>
+/// <param name = "Limit">可选 SQL 表达式；null 表示未提供该子句。</param>
+/// <param name = "Offset">可选 SQL 表达式；null 表示未提供该子句。</param>
+/// <param name = "Descending">是否按降序输出。</param>
 internal sealed record SqlRangePlan(bool Supported, int Column, string Op, Expr? Low, Expr? High, int[] Columns, IReadOnlyList<string> Names, Expr? Limit, Expr? Offset, bool Descending)
 {
     /// <summary>计算范围计划中的常量或参数边界。</summary>
-    /// <param name="e">可选 SQL 表达式；null 表示未提供该子句。</param>
-    /// <param name="parameters">本次调用的参数值或编译期间收集的参数名称。</param>
+    /// <param name = "e">可选 SQL 表达式；null 表示未提供该子句。</param>
+    /// <param name = "parameters">本次调用的参数值或编译期间收集的参数名称。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     public static object? Value(Expr? e, IReadOnlyDictionary<string, object?> parameters) => e?.Op == "parameter" ? SqlPrimaryPlan.Parameter(e, parameters) : e?.Value;
-    /// <summary>计算 LIMIT 或 OFFSET，并验证其为受支持范围内的非负整数。</summary>
-    /// <param name="e">可选 SQL 表达式；null 表示未提供该子句。</param>
-    /// <param name="parameters">本次调用的参数值或编译期间收集的参数名称。</param>
-    /// <param name="fallback">未提供对应表达式时使用的默认值。</param>
+    /// <summary>计算整数分页；负 LIMIT 不限行，负 OFFSET 视为零，超大数量按结果容器上限处理。</summary>
+    /// <param name = "e">可选 SQL 表达式；null 表示未提供该子句。</param>
+    /// <param name = "parameters">本次调用的参数值或编译期间收集的参数名称。</param>
+    /// <param name = "fallback">未提供对应表达式时使用的默认值。</param>
     /// <returns>按方法规定计算的数量、位置、版本或比较结果。</returns>
     public static int Count(Expr? e, IReadOnlyDictionary<string, object?> parameters, int fallback)
     {
         if (e is null)
             return fallback;
         object? value = Value(e, parameters);
-        if (value is not long n || n < 0 || n > int.MaxValue)
-            throw new SqlException("LIMIT/OFFSET requires a nonnegative integer <= Int32.MaxValue");
-        return (int)n;
+        if (value is null && e.Op != "literal")
+            value = new SqlBinding().Bind(e, parameters)([]);
+        if (value is not long n)
+            throw new SqlException("LIMIT/OFFSET requires INTEGER");
+        return n < 0 ? fallback : (int)Math.Min(n, int.MaxValue);
     }
 
     /// <summary>识别可由普通列索引完成的范围、排序和分页查询。</summary>
-    /// <param name="select">当前已解析的 SELECT 查询结构。</param>
-    /// <param name="table">当前操作的不可变表模式。</param>
+    /// <param name = "select">当前已解析的 SELECT 查询结构。</param>
+    /// <param name = "table">当前操作的不可变表模式。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     public static SqlRangePlan Build(Select select, SqlTable table)
     {

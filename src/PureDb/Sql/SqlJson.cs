@@ -4,12 +4,11 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace PureDb;
-
 /// <summary>携带 JSON 文本子类型的内部值，使 JSON 构造函数能区分文档与普通字符串。</summary>
-/// <param name="Text">JSON 文本或词法单元原始内容。</param>
+/// <param name = "Text">JSON 文本或词法单元原始内容。</param>
 internal sealed record SqlJson(string Text);
 /// <summary>JSON 文本、PureDb JSONB、路径查询及修改函数的语义实现。</summary>
-internal static class SqlJsonFunctions
+internal static partial class SqlJsonFunctions
 {
     private static readonly byte[] Magic = "PJB1"u8.ToArray();
     private static readonly JsonDocumentOptions DocumentOptions = new()
@@ -17,11 +16,11 @@ internal static class SqlJsonFunctions
         MaxDepth = 128
     };
     /// <summary>判断操作符是否属于当前 JSON 函数命名空间或 JSON 箭头操作符。</summary>
-    /// <param name="op">当前 SQL 操作符或函数名。</param>
+    /// <param name = "op">当前 SQL 操作符或函数名。</param>
     /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
     public static bool Handles(string op) => op.StartsWith("JSON", StringComparison.Ordinal) || op is "->" or "->>";
     /// <summary>将内部 JSON 子类型或只读 BLOB 视图转为公开标量，BLOB 返回副本。</summary>
-    /// <param name="value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+    /// <param name = "value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     public static object? Unwrap(object? value) => value switch
     {
@@ -30,8 +29,8 @@ internal static class SqlJsonFunctions
         _ => value
     };
     /// <summary>校验 JSON 函数名称与参数数量。</summary>
-    /// <param name="op">当前 SQL 操作符或函数名。</param>
-    /// <param name="n">表达式参数数量。</param>
+    /// <param name = "op">当前 SQL 操作符或函数名。</param>
+    /// <param name = "n">表达式参数数量。</param>
     public static void Validate(string op, int n)
     {
         string textOp = op.Replace("JSONB", "JSON", StringComparison.Ordinal);
@@ -53,11 +52,11 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>将受支持输入解析并转换为规范 JSON 文本。</summary>
-    /// <param name="value">待处理的标量或参数实例，受当前接口的类型约束。</param>
+    /// <param name = "value">待处理的标量或参数实例，受当前接口的类型约束。</param>
     /// <returns>按当前方法语义生成、解析或规范化后的文本。</returns>
     public static string Canonical(object value) => Parse(value)?.ToJsonString() ?? "null";
     /// <summary>将输入转换为 PureDb 的 PJB1 二进制 JSON；该编码不等同于 SQLite JSONB。</summary>
-    /// <param name="value">待处理的标量或参数实例，受当前接口的类型约束。</param>
+    /// <param name = "value">待处理的标量或参数实例，受当前接口的类型约束。</param>
     /// <returns>本次编码或复制得到的字节数组。</returns>
     public static byte[] Binary(object value)
     {
@@ -82,8 +81,8 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>将只读 JSON 元素写入 PureDb JSONB 输出流。</summary>
-    /// <param name="w">接收 PureDb JSONB 编码的输出写入器。</param>
-    /// <param name="element">只读 JSON 文档的根元素。</param>
+    /// <param name = "w">接收 PureDb JSONB 编码的输出写入器。</param>
+    /// <param name = "element">只读 JSON 文档的根元素。</param>
     private static void WriteElement(BinaryWriter w, JsonElement element)
     {
         switch (element.ValueKind)
@@ -144,8 +143,8 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>从缓存解析表示或二进制表示按路径提取标量，避免重复解析文档。</summary>
-    /// <param name="value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
-    /// <param name="path">从输入 JSON 中提取值的 JSON 路径。</param>
+    /// <param name = "value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+    /// <param name = "path">从输入 JSON 中提取值的 JSON 路径。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     public static object? ExtractCached(object? value, string path)
     {
@@ -174,8 +173,8 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>沿已解析路径直接定位 PureDb JSONB 中的值。</summary>
-    /// <param name="bytes">当前调用持有的完整页、记录或模式编码字节。</param>
-    /// <param name="parts">已经解析的 JSON 路径分量。</param>
+    /// <param name = "bytes">当前调用持有的完整页、记录或模式编码字节。</param>
+    /// <param name = "parts">已经解析的 JSON 路径分量。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private static object? ExtractBinary(byte[] bytes, List<Part> parts)
     {
@@ -238,7 +237,7 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>将 JSON 文本、内部子类型或 PureDb JSONB 转换为 JSON 节点树。</summary>
-    /// <param name="value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+    /// <param name = "value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private static JsonNode? Parse(object? value)
     {
@@ -246,8 +245,8 @@ internal static class SqlJsonFunctions
         {
             return value switch
             {
-                SqlJson j => JsonNode.Parse(j.Text, documentOptions: DocumentOptions),
-                string s => JsonNode.Parse(s, documentOptions: DocumentOptions),
+                SqlJson j => SqlJson5.Node(j.Text),
+                string s => SqlJson5.Node(s),
                 byte[] b => ReadBinary(b),
                 long or double => JsonSerializer.SerializeToNode(value),
                 null => null,
@@ -265,8 +264,8 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>将可变 JSON 节点递归编码到 PureDb JSONB 输出流。</summary>
-    /// <param name="w">接收 PureDb JSONB 编码的输出写入器。</param>
-    /// <param name="node">JSON 根节点或节点值；null 表示 JSON null。</param>
+    /// <param name = "w">接收 PureDb JSONB 编码的输出写入器。</param>
+    /// <param name = "node">JSON 根节点或节点值；null 表示 JSON null。</param>
     private static void Write(BinaryWriter w, JsonNode? node)
     {
         if (node is null)
@@ -332,7 +331,7 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>验证并解码 PureDb JSONB，包括长度边界和尾部完整性。</summary>
-    /// <param name="bytes">当前调用持有的完整页、记录或模式编码字节。</param>
+    /// <param name = "bytes">当前调用持有的完整页、记录或模式编码字节。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private static JsonNode? ReadBinary(byte[] bytes)
     {
@@ -394,14 +393,14 @@ internal static class SqlJsonFunctions
 
     private static readonly ConditionalWeakTable<string, List<Part>> Paths = new();
     /// <summary>JSON 路径中的对象名、数组下标、倒数下标或追加位置。</summary>
-    /// <param name="Name">模式对象名或对象路径分量名。</param>
-    /// <param name="Index">目标索引或数组下标。</param>
-    /// <param name="FromEnd">数组下标是否从末尾倒数。</param>
-    /// <param name="Append">是否表示数组追加位置。</param>
+    /// <param name = "Name">模式对象名或对象路径分量名。</param>
+    /// <param name = "Index">目标索引或数组下标。</param>
+    /// <param name = "FromEnd">数组下标是否从末尾倒数。</param>
+    /// <param name = "Append">是否表示数组追加位置。</param>
     private readonly record struct Part(string? Name, int Index = 0, bool FromEnd = false, bool Append = false);
     /// <summary>取得或解析 JSON 路径，支持按操作符要求的简写形式。</summary>
-    /// <param name="value">JSON 路径文本，或箭头操作符允许的字段名、数组下标简写。</param>
-    /// <param name="shorthand">是否允许箭头操作符的字段名或数组下标简写。</param>
+    /// <param name = "value">JSON 路径文本，或箭头操作符允许的字段名、数组下标简写。</param>
+    /// <param name = "shorthand">是否允许箭头操作符的字段名或数组下标简写。</param>
     /// <returns>按方法规定的顺序和可见性组织的结果集合。</returns>
     private static List<Part> Path(object? value, bool shorthand = false)
     {
@@ -411,8 +410,8 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>将 JSON 路径解析为对象字段、数组下标、倒数下标或追加位置。</summary>
-    /// <param name="value">JSON 路径文本，或箭头操作符允许的字段名、数组下标简写。</param>
-    /// <param name="shorthand">是否允许箭头操作符的字段名或数组下标简写。</param>
+    /// <param name = "value">JSON 路径文本，或箭头操作符允许的字段名、数组下标简写。</param>
+    /// <param name = "shorthand">是否允许箭头操作符的字段名或数组下标简写。</param>
     /// <returns>按方法规定的顺序和可见性组织的结果集合。</returns>
     private static List<Part> ParsePath(object? value, bool shorthand = false)
     {
@@ -493,8 +492,8 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>沿路径定位节点，同时区分缺失值与 JSON null。</summary>
-    /// <param name="root">JSON 根节点或节点值；null 表示 JSON null。</param>
-    /// <param name="parts">已经解析的 JSON 路径分量。</param>
+    /// <param name = "root">JSON 根节点或节点值；null 表示 JSON null。</param>
+    /// <param name = "parts">已经解析的 JSON 路径分量。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private static (bool Exists, JsonNode? Node) Find(JsonNode? root, IEnumerable<Part> parts)
     {
@@ -521,7 +520,7 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>按 SQL 值和 JSON 子类型规则构造可写 JSON 节点。</summary>
-    /// <param name="value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+    /// <param name = "value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private static JsonNode? FromSql(object? value) => value switch
     {
@@ -529,8 +528,8 @@ internal static class SqlJsonFunctions
         _ => JsonSerializer.SerializeToNode(value)
     };
     /// <summary>将 JSON 节点转换为 SQL 标量；对象和数组保留文档子类型。</summary>
-    /// <param name="node">JSON 根节点或节点值；null 表示 JSON null。</param>
-    /// <param name="binary">是否输出 PureDb JSONB 而非 JSON 文本。</param>
+    /// <param name = "node">JSON 根节点或节点值；null 表示 JSON null。</param>
+    /// <param name = "binary">是否输出 PureDb JSONB 而非 JSON 文本。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private static object? Scalar(JsonNode? node, bool binary = false)
     {
@@ -550,12 +549,12 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>按调用要求输出 JSON 文本子类型或 PureDb JSONB。</summary>
-    /// <param name="node">JSON 根节点或节点值；null 表示 JSON null。</param>
-    /// <param name="binary">是否输出 PureDb JSONB 而非 JSON 文本。</param>
+    /// <param name = "node">JSON 根节点或节点值；null 表示 JSON null。</param>
+    /// <param name = "binary">是否输出 PureDb JSONB 而非 JSON 文本。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     private static object Output(JsonNode? node, bool binary) => binary ? Binary(new SqlJson(node?.ToJsonString() ?? "null")) : new SqlJson(node?.ToJsonString() ?? "null");
     /// <summary>取得 JSON 节点对应的 SQL JSON 类型名称。</summary>
-    /// <param name="node">JSON 根节点或节点值；null 表示 JSON null。</param>
+    /// <param name = "node">JSON 根节点或节点值；null 表示 JSON null。</param>
     /// <returns>按当前方法语义生成、解析或规范化后的文本。</returns>
     private static string Type(JsonNode? node)
     {
@@ -577,10 +576,10 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>按 insert、replace 或 set 规则修改路径并保留相应缺失路径语义。</summary>
-    /// <param name="root">JSON 根节点或节点值；null 表示 JSON null。</param>
-    /// <param name="path">需要修改的已解析 JSON 路径分量。</param>
-    /// <param name="value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
-    /// <param name="mode">JSON 修改模式：insert、replace 或 set。</param>
+    /// <param name = "root">JSON 根节点或节点值；null 表示 JSON null。</param>
+    /// <param name = "path">需要修改的已解析 JSON 路径分量。</param>
+    /// <param name = "value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+    /// <param name = "mode">JSON 修改模式：insert、replace 或 set。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private static JsonNode? Edit(JsonNode? root, List<Part> path, object? value, string mode)
     {
@@ -646,8 +645,8 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>按 JSON Merge Patch 规则递归合并对象并处理 null 删除。</summary>
-    /// <param name="target">JSON 根节点或节点值；null 表示 JSON null。</param>
-    /// <param name="patch">JSON 根节点或节点值；null 表示 JSON null。</param>
+    /// <param name = "target">JSON 根节点或节点值；null 表示 JSON null。</param>
+    /// <param name = "patch">JSON 根节点或节点值；null 表示 JSON null。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private static JsonNode? Patch(JsonNode? target, JsonNode? patch)
     {
@@ -669,8 +668,8 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>在只读 JSON 元素上定位路径，避免构造可变节点树。</summary>
-    /// <param name="root">只读 JSON 文档的根元素。</param>
-    /// <param name="parts">已经解析的 JSON 路径分量。</param>
+    /// <param name = "root">只读 JSON 文档的根元素。</param>
+    /// <param name = "parts">已经解析的 JSON 路径分量。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     private static JsonElement FindElement(JsonElement root, List<Part> parts)
     {
@@ -696,9 +695,9 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>对只读 JSON 文档执行可直接完成的读取函数。</summary>
-    /// <param name="op">当前 SQL 操作符或函数名。</param>
-    /// <param name="text">待匹配的词法文本或 JSON 文本。</param>
-    /// <param name="args">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
+    /// <param name = "op">当前 SQL 操作符或函数名。</param>
+    /// <param name = "text">待匹配的词法文本或 JSON 文本。</param>
+    /// <param name = "args">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private static object? ReadElement(string op, string text, object?[] args)
     {
@@ -737,8 +736,8 @@ internal static class SqlJsonFunctions
     }
 
     /// <summary>分派 JSON 构造、读取、修改、校验及二进制转换函数。</summary>
-    /// <param name="op">当前 SQL 操作符或函数名。</param>
-    /// <param name="args">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
+    /// <param name = "op">当前 SQL 操作符或函数名。</param>
+    /// <param name = "args">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     public static object? Eval(string op, object?[] args)
     {
@@ -750,8 +749,6 @@ internal static class SqlJsonFunctions
         if (name == "JSON_VALID")
         {
             long flags = args.Length == 1 ? 1 : args[1] is long f && f >= 1 && f <= 15 ? f : throw new SqlException("JSON_VALID flags must be in [1,15]");
-            if ((flags & 2) != 0)
-                throw new SqlException("JSON5 validation is not implemented");
             if (args[0] is null)
                 return null;
             try
@@ -763,8 +760,14 @@ internal static class SqlJsonFunctions
                     if ((flags & 8) == 0)
                         return 0L;
                 }
-                else if ((flags & 1) == 0)
+                else if ((flags & 3) == 0)
                     return 0L;
+                else if ((flags & 2) == 0)
+                {
+                    using var strict = JsonDocument.Parse(args[0] is SqlJson json ? json.Text : args[0] is string text ? text : JsonSerializer.Serialize(args[0]), DocumentOptions);
+                    return 1L;
+                }
+
                 Parse(args[0]);
                 return 1L;
             }

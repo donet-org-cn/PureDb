@@ -1,19 +1,18 @@
 namespace PureDb;
-
 /// <remarks>本部分选择查询计划，并提供通用连接、分组、投影、排序和分页执行器。</remarks>
 internal sealed partial class SqlSession
 {
     /// <summary>将 AND 表达式展开为可独立分析的合取条件。</summary>
-    /// <param name="e">可选 SQL 表达式；null 表示未提供该子句。</param>
+    /// <param name = "e">可选 SQL 表达式；null 表示未提供该子句。</param>
     /// <returns>按方法规定的顺序和可见性组织的结果集合。</returns>
     private static IEnumerable<Expr> Conjuncts(Expr? e) => e is null ? [] : e.Op == "AND" ? Conjuncts(e.Args[0]).Concat(Conjuncts(e.Args[1])) : [e];
     /// <summary>判断表达式能否在读取行之前安全求值；易变用户函数不满足条件。</summary>
-    /// <param name="e">待分析、绑定或求值的 SQL 表达式。</param>
+    /// <param name = "e">待分析、绑定或求值的 SQL 表达式。</param>
     /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
-    private bool Constant(Expr e) => e.Op != "column" && e.Op != "star" && (!owner.TryFunction(e.Op, e.Args.Length, out var function) || function.Deterministic) && e.Args.All(Constant) && !SqlBinding.Aggregate(e);
+    private bool Constant(Expr e) => e.Subquery is null && e.Window is null && e.Op != "column" && e.Op != "star" && (!owner.TryFunction(e.Op, e.Args.Length, out var function) || function.Deterministic) && e.Args.All(Constant) && !SqlBinding.Aggregate(e);
     /// <summary>识别属于指定数据源别名的列引用，排除其他连接输入。</summary>
-    /// <param name="e">待分析、绑定或求值的 SQL 表达式。</param>
-    /// <param name="alias">只允许列引用所属的当前数据源别名。</param>
+    /// <param name = "e">待分析、绑定或求值的 SQL 表达式。</param>
+    /// <param name = "alias">只允许列引用所属的当前数据源别名。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private static string? OwnColumn(Expr e, string alias)
     {
@@ -24,17 +23,26 @@ internal sealed partial class SqlSession
     }
 
     /// <summary>根据安全谓词选择主键、普通索引或表达式索引的候选行，并报告排序性质。</summary>
-    /// <param name="table">当前操作的不可变表模式。</param>
-    /// <param name="alias">当前语句内的数据源别名。</param>
-    /// <param name="where">可选 SQL 表达式；null 表示未提供该子句。</param>
-    /// <param name="order">查询要求的排序表达式及方向。</param>
-    /// <param name="parameters">本次调用的参数值或编译期间收集的参数名称。</param>
-    /// <param name="ordered">返回候选行是否已经满足查询要求的排序。</param>
-    /// <param name="plan">返回候选选择实际使用的索引或扫描路径。</param>
+    /// <param name = "table">当前操作的不可变表模式。</param>
+    /// <param name = "alias">当前语句内的数据源别名。</param>
+    /// <param name = "where">可选 SQL 表达式；null 表示未提供该子句。</param>
+    /// <param name = "order">查询要求的排序表达式及方向。</param>
+    /// <param name = "parameters">本次调用的参数值或编译期间收集的参数名称。</param>
+    /// <param name = "ordered">返回候选行是否已经满足查询要求的排序。</param>
+    /// <param name = "plan">返回候选选择实际使用的索引或扫描路径。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private IEnumerable<object?[]> Candidates(SqlTable table, string alias, Expr? where, List<Ordering> order, IReadOnlyDictionary<string, object?> parameters, out bool ordered, out string plan)
     {
-        var binding = new SqlBinding(owner);
+        if (table.Id < 0)
+        {
+            ordered = false;
+            plan = "VirtualTableScan";
+            return Data(table).Rows;
+        }
+
+        if (CompositeCandidates(table, alias, where, order, parameters, out ordered, out plan) is { } composite)
+            return composite;
+        var binding = new SqlBinding(owner, this);
         int orderColumn = order.Count == 1 && OwnColumn(order[0].Expr, alias) is { } name ? table.Columns.FindIndex(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase)) : -1;
         ordered = false;
         plan = "TableScan";
@@ -130,11 +138,11 @@ internal sealed partial class SqlSession
     }
 
     /// <summary>使用持久化主索引读取整数主键范围，精确处理实数边界和开闭区间。</summary>
-    /// <param name="table">当前操作的不可变表模式。</param>
-    /// <param name="op">当前 SQL 操作符或函数名。</param>
-    /// <param name="value">待处理的标量或参数实例，受当前接口的类型约束。</param>
-    /// <param name="high">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
-    /// <param name="descending">是否按降序枚举结果。</param>
+    /// <param name = "table">当前操作的不可变表模式。</param>
+    /// <param name = "op">当前 SQL 操作符或函数名。</param>
+    /// <param name = "value">待处理的标量或参数实例，受当前接口的类型约束。</param>
+    /// <param name = "high">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+    /// <param name = "descending">是否按降序枚举结果。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private IEnumerable<object?[]> PrimaryRangeRows(SqlTable table, string op, object value, object? high, bool descending)
     {
@@ -165,8 +173,8 @@ internal sealed partial class SqlSession
     }
 
     /// <summary>将左右输入行拼接为连接行。</summary>
-    /// <param name="left">连接左侧的当前输入行。</param>
-    /// <param name="right">连接右侧的当前输入行。</param>
+    /// <param name = "left">连接左侧的当前输入行。</param>
+    /// <param name = "right">连接右侧的当前输入行。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private static object?[] Combine(object?[] left, object?[] right)
     {
@@ -177,13 +185,13 @@ internal sealed partial class SqlSession
     }
 
     /// <summary>按可用等值键使用哈希连接，否则执行嵌套循环，并补齐外连接的 NULL 行。</summary>
-    /// <param name="left">按当前执行顺序枚举的输入行。</param>
-    /// <param name="right">当前版本解码后的行及辅助查找结构。</param>
-    /// <param name="oldWidth">加入右输入前，左侧行数组的总列数。</param>
-    /// <param name="kind">INNER、LEFT、RIGHT、FULL 或 CROSS 连接类型。</param>
-    /// <param name="condition">连接 ON 条件的逐行求值委托。</param>
-    /// <param name="leftKey">左输入连接键的列序号。</param>
-    /// <param name="rightKey">右输入连接键的列序号。</param>
+    /// <param name = "left">按当前执行顺序枚举的输入行。</param>
+    /// <param name = "right">当前版本解码后的行及辅助查找结构。</param>
+    /// <param name = "oldWidth">加入右输入前，左侧行数组的总列数。</param>
+    /// <param name = "kind">INNER、LEFT、RIGHT、FULL 或 CROSS 连接类型。</param>
+    /// <param name = "condition">连接 ON 条件的逐行求值委托。</param>
+    /// <param name = "leftKey">左输入连接键的列序号。</param>
+    /// <param name = "rightKey">右输入连接键的列序号。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private static IEnumerable<object?[]> JoinRows(IEnumerable<object?[]> left, SqlTableData right, int oldWidth, string kind, Func<object?[], object?>? condition, int leftKey, int rightKey)
     {
@@ -217,15 +225,15 @@ internal sealed partial class SqlSession
     }
 
     /// <summary>递归比较两个表达式的结构及字面量值。</summary>
-    /// <param name="a">待分析、绑定或求值的 SQL 表达式。</param>
-    /// <param name="b">待分析、绑定或求值的 SQL 表达式。</param>
+    /// <param name = "a">待分析、绑定或求值的 SQL 表达式。</param>
+    /// <param name = "b">待分析、绑定或求值的 SQL 表达式。</param>
     /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
     private static bool Same(Expr a, Expr b) => a.Op == b.Op && Equals(a.Value, b.Value) && a.Args.Length == b.Args.Length && a.Args.Zip(b.Args).All(p => Same(p.First, p.Second));
     /// <summary>绑定分组后表达式，计算聚合并拒绝不属于分组键的裸列。</summary>
-    /// <param name="expr">待分析、绑定或求值的 SQL 表达式。</param>
-    /// <param name="select">当前已解析的 SELECT 查询结构。</param>
-    /// <param name="binding">当前数据源的列名、偏移及函数绑定上下文。</param>
-    /// <param name="parameters">本次调用的参数值或编译期间收集的参数名称。</param>
+    /// <param name = "expr">待分析、绑定或求值的 SQL 表达式。</param>
+    /// <param name = "select">当前已解析的 SELECT 查询结构。</param>
+    /// <param name = "binding">当前数据源的列名、偏移及函数绑定上下文。</param>
+    /// <param name = "parameters">本次调用的参数值或编译期间收集的参数名称。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     private static Func<object?[][], object?> GroupExpression(Expr expr, Select select, SqlBinding binding, IReadOnlyDictionary<string, object?> parameters)
     {
@@ -271,6 +279,26 @@ internal sealed partial class SqlSession
         if (expr.Op == "column")
             throw new SqlException("Nonaggregate columns must appear in GROUP BY");
         var children = expr.Args.Select(e => GroupExpression(e, select, binding, parameters)).ToArray();
+        if (expr.Subquery is not null)
+        {
+            var subquery = binding.Bind(expr, parameters);
+            return group => subquery(group.Length == 0 ? [] : group[0]);
+        }
+
+        if (expr.Op is "case" or "casebase")
+            return group =>
+            {
+                bool simple = expr.Op == "casebase";
+                object? basis = simple ? children[0](group) : null;
+                for (int i = simple ? 1 : 0; i < children.Length - 1; i += 2)
+                {
+                    object? condition = children[i](group);
+                    if (simple ? basis is not null && condition is not null && SqlValueComparer.Instance.Equals(basis, condition) : SqlValueComparer.Truth(condition) == true)
+                        return children[i + 1](group);
+                }
+
+                return children[^1](group);
+            };
         if (binding.TryFunction(expr.Op, children.Length, out var function))
             return group => function.Invoke(children.Select(f => f(group)).ToArray());
         SqlBinding.Validate(expr.Op, children.Length);
@@ -287,17 +315,19 @@ internal sealed partial class SqlSession
     }
 
     /// <summary>通用查询执行器的投影值和排序键，避免排序时重复计算表达式。</summary>
-    /// <param name="Values">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
-    /// <param name="Keys">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
+    /// <param name = "Values">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
+    /// <param name = "Keys">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
     private sealed record Output(object?[] Values, object?[] Keys);
     /// <summary>为当前 SELECT 选择专用查询计划；用户函数等结构保留通用语义路径。</summary>
-    /// <param name="select">当前已解析的 SELECT 查询结构。</param>
-    /// <param name="parameters">本次调用的参数值或编译期间收集的参数名称。</param>
+    /// <param name = "select">当前已解析的 SELECT 查询结构。</param>
+    /// <param name = "parameters">本次调用的参数值或编译期间收集的参数名称。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
-    internal SqlResult Query(Select select, IReadOnlyDictionary<string, object?> parameters)
+    private SqlResult QueryCore(Select select, IReadOnlyDictionary<string, object?> parameters)
     {
-        var first = select.From.Table.Length == 0 ? new SqlTable() : Catalog.Table(select.From.Table);
-        if (owner.UsesFunction(select))
+        if (select.HasWindows && (select.GroupBy.Count > 0 || select.Having is not null || select.Columns.Any(p => SqlBinding.Aggregate(p.Expr))))
+            return QueryGroupedWindows(select, parameters);
+        var first = SourceTable(select.From, parameters);
+        if (first.Id < 0 || select.RequiresContext || _namedSources is not null || _outerRows is { Count: > 0 } || owner.UsesFunction(select))
             return QueryGeneral(select, first, parameters);
         if (first.Id != 0 && select.Joins.Count == 0 && select.Where is null && select.GroupBy.Count == 0 && select.Having is null && !select.Distinct && select.Order.Count == 0 && select.Columns.Count == 1 && select.Columns[0].Expr.Op == "COUNT" && select.Columns[0].Expr.Args.Length == 1 && select.Columns[0].Expr.Args[0].Op == "star")
         {
@@ -320,8 +350,8 @@ internal sealed partial class SqlSession
             {
                 if (e is null)
                     return fallback;
-                object? v = new SqlBinding(owner).Bind(e, parameters)([]);
-                return v is long n && n >= 0 && n <= int.MaxValue ? (int)n : throw new SqlException("Invalid LIMIT/OFFSET");
+                object? v = new SqlBinding(owner, this).Bind(e, parameters)([]);
+                return v is long n ? n < 0 ? fallback : (int)Math.Min(n, int.MaxValue) : throw new SqlException("Invalid LIMIT/OFFSET");
             }
         }
 
@@ -370,7 +400,7 @@ internal sealed partial class SqlSession
 
         if (select.Joins.Count == 1)
         {
-            var right = Catalog.Table(select.Joins[0].Source.Table);
+            var right = SourceTable(select.Joins[0].Source, parameters);
             if (owner.JoinPlan(select, first, right) is { Supported: true } joinPlan)
                 return QueryPrimaryJoin(joinPlan, first, right, parameters);
         }
@@ -382,25 +412,36 @@ internal sealed partial class SqlSession
 
     // 将通用解释器放在独立方法中，减少索引读取热点路径的 JIT 编译工作。
     /// <summary>执行通用连接、过滤、分组、投影、去重、排序和分页。</summary>
-    /// <param name="select">当前已解析的 SELECT 查询结构。</param>
-    /// <param name="first">SELECT 第一个数据源对应的不可变表模式。</param>
-    /// <param name="parameters">本次调用的参数值或编译期间收集的参数名称。</param>
+    /// <param name = "select">当前已解析的 SELECT 查询结构。</param>
+    /// <param name = "first">SELECT 第一个数据源对应的不可变表模式。</param>
+    /// <param name = "parameters">本次调用的参数值或编译期间收集的参数名称。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     private SqlResult QueryGeneral(Select select, SqlTable first, IReadOnlyDictionary<string, object?> parameters)
     {
-        var binding = new SqlBinding(owner);
+        var binding = new SqlBinding(owner, this);
         binding.Add(first, select.From.Alias);
         bool outerRight = select.Joins.Any(j => j.Kind is "RIGHT" or "FULL");
         bool ordered = false;
         string plan = "ConstantRow";
-        IEnumerable<object?[]> source = select.From.Table.Length == 0 ? [Array.Empty<object?>()] : Candidates(first, select.From.Alias, outerRight ? null : select.Where, select.Joins.Count == 0 ? select.Order : [], parameters, out ordered, out plan);
+        IEnumerable<object?[]> source = first.Id == 0 ? [Array.Empty<object?>()] : Candidates(first, select.From.Alias, outerRight ? null : select.Where, select.Joins.Count == 0 ? select.Order : [], parameters, out ordered, out plan);
         // 枚举行之前先绑定所有 JOIN 别名和 ON 表达式，空输入也必须检查绑定错误。
         foreach (var join in select.Joins)
         {
-            var table = Catalog.Table(join.Source.Table);
+            var arguments = join.Source.Arguments?.Select(e => binding.Bind(e, parameters)).ToArray();
+            var table = arguments is null ? SourceTable(join.Source, parameters) : JsonTableSchema(join.Source);
+            if (arguments is not null)
+                (_sourceCache ??= [])[join.Source] = table;
             int oldWidth = binding.Width;
             binding.Add(table, join.Source.Alias);
             var on = join.On is null ? null : binding.Bind(join.On, parameters);
+            if (arguments is not null)
+            {
+                source = JsonJoinRows(source, arguments, join.Source.Table.Equals("JSON_TREE", StringComparison.OrdinalIgnoreCase), join.Kind, on);
+                ordered = false;
+                plan += " -> JsonTableJoin";
+                continue;
+            }
+
             int leftKey = -1, rightKey = -1;
             foreach (var term in Conjuncts(join.On))
             {
@@ -446,12 +487,13 @@ internal sealed partial class SqlSession
             if (sources.Length == 0)
                 throw new SqlException("Unknown star qualifier");
             foreach (var s in sources)
-                foreach (var c in s.Table.Columns)
+                foreach (var c in s.Table.Columns.Where(c => !c.Hidden))
                     projections.Add(new(new("column", s.Alias + "." + c.Name), c.Name));
         }
 
         string[] names = projections.Select((p, i) => p.Alias ?? (p.Expr.Op == "column" ? ((string)p.Expr.Value!).Split('.')[^1] : p.Expr.Op is "COUNT" or "SUM" or "AVG" or "MIN" or "MAX" ? p.Expr.Op.ToLowerInvariant() : "expr" + (i + 1))).ToArray();
         bool grouped = select.GroupBy.Count > 0 || projections.Any(p => SqlBinding.Aggregate(p.Expr)) || select.Having is not null || select.Order.Any(o => SqlBinding.Aggregate(o.Expr));
+        source = PrepareWindows(select, binding, source, parameters);
         int OrderProjection(Expr expr)
         {
             if (expr.Op == "literal" && expr.Value is long ordinal)
@@ -502,14 +544,10 @@ internal sealed partial class SqlSession
             if (!ordered && !select.Distinct && select.Order.Count > 0 && limit > 0 && (long)offset + limit <= 4096)
             {
                 bool[] descending = select.Order.Select(o => o.Descending).ToArray();
-                int[]? columns = projections.All(p => p.Expr.Op == "column")
-                    ? projections.Select(p => binding.Resolve((string)p.Expr.Value!)).ToArray() : null;
-                int[]? orderColumns = columns is null ? null : select.Order.Select((o, i) => orderIndexes[i] >= 0
-                    ? columns[orderIndexes[i]] : o.Expr.Op == "column" ? binding.Resolve((string)o.Expr.Value!) : -1).ToArray();
+                int[]? columns = projections.All(p => p.Expr.Op == "column") ? projections.Select(p => binding.Resolve((string)p.Expr.Value!)).ToArray() : null;
+                int[]? orderColumns = columns is null ? null : select.Order.Select((o, i) => orderIndexes[i] >= 0 ? columns[orderIndexes[i]] : o.Expr.Op == "column" ? binding.Resolve((string)o.Expr.Value!) : -1).ToArray();
                 bool columnSort = orderColumns is not null && orderColumns.All(c => c >= 0);
-                outputs = columnSort
-                    ? TopSortedColumns(source, columns!, orderColumns!, descending, offset + limit)
-                    : TopSortedRows(source, selectors, orderFunctions, orderIndexes, descending, offset + limit);
+                outputs = columnSort ? TopSortedColumns(source, columns!, orderColumns!, descending, offset + limit) : TopSortedRows(source, selectors, orderFunctions, orderIndexes, descending, offset + limit);
                 topSorted = true;
                 plan += (columnSort ? " -> TopSortColumns(" : " -> TopSort(") + (offset + limit) + ")";
             }
@@ -551,10 +589,10 @@ internal sealed partial class SqlSession
         {
             if (expr is null)
                 return fallback;
-            object? value = new SqlBinding(owner).Bind(expr, parameters)([]);
-            if (value is not long n || n < 0 || n > int.MaxValue)
-                throw new SqlException("LIMIT/OFFSET requires a nonnegative integer <= Int32.MaxValue");
-            return (int)n;
+            object? value = new SqlBinding(owner, this).Bind(expr, parameters)([]);
+            if (value is not long n)
+                throw new SqlException("LIMIT/OFFSET requires INTEGER");
+            return n < 0 ? fallback : (int)Math.Min(n, int.MaxValue);
         }
 
         var rows = outputs.Skip(offset).Take(limit).Select(o => o.Values.Select(v => v is byte[] b ? b.ToArray() : SqlJsonFunctions.Unwrap(v)).ToArray()).ToArray();
@@ -563,10 +601,10 @@ internal sealed partial class SqlSession
 }
 
 /// <summary>可直接按主键获取所需列的查询计划，避免整表解码。</summary>
-/// <param name="Supported">该语句结构是否可使用当前专用计划。</param>
-/// <param name="Key">可选 SQL 表达式；null 表示未提供该子句。</param>
-/// <param name="Columns">目标列集合或结果投影，具体结构由字段类型确定。</param>
-/// <param name="Names">按结果列序号排列的列名。</param>
+/// <param name = "Supported">该语句结构是否可使用当前专用计划。</param>
+/// <param name = "Key">可选 SQL 表达式；null 表示未提供该子句。</param>
+/// <param name = "Columns">目标列集合或结果投影，具体结构由字段类型确定。</param>
+/// <param name = "Names">按结果列序号排列的列名。</param>
 internal sealed record SqlPrimaryPlan(bool Supported, Expr? Key, int[] Columns, IReadOnlyList<string> Names)
 {
     /// <summary>投影是否仅需主键值，可避免读取或解码行载荷。</summary>
@@ -576,8 +614,8 @@ internal sealed record SqlPrimaryPlan(bool Supported, Expr? Key, int[] Columns, 
     }
 
     /// <summary>按原始名称或去前缀名称取得并规范化参数，缺失时失败。</summary>
-    /// <param name="key">主键谓词中的常量或参数表达式。</param>
-    /// <param name="parameters">本次调用的参数值或编译期间收集的参数名称。</param>
+    /// <param name = "key">主键谓词中的常量或参数表达式。</param>
+    /// <param name = "parameters">本次调用的参数值或编译期间收集的参数名称。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     public static object? Parameter(Expr key, IReadOnlyDictionary<string, object?> parameters)
     {
@@ -588,8 +626,8 @@ internal sealed record SqlPrimaryPlan(bool Supported, Expr? Key, int[] Columns, 
     }
 
     /// <summary>识别可直接按主键投影的 SELECT；不支持时返回禁用计划。</summary>
-    /// <param name="select">当前已解析的 SELECT 查询结构。</param>
-    /// <param name="table">当前操作的不可变表模式。</param>
+    /// <param name = "select">当前已解析的 SELECT 查询结构。</param>
+    /// <param name = "table">当前操作的不可变表模式。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     public static SqlPrimaryPlan Build(Select select, SqlTable table)
     {

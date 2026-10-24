@@ -2,13 +2,12 @@ using System.Globalization;
 using System.Text;
 
 namespace PureDb;
-
 /// <summary>SQL 词法和递归下降解析器；表达式采用优先级解析，未知语法显式失败。</summary>
-internal sealed class SqlParser
+internal sealed partial class SqlParser
 {
     /// <summary>词法单元，区分关键字候选、引用标识符、字符串、数字、参数和符号。</summary>
-    /// <param name="Kind">语句对象类别、连接类型或词法类别。</param>
-    /// <param name="Text">JSON 文本或词法单元原始内容。</param>
+    /// <param name = "Kind">语句对象类别、连接类型或词法类别。</param>
+    /// <param name = "Text">JSON 文本或词法单元原始内容。</param>
     private sealed record Token(string Kind, string Text);
     private readonly List<Token> _tokens = [];
     private int _pos, _parameter;
@@ -35,11 +34,25 @@ internal sealed class SqlParser
         "FROM",
         "AND",
         "OR",
-        "UNION"
+        "UNION",
+        "INTERSECT",
+        "EXCEPT",
+        "WINDOW",
+        "OVER",
+        "RETURNING",
+        "ROWS",
+        "RANGE",
+        "GROUPS",
+        "PARTITION",
+        "EXCLUDE",
+        "END",
+        "WHEN",
+        "THEN",
+        "ELSE"
     };
     /// <summary>对 SQL 文本进行词法分析，保留引用标识符、参数和注释边界。</summary>
-    /// <param name="sql">需要词法和语法分析的 SQL 文本。</param>
-    /// <param name="sqliteFile">是否启用 SQLite 文件模式所要求的更严格类型声明校验。</param>
+    /// <param name = "sql">需要词法和语法分析的 SQL 文本。</param>
+    /// <param name = "sqliteFile">是否启用 SQLite 文件模式所要求的更严格类型声明校验。</param>
     public SqlParser(string sql, bool sqliteFile = false)
     {
         _sqliteFile = sqliteFile;
@@ -162,18 +175,18 @@ internal sealed class SqlParser
     }
 
     /// <summary>构造包含当前语法错误说明的 SqlException。</summary>
-    /// <param name="message">SQL 语法或执行错误的说明。</param>
+    /// <param name = "message">SQL 语法或执行错误的说明。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     private static SqlException Error(string message) => new(message);
     /// <summary>当前解析位置的词法单元。</summary>
     private Token Current => _tokens[_pos];
 
     /// <summary>判断当前非引用词法单元是否为指定关键字或符号。</summary>
-    /// <param name="text">待匹配的词法文本或 JSON 文本。</param>
+    /// <param name = "text">待匹配的词法文本或 JSON 文本。</param>
     /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
     private bool Is(string text) => Current.Kind is "word" or "symbol" && Current.Text.Equals(text, StringComparison.OrdinalIgnoreCase);
     /// <summary>匹配当前关键字或符号，成功时前移一个词法单元。</summary>
-    /// <param name="text">待匹配的词法文本或 JSON 文本。</param>
+    /// <param name = "text">待匹配的词法文本或 JSON 文本。</param>
     /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
     private bool Eat(string text)
     {
@@ -184,7 +197,7 @@ internal sealed class SqlParser
     }
 
     /// <summary>要求并消费指定关键字或符号，缺失时报告明确语法错误。</summary>
-    /// <param name="text">待匹配的词法文本或 JSON 文本。</param>
+    /// <param name = "text">待匹配的词法文本或 JSON 文本。</param>
     private void Need(string text)
     {
         if (!Eat(text))
@@ -223,9 +236,18 @@ internal sealed class SqlParser
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     private SqlStatement Statement()
     {
+        int statementStart = _pos;
+        if (ReadTransaction() is { } transaction)
+            return transaction;
+        if (Is("WITH"))
+            return ReadWithStatement();
         if (Eat("CREATE"))
         {
             bool unique = Eat("UNIQUE");
+            if (Eat("VIEW"))
+                return ReadView(unique);
+            if (Eat("TRIGGER"))
+                return ReadTrigger(statementStart, unique);
             if (Eat("TABLE"))
             {
                 if (unique)
@@ -240,9 +262,28 @@ internal sealed class SqlParser
                 string name = Name();
                 Need("(");
                 var columns = new List<SqlColumn>();
+                var foreignKeys = new List<SqlForeignKey>();
+                var uniques = new List<string[]>();
                 string? primary = null;
                 do
                 {
+                    if (Eat("CONSTRAINT"))
+                        Name();
+                    if (Eat("FOREIGN"))
+                    {
+                        Need("KEY");
+                        var childColumns = ReadNames();
+                        Need("REFERENCES");
+                        foreignKeys.Add(ReadReferences(childColumns));
+                        continue;
+                    }
+
+                    if (Eat("UNIQUE"))
+                    {
+                        uniques.Add(ReadNames());
+                        continue;
+                    }
+
                     if (Eat("PRIMARY"))
                     {
                         Need("KEY");
@@ -254,6 +295,7 @@ internal sealed class SqlParser
 
                     string column = Name(), type = Name().ToUpperInvariant();
                     bool pk = false, required = false, uq = false;
+                    Expr? defaultValue = null;
                     if (_sqliteFile && type is not ("INTEGER" or "REAL" or "TEXT" or "BLOB" or "JSON"))
                         throw new NotSupportedException("SQLite compatibility requires exact INTEGER/REAL/TEXT/BLOB/JSON declarations; native JSONB is not yet supported.");
                     if (type is "INT" or "BIGINT" or "BOOLEAN")
@@ -278,13 +320,30 @@ internal sealed class SqlParser
                         }
                         else if (Eat("UNIQUE"))
                             uq = true;
+                        else if (Eat("CONSTRAINT"))
+                            Name();
+                        else if (Eat("REFERENCES"))
+                            foreignKeys.Add(ReadReferences([column]));
+                        else if (Eat("DEFAULT"))
+                        {
+                            if (Eat("("))
+                            {
+                                defaultValue = Expression();
+                                Need(")");
+                            }
+                            else
+                                defaultValue = Expression(7);
+                        }
                         else
                             break;
                     }
 
                     if (columns.Any(x => x.Name.Equals(column, StringComparison.OrdinalIgnoreCase)))
                         throw Error("Duplicate column");
-                    columns.Add(new(column, type, pk, required, uq));
+                    columns.Add(new(column, type, pk, required, uq)
+                    {
+                        Default = defaultValue
+                    });
                 }
                 while (Eat(","));
                 Need(")");
@@ -301,7 +360,13 @@ internal sealed class SqlParser
 
                 if (columns.Count(c => c.Primary) != 1 || columns.Single(c => c.Primary).Type != "INTEGER")
                     throw Error("Exactly one INTEGER PRIMARY KEY is required");
-                return new CreateTable(name, columns, optional);
+                if (_sqliteFile && (foreignKeys.Count > 0 || uniques.Count > 0 || columns.Any(c => c.Default is not null)))
+                    throw new NotSupportedException("SQLite file foreign-key, table UNIQUE and DEFAULT schema support is not implemented yet");
+                return new CreateTable(name, columns, optional)
+                {
+                    ForeignKeys = foreignKeys,
+                    UniqueColumns = uniques
+                };
             }
 
             Need("INDEX");
@@ -316,15 +381,31 @@ internal sealed class SqlParser
             Need("ON");
             string table = Name();
             Need("(");
-            Expr expr = Expression();
+            var expressions = new List<Expr>();
+            var directions = new List<bool>();
+            do
+            {
+                expressions.Add(Expression());
+                bool desc = Eat("DESC");
+                if (!desc)
+                    Eat("ASC");
+                directions.Add(desc);
+            }
+            while (Eat(","));
             Need(")");
-            return new CreateIndex(index, table, expr, unique, opt);
+            bool composite = expressions.Count > 1 || directions.Any(d => d);
+            if (_sqliteFile && composite)
+                throw new NotSupportedException("SQLite file composite index page support is not implemented");
+            return new CreateIndex(index, table, composite ? new Expr("composite", Items: expressions.ToArray()) : expressions[0], unique, opt)
+            {
+                Descending = composite ? directions.ToArray() : null
+            };
         }
 
         if (Eat("DROP"))
         {
             string kind = Name().ToUpperInvariant();
-            if (kind is not ("TABLE" or "INDEX"))
+            if (kind is not ("TABLE" or "INDEX" or "VIEW" or "TRIGGER"))
                 throw Error("Unsupported DROP");
             bool optional = Eat("IF");
             if (optional)
@@ -347,6 +428,17 @@ internal sealed class SqlParser
                 while (Eat(","));
                 Need(")");
                 columns = list.ToArray();
+            }
+
+            if (Is("SELECT") || Is("WITH"))
+                return new Insert(table, columns, [])
+                {
+                    Query = ReadQuery()
+                };
+            if (Eat("DEFAULT"))
+            {
+                Need("VALUES");
+                return new Insert(table, [], [[]]);
             }
 
             Need("VALUES");
@@ -389,9 +481,20 @@ internal sealed class SqlParser
             return new Delete(table, Eat("WHERE") ? Expression() : null);
         }
 
-        if (Eat("SELECT"))
+        if (Is("SELECT"))
+            return ReadQuery();
+        throw Error($"Unsupported statement near {Current.Text}");
+    }
+
+    /// <summary>解析不含尾部集合运算、排序和分页的单个 SELECT 核心。</summary>
+    /// <returns>当前简单查询的语法树。</returns>
+    private Select ReadSelectCore()
+    {
+        Need("SELECT");
         {
             bool distinct = Eat("DISTINCT");
+            if (!distinct)
+                Eat("ALL");
             var cols = new List<Projection>();
             do
             {
@@ -402,8 +505,14 @@ internal sealed class SqlParser
             while (Eat(","));
             var from = Eat("FROM") ? ReadSource() : new Source("", "");
             var joins = new List<Join>();
-            while (Is("JOIN") || Is("INNER") || Is("LEFT") || Is("RIGHT") || Is("FULL") || Is("CROSS"))
+            while (Is(",") || Is("JOIN") || Is("INNER") || Is("LEFT") || Is("RIGHT") || Is("FULL") || Is("CROSS"))
             {
+                if (Eat(","))
+                {
+                    joins.Add(new("CROSS", ReadSource(), null));
+                    continue;
+                }
+
                 string kind = "INNER";
                 if (!Is("JOIN"))
                 {
@@ -437,51 +546,138 @@ internal sealed class SqlParser
             }
 
             var having = Eat("HAVING") ? Expression() : null;
-            var order = new List<Ordering>();
-            if (Eat("ORDER"))
+            var windows = new Dictionary<string, SqlWindow>(StringComparer.OrdinalIgnoreCase);
+            if (Eat("WINDOW"))
             {
-                Need("BY");
                 do
                 {
-                    var e = Expression();
-                    bool desc = Eat("DESC");
-                    if (!desc)
-                        Eat("ASC");
-                    order.Add(new(e, desc));
+                    string name = Name();
+                    Need("AS");
+                    if (!windows.TryAdd(name, ReadWindow()))
+                        throw Error("Duplicate window name");
                 }
                 while (Eat(","));
             }
 
-            Expr? limit = null, offset = null;
-            if (Eat("LIMIT"))
-            {
-                limit = Expression();
-                if (Eat("OFFSET"))
-                    offset = Expression();
-            }
+            return AnalyzeQuery(new Select(cols, from, joins, where, groups, having, [], null, null, distinct) { Windows = windows });
+        }
+    }
 
-            return new Select(cols, from, joins, where, groups, having, order, limit, offset, distinct);
+    /// <summary>解析整个复合查询共用的 ORDER BY 和 LIMIT。</summary>
+    /// <param name = "select">已经解析的查询核心及集合分支。</param>
+    /// <returns>包含最终排序和分页的查询。</returns>
+    private Select ReadQueryTail(Select select)
+    {
+        var order = new List<Ordering>();
+        if (Eat("ORDER"))
+        {
+            Need("BY");
+            do
+            {
+                var e = Expression();
+                bool desc = Eat("DESC");
+                if (!desc)
+                    Eat("ASC");
+                order.Add(new(e, desc));
+            }
+            while (Eat(","));
         }
 
-        throw Error($"Unsupported statement near {Current.Text}");
+        Expr? limit = null, offset = null;
+        if (Eat("LIMIT"))
+        {
+            limit = Expression();
+            if (Eat("OFFSET"))
+                offset = Expression();
+            else if (Eat(","))
+                (offset, limit) = (limit, Expression());
+        }
+
+        return select with
+        {
+            Order = order,
+            Limit = limit,
+            Offset = offset
+        };
     }
 
     /// <summary>解析表名及可选别名，并阻止将保留字误当作别名。</summary>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     private Source ReadSource()
     {
+        if (Eat("("))
+        {
+            var query = ReadQuery();
+            Need(")");
+            string derivedAlias = Eat("AS") ? Name() : Current.Kind is "word" or "quoted" && !Reserved.Contains(Current.Text) ? Name() : "subquery";
+            return new Source("", derivedAlias)
+            {
+                Query = query
+            };
+        }
+
         string table = Name();
+        Expr[]? arguments = null;
+        if (Eat("("))
+        {
+            var list = new List<Expr>();
+            if (!Eat(")"))
+            {
+                do
+                {
+                    list.Add(Expression());
+                }
+                while (Eat(","));
+                Need(")");
+            }
+
+            arguments = list.ToArray();
+        }
+
         string alias = Eat("AS") ? Name() : Current.Kind is "word" or "quoted" && !Reserved.Contains(Current.Text) ? Name() : table;
-        return new(table, alias);
+        return new(table, alias)
+        {
+            Arguments = arguments
+        };
     }
 
     /// <summary>按最小优先级递归解析 SQL 表达式，保持操作符结合顺序。</summary>
-    /// <param name="min">允许继续结合的最小操作符优先级。</param>
+    /// <param name = "min">允许继续结合的最小操作符优先级。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     private Expr Expression(int min = 0)
     {
         Expr left;
-        if (Eat("NOT"))
+        if (Eat("CASE"))
+        {
+            bool simple = !Is("WHEN");
+            var branches = new List<Expr>();
+            if (simple)
+                branches.Add(Expression());
+            int pairs = 0;
+            while (Eat("WHEN"))
+            {
+                branches.Add(Expression());
+                Need("THEN");
+                branches.Add(Expression());
+                pairs++;
+            }
+
+            if (pairs == 0)
+                throw Error("CASE requires WHEN");
+            branches.Add(Eat("ELSE") ? Expression() : Expr.Literal(null));
+            Need("END");
+            left = new(simple ? "casebase" : "case", Items: branches.ToArray());
+        }
+        else if (Eat("EXISTS"))
+        {
+            Need("(");
+            left = new Expr("exists")
+            {
+                Subquery = ReadQuery()
+            };
+            Need(")");
+        }
+        else if (Eat("NOT"))
             left = new("NOT", Items: [Expression(3)]);
         else if (Eat("-"))
             left = new("negate", Items: [Expression(7)]);
@@ -489,7 +685,12 @@ internal sealed class SqlParser
             left = Expression(7);
         else if (Eat("("))
         {
-            left = Expression();
+            left = Is("SELECT") || Is("WITH") ? new Expr("subquery")
+            {
+                Subquery = ReadQuery()
+            }
+
+            : Expression();
             Need(")");
         }
         else if (Eat("*"))
@@ -517,7 +718,15 @@ internal sealed class SqlParser
         else
         {
             string name = Name();
-            if (name.Equals("X", StringComparison.OrdinalIgnoreCase) && Current.Kind == "string")
+            if (name.Equals("RAISE", StringComparison.OrdinalIgnoreCase) && Eat("("))
+            {
+                Need("ABORT");
+                Need(",");
+                var message = Expression();
+                Need(")");
+                left = new("raise", Items: [message]);
+            }
+            else if (name.Equals("X", StringComparison.OrdinalIgnoreCase) && Current.Kind == "string")
             {
                 try
                 {
@@ -549,6 +758,11 @@ internal sealed class SqlParser
                 left = new("column", name);
         }
 
+        if (Eat("OVER"))
+            left = left with
+            {
+                Window = ReadWindow()
+            };
         while (true)
         {
             string op = Current.Text.ToUpperInvariant();
@@ -586,6 +800,18 @@ internal sealed class SqlParser
             else if (op == "IN")
             {
                 Need("(");
+                if (Is("SELECT") || Is("WITH"))
+                {
+                    left = new Expr("inquery", Items: [left])
+                    {
+                        Subquery = ReadQuery()
+                    };
+                    Need(")");
+                    if (not)
+                        left = new("NOT", Items: [left]);
+                    continue;
+                }
+
                 var list = new List<Expr>
                 {
                     left

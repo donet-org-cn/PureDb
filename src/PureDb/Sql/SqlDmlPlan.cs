@@ -4,9 +4,9 @@ namespace PureDb;
 internal static class SqlPrimaryPredicate
 {
     /// <summary>识别主键等值比较中的常量或参数键表达式。</summary>
-    /// <param name="where">可选 SQL 表达式；null 表示未提供该子句。</param>
-    /// <param name="binding">当前数据源的列名、偏移及函数绑定上下文。</param>
-    /// <param name="primary">整数主键列的零基序号。</param>
+    /// <param name = "where">可选 SQL 表达式；null 表示未提供该子句。</param>
+    /// <param name = "binding">当前数据源的列名、偏移及函数绑定上下文。</param>
+    /// <param name = "primary">整数主键列的零基序号。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     internal static Expr? Key(Expr? where, SqlBinding binding, int primary)
     {
@@ -20,8 +20,8 @@ internal static class SqlPrimaryPredicate
     }
 
     /// <summary>仅当值能精确表示受支持的非负整数主键时转换成功。</summary>
-    /// <param name="value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
-    /// <param name="id">转换成功时返回范围内的整数主键。</param>
+    /// <param name = "value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+    /// <param name = "id">转换成功时返回范围内的整数主键。</param>
     /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
     internal static bool TryId(object? value, out long id)
     {
@@ -43,16 +43,16 @@ internal static class SqlPrimaryPredicate
 }
 
 /// <summary>主键更新或删除的已编译语句结构；不捕获调用参数和事务行。</summary>
-/// <param name="Supported">该语句结构是否可使用当前专用计划。</param>
-/// <param name="Delete">是否执行删除而非更新。</param>
-/// <param name="Key">索引键或查询主键表达式。</param>
-/// <param name="Assignments">目标列序号及赋值表达式。</param>
-/// <param name="Parameters">执行前必须验证的参数名称。</param>
+/// <param name = "Supported">该语句结构是否可使用当前专用计划。</param>
+/// <param name = "Delete">是否执行删除而非更新。</param>
+/// <param name = "Key">索引键或查询主键表达式。</param>
+/// <param name = "Assignments">目标列序号及赋值表达式。</param>
+/// <param name = "Parameters">执行前必须验证的参数名称。</param>
 internal sealed record SqlDmlPlan(bool Supported, bool Delete, SqlRuntimeValue? Key, (int Column, SqlRuntimeValue Value)[] Assignments, Expr[] Parameters)
 {
     /// <summary>识别主键更新或删除并编译可复用结构；不支持时返回禁用计划。</summary>
-    /// <param name="statement">本次待编译或执行的已解析语句。</param>
-    /// <param name="table">当前操作的不可变表模式。</param>
+    /// <param name = "statement">本次待编译或执行的已解析语句。</param>
+    /// <param name = "table">当前操作的不可变表模式。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     internal static SqlDmlPlan Build(SqlStatement statement, SqlTable table)
     {
@@ -76,16 +76,16 @@ internal sealed record SqlDmlPlan(bool Supported, bool Delete, SqlRuntimeValue? 
 }
 
 /// <summary>DML 表达式的轻量运行时节点；列、参数和常量在执行时按槽位求值。</summary>
-/// <param name="op">操作符或表达式节点类型。</param>
-/// <param name="constant">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
-/// <param name="slot">列或参数的槽位。</param>
-/// <param name="args">子表达式节点。</param>
+/// <param name = "op">操作符或表达式节点类型。</param>
+/// <param name = "constant">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+/// <param name = "slot">列或参数的槽位。</param>
+/// <param name = "args">子表达式节点。</param>
 internal sealed class SqlRuntimeValue(string op, object? constant, int slot, SqlRuntimeValue[] args)
 {
     /// <summary>将支持的 DML 表达式编译为轻量节点，并收集必须检查的参数名称。</summary>
-    /// <param name="expression">待分析、绑定或求值的 SQL 表达式。</param>
-    /// <param name="binding">当前数据源的列名、偏移及函数绑定上下文。</param>
-    /// <param name="parameters">本次调用的参数值或编译期间收集的参数名称。</param>
+    /// <param name = "expression">待分析、绑定或求值的 SQL 表达式。</param>
+    /// <param name = "binding">当前数据源的列名、偏移及函数绑定上下文。</param>
+    /// <param name = "parameters">本次调用的参数值或编译期间收集的参数名称。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     internal static SqlRuntimeValue Build(Expr expression, SqlBinding binding, List<Expr> parameters)
     {
@@ -111,8 +111,8 @@ internal sealed class SqlRuntimeValue(string op, object? constant, int slot, Sql
     }
 
     /// <summary>根据当前行和本次参数递归计算表达式值，不保留本次调用结果。</summary>
-    /// <param name="row">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
-    /// <param name="parameters">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
+    /// <param name = "row">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
+    /// <param name = "parameters">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     internal object? Evaluate(object?[] row, object?[] parameters)
     {
@@ -138,6 +138,21 @@ internal sealed class SqlRuntimeValue(string op, object? constant, int slot, Sql
                     return value;
             return null;
         }
+
+        if (op is "case" or "casebase")
+        {
+            bool simple = op == "casebase";
+            object? basis = simple ? args[0].Evaluate(row, parameters) : null;
+            for (int i = simple ? 1 : 0; i < args.Length - 1; i += 2)
+            {
+                object? condition = args[i].Evaluate(row, parameters);
+                if (simple ? basis is not null && condition is not null && SqlValueComparer.Instance.Equals(basis, condition) : SqlValueComparer.Truth(condition) == true)
+                    return args[i + 1].Evaluate(row, parameters);
+            }
+
+            return args[^1].Evaluate(row, parameters);
+        }
+
         var values = new object?[args.Length];
         for (int i = 0; i < args.Length; i++)
             values[i] = args[i].Evaluate(row, parameters);
@@ -149,9 +164,9 @@ internal sealed class SqlRuntimeValue(string op, object? constant, int slot, Sql
 internal sealed partial class SqlSession
 {
     /// <summary>按编译计划验证参数并只更新或删除命中的主键行。</summary>
-    /// <param name="plan">专用查询计划，或候选行选择返回的计划说明。</param>
-    /// <param name="table">当前操作的不可变表模式。</param>
-    /// <param name="parameters">本次调用的参数值或编译期间收集的参数名称。</param>
+    /// <param name = "plan">专用查询计划，或候选行选择返回的计划说明。</param>
+    /// <param name = "table">当前操作的不可变表模式。</param>
+    /// <param name = "parameters">本次调用的参数值或编译期间收集的参数名称。</param>
     /// <returns>按方法规定计算的数量、位置、版本或比较结果。</returns>
     private int ExecutePrimaryDml(SqlDmlPlan plan, SqlTable table, IReadOnlyDictionary<string, object?> parameters)
     {
@@ -171,7 +186,7 @@ internal sealed partial class SqlSession
                     if (state.Get(original) is { } value)
                         state.Values.Remove(value);
             long key = StorageId(table, id);
-            Mutations[key] = Mutation.Delete(key);
+            Stage(Mutation.Delete(key));
         }
         else
         {

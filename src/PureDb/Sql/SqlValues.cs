@@ -2,14 +2,13 @@ using System.Globalization;
 using System.Text;
 
 namespace PureDb;
-
 /// <summary>SQL 存储类别排序及 NULL、整数、实数、文本和 BLOB 的一致比较与哈希。</summary>
 internal sealed class SqlValueComparer : IComparer<object?>, IEqualityComparer<object?>
 {
     /// <summary>所有 SQL 值比较和哈希共享的无状态比较器。</summary>
     public static readonly SqlValueComparer Instance = new();
     /// <summary>将受支持 CLR 标量转换为内部 SQL 存储类型，拒绝非有限实数和未知类型。</summary>
-    /// <param name="v">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+    /// <param name = "v">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     internal static object? Normalize(object? v) => v switch
     {
@@ -26,11 +25,11 @@ internal sealed class SqlValueComparer : IComparer<object?>, IEqualityComparer<o
         _ => throw new SqlException($"Unsupported value type: {v.GetType().Name}")
     };
     /// <summary>验证实数有限，避免持久化 NaN 或无穷大造成比较不一致。</summary>
-    /// <param name="value">必须有限的实数值。</param>
+    /// <param name = "value">必须有限的实数值。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     private static double Finite(double value) => double.IsFinite(value) ? value : throw new SqlException("Nonfinite REAL value");
     /// <summary>返回 SQL 存储类别的排序序号：NULL、数值、文本、BLOB。</summary>
-    /// <param name="v">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+    /// <param name = "v">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
     /// <returns>按方法规定计算的数量、位置、版本或比较结果。</returns>
     private static int Rank(object? v) => v switch
     {
@@ -41,15 +40,17 @@ internal sealed class SqlValueComparer : IComparer<object?>, IEqualityComparer<o
         _ => throw new SqlException("Invalid SQL value")
     };
     /// <summary>将数组或缓存 BLOB 转换为只读字节视图而不分配副本。</summary>
-    /// <param name="value">待处理的标量或参数实例，受当前接口的类型约束。</param>
+    /// <param name = "value">待处理的标量或参数实例，受当前接口的类型约束。</param>
     /// <returns>受当前读取保护期约束的只读字节片段。</returns>
     private static ReadOnlySpan<byte> Blob(object value) => value is CachedBlob cached ? cached.Span : (byte[])value;
     /// <summary>按 SQL 存储类别比较两个值，混合整数和实数比较保留整数精度边界。</summary>
-    /// <param name="x">左侧 SQL 值。</param>
-    /// <param name="y">右侧 SQL 值。</param>
+    /// <param name = "x">左侧 SQL 值。</param>
+    /// <param name = "y">右侧 SQL 值。</param>
     /// <returns>按方法规定计算的数量、位置、版本或比较结果。</returns>
     public int Compare(object? x, object? y)
     {
+        if (x is SqlCompositeKey cx && y is SqlCompositeKey cy)
+            return cx.CompareTo(cy);
         // 整数是主键和常见排序键，先直接比较，省去 JSON 解包与两次存储类别判断。
         if (x is long l && y is long r)
             return l.CompareTo(r);
@@ -84,15 +85,17 @@ internal sealed class SqlValueComparer : IComparer<object?>, IEqualityComparer<o
     }
 
     /// <summary>按 SQL 值比较规则判断是否相等，包括 NULL 与 BLOB 内容比较。</summary>
-    /// <param name="x">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
-    /// <param name="y">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+    /// <param name = "x">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+    /// <param name = "y">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
     /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
     public new bool Equals(object? x, object? y) => Compare(x, y) == 0;
     /// <summary>计算与 SQL 相等规则一致的哈希，整数和等值实数共享哈希语义。</summary>
-    /// <param name="x">需要计算 SQL 相等语义哈希的值。</param>
+    /// <param name = "x">需要计算 SQL 相等语义哈希的值。</param>
     /// <returns>按方法规定计算的数量、位置、版本或比较结果。</returns>
     public int GetHashCode(object? x)
     {
+        if (x is SqlCompositeKey composite)
+            return composite.GetHashCode();
         x = x is SqlJson j ? j.Text : x;
         if (x is null)
             return 0;
@@ -110,7 +113,7 @@ internal sealed class SqlValueComparer : IComparer<object?>, IEqualityComparer<o
     }
 
     /// <summary>将 NULL 或数值转为 SQL 三值布尔；当前不对文本执行 SQLite 的宽松数值转换。</summary>
-    /// <param name="v">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+    /// <param name = "v">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
     /// <returns>数值对应的布尔结果；SQL NULL 保留为 null。</returns>
     public static bool? Truth(object? v) => v switch
     {
@@ -121,24 +124,24 @@ internal sealed class SqlValueComparer : IComparer<object?>, IEqualityComparer<o
         _ => throw new SqlException("Predicate requires a numeric/boolean value")
     };
     /// <summary>将可空布尔值转换为 SQL NULL、0 或 1。</summary>
-    /// <param name="value">SQL 三值逻辑中的真、假或未知。</param>
+    /// <param name = "value">SQL 三值逻辑中的真、假或未知。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     public static object? Boolean(bool? value) => value is null ? null : value.Value ? 1L : 0L;
 }
 
 /// <summary>按 SQL 值语义比较的复合行键，用于分组及去重；构造后键值不可变。</summary>
-/// <param name="values">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
+/// <param name = "values">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
 internal sealed class RowKey(object?[] values) : IEquatable<RowKey>
 {
     /// <summary>按 SQL 值语义逐列比较行键，NULL 值在分组或去重中相等。</summary>
-    /// <param name="other">要与当前行键比较的另一个行键。</param>
+    /// <param name = "other">要与当前行键比较的另一个行键。</param>
     /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
     public bool Equals(RowKey? other) => other is not null && values.SequenceEqual(other.Values, SqlValueComparer.Instance);
     /// <summary>构造时捕获的键值；键加入哈希集合后不得修改。</summary>
     private object?[] Values => values;
 
     /// <summary>按 SQL 值语义逐列比较行键，NULL 值在分组或去重中相等。</summary>
-    /// <param name="obj">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
+    /// <param name = "obj">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
     /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
     public override bool Equals(object? obj) => obj is RowKey k && Equals(k);
     /// <summary>合并各列的 SQL 哈希，以匹配行键逐列相等规则。</summary>
@@ -153,16 +156,17 @@ internal sealed class RowKey(object?[] values) : IEquatable<RowKey>
 }
 
 /// <summary>将列名、参数、内置表达式及连接级用户函数绑定为逐行执行的委托。</summary>
-/// <param name="owner">拥有函数注册和计划缓存的 SQL 数据库。</param>
-internal sealed class SqlBinding(SqlDatabase? owner = null)
+/// <param name = "owner">拥有函数注册和计划缓存的 SQL 数据库。</param>
+/// <param name = "context">当前执行上下文，用于绑定相关子查询和外层列。</param>
+internal sealed class SqlBinding(SqlDatabase? owner = null, SqlSession? context = null)
 {
     internal readonly List<(SqlTable Table, string Alias, int Offset)> Sources = [];
     /// <summary>当前已绑定数据源的总列数。</summary>
     public int Width => Sources.Sum(s => s.Table.Columns.Count);
 
     /// <summary>为数据源分配行数组偏移，拒绝重复别名。</summary>
-    /// <param name="table">当前操作的不可变表模式。</param>
-    /// <param name="alias">当前语句内的数据源别名。</param>
+    /// <param name = "table">当前操作的不可变表模式。</param>
+    /// <param name = "alias">当前语句内的数据源别名。</param>
     public void Add(SqlTable table, string alias)
     {
         if (Sources.Any(s => s.Alias.Equals(alias, StringComparison.OrdinalIgnoreCase)))
@@ -171,9 +175,13 @@ internal sealed class SqlBinding(SqlDatabase? owner = null)
     }
 
     /// <summary>按可选表别名解析列序号，拒绝不存在或含糊的列引用。</summary>
-    /// <param name="name">要解析、规范化或查找的标识符。</param>
+    /// <param name = "name">要解析、规范化或查找的标识符。</param>
     /// <returns>按方法规定计算的数量、位置、版本或比较结果。</returns>
-    public int Resolve(string name)
+    public int Resolve(string name) => FindColumn(name) is var found && found >= 0 ? found : throw new SqlException($"Unknown column: {name}");
+    /// <summary>查找本层列；不存在返回负数，列引用含糊时仍然报错。</summary>
+    /// <param name = "name">可带数据源别名的列引用。</param>
+    /// <returns>本层行数组中的列位置，或未找到标记。</returns>
+    internal int FindColumn(string name)
     {
         var parts = name.Split('.');
         int found = -1;
@@ -189,21 +197,31 @@ internal sealed class SqlBinding(SqlDatabase? owner = null)
             found = s.Offset + i;
         }
 
-        return found < 0 ? throw new SqlException($"Unknown column: {name}") : found;
+        return found;
     }
 
     /// <summary>将表达式绑定为逐行委托，并在枚举前校验列、参数和函数。</summary>
-    /// <param name="expr">待分析、绑定或求值的 SQL 表达式。</param>
-    /// <param name="parameters">本次调用的参数值或编译期间收集的参数名称。</param>
+    /// <param name = "expr">待分析、绑定或求值的 SQL 表达式。</param>
+    /// <param name = "parameters">本次调用的参数值或编译期间收集的参数名称。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     public Func<object?[], object?> Bind(Expr expr, IReadOnlyDictionary<string, object?> parameters)
     {
+        if (expr.Window is not null)
+            return context?.BindWindow(expr) ?? throw new SqlException("Window requires an execution context");
         if (expr.Op == "column")
         {
-            int i = Resolve((string)expr.Value!);
+            int i = FindColumn((string)expr.Value!);
+            if (i < 0)
+            {
+                object? value = context?.OuterColumn((string)expr.Value!) ?? throw new SqlException($"Unknown column: {expr.Value}");
+                return _ => value is SqlOuterValue outer ? outer.Value : value;
+            }
+
             return r => r[i];
         }
 
+        if (expr.Subquery is not null)
+            return context?.BindSubquery(expr, this, parameters) ?? throw new SqlException("Subquery requires an execution context");
         if (expr.Op == "literal")
             return _ => expr.Value;
         if (expr.Op == "parameter")
@@ -216,9 +234,31 @@ internal sealed class SqlBinding(SqlDatabase? owner = null)
         }
 
         var args = expr.Args.Select(e => Bind(e, parameters)).ToArray();
+        if (expr.Op == "raise")
+            return row => context?.Raise(args[0](row)) ?? throw new SqlException("RAISE requires a trigger");
+        if (expr.Op == "composite")
+            return row =>
+            {
+                var values = args.Select(f => f(row)).ToArray();
+                return values.Any(v => v is null) ? null : new SqlCompositeKey(values);
+            };
         if (TryFunction(expr.Op, args.Length, out var function))
             return function.Bind(args);
         Validate(expr.Op, args.Length);
+        if (expr.Op is "case" or "casebase")
+            return row =>
+            {
+                bool simple = expr.Op == "casebase";
+                object? basis = simple ? args[0](row) : null;
+                for (int i = simple ? 1 : 0; i < args.Length - 1; i += 2)
+                {
+                    object? condition = args[i](row);
+                    if (simple ? basis is not null && condition is not null && SqlValueComparer.Instance.Equals(basis, condition) : SqlValueComparer.Truth(condition) == true)
+                        return args[i + 1](row);
+                }
+
+                return args[^1](row);
+            };
         if (expr.Op == "COALESCE")
             return row =>
             {
@@ -246,9 +286,9 @@ internal sealed class SqlBinding(SqlDatabase? owner = null)
     }
 
     /// <summary>执行常用二元数值或比较操作，减少通用参数数组分配。</summary>
-    /// <param name="op">当前 SQL 操作符或函数名。</param>
-    /// <param name="left">二元操作的左侧 SQL 标量。</param>
-    /// <param name="right">二元操作的右侧 SQL 标量。</param>
+    /// <param name = "op">当前 SQL 操作符或函数名。</param>
+    /// <param name = "left">二元操作的左侧 SQL 标量。</param>
+    /// <param name = "right">二元操作的右侧 SQL 标量。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     internal static object? Binary(string op, object? left, object? right)
     {
@@ -301,13 +341,13 @@ internal sealed class SqlBinding(SqlDatabase? owner = null)
     }
 
     /// <summary>递归判断表达式中是否包含受支持聚合函数。</summary>
-    /// <param name="e">待分析、绑定或求值的 SQL 表达式。</param>
+    /// <param name = "e">待分析、绑定或求值的 SQL 表达式。</param>
     /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
-    internal static bool Aggregate(Expr e) => e.Op is "COUNT" or "SUM" or "AVG" or "MIN" or "MAX" || e.Args.Any(Aggregate);
+    internal static bool Aggregate(Expr e) => e.Window is null && e.Op is ("COUNT" or "SUM" or "AVG" or "MIN" or "MAX") || e.Args.Any(Aggregate);
     /// <summary>从所属连接解析指定名称和参数数量的用户函数。</summary>
-    /// <param name="name">要解析、规范化或查找的标识符。</param>
-    /// <param name="arity">参数数量；-1 表示可变参数重载。</param>
-    /// <param name="function">成功时返回当前连接中匹配的函数定义。</param>
+    /// <param name = "name">要解析、规范化或查找的标识符。</param>
+    /// <param name = "arity">参数数量；-1 表示可变参数重载。</param>
+    /// <param name = "function">成功时返回当前连接中匹配的函数定义。</param>
     /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
     internal bool TryFunction(string name, int arity, out SqlFunctionDefinition function)
     {
@@ -316,14 +356,21 @@ internal sealed class SqlBinding(SqlDatabase? owner = null)
     }
 
     /// <summary>判断名称是否属于不允许用户替换的内置函数命名空间。</summary>
-    /// <param name="name">要解析、规范化或查找的标识符。</param>
+    /// <param name = "name">要解析、规范化或查找的标识符。</param>
     /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
-    internal static bool BuiltinFunction(string name) => SqlJsonFunctions.Handles(name) || name is "COUNT" or "SUM" or "AVG" or "MIN" or "MAX" or "LENGTH" or "LOWER" or "UPPER" or "COALESCE";
+    internal static bool BuiltinFunction(string name) => SqlJsonFunctions.Handles(name) || name is "COUNT" or "SUM" or "AVG" or "MIN" or "MAX" or "LENGTH" or "LOWER" or "UPPER" or "COALESCE" or "RAISE" or "CASE" or "EXISTS" or "ROW_NUMBER" or "RANK" or "DENSE_RANK" or "PERCENT_RANK" or "CUME_DIST" or "NTILE" or "LAG" or "LEAD" or "FIRST_VALUE" or "LAST_VALUE" or "NTH_VALUE";
     /// <summary>检查通用表达式操作符及其参数数量。</summary>
-    /// <param name="op">当前 SQL 操作符或函数名。</param>
-    /// <param name="n">表达式参数数量。</param>
+    /// <param name = "op">当前 SQL 操作符或函数名。</param>
+    /// <param name = "n">表达式参数数量。</param>
     internal static void Validate(string op, int n)
     {
+        if (op is "case" or "casebase")
+        {
+            if (op == "case" ? n >= 3 && n % 2 == 1 : n >= 4 && n % 2 == 0)
+                return;
+            throw new SqlException("Invalid CASE expression");
+        }
+
         if (SqlJsonFunctions.Handles(op))
         {
             SqlJsonFunctions.Validate(op, n);
@@ -344,8 +391,8 @@ internal sealed class SqlBinding(SqlDatabase? owner = null)
     }
 
     /// <summary>按 SQL 三值逻辑及存储类型规则计算通用表达式。</summary>
-    /// <param name="op">当前 SQL 操作符或函数名。</param>
-    /// <param name="a">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
+    /// <param name = "op">当前 SQL 操作符或函数名。</param>
+    /// <param name = "a">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     internal static object? Eval(string op, object?[] a)
     {
@@ -362,6 +409,15 @@ internal sealed class SqlBinding(SqlDatabase? owner = null)
             return a[0] is null ? 0L : 1L;
         if (op == "COALESCE")
             return a.FirstOrDefault(x => x is not null);
+        if (op is "case" or "casebase")
+        {
+            bool simple = op == "casebase";
+            for (int i = simple ? 1 : 0; i < a.Length - 1; i += 2)
+                if (simple ? a[0] is not null && a[i] is not null && cmp.Equals(a[0], a[i]) : SqlValueComparer.Truth(a[i]) == true)
+                    return a[i + 1];
+            return a[^1];
+        }
+
         if (op == "NOT")
             return SqlValueComparer.Boolean(!SqlValueComparer.Truth(a[0]));
         if (op is "AND" or "OR")
@@ -471,7 +527,7 @@ internal sealed class SqlBinding(SqlDatabase? owner = null)
 internal static class SqlCodec
 {
     /// <summary>将一行 SQL 标量写成紧凑二进制表示，预先精确计算容量以避免缓冲扩容。</summary>
-    /// <param name="row">按存储列顺序排列、已经规范化的完整 SQL 行。</param>
+    /// <param name = "row">按存储列顺序排列、已经规范化的完整 SQL 行。</param>
     /// <returns>本次编码或复制得到的字节数组。</returns>
     public static byte[] Encode(object?[] row)
     {
@@ -546,8 +602,8 @@ internal static class SqlCodec
     }
 
     /// <summary>完整解码一行并检查没有截断或多余尾部字节。</summary>
-    /// <param name="bytes">待校验或解码的只读编码字节。</param>
-    /// <param name="columns">行编码中预期存在的列数量。</param>
+    /// <param name = "bytes">待校验或解码的只读编码字节。</param>
+    /// <param name = "columns">行编码中预期存在的列数量。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     public static object?[] Decode(ReadOnlySpan<byte> bytes, int columns)
     {
@@ -560,8 +616,8 @@ internal static class SqlCodec
     }
 
     /// <summary>解码缓存行，BLOB 可保留对已提交只读页的内部视图。</summary>
-    /// <param name="bytes">包含完整编码行的只读内存，可用于保留内部 BLOB 视图。</param>
-    /// <param name="columns">行编码中预期存在的列数量。</param>
+    /// <param name = "bytes">包含完整编码行的只读内存，可用于保留内部 BLOB 视图。</param>
+    /// <param name = "columns">行编码中预期存在的列数量。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     public static object?[] DecodeCached(ReadOnlyMemory<byte> bytes, int columns)
     {
@@ -574,9 +630,9 @@ internal static class SqlCodec
     }
 
     /// <summary>扫描编码行并只物化请求列，重复 BLOB 投影分别复制以隔离结果。</summary>
-    /// <param name="bytes">待校验或解码的只读编码字节。</param>
-    /// <param name="columns">行编码中预期存在的列数量。</param>
-    /// <param name="projection">需要输出的列序号数组，允许同一列重复出现。</param>
+    /// <param name = "bytes">待校验或解码的只读编码字节。</param>
+    /// <param name = "columns">行编码中预期存在的列数量。</param>
+    /// <param name = "projection">需要输出的列序号数组，允许同一列重复出现。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     public static object?[] DecodeProjection(ReadOnlySpan<byte> bytes, int columns, int[] projection)
     {
@@ -597,14 +653,14 @@ internal static class SqlCodec
     }
 
     /// <summary>带边界校验的栈上行读取器，支持跳过非投影列并保留已提交 BLOB 的只读视图。</summary>
-    /// <param name="bytes">待校验或解码的只读编码字节。</param>
-    /// <param name="backing">可选的已提交缓存内存，用于建立只读 BLOB 视图。</param>
+    /// <param name = "bytes">待校验或解码的只读编码字节。</param>
+    /// <param name = "backing">可选的已提交缓存内存，用于建立只读 BLOB 视图。</param>
     private ref struct RowReader(ReadOnlySpan<byte> bytes, ReadOnlyMemory<byte> backing = default)
     {
         private ReadOnlySpan<byte> _remaining = bytes;
         private int _consumed;
         /// <summary>检查剩余长度并消费指定字节数，禁止越界读取截断行。</summary>
-        /// <param name="length">本次处理的字节长度或请求长度。</param>
+        /// <param name = "length">本次处理的字节长度或请求长度。</param>
         /// <returns>受当前读取保护期约束的只读字节片段。</returns>
         private ReadOnlySpan<byte> Take(int length)
         {
@@ -617,7 +673,7 @@ internal static class SqlCodec
         }
 
         /// <summary>读取一个编码标量；无需物化时只前移游标，BLOB 可保留缓存视图。</summary>
-        /// <param name="materialize">是否解码并返回值；为 false 时只跳过编码字节。</param>
+        /// <param name = "materialize">是否解码并返回值；为 false 时只跳过编码字节。</param>
         /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
         public object? Read(bool materialize)
         {

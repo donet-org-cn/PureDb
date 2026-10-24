@@ -72,7 +72,9 @@ await transaction.CommitAsync();
 
 采用乐观 Serializable 隔离：变更暂存，不向其他连接暴露，事务内查询可以读到自己的修改。每条语句与最终提交都会验证全局提交版本；其他连接的提交或文件压缩可能使事务发生冲突，抛出 `DBConcurrencyException`。调用方必须重做整个事务；这是保守的冲突检测，没有逐行 MVCC。提交时所有变更合成一笔原子日志事务。
 
-默认隔离级别和显式 Serializable 均可用；其他隔离级别与嵌套事务会报 NotSupportedException。显式事务中所有命令必须设置 `command.Transaction`。约束错误会使该事务失效，必须回滚；Dispose 未提交事务、关闭连接均回滚。提交失败不会部分提交，发生 I/O 故障时仍需按数据库故障语义重新打开并核查，不能盲目重试非幂等外部副作用。
+默认隔离级别和显式 Serializable 均可用；其他隔离级别和嵌套 BeginTransaction 不受支持。显式事务中所有命令必须设置 `command.Transaction`。普通约束或触发器错误回滚当前语句，事务可修正后继续；延迟外键检查失败的 Commit 也保留事务。版本冲突仍要求整体回滚重试。Dispose 未提交事务、关闭连接均回滚。发生 I/O 故障时提交结果可能不确定，需重新打开并核查，不能盲目重试非幂等外部副作用。
+
+源码 `preview.2` 支持 `SupportsSavepoints`、`Save(name)`、`Rollback(name)`、`Release(name)` 及异步对应方法。SQL SAVEPOINT / ROLLBACK TO / RELEASE 也可在该事务中执行；通过 BeginTransaction 创建的事务应由事务对象 Commit / Rollback 结束，内部 SQL BEGIN / COMMIT / 完整 ROLLBACK 会报错。没有 ADO.NET 显式事务时，可用命令执行 SQL BEGIN / COMMIT；Shared 只支持 DEFERRED。完整语法和边界见 [SQL 清单](SQL-SUPPORT.md)。
 
 批量写入应分成合理大小的事务（例如每笔 1000 行），复用命令和参数，尽量提供主键。原生 `SqlDatabase.ExecuteTransactionAsync` 仍可用于一次性提交命令集合。当前不提供 SqlBulkCopy 类；单笔事务受默认 64 MiB 日志帧限制。
 
@@ -87,7 +89,7 @@ adapter.Fill(table);
 
 支持同步/异步入口、ExecuteNonQuery、ExecuteScalar、ExecuteReader、多条 SELECT 的 NextResult、字段名称/类型、空结果基本字段类型、GetValues、GetBytes/GetChars 分段读取、DataTable.Load、DataAdapter.Fill。DataAdapter.Update 需要手工配置 InsertCommand/UpdateCommand/DeleteCommand 和参数 SourceColumn；没有自动生成 DML 的 CommandBuilder。
 
-支持 `GetSchema("Tables")`、`GetSchema("Columns")` 及限制条件。读取器基于已物化的结果集，遍历时不持有数据库锁；这不是大型结果的流式游标。SequentialAccess 不会减少物化内存，SchemaOnly 目前也会先执行只读查询再抑制行输出。动态 JSON 提取和全 NULL 表达式的空结果字段类型可能为 Object。KeyInfo 元数据尚未实现，显式请求会报错。
+支持 `GetSchema("Tables")`、`GetSchema("Columns")` 及限制条件，目前只枚举已提交的基表，不提供视图和事务内模式目录。读取器基于已物化的结果集，遍历时不持有数据库锁；这不是大型结果的流式游标。SequentialAccess 不会减少物化内存，SchemaOnly 目前也会先执行只读查询再抑制行输出。动态 JSON 提取和全 NULL 表达式的空结果字段类型可能为 Object。KeyInfo 元数据尚未实现，显式请求会报错。
 
 ## 并发、取消和兼容边界
 

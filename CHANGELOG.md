@@ -11,7 +11,16 @@
 - 整数对整数比较直接处理，跳过不必要的 JSON 解包和 SQL 存储类别判断，混合数值比较保留原语义。
 - 增加 160 条 SQLite 排序差分查询、并发与语义验证，以及 Windows / Linux 优化前后、CPU 时间和托管分配专项报告。
 
-复合索引、外键、视图、触发器、CTE、窗口函数、子查询、UNION、JSON5/表值 JSON 函数及保存点仍在扩展计划中。
+- 补齐普通及受控递归 CTE、WITH 增删改、派生表、标量 / IN / EXISTS 及相关子查询、UNION / UNION ALL / INTERSECT / EXCEPT。
+- 增加排名、偏移、取值及聚合窗口，ROWS / RANGE / GROUPS、EXCLUDE、命名窗口及分组后窗口；聚合帧使用前缀统计及区间树。
+- 增加复合索引定义、唯一性、左前缀和范围二分定位、多列升降序及反向扫描；索引数据按版本惰性构建，尚非分页增量复合 B-tree。
+- 增加持久化外键、五种引用动作及延迟检查、视图、BEFORE / AFTER / INSTEAD OF 行触发器和原子撤销。
+- 增加 SQL BEGIN / COMMIT / END / ROLLBACK 和嵌套 SAVEPOINT / ROLLBACK TO / RELEASE，ADO.NET 保存点、DDL 回滚；普通语句失败保留事务以便修正。
+- 增加 JSON5 输入、json_valid 标志 2、json_each / json_tree 及左侧相关 JSON 连接。
+- 新增 [SQL 支持与不支持清单](docs/SQL-SUPPORT.md)；新增模式尚未接入 SQLite 文件格式，兼容后端及导出显式拒绝，验证拒绝后原文件不变。
+- 扩展状态按需分配，保留普通查询快路径；保存点记录增量撤销，外键主键检查直接查索引，事务内缓存父键及索引绑定。
+
+完整 SQLite SQL、类型亲和性、锁协议、通用去相关优化和分页增量复合索引仍未实现。本轮新增功能的历史性能对比尚未全面重测。
 
 # 1.0.0-preview.1
 

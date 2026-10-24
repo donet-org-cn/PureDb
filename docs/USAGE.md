@@ -47,19 +47,19 @@ await db.ExecuteAsync("""
 
 `Query` 返回列名、已物化的行和执行计划。BLOB 为独立副本，文本为不可变字符串。参数支持具名参数及 `?1` 等值参数，标识符不能通过参数替换。
 
-每次 `ExecuteAsync` 中的多条 DDL/DML 原子提交。`ExecuteTransactionAsync` 可给每条 SQL 独立参数，支持事务内前面语句的改动。约束检查在写锁/进程锁下完成，错误使整批回滚，写入器继续可用；多进程 `UPDATE ... SET value=value+1` 不会通过客户端读改写丢失更新。直接 SQL API 不接受 BEGIN/COMMIT；新增 ADO.NET DbTransaction 支持跨调用的乐观 Serializable 事务，详见 ADO.NET.md。
+不含显式事务控制时，每次 `ExecuteAsync` 中的多条 DDL/DML 原子提交。`ExecuteTransactionAsync` 可给每条 SQL 独立参数，支持事务内前面语句的改动。约束检查在写锁/进程锁下完成，错误使整批回滚，写入器继续可用；多进程 `UPDATE ... SET value=value+1` 不会通过客户端读改写丢失更新。源码 preview.2 支持 SQL BEGIN / COMMIT / ROLLBACK 和嵌套保存点，跨调用采用乐观 Serializable。显式事务中的普通语句失败只撤销该语句；含事务控制语句的批处理按显式边界执行，详见 [SQL 支持清单](SQL-SUPPORT.md) 和 [ADO.NET](ADO.NET.md)。
 
 ## SQL 支持范围
 
-- DDL：建表、单列索引、唯一索引、JSON_EXTRACT 路径表达式索引、删除表或索引；支持对应的 IF EXISTS / IF NOT EXISTS。
-- 类型：INTEGER、REAL、TEXT、BLOB、JSON、JSONB，以及 NOT NULL、单列 UNIQUE。每张表需一个 INTEGER PRIMARY KEY，SQL 主键范围 `[0,2^40)`，表标识存于内部键高位。
-- DML：多行 INSERT VALUES、UPDATE SET、DELETE WHERE。
+- DDL：表、单列及复合索引、唯一与 JSON_EXTRACT 路径索引、外键、视图、行触发器；支持对应的删除及存在性子句。
+- 类型：INTEGER、REAL、TEXT、BLOB、JSON、JSONB，以及 NOT NULL、单列/复合 UNIQUE 和常量 DEFAULT。每张表需一个 INTEGER PRIMARY KEY，SQL 主键范围 `[0,2^40)`，表标识存于内部键高位。
+- DML：多行 INSERT VALUES、INSERT SELECT、DEFAULT VALUES、UPDATE SET、DELETE WHERE，支持 WITH 前缀。
 - 查询：列/表达式、别名、星号、参数、WHERE、DISTINCT、GROUP BY、HAVING、ORDER BY、LIMIT/OFFSET、投影别名及排序序号、无 FROM 的常量查询。
 - 连接：INNER、LEFT、RIGHT、FULL OUTER、CROSS，多表与自连接。可提取等值条件时使用哈希/缓存索引查找，否则使用嵌套循环；NULL 键不互相匹配。
 - 表达式：算术、比较、AND/OR/NOT、BETWEEN、IN、IS NULL、LIKE、字符串拼接和 NULL 三值逻辑。
 - 函数：COUNT、SUM、AVG、MIN、MAX、LENGTH、LOWER、UPPER、COALESCE 与 JSON 函数。
 
-当前是明确范围的 SQL 方言，不是完整 SQLite 兼容层。未支持的子查询、CTE/UNION、窗口函数、视图、触发器、外键、ALTER TABLE、复合索引、ON CONFLICT、RETURNING、COLLATE 等会报错。采用严格类型，未实现 SQLite 的全部类型亲和性；排序使用 .NET ordinal，LIKE 和大小写使用 invariant Unicode，与 SQLite 部分规则不同。REAL 为有限 double，整数算术溢出报错。
+源码 preview.2 还支持普通及受控递归 CTE、相关标量 / IN / EXISTS 子查询、FROM 派生表、集合运算、窗口函数、CASE、SQL 事务和保存点。逐条语法、例子、实现方式及明确未支持项集中在独立的 [SQL 支持与不支持清单](SQL-SUPPORT.md)，包括原版文件和 SQLite 文件后端的差异。ALTER TABLE、ON CONFLICT、RETURNING、COLLATE 等仍未实现。采用严格类型，未实现 SQLite 的全部类型亲和性；排序使用 .NET ordinal，LIKE 和大小写使用 invariant Unicode，与 SQLite 部分规则不同。REAL 为有限 double，整数算术溢出报错。
 
 ## JSON / JSONB
 
@@ -69,7 +69,7 @@ JSON 列验证并保存紧凑的标准 JSON 文本；JSONB 列保存 PureDb 自�
 
 路径支持字段、带双引号的字段、数组下标、倒数下标，编辑支持末尾追加。JSON 函数产生的 JSON 子类型在表达式内部保留，嵌套构造不会被错误地引用成普通字符串。
 
-`json_valid(NULL)` 返回 SQL NULL；单参数只验证标准 JSON 文本；PureDb JSONB 可用标志 8 严格验证、标志 4 检查格式头。JSON5 标志 2 明确报不支持。标准 JSON 最大深度 128，未实现 JSON5、json_each/json_tree 表函数或通配 JSONPath。
+`json_valid(NULL)` 返回 SQL NULL；单参数只验证标准 JSON 文本；PureDb JSONB 可用标志 8 严格验证、标志 4 检查格式头。标志 2 接受 JSON5。JSON 最大深度 128；源码 preview.2 已支持 JSON5 输入、json_each / json_tree 和左侧相关 JSON 连接。不支持通配 JSONPath、SQLite JSONB 互通及所有 SQLite 宽松输入规则，详见 [SQL 清单](SQL-SUPPORT.md)。
 
 路径读取采用弱引用解析缓存，文档字符串释放后允许回收解析树。路径索引更新/删除后按表版本失效，多进程追赶或压缩更换 generation 后重新构建。参考：[SQLite JSON 文档](https://www.sqlite.org/json1.html)。
 
@@ -131,7 +131,7 @@ SQLite DLL 位于 `artifacts/sqlite/3.54.1/sqlite3.dll`，可通过 `SQLITE_LIBR
 
 本项目仍需长期故障压力测试、超内存调优及更完整的 SQL 验证，适合先进行评估与受控使用。全面报告会同时列出优势、退步和限制。
 
-完整复现脚本会一起运行 11 组存储测试、16 组 SQL/共享测试、10 组 ADO.NET/缓存测试，11 组启动/SQLite 文件交换测试、10 组原地兼容测试（共 58 组），以及 134 条 SQLite 差分查询，再采集主基准、ADO.NET、单库隔离内存和设备指标。报告生成需要 Python 3；核心仍只需要 .NET 10。
+自动脚本运行 67 组原有回归、134 条 SQL/JSON/JOIN、160 条排序及 218 条新增 SQL 扩展差分（共 512 条），并检查约束、保存点、重开及文件保护。平台验证见 [开发记录](DEVELOPMENT-VALIDATION.md)。旧版全面基准和报告脚本仍保留其构建标识，不作为本轮扩展构建成绩。
 
 ## ADO.NET 接入
 

@@ -19,7 +19,7 @@ public partial class PureDbConnection : DbConnection
     }
 
     /// <summary>创建尚未打开的连接；可以在 Open 之前配置连接字符串和用户函数。</summary>
-    /// <param name="connectionString">包含 Data Source 等受支持配置的连接字符串。</param>
+    /// <param name = "connectionString">包含 Data Source 等受支持配置的连接字符串。</param>
     public PureDbConnection(string connectionString) => ConnectionString = connectionString;
     /// <summary>连接配置；必须关闭连接后才能修改，不支持连接池。</summary>
     [AllowNull]
@@ -114,12 +114,12 @@ public partial class PureDbConnection : DbConnection
     protected virtual DatabaseAccess DefaultAccess => DatabaseAccess.Shared;
 
     /// <summary>创建实际使用的 SQL 引擎；派生连接可替换存储后端。</summary>
-    /// <param name="path">当前数据库或索引文件路径。</param>
-    /// <param name="options">可选配置；为 null 时使用默认值。</param>
+    /// <param name = "path">当前数据库或索引文件路径。</param>
+    /// <param name = "options">可选配置；为 null 时使用默认值。</param>
     /// <returns>当前配置对应的对象；由调用方按其生命周期约定使用和释放。</returns>
     protected virtual SqlDatabase OpenDatabase(string path, SqlDatabaseOptions options) => new(path, options);
     /// <summary>检查取消后打开连接；文件打开和恢复工作在当前线程执行。</summary>
-    /// <param name="token">取消请求；执行中的同步计算不能被抢占。</param>
+    /// <param name = "token">取消请求；执行中的同步计算不能被抢占。</param>
     /// <returns>完成时表示该操作结束的任务。</returns>
     public override Task OpenAsync(CancellationToken token)
     {
@@ -141,7 +141,7 @@ public partial class PureDbConnection : DbConnection
     }
 
     /// <summary>释放连接；显式释放时关闭数据库并回滚未提交事务。</summary>
-    /// <param name="disposing">是否由显式资源释放触发；为 true 时释放托管连接及事务资源。</param>
+    /// <param name = "disposing">是否由显式资源释放触发；为 true 时释放托管连接及事务资源。</param>
     protected override void Dispose(bool disposing)
     {
         if (disposing)
@@ -150,7 +150,7 @@ public partial class PureDbConnection : DbConnection
     }
 
     /// <summary>不支持切换已打开连接的数据文件；应创建另一个连接。</summary>
-    /// <param name="databaseName">请求切换到的数据库名称；该操作不受支持。</param>
+    /// <param name = "databaseName">请求切换到的数据库名称；该操作不受支持。</param>
     /// <exception cref = "System.NotSupportedException">当前提供程序不支持切换数据库。</exception>
     public override void ChangeDatabase(string databaseName) => throw new NotSupportedException("Open another connection to change database");
     /// <summary>创建绑定到当前连接的 ADO.NET 命令。</summary>
@@ -163,7 +163,7 @@ public partial class PureDbConnection : DbConnection
     /// <returns>当前配置对应的对象；由调用方按其生命周期约定使用和释放。</returns>
     public new PureDbCommand CreateCommand() => (PureDbCommand)base.CreateCommand();
     /// <summary>创建乐观 Serializable 事务；每次访问及提交验证版本，冲突时需要回滚并重试整个事务。</summary>
-    /// <param name="isolationLevel">请求的隔离级别；只接受 Unspecified 或 Serializable。</param>
+    /// <param name = "isolationLevel">请求的隔离级别；只接受 Unspecified 或 Serializable。</param>
     /// <returns>当前配置对应的对象；由调用方按其生命周期约定使用和释放。</returns>
     /// <exception cref = "System.NotSupportedException">请求的隔离级别不受支持。</exception>
     protected override DbTransaction BeginDbTransaction(IsolationLevel isolationLevel)
@@ -179,12 +179,12 @@ public partial class PureDbConnection : DbConnection
     /// <returns>当前配置对应的对象；由调用方按其生命周期约定使用和释放。</returns>
     public override DataTable GetSchema() => GetSchema("MetaDataCollections");
     /// <summary>获取模式集合目录、表或列信息；支持按目录、模式、表名和列名筛选。</summary>
-    /// <param name="name">模式集合名称：MetaDataCollections、Tables 或 Columns。</param>
+    /// <param name = "name">模式集合名称：MetaDataCollections、Tables 或 Columns。</param>
     /// <returns>当前配置对应的对象；由调用方按其生命周期约定使用和释放。</returns>
     public override DataTable GetSchema(string name) => GetSchema(name, null);
     /// <summary>获取模式集合目录、表或列信息；支持按目录、模式、表名和列名筛选。</summary>
-    /// <param name="name">模式集合名称：MetaDataCollections、Tables 或 Columns。</param>
-    /// <param name="restrictions">按模式集合约定排列的筛选值，null 项表示不限制。</param>
+    /// <param name = "name">模式集合名称：MetaDataCollections、Tables 或 Columns。</param>
+    /// <param name = "restrictions">按模式集合约定排列的筛选值，null 项表示不限制。</param>
     /// <returns>当前配置对应的对象；由调用方按其生命周期约定使用和释放。</returns>
     public override DataTable GetSchema(string name, string?[]? restrictions)
     {
@@ -256,8 +256,8 @@ public sealed class PureDbTransaction : DbTransaction
     }
 
     /// <summary>将已创建的事务会话绑定到连接。</summary>
-    /// <param name="connection">拥有当前对象的 ADO.NET 连接。</param>
-    /// <param name="session">持有当前 SQL 私有变更的会话。</param>
+    /// <param name = "connection">拥有当前对象的 ADO.NET 连接。</param>
+    /// <param name = "session">持有当前 SQL 私有变更的会话。</param>
     internal PureDbTransaction(PureDbConnection connection, SqlDatabase.TransactionSession session)
     {
         _connection = connection;
@@ -272,8 +272,8 @@ public sealed class PureDbTransaction : DbTransaction
     /// <summary>提交全部暂存变更；版本冲突时不写入任何事务变更。</summary>
     /// <exception cref = "System.Data.DBConcurrencyException">事务期间全局已提交版本发生变化，必须重试整个事务。</exception>
     public override void Commit() => CommitAsync(CancellationToken.None).GetAwaiter().GetResult();
-    /// <summary>异步提交暂存变更；无论提交成功或失败，当前事务对象都会结束。</summary>
-    /// <param name="token">取消请求；执行中的同步计算不能被抢占。</param>
+    /// <summary>异步提交暂存变更；延迟约束错误保留事务供修正，其余失败结束事务。</summary>
+    /// <param name = "token">取消请求；执行中的同步计算不能被抢占。</param>
     /// <returns>完成时表示该操作结束的任务。</returns>
     /// <exception cref = "System.Data.DBConcurrencyException">提交时检测到已提交版本变化，没有提交本事务变更。</exception>
     public override async Task CommitAsync(CancellationToken token = default)
@@ -285,11 +285,82 @@ public sealed class PureDbTransaction : DbTransaction
         {
             await Session.CommitAsync(token).ConfigureAwait(false);
         }
-        finally
+        catch (SqlException) when (!Session.Ended)
+        {
+            throw;
+        }
+        catch
         {
             Session.Rollback();
             End();
+            throw;
         }
+
+        Session.Rollback();
+        End();
+    }
+
+    /// <summary>报告事务支持命名保存点。</summary>
+    public override bool SupportsSavepoints => true;
+
+    /// <summary>创建命名保存点；同名嵌套时后续操作匹配最近名称。</summary>
+    /// <param name = "savepointName">保存点名称，不作为 SQL 文本拼接。</param>
+    public override void Save(string savepointName)
+    {
+        if (_connection is null)
+            throw new InvalidOperationException("Transaction complete");
+        Session.Save(savepointName);
+    }
+
+    /// <summary>回滚指定保存点之后的变更，保留该保存点。</summary>
+    /// <param name = "savepointName">最近匹配的保存点名称。</param>
+    public override void Rollback(string savepointName)
+    {
+        if (_connection is null)
+            throw new InvalidOperationException("Transaction complete");
+        Session.RollbackTo(savepointName);
+    }
+
+    /// <summary>释放指定保存点及其内部保存点，不结束外部 ADO.NET 事务。</summary>
+    /// <param name = "savepointName">最近匹配的保存点名称。</param>
+    public override void Release(string savepointName)
+    {
+        if (_connection is null)
+            throw new InvalidOperationException("Transaction complete");
+        Session.Release(savepointName);
+    }
+
+    /// <summary>检查取消后创建命名保存点。</summary>
+    /// <param name = "savepointName">保存点名称。</param>
+    /// <param name = "cancellationToken">调用前取消令牌。</param>
+    /// <returns>完成保存点创建的任务。</returns>
+    public override Task SaveAsync(string savepointName, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        Save(savepointName);
+        return Task.CompletedTask;
+    }
+
+    /// <summary>检查取消后回滚到指定保存点。</summary>
+    /// <param name = "savepointName">保存点名称。</param>
+    /// <param name = "cancellationToken">调用前取消令牌。</param>
+    /// <returns>完成回滚的任务。</returns>
+    public override Task RollbackAsync(string savepointName, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        Rollback(savepointName);
+        return Task.CompletedTask;
+    }
+
+    /// <summary>检查取消后释放指定保存点。</summary>
+    /// <param name = "savepointName">保存点名称。</param>
+    /// <param name = "cancellationToken">调用前取消令牌。</param>
+    /// <returns>完成释放的任务。</returns>
+    public override Task ReleaseAsync(string savepointName, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        Release(savepointName);
+        return Task.CompletedTask;
     }
 
     /// <summary>丢弃全部暂存变更并结束事务；已结束事务重复调用无操作。</summary>
@@ -312,7 +383,7 @@ public sealed class PureDbTransaction : DbTransaction
     }
 
     /// <summary>释放事务；尚未提交时自动回滚。</summary>
-    /// <param name="disposing">是否由显式资源释放触发；为 true 时释放托管连接及事务资源。</param>
+    /// <param name = "disposing">是否由显式资源释放触发；为 true 时释放托管连接及事务资源。</param>
     protected override void Dispose(bool disposing)
     {
         if (disposing)
@@ -359,6 +430,6 @@ public sealed class PureDbDataAdapter : DbDataAdapter
     }
 
     /// <summary>创建数据适配器，可指定用于填充数据的查询命令。</summary>
-    /// <param name="selectCommand">用于数据填充的查询命令。</param>
+    /// <param name = "selectCommand">用于数据填充的查询命令。</param>
     public PureDbDataAdapter(PureDbCommand selectCommand) => SelectCommand = selectCommand;
 }
