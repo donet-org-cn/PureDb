@@ -31,4 +31,6 @@ git push origin v1.0.0-preview.2
 
 `aot.yml` 在 Windows x64、Linux x64、Linux ARM64 实际编译运行 7 组功能和 230 条扩展差分，拒绝 IL 裁剪 / AOT 编译警告，并检查动态代码不可用。发布任务等待常规测试和全部 AOT 作业；对打出的两个实际 NuGet 包执行 `package-aot-smoke.py --rid linux-x64` 后才上传，推送命令显式传入仓库 secret `NUGET_API_KEY`。
 
+首次构建需要从 NuGet.org 恢复微软官方 AOT 编译器、ILLink 和目标运行时工具包，因此仓库 NuGet.Config 启用官方源；这不增加 PureDb 或兼容库的第三方运行依赖，包内容检查继续验证该约束。
+
 手动重跑发布时，workflow_dispatch 必须选择对应版本标签（如 v1.0.0-preview.2），不能选择 main；版本检查会拒绝非版本标签。API 密钥只存 GitHub Actions secret，不进入源码或日志。

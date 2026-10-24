@@ -21,8 +21,11 @@ else:
 
 def run(command, log):
     with log.open('w', encoding='utf-8') as stream:
-        subprocess.run(list(map(str, command)), stdout=stream, stderr=subprocess.STDOUT, check=True)
+        result = subprocess.run(list(map(str, command)), stdout=stream, stderr=subprocess.STDOUT)
     text = log.read_text(encoding='utf-8', errors='replace')
+    if result.returncode:
+        print('\n'.join(text.splitlines()[-50:]), flush=True)
+        raise subprocess.CalledProcessError(result.returncode, command)
     assert 'warning IL' not in text and 'error IL' not in text, log
 
 
