@@ -8,6 +8,6 @@ name='sqlite3.dll' if platform.system()=='Windows' else 'libsqlite3.dylib' if pl
 library=root/'artifacts/sqlite/3.54.1'/name
 if not library.exists():raise SystemExit('Run python scripts/prepare-sqlite.py first')
 env=os.environ.copy();env['SQLITE_LIBRARY']=str(library)
-for name in ['PureDb.Tests','PureDb.SqlTests','PureDb.AdoNetTests','PureDb.StorageTests','PureDb.CompatibilityTests','PureDb.FeatureTests']:
+for name in ['PureDb.Tests','PureDb.SqlTests','PureDb.AdoNetTests','PureDb.StorageTests','PureDb.CompatibilityTests','PureDb.FeatureTests','PureDb.SortTests']:
  subprocess.run(['dotnet',str(root/'tests'/name/'bin/Release/net10.0'/(name+'.dll'))],env=env,check=True)
 subprocess.run(['dotnet',str(root/'benchmarks/PureDb.QueryBenchmarks/bin/Release/net10.0/PureDb.QueryBenchmarks.dll'),'100000','1',str(root/'artifacts'/('ci-fixture-'+uuid.uuid4().hex)),'--create','--verify-only'],env=env,check=True)

@@ -466,6 +466,8 @@ internal sealed partial class SqlSession
             return -1;
         }
 
+        int offset = Number(select.Offset, 0), limit = Number(select.Limit, int.MaxValue);
+        bool topSorted = false;
         IEnumerable<Output> outputs;
         if (grouped)
         {
@@ -496,15 +498,33 @@ internal sealed partial class SqlSession
             if (ordered && select.Order.Any(o => o.Expr.Op == "column" && OrderProjection(o.Expr) is var i && i >= 0 && (projections[i].Expr.Op != "column" || binding.Resolve((string)o.Expr.Value!) != binding.Resolve((string)projections[i].Expr.Value!))))
                 ordered = false;
             var orderIndexes = select.Order.Select(o => OrderProjection(o.Expr)).ToArray();
-            outputs = source.Select(row =>
+            // 大分页、分组和 DISTINCT 保留通用路径；使用 long 求和防止分页整数溢出。
+            if (!ordered && !select.Distinct && select.Order.Count > 0 && limit > 0 && (long)offset + limit <= 4096)
             {
-                // ORDER BY 别名复用已经得到的投影值，易变函数每行只计算一次。
-                var values = selectors.Select(f => f(row)).ToArray();
-                var keys = ordered ? [] : new object?[orderFunctions.Length];
-                for (int i = 0; i < keys.Length; i++)
-                    keys[i] = orderIndexes[i] >= 0 ? values[orderIndexes[i]] : orderFunctions[i](row);
-                return new Output(values, keys);
-            });
+                bool[] descending = select.Order.Select(o => o.Descending).ToArray();
+                int[]? columns = projections.All(p => p.Expr.Op == "column")
+                    ? projections.Select(p => binding.Resolve((string)p.Expr.Value!)).ToArray() : null;
+                int[]? orderColumns = columns is null ? null : select.Order.Select((o, i) => orderIndexes[i] >= 0
+                    ? columns[orderIndexes[i]] : o.Expr.Op == "column" ? binding.Resolve((string)o.Expr.Value!) : -1).ToArray();
+                bool columnSort = orderColumns is not null && orderColumns.All(c => c >= 0);
+                outputs = columnSort
+                    ? TopSortedColumns(source, columns!, orderColumns!, descending, offset + limit)
+                    : TopSortedRows(source, selectors, orderFunctions, orderIndexes, descending, offset + limit);
+                topSorted = true;
+                plan += (columnSort ? " -> TopSortColumns(" : " -> TopSort(") + (offset + limit) + ")";
+            }
+            else
+            {
+                outputs = source.Select(row =>
+                {
+                    // ORDER BY 别名复用已经得到的投影值，易变函数每行只计算一次。
+                    var values = selectors.Select(f => f(row)).ToArray();
+                    var keys = ordered ? [] : new object?[orderFunctions.Length];
+                    for (int i = 0; i < keys.Length; i++)
+                        keys[i] = orderIndexes[i] >= 0 ? values[orderIndexes[i]] : orderFunctions[i](row);
+                    return new Output(values, keys);
+                });
+            }
         }
 
         if (select.Distinct)
@@ -513,7 +533,7 @@ internal sealed partial class SqlSession
             plan += " -> Distinct";
         }
 
-        if (select.Order.Count > 0 && !ordered)
+        if (select.Order.Count > 0 && !ordered && !topSorted)
         {
             IOrderedEnumerable<Output>? sorted = null;
             for (int i = 0; i < select.Order.Count; i++)
@@ -537,7 +557,6 @@ internal sealed partial class SqlSession
             return (int)n;
         }
 
-        int offset = Number(select.Offset, 0), limit = Number(select.Limit, int.MaxValue);
         var rows = outputs.Skip(offset).Take(limit).Select(o => o.Values.Select(v => v is byte[] b ? b.ToArray() : SqlJsonFunctions.Unwrap(v)).ToArray()).ToArray();
         return new(names, rows, plan + (select.Limit is not null ? " -> Limit" : ""));
     }

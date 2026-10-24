@@ -45,3 +45,27 @@ for result in functions:
   assert f"{statistics.median(s['AllocatedBytes']/s['Repetitions'] for s in samples):,.0f}" in function_report
 print('PASS latest-only evidence: 492 main, 36 memory, 144 ADO, 12 steady; arithmetic, hashes, links, tables, UTF-8.')
 print('PASS user-function evidence: matched build hashes, 12 samples, normalized CPU/time/allocation table.')
+sort_base=root/'benchmarks/results/sort/latest'
+sort_summary=read(sort_base/'summary.json')
+sort_report=(root/'docs/SORT-PERFORMANCE.md').read_text(encoding='utf-8-sig')
+sort_results={name:read(sort_base/(name+'.json')) for name in ['windows-before','windows-after','linux-before','linux-after']}
+for stage in ['before','after']:
+ assert sort_results['windows-'+stage]['CoreSHA256']==sort_results['linux-'+stage]['CoreSHA256']
+ assert sort_results['windows-'+stage]['CoreSHA256'] in sort_report
+for platform,key in [('Windows x64','windows'),('Linux ARM64','linux')]:
+ for label,stage,engine in [('Before','before','PureDb'),('After','after','PureDb'),('SQLite','after','SQLite')]:
+  result=sort_results[key+'-'+stage]
+  assert result['SQLiteVersion']=='3.54.1' and len(result['Samples'])==24
+  for scenario,metrics in sort_summary['Platforms'][platform].items():
+   samples=[s for s in result['Samples'] if s['Engine']==engine and s['Scenario']==scenario]
+   assert len(samples)==3 and {s['Round'] for s in samples}=={1,2,3}
+   assert all(s['RowsPerQuery']==100000 and s['WarmupMilliseconds']==500 and s['MeasurementMilliseconds']==750 and s['ElapsedMilliseconds']>=750 and s['Repetitions']>0 for s in samples)
+   expected={'Us':statistics.median(s['ElapsedMilliseconds']*1000/s['Repetitions'] for s in samples),
+             'CpuUs':statistics.median(s['CpuMilliseconds']*1000/s['Repetitions'] for s in samples),
+             'AllocatedBytes':statistics.median(s['AllocatedBytes']/s['Repetitions'] for s in samples)}
+   for field,value in expected.items():
+    assert abs(value-metrics[label][field])<1e-8
+    # SQLite 原生分配不在托管分配比较表中，不把它当作总内存指标。
+    if field!='AllocatedBytes' or engine=='PureDb':
+     assert format(value,',.0f' if field=='AllocatedBytes' else ',.3f') in sort_report
+print('PASS sort evidence: paired Windows/Linux hashes, 96 samples, CPU/time/allocation arithmetic and report.')

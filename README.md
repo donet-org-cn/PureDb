@@ -6,11 +6,11 @@
 
 PureDb 使用 C# 和 .NET 10 标准库实现嵌入式数据库，提供 KV、SQL、JOIN、JSON、事务、多线程写入、多进程访问和 ADO.NET。核心与可选 SQLite 文件兼容库均无原生库和第三方 NuGet 依赖。
 
-**当前版本：`1.0.0-preview.1`。** 这是首个公开预览版。SQL、文件协议和事务能力有明确边界；当前没有在所有性能、CPU、内存指标上超过 SQLite。
+**已发布：`1.0.0-preview.1`；开发分支：`1.0.0-preview.2`（尚未发布）。** SQL、文件协议和事务能力有明确边界；当前没有在所有性能、CPU、内存指标上超过 SQLite。
 
 [安装与使用](docs/USAGE.md) · [ADO.NET](docs/ADO.NET.md) · [SQLite 文件兼容](docs/SQLITE-COMPATIBILITY.md) · [全面性能表](docs/PERFORMANCE.md) · [CPU / 内存谁更高](docs/RESOURCES.md) · [可筛选性能面板](docs/PERFORMANCE.html) · [原始结果](benchmarks/results/latest) · [自动发布](docs/RELEASING.md)
 
-开发分支 `1.0.0-preview.2` 新增：[C# 用户函数注入](docs/USER-FUNCTIONS.md)、[中文注释与代码规范](docs/CODE-STYLE.md)。开发版尚未发布；[扩展进度](docs/FEATURE-WORK.md) 单独记录，下面的版本矩阵与性能实测仍对应已发布的 `1.0.0-preview.1`。
+开发分支新增 **C# 用户函数注入、小分页有界排序、中文 XML 注释与格式检查**。下面的功能矩阵对应开发代码；全面性能表仍对应已发布的 `1.0.0-preview.1`，本次排序优化的独立实测见 [排序专项报告](docs/SORT-PERFORMANCE.md)。[开发验证](docs/DEVELOPMENT-VALIDATION.md) 与 [扩展进度](docs/FEATURE-WORK.md) 记录验证范围和未完成功能。
 
 ## 安装
 
@@ -37,9 +37,18 @@ Console.WriteLine(result.Rows[0][0]);
 
 KV 使用 `Database`，SQL 使用 `SqlDatabase`，各自使用独立文件。SQL 表需要 `INTEGER PRIMARY KEY`，主键范围 `[0, 2^40)`。
 
+开发版支持将 C# 方法注册为 SQL 标量函数，`SqlDatabase` 和 ADO.NET 连接都提供相同入口：
+
+```csharp
+db.CreateFunction<string?, bool>("RELIGIBLE", user => user is "Alice" or "小明");
+var eligible = db.Query("SELECT * FROM users WHERE RELIGIBLE(name)");
+```
+
+函数按连接、名称和参数数量注册，可替换或移除。强类型入口直接调用委托，布尔结果复用 SQL 0/1 对象，省去逐行参数数组和布尔装箱；NULL、BLOB 复制和业务异常仍经过边界检查。上述 API 尚不在 NuGet 的 `preview.1` 中，使用方法及限制见 [用户函数](docs/USER-FUNCTIONS.md)。
+
 ## 与 SQLite 功能对比
 
-基准：PureDb `1.0.0-preview.1` / SQLite `3.54.1`。✅ 已实现，⚠️ 有限制或需额外组件，❌ 尚未实现。功能标记表示支持范围，不表示相同的实现、成熟度或性能。
+基准：PureDb `1.0.0-preview.2` **开发代码** / SQLite `3.54.1`。✅ 已实现，⚠️ 有限制或需额外组件，❌ 尚未实现。功能标记表示支持范围，不表示相同的实现、成熟度或性能。
 
 | 功能 | PureDb | SQLite |
 | :--- | :--- | :--- |
@@ -49,6 +58,7 @@ KV 使用 `Database`，SQL 使用 `SqlDatabase`，各自使用独立文件。SQL
 | 参数化 SQL、增删改查 | ✅ 支持的 SQL 子集 | ✅ 更完整的 SQL 方言 |
 | INNER / LEFT / RIGHT / FULL / CROSS JOIN | ✅ 哈希查找或通用循环执行 | ✅ 支持 |
 | GROUP BY / HAVING / ORDER BY / LIMIT | ✅ 支持 | ✅ 支持 |
+| 应用自定义 SQL 函数 | ⚠️ C# 标量函数、强类型和可变参数入口；自定义聚合、窗口和表值函数尚未实现 | ✅ 标量、聚合、窗口及表值扩展接口 |
 | 普通、唯一、JSON 路径索引 | ✅ 单列及指定表达式 | ✅ 支持更多索引形态 |
 | 复合索引、外键、视图、触发器 | ❌ 尚未实现 | ✅ 支持 |
 | CTE、窗口函数、子查询、UNION | ❌ 尚未实现 | ✅ 支持 |
@@ -66,9 +76,32 @@ KV 使用 `Database`，SQL 使用 `SqlDatabase`，各自使用独立文件。SQL
 | SQLite WAL 文件协议兼容 | ❌ 兼容包拒绝 WAL | ✅ 支持 |
 | 跨平台验证 | ✅ Windows x64、Linux ARM64 | ✅ 多平台 |
 
-SQLite 能力依据官方 [SQL 文档](https://www.sqlite.org/lang.html)、[JSON 文档](https://www.sqlite.org/json1.html)、[WAL 文档](https://www.sqlite.org/wal.html)；其 .NET 提供程序见 [Microsoft.Data.Sqlite](https://learn.microsoft.com/en-us/dotnet/standard/data/sqlite/)。PureDb 的具体约束见 [使用文档](docs/USAGE.md)。
+SQLite 能力依据官方 [SQL 文档](https://www.sqlite.org/lang.html)、[自定义函数](https://www.sqlite.org/appfunc.html)、[JSON 文档](https://www.sqlite.org/json1.html)、[WAL 文档](https://www.sqlite.org/wal.html)；其 .NET 提供程序见 [Microsoft.Data.Sqlite](https://learn.microsoft.com/en-us/dotnet/standard/data/sqlite/)。PureDb 的具体约束见 [使用文档](docs/USAGE.md)。
 
-## 与 SQLite 性能对比
+## 开发版排序专项
+
+<!-- SORT:START -->
+
+10 万行热缓存排序，三轮中位数；数值越低越好。此表对应开发代码，CPU 是每次查询消耗的时间。
+
+| 平台 | 场景 | PureDb 耗时 µs | SQLite 耗时 µs | 耗时谁更低 | PureDb CPU µs | SQLite CPU µs | CPU 谁更低 |
+| --- | --- | ---: | ---: | --- | ---: | ---: | --- |
+| Windows x64 | 排序取 20 行 | 1,822.724 | 5,540.276 | 🟩 PureDb 3.04× | 1,820.388 | 5,514.706 | 🟩 PureDb 3.03× |
+| Windows x64 | 降序取 20 行，跳过 100 行 | 1,570.453 | 5,881.135 | 🟩 PureDb 3.74× | 1,569.038 | 5,859.375 | 🟩 PureDb 3.73× |
+| Windows x64 | 排序取 4096 行 | 7,009.090 | 12,899.017 | 🟩 PureDb 1.84× | 7,089.120 | 12,976.695 | 🟩 PureDb 1.83× |
+| Windows x64 | 主键范围取 20 行（对照） | 2.413 | 6.927 | 🟩 PureDb 2.87× | 2.413 | 6.926 | 🟩 PureDb 2.87× |
+| Linux ARM64 | 排序取 20 行 | 3,870.887 | 8,405.700 | 🟩 PureDb 2.17× | 3,872.459 | 8,456.640 | 🟩 PureDb 2.18× |
+| Linux ARM64 | 降序取 20 行，跳过 100 行 | 4,632.469 | 8,955.385 | 🟩 PureDb 1.93× | 4,633.765 | 8,961.083 | 🟩 PureDb 1.93× |
+| Linux ARM64 | 排序取 4096 行 | 21,544.954 | 20,234.737 | 🟥 SQLite 1.06× | 21,544.657 | 20,265.553 | 🟥 SQLite 1.06× |
+| Linux ARM64 | 主键范围取 20 行（对照） | 6.412 | 10.431 | 🟩 PureDb 1.63× | 6.413 | 10.430 | 🟩 PureDb 1.63× |
+
+托管分配相对优化前的变化、全部四个场景及方法见 [排序专项报告](docs/SORT-PERFORMANCE.md)。分配减少不等于 RSS 降低；此专项不代表全部 SQL 已超过 SQLite。
+
+<!-- SORT:END -->
+
+## 已发布预览版与 SQLite 全面对比
+
+**下方完整对比对应已发布的 `preview.1`，不是本次开发代码的全套重测。** 本次 `preview.2` 对未命中索引的排序分页另做优化前后及 SQLite 三方测量，详见 [排序专项](docs/SORT-PERFORMANCE.md)。
 
 <!-- PERFORMANCE:START -->
 
@@ -193,7 +226,11 @@ SQL 先解析成 AST，再缓存参数绑定、列投影和受支持的执行计
 
 区间 UPDATE / DELETE 直接读取目标范围，避免先解码整表；没有 UNIQUE 约束时省去约束集合。通用谓词和不支持的优化形状走通用执行器，不能把专用路径的倍率当作所有 SQL 的速度。
 
-源码：[查询分派](src/PureDb/Sql/SqlQuery.cs)、[范围查询](src/PureDb/Sql/SqlDiskRange.cs)、[区间 DML](src/PureDb/Sql/SqlDmlPlan.cs)。
+开发版新增小分页排序：输入未满足 `ORDER BY`、无分组及 DISTINCT、`OFFSET + LIMIT <= 4096` 时，用 `PriorityQueue` 保留最好的 K 行，堆顶始终是最差候选。纯列查询只保留输入行引用，入选后再生成结果投影；含表达式时，淘汰候选的投影与键数组作为下一行缓冲区复用。排序候选的保留空间从随 N 行增长降到随 K 行增长；比较工作为 O(N log K)，已命中索引顺序的查询继续直接分页。
+
+比较器复用 SQL 的 NULL、整数/实数、文本和 BLOB 规则，整数对整数先直接比较，省去 JSON 解包和存储类别判断，并以原始输入序号保持相同键的稳定顺序。含表达式的查询仍逐行执行投影，`ORDER BY` 别名复用投影值，易变 C# 函数每行调用次数及未入选行异常保持一致。大分页、分组、去重回退到原执行器；表缓存、函数结果和最终输出仍有额外内存，O(K) 只描述排序候选缓冲区。
+
+源码：[查询分派](src/PureDb/Sql/SqlQuery.cs)、[有界排序](src/PureDb/Sql/SqlQuery.TopSort.cs)、[范围查询](src/PureDb/Sql/SqlDiskRange.cs)、[区间 DML](src/PureDb/Sql/SqlDmlPlan.cs)。
 
 ### 5. JOIN、聚合、JSON 与 SIMD
 
@@ -221,12 +258,14 @@ ADO.NET 提供 Connection、Command、Parameter、DataReader、DbTransaction 和
 dotnet build PureDb.slnx -c Release
 python scripts/prepare-sqlite.py
 python scripts/test.py
+# 小分页排序专项，与 SQLite 核对结果后测量耗时、CPU 时间和托管分配：
+dotnet run -c Release --no-build --project tests/PureDb.SortTests -- --measure
 # 创建 10 万行数据集，然后以程序输出的目录运行：
 dotnet run -c Release --no-build --project benchmarks/PureDb.QueryBenchmarks -- 100000 1
 python scripts/run-benchmarks.py artifacts/new-comparison DATASET --tests --memory --ado
 ```
 
-CI 在 Windows / Linux 上构建并运行回归和 SQLite 差分查询；性能测量按主机串行进行。仓库只保存 [最新一份对比证据](benchmarks/results/latest)，不保存历史轮次、测试数据库或运行库二进制。复现细节见 [基准方法](docs/BENCHMARKS.md)。
+CI 在 Windows / Linux 上构建并运行回归和 SQLite 差分查询，检查中文源码文档、格式及实际 NuGet 包。性能测量按主机串行进行；仓库分别保留 [完整预览版对比](benchmarks/results/latest)、[用户函数专项](benchmarks/results/functions/latest) 和 [本次排序优化前后](benchmarks/results/sort/latest) 的最新证据，不保存测试数据库或运行库二进制。复现细节见 [基准方法](docs/BENCHMARKS.md)。
 
 ## 自动发布与许可
 

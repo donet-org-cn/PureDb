@@ -50,6 +50,9 @@ internal sealed class SqlValueComparer : IComparer<object?>, IEqualityComparer<o
     /// <returns>按方法规定计算的数量、位置、版本或比较结果。</returns>
     public int Compare(object? x, object? y)
     {
+        // 整数是主键和常见排序键，先直接比较，省去 JSON 解包与两次存储类别判断。
+        if (x is long l && y is long r)
+            return l.CompareTo(r);
         x = x is SqlJson jx ? jx.Text : x;
         y = y is SqlJson jy ? jy.Text : y;
         int a = Rank(x), b = Rank(y);
@@ -57,8 +60,6 @@ internal sealed class SqlValueComparer : IComparer<object?>, IEqualityComparer<o
             return a.CompareTo(b);
         if (x is null)
             return 0;
-        if (x is long l && y is long r)
-            return l.CompareTo(r);
         if (a == 1)
         {
             if (x is double dx && y is double dy)
