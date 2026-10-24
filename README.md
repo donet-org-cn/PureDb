@@ -10,6 +10,8 @@ PureDb 使用 C# 和 .NET 10 标准库实现嵌入式数据库，提供 KV、SQL
 
 [安装与使用](docs/USAGE.md) · [ADO.NET](docs/ADO.NET.md) · [SQLite 文件兼容](docs/SQLITE-COMPATIBILITY.md) · [全面性能表](docs/PERFORMANCE.md) · [CPU / 内存谁更高](docs/RESOURCES.md) · [可筛选性能面板](docs/PERFORMANCE.html) · [原始结果](benchmarks/results/latest) · [自动发布](docs/RELEASING.md)
 
+开发分支 `1.0.0-preview.2` 新增：[C# 用户函数注入](docs/USER-FUNCTIONS.md)、[中文注释与代码规范](docs/CODE-STYLE.md)。开发版尚未发布；[扩展进度](docs/FEATURE-WORK.md) 单独记录，下面的版本矩阵与性能实测仍对应已发布的 `1.0.0-preview.1`。
+
 ## 安装
 
 ```bash

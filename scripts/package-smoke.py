@@ -12,10 +12,13 @@ using(var db=new SqlDatabase(path)) {
  db.ExecuteAsync("CREATE TABLE r(id INTEGER PRIMARY KEY,body JSON)").AsTask().GetAwaiter().GetResult();
  db.ExecuteAsync("INSERT INTO r VALUES(1,'{\\"age\\":25}')").AsTask().GetAwaiter().GetResult();
  if(!Equals(db.Query("SELECT json_extract(body,'$.age') FROM r WHERE id=1").Rows[0][0],25L))throw new Exception("JSON roundtrip");
+ db.CreateFunction<long,long>("increment",value=>value+1);
+ if(!Equals(db.Query("SELECT increment(json_extract(body,'$.age')) FROM r WHERE id=1").Rows[0][0],26L))throw new Exception("Packaged C# function");
 }
 using(var c=new PureDbConnection("Data Source="+path+";Access=Exclusive")) {
+ c.CreateFunction<string,bool>("is_target",value=>value=="ok");
  c.Open(); using var tx=c.BeginTransaction();using var command=c.CreateCommand();command.Transaction=tx;
- command.CommandText="DELETE FROM r WHERE id=1";if(command.ExecuteNonQuery()!=1)throw new Exception("ADO delete");tx.Commit();
+ command.CommandText="DELETE FROM r WHERE id=1 AND is_target('ok')";if(command.ExecuteNonQuery()!=1)throw new Exception("ADO delete/function");tx.Commit();
 }
 using(var db=new SqlDatabase(path))if(db.Query("SELECT id FROM r").Rows.Count!=0)throw new Exception("Reopen");
 foreach(var a in new[]{typeof(Database).Assembly,Assembly.Load("PureDb.SqliteCompatibility")}) {

@@ -26,6 +26,9 @@ jobs:
           python-version: '3.12'
       - run: python scripts/check-version.py
       - run: dotnet build PureDb.slnx -c Release
+      - run: dotnet run --project tools/PureDb.SourceCheck -c Release --no-build
+      - run: dotnet format whitespace src/PureDb/PureDb.csproj --no-restore --verify-no-changes
+      - run: dotnet format whitespace src/PureDb.SqliteCompatibility/PureDb.SqliteCompatibility.csproj --no-restore --verify-no-changes
       - run: python scripts/prepare-sqlite.py
       - run: python scripts/test.py
       - run: python scripts/verify-public.py

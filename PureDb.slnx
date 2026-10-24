@@ -15,8 +15,12 @@
   <Folder Name="/tests/">
     <Project Path="tests/PureDb.AdoNetTests/PureDb.AdoNetTests.csproj" />
     <Project Path="tests/PureDb.CompatibilityTests/PureDb.CompatibilityTests.csproj" />
+    <Project Path="tests/PureDb.FeatureTests/PureDb.FeatureTests.csproj" />
     <Project Path="tests/PureDb.SqlTests/PureDb.SqlTests.csproj" />
     <Project Path="tests/PureDb.StorageTests/PureDb.StorageTests.csproj" />
     <Project Path="tests/PureDb.Tests/PureDb.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/PureDb.SourceCheck/PureDb.SourceCheck.csproj" />
   </Folder>
 </Solution>

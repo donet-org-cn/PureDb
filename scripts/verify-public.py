@@ -30,4 +30,18 @@ for p in [root/'README.md',*list((root/'docs').glob('*.md'))]:
    assert width==w,p
   else:width=None
 assert '正在生成' not in (root/'README.md').read_text(encoding='utf-8-sig')
+functions=[read(root/'benchmarks/results/functions/latest'/(name+'.json')) for name in ['windows','linux']]
+assert len({r['CoreSHA256'] for r in functions})==1
+function_report=(root/'docs/DEVELOPMENT-VALIDATION.md').read_text(encoding='utf-8-sig')
+assert functions[0]['CoreSHA256'] in function_report
+for result in functions:
+ assert len(result['Samples'])==6
+ for name in ['typed_reject','array_reject']:
+  samples=[s for s in result['Samples'] if s['Function']==name]
+  assert len(samples)==3 and {s['Round'] for s in samples}=={1,2,3}
+  assert all(s['RowsPerQuery']==20000 and s['WarmupMilliseconds']==500 and s['MeasurementMilliseconds']==750 and s['ElapsedMilliseconds']>=750 and s['Repetitions']>0 for s in samples)
+  assert f"{statistics.median(s['ElapsedMilliseconds']*1000/s['Repetitions'] for s in samples):,.3f}" in function_report
+  assert f"{statistics.median(s['CpuMilliseconds']*1000/s['Repetitions'] for s in samples):,.3f}" in function_report
+  assert f"{statistics.median(s['AllocatedBytes']/s['Repetitions'] for s in samples):,.0f}" in function_report
 print('PASS latest-only evidence: 492 main, 36 memory, 144 ADO, 12 steady; arithmetic, hashes, links, tables, UTF-8.')
+print('PASS user-function evidence: matched build hashes, 12 samples, normalized CPU/time/allocation table.')
