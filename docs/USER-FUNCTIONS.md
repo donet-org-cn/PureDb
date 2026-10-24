@@ -33,7 +33,7 @@ await db.ExecuteAsync("UPDATE Awards SET User=UPPER(User) WHERE RELIGIBLE(User)"
 db.RemoveFunction("twice", 1);
 ```
 
-固定参数数量范围为 0～127；`-1` 表示可变参数重载。固定数量的匹配优先于可变参数匹配。当前不允许覆盖内置函数，也不允许用户函数出现在持久化索引定义中。
+固定参数数量范围为 0～127；`-1` 表示可变参数重载。固定数量的匹配优先于可变参数匹配。当前不允许覆盖内置函数；JSON 前缀和 AND、OR、NOT、IN、BETWEEN、LIKE 等运算符名称保留，避免改变既有语句的含义。用户函数不能出现在持久化索引定义中。
 
 ## ADO.NET
 

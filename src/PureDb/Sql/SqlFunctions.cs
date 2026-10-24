@@ -84,7 +84,7 @@ public sealed partial class SqlDatabase
         ClearFunctionPlans();
     }
 
-    /// <summary>校验用户函数名称、参数数量和内置函数名称冲突。</summary>
+    /// <summary>校验用户函数名称、参数数量，以及内置函数和 SQL 运算符的名称冲突。</summary>
     /// <param name="name">要解析、规范化或查找的标识符。</param>
     /// <param name="arity">参数数量；-1 表示可变参数重载。</param>
     internal static void ValidateFunctionName(string name, int arity)
@@ -95,8 +95,9 @@ public sealed partial class SqlDatabase
         if (name.Length > 255 || !char.IsLetter(name[0]) && name[0] != '_' || name.Any(c => !char.IsLetterOrDigit(c) && c != '_'))
             throw new ArgumentException("函数名必须是有效的 SQL 标识符。", nameof(name));
         string key = name.ToUpperInvariant();
-        if (SqlBinding.BuiltinFunction(key))
-            throw new ArgumentException("不能替换内置 SQL 函数。", nameof(name));
+        // 运算符与函数目前共用表达式操作码，禁止注册同名函数改变既有 WHERE 的语义。
+        if (SqlBinding.BuiltinFunction(key) || key is "AND" or "OR" or "NOT" or "IN" or "BETWEEN" or "LIKE")
+            throw new ArgumentException("函数名与内置 SQL 函数或运算符冲突。", nameof(name));
     }
 
     /// <summary>清除可能持有旧用户函数委托或结果类型的缓存。</summary>

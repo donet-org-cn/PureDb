@@ -59,6 +59,17 @@ await Test("C# 用户函数：筛选、投影、聚合、重载、替换和连�
     Check(Equals(db.Query("SELECT argcount(),argcount(1,NULL,3)").Rows[0][1], 3L), "可变参数");
     using var other = Open("isolated");
     await Reject(() => Task.FromResult(other.Query("SELECT RELIGIBLE('Alice')")));
+    foreach (string name in new[] { "AND", "OR", "NOT", "IN", "BETWEEN", "LIKE" })
+    {
+        try
+        {
+            db.CreateFunction(name, 2, _ => 1L);
+            throw new Exception("不得覆盖 SQL 运算符");
+        }
+        catch (ArgumentException) { }
+    }
+    var logic = db.Query("SELECT 0 AND 1,1 OR 0,2 BETWEEN 1 AND 3").Rows[0];
+    Check(Equals(logic[0], 0L) && Equals(logic[1], 1L) && Equals(logic[2], 1L), "拒绝非法注册后保留 SQL 运算符语义");
 });
 
 await Test("C# 用户函数：易变函数不能被索引提前计算，异常不能留下部分写入", async () =>
