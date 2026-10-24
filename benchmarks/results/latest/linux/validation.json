@@ -1,0 +1,12 @@
+{
+  "TestGroups": 58,
+  "DifferentialQueries": 134,
+  "Passed": true,
+  "Groups": {
+    "PureDb.Tests": "11 test groups passed",
+    "PureDb.SqlTests": "16 SQL/shared test groups passed",
+    "PureDb.AdoNetTests": "10 ADO.NET/cache test groups passed",
+    "PureDb.StorageTests": "11 storage/exchange groups passed",
+    "PureDb.CompatibilityTests": "10 managed SQLite compatibility test groups passed"
+  }
+}

@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
+    <Description>A fully managed .NET 10 embedded file database with SQL, JOIN, JSON, transactions, multi-process access and an ADO.NET provider. Preview.</Description>
+  </PropertyGroup>
+
+</Project>

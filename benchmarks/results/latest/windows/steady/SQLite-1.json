@@ -1,0 +1,14 @@
+﻿{
+  "Engine": "SQLite",
+  "Operations": 500000,
+  "Milliseconds": 2765.3143,
+  "CpuMilliseconds": 2765.625,
+  "AllocatedBytes": 188000000,
+  "WorkingSetBytes": 77230080,
+  "PrivateBytes": 57700352,
+  "ManagedLiveBytes": 269768,
+  "CPUs": 12,
+  "Runtime": "10.0.13",
+  "SQLite": "3.54.1",
+  "LibrarySHA256": "AD447F6E305574AF2EC459BE2BF4E6B59768E46ED6B8C516961244F103DA10B3"
+}

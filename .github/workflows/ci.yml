@@ -1,0 +1,32 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5
+        with:
+          global-json-file: global.json
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - run: dotnet build PureDb.slnx -c Release
+      - run: python scripts/prepare-sqlite.py
+      - run: python scripts/test.py
+      - run: python scripts/verify-public.py
+      - run: dotnet pack src/PureDb -c Release --no-build -o artifacts/packages
+      - run: dotnet pack src/PureDb.SqliteCompatibility -c Release --no-build -o artifacts/packages
+      - run: python scripts/verify-packages.py
+      - run: python scripts/package-smoke.py

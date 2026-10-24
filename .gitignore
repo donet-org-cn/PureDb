@@ -1,0 +1,17 @@
+**/bin/
+**/obj/
+**/__pycache__/
+artifacts/
+.vs/
+.idea/
+*.user
+*.suo
+*.log
+*.nupkg
+*.snupkg
+*.sqlite*
+*.pidx
+*.sidx-*
+.env
+.env.*
+**/data/

@@ -1,0 +1,50 @@
+[
+  {
+    "Scenario": "point",
+    "Engine": "Optimized",
+    "WorkingSetBytes": 102813696,
+    "PrivateBytes": 125579264,
+    "ManagedLiveBytes": 35483560,
+    "PeakWorkingSetBytes": 110800896
+  },
+  {
+    "Scenario": "point",
+    "Engine": "SQLite",
+    "WorkingSetBytes": 80596992,
+    "PrivateBytes": 104730624,
+    "ManagedLiveBytes": 57240,
+    "PeakWorkingSetBytes": 81268736
+  },
+  {
+    "Scenario": "range",
+    "Engine": "Optimized",
+    "WorkingSetBytes": 71811072,
+    "PrivateBytes": 86040576,
+    "ManagedLiveBytes": 7243640,
+    "PeakWorkingSetBytes": 80674816
+  },
+  {
+    "Scenario": "range",
+    "Engine": "SQLite",
+    "WorkingSetBytes": 60215296,
+    "PrivateBytes": 84246528,
+    "ManagedLiveBytes": 57240,
+    "PeakWorkingSetBytes": 60215296
+  },
+  {
+    "Scenario": "json",
+    "Engine": "Optimized",
+    "WorkingSetBytes": 78118912,
+    "PrivateBytes": 91770880,
+    "ManagedLiveBytes": 8798856,
+    "PeakWorkingSetBytes": 80646144
+  },
+  {
+    "Scenario": "json",
+    "Engine": "SQLite",
+    "WorkingSetBytes": 52842496,
+    "PrivateBytes": 77033472,
+    "ManagedLiveBytes": 57240,
+    "PeakWorkingSetBytes": 52842496
+  }
+]

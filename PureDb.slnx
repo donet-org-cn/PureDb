@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/benchmarks/">
+    <Project Path="benchmarks/PureDb.CacheBenchmarks/PureDb.CacheBenchmarks.csproj" />
+    <Project Path="benchmarks/PureDb.AdoBenchmarks/PureDb.AdoBenchmarks.csproj" />
+    <Project Path="benchmarks/PureDb.Benchmarks/PureDb.Benchmarks.csproj" />
+    <Project Path="benchmarks/PureDb.CompatibilityBenchmarks/PureDb.CompatibilityBenchmarks.csproj" />
+    <Project Path="benchmarks/PureDb.Comprehensive/PureDb.Comprehensive.csproj" />
+    <Project Path="benchmarks/PureDb.QueryBenchmarks/PureDb.QueryBenchmarks.csproj" />
+    <Project Path="benchmarks/PureDb.Startup/PureDb.Startup.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/PureDb.SqliteCompatibility/PureDb.SqliteCompatibility.csproj" />
+    <Project Path="src/PureDb/PureDb.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/PureDb.AdoNetTests/PureDb.AdoNetTests.csproj" />
+    <Project Path="tests/PureDb.CompatibilityTests/PureDb.CompatibilityTests.csproj" />
+    <Project Path="tests/PureDb.SqlTests/PureDb.SqlTests.csproj" />
+    <Project Path="tests/PureDb.StorageTests/PureDb.StorageTests.csproj" />
+    <Project Path="tests/PureDb.Tests/PureDb.Tests.csproj" />
+  </Folder>
+</Solution>

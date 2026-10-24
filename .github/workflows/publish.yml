@@ -1,0 +1,74 @@
+name: Publish preview
+on:
+  push:
+    tags: ['v*-preview.*']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5
+        with:
+          global-json-file: global.json
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - run: python scripts/check-version.py
+      - run: dotnet build PureDb.slnx -c Release
+      - run: python scripts/prepare-sqlite.py
+      - run: python scripts/test.py
+      - run: python scripts/verify-public.py
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5
+        with:
+          global-json-file: global.json
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - run: python scripts/check-version.py
+      - name: Check NuGet credentials
+        shell: bash
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: test -n "$NUGET_API_KEY" || { echo 'Missing repository secret NUGET_API_KEY'; exit 1; }
+      - run: dotnet build PureDb.slnx -c Release
+      - run: dotnet pack src/PureDb -c Release --no-build -o artifacts/packages
+      - run: dotnet pack src/PureDb.SqliteCompatibility -c Release --no-build -o artifacts/packages
+      - run: python scripts/verify-packages.py
+      - run: python scripts/package-smoke.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: preview-packages
+          path: artifacts/packages/*.nupkg
+      - name: Publish NuGet packages
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push 'artifacts/packages/*.nupkg' --source https://api.nuget.org/v3/index.json --skip-duplicate
+      - name: Create GitHub prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" artifacts/packages/*.nupkg --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" artifacts/packages/*.nupkg --verify-tag --prerelease --title "PureDb $GITHUB_REF_NAME" --notes-file CHANGELOG.md
+          fi
