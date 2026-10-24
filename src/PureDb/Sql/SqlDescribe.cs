@@ -1,6 +1,6 @@
 namespace PureDb;
 
-/// <summary>一次快照或显式事务中的 SQL 执行状态；维护私有变更、模式副本和约束映射。</summary>
+/// <remarks>本部分根据模式及表达式推断结果类型，不执行用户函数探测类型。</remarks>
 internal sealed partial class SqlSession
 {
     /// <summary>当前读取快照的模式版本。</summary>

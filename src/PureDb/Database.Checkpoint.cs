@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 
 namespace PureDb;
-/// <summary>纯托管的追加日志文件数据库，提供原子批量写入、索引查询和可选的多进程协调。</summary>
+/// <remarks>本部分管理可重建主索引检查点、按需 CRC 校验和热点页缓存。</remarks>
 public sealed partial class Database
 {
     private long _checkpointOffset;

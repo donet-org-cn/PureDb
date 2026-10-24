@@ -145,7 +145,7 @@ internal sealed class SqlRuntimeValue(string op, object? constant, int slot, Sql
     }
 }
 
-/// <summary>一次快照或显式事务中的 SQL 执行状态；维护私有变更、模式副本和约束映射。</summary>
+/// <remarks>本部分执行可复用的主键 DML 计划，并维护当前事务的唯一约束映射。</remarks>
 internal sealed partial class SqlSession
 {
     /// <summary>按编译计划验证参数并只更新或删除命中的主键行。</summary>

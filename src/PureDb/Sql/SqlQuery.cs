@@ -1,6 +1,6 @@
 namespace PureDb;
 
-/// <summary>一次快照或显式事务中的 SQL 执行状态；维护私有变更、模式副本和约束映射。</summary>
+/// <remarks>本部分选择查询计划，并提供通用连接、分组、投影、排序和分页执行器。</remarks>
 internal sealed partial class SqlSession
 {
     /// <summary>将 AND 表达式展开为可独立分析的合取条件。</summary>

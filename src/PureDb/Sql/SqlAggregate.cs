@@ -1,6 +1,6 @@
 namespace PureDb;
 
-/// <summary>一次快照或显式事务中的 SQL 执行状态；维护私有变更、模式副本和约束映射。</summary>
+/// <remarks>本部分实现专用数值聚合循环和按表版本复用的分组计数。</remarks>
 internal sealed partial class SqlSession
 {
     /// <summary>对受支持的简单数值聚合使用专用循环，避免通用分组物化。</summary>

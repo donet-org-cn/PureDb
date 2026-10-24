@@ -2,7 +2,7 @@ using System.Numerics;
 
 namespace PureDb;
 
-/// <summary>一次快照或显式事务中的 SQL 执行状态；维护私有变更、模式副本和约束映射。</summary>
+/// <remarks>本部分实现确定性派生列的缓存及保持 NULL 语义的 SIMD 谓词计数。</remarks>
 internal sealed partial class SqlSession
 {
     // 缓存确定性的派生列，不缓存最终筛选结果；每次查询重新计算整数谓词，

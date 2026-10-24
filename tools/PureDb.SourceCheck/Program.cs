@@ -9,6 +9,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 string root = Path.GetFullPath(args.Length == 0 ? "." : args[0]);
 int declarations = 0;
 int errors = 0;
+var partialTypes = new Dictionary<string, (int Summaries, string File, int Line)>();
 var strictUtf8 = new UTF8Encoding(false, true);
 
 foreach (string file in Directory.EnumerateFiles(Path.Combine(root, "src"), "*.cs", SearchOption.AllDirectories)
@@ -49,7 +50,15 @@ foreach (string file in Directory.EnumerateFiles(Path.Combine(root, "src"), "*.c
         }
         catch (System.Xml.XmlException) { Fail(file, line, "XML 注释格式错误。"); continue; }
 
-        CheckText(document.Element("summary"), "summary");
+        bool partial = node is TypeDeclarationSyntax type && type.Modifiers.Any(SyntaxKind.PartialKeyword);
+        CheckText(document.Element("summary") ?? (partial ? document.Element("remarks") : null), "summary 或部分类型的 remarks");
+        if (partial)
+        {
+            string key = string.Join(".", node.Ancestors().OfType<BaseNamespaceDeclarationSyntax>().Reverse().Select(n => n.Name.ToString())
+                .Concat(node.AncestorsAndSelf().OfType<BaseTypeDeclarationSyntax>().Reverse().Select(t => t.Identifier.Text)));
+            var old = partialTypes.GetValueOrDefault(key);
+            partialTypes[key] = (old.Summaries + document.Elements("summary").Count(), file, line);
+        }
         var parameters = node switch
         {
             BaseMethodDeclarationSyntax m => m.ParameterList.Parameters,
@@ -96,6 +105,10 @@ foreach (string file in Directory.EnumerateFiles(Path.Combine(root, "src"), "*.c
         }
     }
 }
+
+foreach (var entry in partialTypes)
+    if (entry.Value.Summaries != 1)
+        Fail(entry.Value.File, entry.Value.Line, $"部分类型 {entry.Key} 必须且只能提供一个 summary；其他部分使用中文 remarks。");
 
 Console.WriteLine($"Checked {declarations} documented declarations; errors: {errors}.");
 return errors == 0 ? 0 : 1;

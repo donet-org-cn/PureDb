@@ -72,7 +72,7 @@ internal sealed record SqlExpressionRangePlan(bool Supported, SqlIndex? Index, s
     }
 }
 
-/// <summary>一次快照或显式事务中的 SQL 执行状态；维护私有变更、模式副本和约束映射。</summary>
+/// <remarks>本部分执行受支持的 JSON 表达式索引范围查询。</remarks>
 internal sealed partial class SqlSession
 {
     /// <summary>执行受支持的 JSON 表达式索引范围查询及分页投影。</summary>

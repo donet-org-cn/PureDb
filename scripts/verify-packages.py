@@ -16,6 +16,7 @@ for name in ['PureDb','PureDb.SqliteCompatibility']:
   assert 'lib/net10.0/'+name+'.dll' in z.namelist()
   documentation=ET.fromstring(z.read('lib/net10.0/'+name+'.xml'))
   assert any('\u4e00'<=c<='\u9fff' for c in ''.join(documentation.itertext())), 'Missing Chinese XML documentation'
+  assert all(len(m.findall('summary'))<=1 for m in documentation.findall('./members/member')), 'Duplicate XML summaries in a partial type'
   deps=tree.findall('.//n:dependency',ns)
   if name=='PureDb':assert not deps
   else:assert len(deps)==1 and deps[0].get('id')=='PureDb' and version in deps[0].get('version','')

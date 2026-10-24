@@ -1,5 +1,5 @@
 namespace PureDb.AdoNet;
-/// <summary>PureDb 的 ADO.NET 连接；支持参数化命令、乐观 Serializable 事务和连接级用户函数。</summary>
+/// <remarks>本部分管理连接级 C# 函数注册，并在关闭后重新打开时恢复注册。</remarks>
 public partial class PureDbConnection
 {
     // 注册信息属于连接实例，关闭再打开仍会应用；委托不会写入数据库文件。

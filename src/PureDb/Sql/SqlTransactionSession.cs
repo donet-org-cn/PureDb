@@ -1,7 +1,7 @@
 using System.Data;
 
 namespace PureDb;
-/// <summary>建立在文件存储上的 SQL 数据库，提供查询、原子 DDL/DML 批处理及连接级 C# 函数。</summary>
+/// <remarks>本部分提供显式事务、全局版本冲突检查和 ADO.NET 结果类型描述缓存。</remarks>
 public sealed partial class SqlDatabase
 {
     private readonly Dictionary<Select, IReadOnlyList<Type>> _descriptions = [];

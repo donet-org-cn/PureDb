@@ -7,7 +7,7 @@ namespace PureDb;
 /// <param name="arguments">当前行的 SQL 标量参数；NULL 对应 null，BLOB 为可独立修改的副本。</param>
 /// <returns>SQL 标量结果；bool 自动转换为整数 0 或 1。</returns>
 public delegate object? SqlScalarFunction(params object?[] arguments);
-/// <summary>建立在文件存储上的 SQL 数据库，提供查询、原子 DDL/DML 批处理及连接级 C# 函数。</summary>
+/// <remarks>本部分提供连接级用户函数、委托绑定及注册变更后的缓存失效。</remarks>
 public sealed partial class SqlDatabase
 {
     private ConcurrentDictionary<(string Name, int Arity), SqlFunctionDefinition>? _functions;

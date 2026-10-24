@@ -1,5 +1,5 @@
 namespace PureDb;
-/// <summary>建立在文件存储上的 SQL 数据库，提供查询、原子 DDL/DML 批处理及连接级 C# 函数。</summary>
+/// <remarks>本部分管理 SQL 持久化范围索引、按需读取和关闭时的检查点。</remarks>
 public sealed partial class SqlDatabase
 {
     /// <summary>保存原生存储的主索引和可用的 SQL 范围索引；不支持的存储后端会显式报错。</summary>

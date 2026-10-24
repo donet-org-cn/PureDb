@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text;
 
 namespace PureDb;
-/// <summary>建立在文件存储上的 SQL 数据库，提供查询、原子 DDL/DML 批处理及连接级 C# 函数。</summary>
+/// <remarks>本部分提供受支持 SQLite 文件的离线导入、导出和模式转换。</remarks>
 public sealed partial class SqlDatabase
 {
     /// <summary>对 SQL 标识符进行双引号引用并转义内部引号。</summary>

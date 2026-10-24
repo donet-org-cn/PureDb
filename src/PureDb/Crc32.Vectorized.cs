@@ -8,7 +8,7 @@ using System.Runtime.Intrinsics.X86;
 
 namespace PureDb;
 
-/// <summary>IEEE CRC-32 校验器；按硬件能力使用多项式折叠或标量查表，结果保持文件格式一致。</summary>
+/// <remarks>本部分实现按硬件能力选择的多项式折叠和向量化 CRC 归约。</remarks>
 internal static partial class Crc32
 {
     /// <summary>使用无进位乘法折叠一个 128 位数据块。</summary>

@@ -59,7 +59,7 @@ internal sealed record SqlJoinPlan(bool Supported, Expr? Key, int LeftKey, int R
     }
 }
 
-/// <summary>一次快照或显式事务中的 SQL 执行状态；维护私有变更、模式副本和约束映射。</summary>
+/// <remarks>本部分执行由主键定位驱动的两表等值连接和结果投影。</remarks>
 internal sealed partial class SqlSession
 {
     /// <summary>从主键驱动记录开始执行两表等值连接，保留所需外连接语义。</summary>
