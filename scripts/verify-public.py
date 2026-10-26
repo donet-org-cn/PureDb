@@ -72,7 +72,7 @@ print('PASS sort evidence: paired Windows/Linux hashes, 96 samples, CPU/time/all
 optimization=root/'benchmarks/results/optimization/latest'
 paired=read(optimization/'summary.json')
 optimization_report=(root/'docs/OPTIMIZATION.md').read_text(encoding='utf-8-sig')
-assert paired['BeforeCommit']=='21571bcf875303db7002f82f36a0eaa96f712940'
+assert paired['BeforeCommit']=='09cdfffbfb4ab6f10ba373ac6e46745049397cc2'
 for platform,key in [('Windows x64','windows'),('Linux ARM64','linux')]:
  result=paired['Platforms'][platform]
  assert result['AfterSHA256']==summary['Platforms'][platform]['MeasuredCoreSHA256']
@@ -90,5 +90,29 @@ for platform,key in [('Windows x64','windows'),('Linux ARM64','linux')]:
  assert all(result['After'][s][e]['Us']==summary['Platforms'][platform]['Metrics'][s][e]['Us'] for s in result['After'] for e in ['Optimized','SQLite'])
  assert read(base/key/'validation.json')['TestGroups']==77
  assert read(base/key/'validation.json')['DifferentialQueries']==524
-print('PASS paired optimization evidence: 984 main and 72 memory samples, build boundaries, arithmetic and validation counts.')
+print('PASS paired optimization evidence: 984 main / 72 memory records (738 / 54 unique executions; SQLite reference shared), build boundaries, arithmetic and validation counts.')
+acceptance=read(optimization/'acceptance.json')
+for platform,key in [('Windows x64','windows'),('Linux ARM64','linux')]:
+ import math
+ result=acceptance[platform];assert len(result['Scenarios'])==19
+ assert set(result['Scenarios'])=={s['Scenario'] for s in read(base/key/'raw/Optimized-queries-1.json')['Samples']}
+ ratios=[paired['Platforms'][platform]['Before'][s]['Optimized']['Us']/paired['Platforms'][platform]['After'][s]['Optimized']['Us'] for s in result['Scenarios']]
+ geo=math.exp(sum(map(math.log,ratios))/19)
+ assert abs(geo-result['ThroughputGeomean'])<1e-12
+ assert abs((1-1/geo)-result['LatencyReduction'])<1e-12
+ assert result['LatencyReduction']>=.10,platform+' fixed read/reopen corpus did not meet 10% latency reduction'
+ validation=read(base/key/'validation.json');assert validation['AdditionalSQLCases']==175 and validation['FileProfiles']==64
+ compatibility=root/'benchmarks/results/compatibility/latest'/key
+ sql=read(compatibility/'sql-parity.json');files=read(compatibility/'file-parity.json')
+ assert sql['Total']==175 and sql['Passed']==sum(c['Passed'] for c in sql['Cases'])==175
+ assert sql['CorpusSHA256']=='5D8E0C5FB5FCFC638965ACE2E750A8BD3B2FA75743DF3DBC37835FE179FCC325'
+ assert files['Total']==64 and files['Passed']==sum(c['Passed'] for c in files['Cases'])==64
+ assert len(list((compatibility/'performance/before').glob('*.json')))==18
+ assert len(list((compatibility/'performance/after').glob('*.json')))==54
+ assert len(read(compatibility/'performance/environment.json')['Hosts'])==2
+ assert len(set(read(compatibility/'performance/environment.json')['Hosts'].values()))==1
+for name in ['all-performance','before-after','cpu-memory']:
+ for ext in ['png','svg']:assert (root/'docs/images/preview.3'/(name+'.'+ext)).stat().st_size>1000
+assert (root/'docs/CNBLOGS-preview.3.md').exists()
+print('PASS preview.3 scoped acceptance: 19 fixed cases >=10% latency reduction on both platforms; 350 SQL / 128 file-case executions; all 144 file-mode performance samples and actual charts.')
 subprocess.run([__import__('sys').executable,str(root/'scripts/verify-aot.py')],check=True)

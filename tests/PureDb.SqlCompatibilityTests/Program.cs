@@ -1,4 +1,4 @@
-using PureDb;
+﻿using PureDb;
 using PureDb.AdoNet;
 using PureDb.Benchmarks;
 
@@ -379,16 +379,13 @@ var metadata = db.Query("SELECT q.id,ROW_NUMBER() OVER () FROM (SELECT id FROM t
 Check(metadata.FieldTypes.SequenceEqual(new[] { typeof(long), typeof(long) }), "空派生表和窗口元数据");
 Check(db.Query("SELECT 1 AS n UNION ALL SELECT 'x'").FieldTypes.Single() == typeof(object), "集合混合类型不错误声明为整数");
 string untouched = Path.Combine(root, "must-not-overwrite.sqlite");
-try
+db.ExportSqlite(untouched);
+using (var nativeExport = new Sqlite(untouched, Durability.Full, configure: false))
 {
-    db.ExportSqlite(untouched);
-    throw new Exception("扩展模式不应被不完整的 SQLite 写入器导出");
+    using var integrity = nativeExport.Prepare("PRAGMA integrity_check");
+    Check(integrity.Step() && Equals(integrity.Values()[0], "ok"), "扩展模式导出后的原生完整性");
 }
-catch (NotSupportedException)
-{
-}
-
-Check(!File.Exists(untouched), "拒绝导出不得发布残缺目标");
+File.Delete(untouched);
 File.WriteAllText(untouched, "existing destination");
 try
 {
@@ -409,7 +406,6 @@ using (var managed = PureDb.SqliteCompatibility.SqliteCompatibility.Open(compati
     Check(Equals(managed.Query("SELECT n FROM t WHERE id=1").Rows[0][0], 15L), "SQLite 文件后端 UPSERT");
 }
 
-byte[] originalBytes = File.ReadAllBytes(compatible);
 foreach (string sql in new[]
 {
     "CREATE VIEW v AS SELECT id FROM t",
@@ -423,23 +419,17 @@ foreach (string sql in new[]
 {
     using (var managed = PureDb.SqliteCompatibility.SqliteCompatibility.Open(compatible, new() { LinuxExclusiveProcess = OperatingSystem.IsLinux() }))
     {
-        try
-        {
-            await managed.ExecuteAsync(sql);
-            throw new Exception("兼容文件不应发布尚未支持的模式: " + sql);
-        }
-        catch (Exception error)when (error is SqlException or NotSupportedException)
-        {
-        }
+        await managed.ExecuteAsync(sql);
+        Check(managed.Query("SELECT COUNT(*) FROM t").Rows.Count == 1, "扩展模式创建后连接继续可用");
     }
 
-    Check(File.ReadAllBytes(compatible).SequenceEqual(originalBytes), "拒绝兼容模式不得修改 SQLite 数据文件");
+
 }
 
 using (var original = new Sqlite(compatible, Durability.Buffered))
 {
     using var check = original.Prepare("PRAGMA integrity_check");
-    Check(check.Step() && Equals(check.Values()[0], "ok"), "兼容拒绝后的原生完整性");
+    Check(check.Step() && Equals(check.Values()[0], "ok"), "兼容扩展模式后的原生完整性");
 }
 
 foreach (string ddl in new[]
@@ -454,28 +444,13 @@ foreach (string ddl in new[]
 )
 {
     string source = Path.Combine(root, Guid.NewGuid().ToString("N") + ".sqlite"), target = source + ".pdb";
-    using (var native = new Sqlite(source, Durability.Buffered))
+    using (var native = new Sqlite(source, Durability.Full, configure: false))
         native.Exec(ddl);
     byte[] bytes = File.ReadAllBytes(source);
-    try
-    {
-        using var rejected = PureDb.SqliteCompatibility.SqliteCompatibility.Open(source, new() { LinuxExclusiveProcess = OperatingSystem.IsLinux() });
-        throw new Exception("不得忽略原 SQLite 的新约束或索引定义");
-    }
-    catch (NotSupportedException)
-    {
-    }
-
-    try
-    {
-        await SqlDatabase.ImportSqliteAsync(source, target);
-        throw new Exception("未验证的新模式不得被导入接受");
-    }
-    catch (NotSupportedException)
-    {
-    }
-
-    Check(!File.Exists(target) && bytes.SequenceEqual(File.ReadAllBytes(source)), "拒绝新 SQLite 模式的导入和打开必须保持原文件不变");
+    using (var accepted = PureDb.SqliteCompatibility.SqliteCompatibility.Open(source, new() { LinuxExclusiveProcess = OperatingSystem.IsLinux() }))
+        Check(accepted.Query("SELECT COUNT(*) FROM t").Rows.Count == 1, "读取原生扩展模式");
+    await SqlDatabase.ImportSqliteAsync(source, target);
+    Check(File.Exists(target) && bytes.SequenceEqual(File.ReadAllBytes(source)), "导入扩展模式应成功且源文件保持不变");
 }
 
 using (var first = new SqlDatabase(Path.Combine(root, "shared.puredb"), new() { Storage = new() { Access = DatabaseAccess.Shared, Durability = Durability.Buffered } }))

@@ -375,8 +375,6 @@ internal sealed partial class SqlParser
 
                 if (columns.Count(c => c.Primary) != 1 || columns.Single(c => c.Primary).Type != "INTEGER")
                     throw Error("Exactly one INTEGER PRIMARY KEY is required");
-                if (_sqliteFile && (foreignKeys.Count > 0 || uniques.Count > 0 || checks.Count > 0 || columns.Any(c => c.Default is not null)))
-                    throw new NotSupportedException("SQLite file foreign-key, table UNIQUE and DEFAULT schema support is not implemented yet");
                 return new CreateTable(name, columns, optional)
                 {
                     ForeignKeys = foreignKeys,
@@ -410,8 +408,6 @@ internal sealed partial class SqlParser
             while (Eat(","));
             Need(")");
             bool composite = expressions.Count > 1 || directions.Any(d => d);
-            if (_sqliteFile && composite)
-                throw new NotSupportedException("SQLite file composite index page support is not implemented");
             return new CreateIndex(index, table, composite ? new Expr("composite", Items: expressions.ToArray()) : expressions[0], unique, opt)
             {
                 Descending = composite ? directions.ToArray() : null
@@ -749,6 +745,20 @@ internal sealed partial class SqlParser
                 {
                     throw Error("Invalid hex blob");
                 }
+            }
+            else if (name.Equals("CAST", StringComparison.OrdinalIgnoreCase) && Eat("("))
+            {
+                var value = Expression();
+                Need("AS");
+                string type = Name().ToUpperInvariant();
+                if (type is "INT" or "BIGINT")
+                    type = "INTEGER";
+                if (type is "DOUBLE" or "FLOAT")
+                    type = "REAL";
+                if (type is not ("INTEGER" or "REAL" or "TEXT" or "BLOB" or "NUMERIC"))
+                    throw Error("Unsupported CAST type");
+                Need(")");
+                left = new("CAST:" + type, Items: [value]);
             }
             else if (Eat("("))
             {

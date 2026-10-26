@@ -101,7 +101,16 @@ internal sealed partial class SqlParser
         var tokens = _tokens.GetRange(start, end - start);
         if (tokens.Any(t => t.Kind == "parameter"))
             throw Error("Schema SQL cannot contain parameters");
-        return string.Join(" ", tokens.Select(t => t.Kind == "string" ? "'" + t.Text.Replace("'", "''") + "'" : t.Kind == "quoted" ? "\"" + t.Text.Replace("\"", "\"\"") + "\"" : t.Text));
+        var rendered = new System.Text.StringBuilder();
+        for (int i = 0; i < tokens.Count; i++)
+        {
+            var t = tokens[i];
+            // SQLite 的 BLOB 字面量前缀 X 必须紧邻引号；不可在保存触发器或视图时插入空格。
+            if (i > 0 && !(t.Kind == "string" && tokens[i - 1].Kind == "word" && tokens[i - 1].Text.Equals("X", StringComparison.OrdinalIgnoreCase)))
+                rendered.Append(' ');
+            rendered.Append(t.Kind == "string" ? "'" + t.Text.Replace("'", "''") + "'" : t.Kind == "quoted" ? "\"" + t.Text.Replace("\"", "\"\"") + "\"" : t.Text);
+        }
+        return rendered.ToString();
     }
 
     /// <summary>解析 CREATE VIEW，查询在使用时绑定以允许视图之间的依赖。</summary>

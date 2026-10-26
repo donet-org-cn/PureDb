@@ -12,14 +12,14 @@ public sealed partial class SqlDatabase : IDisposable, IAsyncDisposable
     private readonly int _initialGeneration;
     private readonly object _closeGate = new();
     private Task? _closeTask;
-    private readonly ConcurrentDictionary<(Select Query, int TableId, int Indexes), SqlRangePlan> _rangePlans = new();
-    private readonly ConcurrentDictionary<(Select Query, int TableId), SqlPrimaryPlan> _primaryPlans = new();
-    private readonly ConcurrentDictionary<(Select Query, int TableId), SqlScalarPlan> _scalarPlans = new();
-    private readonly Lazy<ConcurrentDictionary<(Select Query, int Left, int Right), SqlJoinPlan>> _joinPlans = new(static () => new());
-    private readonly Lazy<ConcurrentDictionary<(SqlStatement Statement, int Table), SqlDmlPlan>> _dmlPlans = new(static () => new());
-    private readonly Lazy<ConcurrentDictionary<(Select Query, SqlTable Table), SqlExpressionRangePlan>> _expressionPlans = new(static () => new());
+    private readonly ConcurrentDictionary<(Select Query, (int TableId, int Indexes) Context), SqlRangePlan> _rangePlans = new(SqlPlanComparer<Select, (int, int)>.Instance);
+    private readonly ConcurrentDictionary<(Select Query, int TableId), SqlPrimaryPlan> _primaryPlans = new(SqlPlanComparer<Select, int>.Instance);
+    private readonly ConcurrentDictionary<(Select Query, int TableId), SqlScalarPlan> _scalarPlans = new(SqlPlanComparer<Select, int>.Instance);
+    private readonly Lazy<ConcurrentDictionary<(Select Query, (int Left, int Right) Context), SqlJoinPlan>> _joinPlans = new(static () => new(SqlPlanComparer<Select, (int, int)>.Instance));
+    private readonly Lazy<ConcurrentDictionary<(SqlStatement Statement, int Table), SqlDmlPlan>> _dmlPlans = new(static () => new(SqlPlanComparer<SqlStatement, int>.Instance));
+    private readonly Lazy<ConcurrentDictionary<(Select Query, SqlTable Table), SqlExpressionRangePlan>> _expressionPlans = new(static () => new(SqlPlanComparer<Select, SqlTable>.Instance));
     private readonly ConcurrentDictionary<string, List<SqlStatement>> _plans = new(StringComparer.Ordinal);
-    private readonly ConcurrentDictionary<(Insert Statement, int Table), int[]> _insertColumns = new();
+    private readonly ConcurrentDictionary<(Insert Statement, int Table), int[]> _insertColumns = new(SqlPlanComparer<Insert, int>.Instance);
     private readonly object _cacheGate = new();
     private readonly Dictionary<int, (long Version, long SchemaVersion, SqlTableData Data)> _tables = [];
     private long _cachedBytes, _catalogVersion = -1;
@@ -235,7 +235,7 @@ public sealed partial class SqlDatabase : IDisposable, IAsyncDisposable
     /// <param name = "select">当前已解析的 SELECT 查询结构。</param>
     /// <param name = "table">当前操作的不可变表模式。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
-    internal SqlRangePlan RangePlan(Select select, SqlTable table) => _rangePlans.GetOrAdd((select, table.Id, table.Indexes.Count), static (key, schema) => SqlRangePlan.Build(key.Query, schema), table);
+    internal SqlRangePlan RangePlan(Select select, SqlTable table) => _rangePlans.GetOrAdd((select, (table.Id, table.Indexes.Count)), static (key, schema) => SqlRangePlan.Build(key.Query, schema), table);
     /// <summary>取得主键投影查询的结构计划。</summary>
     /// <param name = "select">当前已解析的 SELECT 查询结构。</param>
     /// <param name = "table">当前操作的不可变表模式。</param>
@@ -262,7 +262,7 @@ public sealed partial class SqlDatabase : IDisposable, IAsyncDisposable
     /// <param name = "left">当前操作的不可变表模式。</param>
     /// <param name = "right">当前操作的不可变表模式。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
-    internal SqlJoinPlan JoinPlan(Select select, SqlTable left, SqlTable right) => _joinPlans.Value.GetOrAdd((select, left.Id, right.Id), static (key, schemas) => SqlJoinPlan.Build(key.Query, schemas.Left, schemas.Right), (Left: left, Right: right));
+    internal SqlJoinPlan JoinPlan(Select select, SqlTable left, SqlTable right) => _joinPlans.Value.GetOrAdd((select, (left.Id, right.Id)), static (key, schemas) => SqlJoinPlan.Build(key.Query, schemas.Left, schemas.Right), (Left: left, Right: right));
     /// <summary>取得主键更新或删除的结构计划。</summary>
     /// <param name = "statement">本次待编译或执行的已解析语句。</param>
     /// <param name = "table">当前操作的不可变表模式。</param>
@@ -883,10 +883,9 @@ internal sealed partial class SqlSession(SqlDatabase owner, ISqlSnapshot snapsho
                     if (column.Default is not null)
                     {
                         static bool ConstantDefault(Expr e) => e.Op != "parameter" && e.Op != "column" && e.Subquery is null && e.Window is null && e.Args.All(ConstantDefault);
-                        if (!ConstantDefault(column.Default) || column.Default.Value is byte[])
-                            throw new SqlException("DEFAULT requires a numeric/text/NULL constant expression");
-                        if (new SqlBinding().Bind(column.Default, SqlDatabase.EmptyParameters)([]) is byte[])
-                            throw new SqlException("BLOB DEFAULT expressions are not supported");
+                        if (!ConstantDefault(column.Default))
+                            throw new SqlException("DEFAULT requires a constant expression");
+                        _ = new SqlBinding().Bind(column.Default, SqlDatabase.EmptyParameters)([]);
                     }
 
                 foreach (var foreign in c.ForeignKeys)

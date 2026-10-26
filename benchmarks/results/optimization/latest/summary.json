@@ -1,982 +1,324 @@
 {
-  "BeforeCommit": "21571bcf875303db7002f82f36a0eaa96f712940",
+  "BeforeCommit": "09cdfffbfb4ab6f10ba373ac6e46745049397cc2",
   "Platforms": {
     "Windows x64": {
-      "BeforeSHA256": "F57A192E23B4467BAEAF12D40B4A5849C3E09E80A8D408120B55E8F517DCC41B",
-      "AfterSHA256": "A240817D6F98A3264CB24AD474A870BC1AACA56A9466411CAB12387EB7EB04F5",
+      "BeforeSHA256": "A240817D6F98A3264CB24AD474A870BC1AACA56A9466411CAB12387EB7EB04F5",
+      "AfterSHA256": "30C7DB3221A39E08DF491CB88D85EB04E6ABD226990A2C89C7E6A916E62CC510",
       "Before": {
         "shared_read": {
           "Optimized": {
-            "Us": 32.935025,
+            "Us": 30.535125,
             "CpuUs": 82.03125,
             "CpuMs": 328.125,
-            "AllocatedBytes": 64.702,
+            "AllocatedBytes": 65.012,
             "WorkerReadBytes": 18184
           },
           "SQLite": {
-            "Us": 15.90805,
-            "CpuUs": 19.53125,
-            "CpuMs": 78.125,
-            "AllocatedBytes": 65.972,
-            "WorkerReadBytes": 16384
-          }
-        },
-        "shared_update": {
-          "Optimized": {
-            "Us": 205.40255,
-            "CpuUs": 148.4375,
-            "CpuMs": 593.75,
-            "AllocatedBytes": 63.604,
-            "WorkerReadBytes": 9000876
-          },
-          "SQLite": {
-            "Us": 110.76215,
-            "CpuUs": 23.4375,
-            "CpuMs": 93.75,
-            "AllocatedBytes": 63.516,
-            "WorkerReadBytes": 77824
-          }
-        },
-        "kv_get": {
-          "Optimized": {
-            "Us": 0.290420125569901,
-            "CpuUs": 0.29647050532320657,
-            "CpuMs": 765.625,
-            "AllocatedBytes": 290.2512776547687,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 5.5193902555687195,
-            "CpuUs": 5.737608601455609,
-            "CpuMs": 765.625,
-            "AllocatedBytes": 376.51320843400924,
-            "WorkerReadBytes": 0
-          }
-        },
-        "kv_miss": {
-          "Optimized": {
-            "Us": 0.04978237138525223,
-            "CpuUs": 0.04978237138525223,
-            "CpuMs": 750,
-            "AllocatedBytes": 0.27863365843213145,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 4.70981901759586,
-            "CpuUs": 4.709812737845543,
-            "CpuMs": 750,
-            "AllocatedBytes": 0.43023825372703184,
-            "WorkerReadBytes": 0
-          }
-        },
-        "kv_range_20": {
-          "Optimized": {
-            "Us": 2.541270766342853,
-            "CpuUs": 2.5412616178010294,
-            "CpuMs": 750,
-            "AllocatedBytes": 7024.456234392418,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 16.229661126980005,
-            "CpuUs": 15.969338869370809,
-            "CpuMs": 750,
-            "AllocatedBytes": 7520.4227473383535,
-            "WorkerReadBytes": 0
-          }
-        },
-        "kv_range_1000": {
-          "Optimized": {
-            "Us": 103.82520764119602,
-            "CpuUs": 105.75296108291032,
-            "CpuMs": 765.625,
-            "AllocatedBytes": 335896.7585825028,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 517.570827586207,
-            "CpuUs": 517.2413793103449,
-            "CpuMs": 750,
-            "AllocatedBytes": 376002.47172413795,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_point": {
-          "Optimized": {
-            "Us": 0.38737678838902945,
-            "CpuUs": 0.38737668508858014,
-            "CpuMs": 750,
-            "AllocatedBytes": 631.6989948866277,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 5.20505305674886,
-            "CpuUs": 5.313482452061544,
-            "CpuMs": 765.625,
-            "AllocatedBytes": 400.47703187568965,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_projection": {
-          "Optimized": {
-            "Us": 0.30689549064193933,
-            "CpuUs": 0.30689544972254607,
-            "CpuMs": 750,
-            "AllocatedBytes": 288.4305636769185,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 4.9204710513367225,
-            "CpuUs": 4.989422424460145,
-            "CpuMs": 765.625,
-            "AllocatedBytes": 80.45094964736755,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_range20": {
-          "Optimized": {
-            "Us": 2.9025352657752665,
-            "CpuUs": 2.9630023800770138,
-            "CpuMs": 765.625,
-            "AllocatedBytes": 9072.306493829132,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 14.665413269196927,
-            "CpuUs": 14.665337009444476,
-            "CpuMs": 750,
-            "AllocatedBytes": 7544.382002698422,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_range1000": {
-          "Optimized": {
-            "Us": 115.18191031941033,
-            "CpuUs": 115.17199017199017,
-            "CpuMs": 750,
-            "AllocatedBytes": 407408.84152334154,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 504.55420309347676,
-            "CpuUs": 513.8422818791946,
-            "CpuMs": 750,
-            "AllocatedBytes": 376026.4102219233,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_count": {
-          "Optimized": {
-            "Us": 0.17251936702414214,
-            "CpuUs": 0.17251936702414214,
-            "CpuMs": 750,
-            "AllocatedBytes": 280.4832437689455,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 17.546739817046067,
-            "CpuUs": 17.546732798352945,
-            "CpuMs": 750,
-            "AllocatedBytes": 80.45181667173573,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_sum_scan": {
-          "Optimized": {
-            "Us": 1165.7131987577638,
-            "CpuUs": 1164.5962732919254,
-            "CpuMs": 750,
-            "AllocatedBytes": 757.3291925465838,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 2986.4281746031743,
-            "CpuUs": 2918.2879377431905,
-            "CpuMs": 734.375,
-            "AllocatedBytes": 91.31474103585657,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_group": {
-          "Optimized": {
-            "Us": 18.351447307249995,
-            "CpuUs": 18.45427031815162,
-            "CpuMs": 765.625,
-            "AllocatedBytes": 73136.48662800656,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 4289.983428571429,
-            "CpuUs": 4375.0,
-            "CpuMs": 750,
-            "AllocatedBytes": 88041.50857142857,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_join": {
-          "Optimized": {
-            "Us": 1.2410093869912484,
-            "CpuUs": 1.2410088905876921,
-            "CpuMs": 750,
-            "AllocatedBytes": 1000.8099452797813,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 10.241950593344166,
-            "CpuUs": 10.082135799647798,
-            "CpuMs": 750,
-            "AllocatedBytes": 1704.3971554934196,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_left_join": {
-          "Optimized": {
-            "Us": 1.040354746576891,
-            "CpuUs": 1.0403532207255006,
-            "CpuMs": 750,
-            "AllocatedBytes": 840.7386896265687,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 7.00673673393124,
-            "CpuUs": 6.942773036120934,
-            "CpuMs": 750,
-            "AllocatedBytes": 904.3357997010463,
-            "WorkerReadBytes": 0
-          }
-        },
-        "json_index": {
-          "Optimized": {
-            "Us": 2.553203244947217,
-            "CpuUs": 2.5532001811069995,
-            "CpuMs": 750,
-            "AllocatedBytes": 1384.4583777306475,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 21.55513723236097,
-            "CpuUs": 21.554821094984913,
-            "CpuMs": 750,
-            "AllocatedBytes": 2103.7613450208364,
-            "WorkerReadBytes": 0
-          }
-        },
-        "json_scan": {
-          "Optimized": {
-            "Us": 3.887357334632569,
-            "CpuUs": 3.8671788829166194,
-            "CpuMs": 750,
-            "AllocatedBytes": 2936.3580913680325,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 492.96524310118264,
-            "CpuUs": 492.772667542707,
-            "CpuMs": 750,
-            "AllocatedBytes": 82.2233902759527,
-            "WorkerReadBytes": 0
-          }
-        },
-        "json_binary_conversion": {
-          "Optimized": {
-            "Us": 0.9578489281677639,
-            "CpuUs": 0.9778034623022841,
-            "CpuMs": 765.625,
-            "AllocatedBytes": 784.2506037637052,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 5.7947160219116265,
-            "CpuUs": 5.915405357377404,
-            "CpuMs": 765.625,
-            "AllocatedBytes": 80.27771210470605,
-            "WorkerReadBytes": 0
-          }
-        },
-        "parallel_get_8": {
-          "Optimized": {
-            "Us": 0.19719774999999998,
-            "CpuUs": 1.40625,
-            "CpuMs": 562.5,
-            "AllocatedBytes": 320.06926,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 1.97616,
-            "CpuUs": 13.8671875,
-            "CpuMs": 5546.875,
-            "AllocatedBytes": 376.06442,
-            "WorkerReadBytes": 0
-          }
-        },
-        "reopen_and_first_range": {
-          "Optimized": {
-            "Us": 677.96,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 235980.8,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 610.1,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 9043.2,
-            "WorkerReadBytes": 0
-          }
-        },
-        "cache_limited_2MiB": {
-          "Optimized": {
-            "Us": 5.387408684409007,
-            "CpuUs": 5.3873505010235965,
-            "CpuMs": 750,
-            "AllocatedBytes": 4702.541291480726,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 10.306498557097706,
-            "CpuUs": 10.306444963583894,
-            "CpuMs": 750,
-            "AllocatedBytes": 376.49393981036144,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_single": {
-          "Optimized": {
-            "Us": 24428.963,
-            "CpuUs": 3281.25,
-            "CpuMs": 328.125,
-            "AllocatedBytes": 3980.96,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 24174.499,
-            "CpuUs": 156.25,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 81.6,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_concurrent8": {
-          "Optimized": {
-            "Us": 5968.335,
-            "CpuUs": 468.75,
-            "CpuMs": 46.875,
-            "AllocatedBytes": 3659.92,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 31752.354,
-            "CpuUs": 468.75,
-            "CpuMs": 46.875,
-            "AllocatedBytes": 265.6,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_batch1000": {
-          "Optimized": {
-            "Us": 30.731240000000003,
-            "CpuUs": 9.375,
-            "CpuMs": 93.75,
-            "AllocatedBytes": 1965.9,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 36.435759999999995,
-            "CpuUs": 1.5625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 0.3592,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_compact": {
-          "Optimized": {
-            "Us": 66412.9,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 3658224.0,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 70444.1,
-            "CpuUs": 15625.0,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 3296.0,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_batch_unique": {
-          "Optimized": {
-            "Us": 44.4972,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 2157.0,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 82.275,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 3.384,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_batch_update": {
-          "Optimized": {
-            "Us": 28.249370000000003,
-            "CpuUs": 10.9375,
-            "CpuMs": 109.375,
-            "AllocatedBytes": 2021.4456,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 53.217079999999996,
-            "CpuUs": 4.6875,
-            "CpuMs": 46.875,
-            "AllocatedBytes": 0.736,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_batch_delete": {
-          "Optimized": {
-            "Us": 25.973950000000002,
+            "Us": 15.670975,
             "CpuUs": 7.8125,
-            "CpuMs": 78.125,
-            "AllocatedBytes": 1353.6088,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 52.41871999999999,
-            "CpuUs": 3.125,
             "CpuMs": 31.25,
-            "AllocatedBytes": 0.7296,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_update": {
-          "Optimized": {
-            "Us": 25795.701,
-            "CpuUs": 781.25,
-            "CpuMs": 78.125,
-            "AllocatedBytes": 3560.32,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 28820.095,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 55.12,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_delete": {
-          "Optimized": {
-            "Us": 26060.506999999998,
-            "CpuUs": 625.0,
-            "CpuMs": 62.5,
-            "AllocatedBytes": 2817.28,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 23710.411,
-            "CpuUs": 156.25,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 55.12,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_mixed": {
-          "Optimized": {
-            "Us": 20037.999,
-            "CpuUs": 937.5,
-            "CpuMs": 93.75,
-            "AllocatedBytes": 10153.44,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 23238.207000000002,
-            "CpuUs": 156.25,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 1938.24,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_single": {
-          "Optimized": {
-            "Us": 5.037,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 2953.312,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 400.4205,
-            "CpuUs": 31.25,
-            "CpuMs": 31.25,
-            "AllocatedBytes": 19.968,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_concurrent8": {
-          "Optimized": {
-            "Us": 7.4276,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 2942.016,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 383.9939,
-            "CpuUs": 31.25,
-            "CpuMs": 31.25,
-            "AllocatedBytes": 5.912,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_batch1000": {
-          "Optimized": {
-            "Us": 2.20941,
-            "CpuUs": 3.125,
-            "CpuMs": 31.25,
-            "AllocatedBytes": 1965.0352,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 1.7439200000000001,
-            "CpuUs": 1.5625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 0.364,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_compact": {
-          "Optimized": {
-            "Us": 67888.8,
-            "CpuUs": 78125.0,
-            "CpuMs": 78.125,
-            "AllocatedBytes": 3658880.0,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 27230.0,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 3368.0,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_batch_unique": {
-          "Optimized": {
-            "Us": 1.5162,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 2152.576,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 1.5673,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 3.432,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_batch_update": {
-          "Optimized": {
-            "Us": 1.6627600000000002,
-            "CpuUs": 1.5625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 2010.04,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 18.3521,
-            "CpuUs": 4.6875,
-            "CpuMs": 46.875,
-            "AllocatedBytes": 0.7888,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_batch_delete": {
-          "Optimized": {
-            "Us": 1.46395,
-            "CpuUs": 1.5625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 1353.1224,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 15.86863,
-            "CpuUs": 1.5625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 0.7392,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_update": {
-          "Optimized": {
-            "Us": 5.1177,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 3051.152,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 289.8881,
-            "CpuUs": 31.25,
-            "CpuMs": 31.25,
-            "AllocatedBytes": 19.968,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_delete": {
-          "Optimized": {
-            "Us": 5.259,
-            "CpuUs": 15.625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 2329.16,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 341.5804,
-            "CpuUs": 31.25,
-            "CpuMs": 31.25,
-            "AllocatedBytes": 19.968,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_mixed": {
-          "Optimized": {
-            "Us": 11.952,
-            "CpuUs": 15.625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 9648.28,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 390.5465,
-            "CpuUs": 62.5,
-            "CpuMs": 62.5,
-            "AllocatedBytes": 1899.96,
-            "WorkerReadBytes": 0
-          }
-        }
-      },
-      "After": {
-        "shared_read": {
-          "Optimized": {
-            "Us": 31.8689,
-            "CpuUs": 78.125,
-            "CpuMs": 312.5,
-            "AllocatedBytes": 64.44,
-            "WorkerReadBytes": 18184
-          },
-          "SQLite": {
-            "Us": 15.548425,
-            "CpuUs": 11.71875,
-            "CpuMs": 46.875,
-            "AllocatedBytes": 65.774,
+            "AllocatedBytes": 67.256,
             "WorkerReadBytes": 16384
           }
         },
         "shared_update": {
           "Optimized": {
-            "Us": 206.37735,
-            "CpuUs": 148.4375,
-            "CpuMs": 593.75,
-            "AllocatedBytes": 63.612,
+            "Us": 225.811875,
+            "CpuUs": 152.34375,
+            "CpuMs": 609.375,
+            "AllocatedBytes": 63.638,
             "WorkerReadBytes": 9000876
           },
           "SQLite": {
-            "Us": 108.7706,
+            "Us": 179.76,
             "CpuUs": 27.34375,
             "CpuMs": 109.375,
-            "AllocatedBytes": 63.6,
-            "WorkerReadBytes": 118784
+            "AllocatedBytes": 63.626,
+            "WorkerReadBytes": 81920
           }
         },
         "kv_get": {
           "Optimized": {
-            "Us": 0.3027485120921776,
-            "CpuUs": 0.30905573155333377,
+            "Us": 0.3564414416769282,
+            "CpuUs": 0.3490154852378628,
             "CpuMs": 765.625,
-            "AllocatedBytes": 290.8536312055363,
+            "AllocatedBytes": 291.1633934481776,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 5.5595828113533425,
-            "CpuUs": 5.559550195325531,
-            "CpuMs": 750,
-            "AllocatedBytes": 376.5186541440887,
+            "Us": 5.662091952287484,
+            "CpuUs": 5.78004680658312,
+            "CpuMs": 765.625,
+            "AllocatedBytes": 376.52339916217835,
             "WorkerReadBytes": 0
           }
         },
         "kv_miss": {
           "Optimized": {
-            "Us": 0.05111014297142514,
-            "CpuUs": 0.05111014297142514,
-            "CpuMs": 750,
-            "AllocatedBytes": 0.28607396482708997,
+            "Us": 0.05194369137634991,
+            "CpuUs": 0.0512364815050866,
+            "CpuMs": 734.375,
+            "AllocatedBytes": 0.2907395064047264,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 4.665955990767642,
-            "CpuUs": 4.665949147375559,
+            "Us": 4.787870102013458,
+            "CpuUs": 4.787865633338866,
             "CpuMs": 750,
-            "AllocatedBytes": 0.4267788153466178,
+            "AllocatedBytes": 0.43793010992939496,
             "WorkerReadBytes": 0
           }
         },
         "kv_range_20": {
           "Optimized": {
-            "Us": 2.555055597950507,
-            "CpuUs": 2.5018226043824265,
-            "CpuMs": 734.375,
-            "AllocatedBytes": 7024.458091444265,
+            "Us": 3.2003068021318266,
+            "CpuUs": 3.26697332656292,
+            "CpuMs": 765.625,
+            "AllocatedBytes": 7024.297851831451,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 16.81781101444076,
-            "CpuUs": 16.81765180733698,
+            "Us": 16.659110193021036,
+            "CpuUs": 16.658892516825482,
             "CpuMs": 750,
-            "AllocatedBytes": 7520.440039465423,
+            "AllocatedBytes": 7520.4358854756665,
             "WorkerReadBytes": 0
           }
         },
         "kv_range_1000": {
           "Optimized": {
-            "Us": 107.18496713346671,
-            "CpuUs": 108.69565217391305,
+            "Us": 115.60502466091246,
+            "CpuUs": 117.4812030075188,
             "CpuMs": 765.625,
-            "AllocatedBytes": 335896.8013718205,
+            "AllocatedBytes": 335896.8643649815,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 516.3907088781831,
-            "CpuUs": 516.1734342739161,
+            "Us": 525.7760336370008,
+            "CpuUs": 525.5781359495445,
             "CpuMs": 750,
-            "AllocatedBytes": 376002.5271851342,
+            "AllocatedBytes": 376002.5732305536,
             "WorkerReadBytes": 0
           }
         },
         "sql_point": {
           "Optimized": {
-            "Us": 0.3987879506502635,
-            "CpuUs": 0.3987878974785439,
+            "Us": 0.43064887876257923,
+            "CpuUs": 0.4216770271216922,
             "CpuMs": 750,
-            "AllocatedBytes": 631.7072407652687,
+            "AllocatedBytes": 631.7295800656653,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 5.227065038610577,
-            "CpuUs": 5.227063644726938,
+            "Us": 5.303642522257501,
+            "CpuUs": 5.303614236314908,
             "CpuMs": 750,
-            "AllocatedBytes": 400.47966323771294,
+            "AllocatedBytes": 400.48668792826686,
             "WorkerReadBytes": 0
           }
         },
         "sql_projection": {
           "Optimized": {
-            "Us": 0.306868367808285,
-            "CpuUs": 0.30483185734180396,
-            "CpuMs": 734.375,
-            "AllocatedBytes": 288.43057799672266,
+            "Us": 0.3196198399514519,
+            "CpuUs": 0.3196197973354789,
+            "CpuMs": 750,
+            "AllocatedBytes": 288.4484700439541,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 5.003939765949213,
-            "CpuUs": 5.1081851056164185,
-            "CpuMs": 765.625,
-            "AllocatedBytes": 80.45918789447698,
+            "Us": 5.0780952509919155,
+            "CpuUs": 5.089542009079743,
+            "CpuMs": 750,
+            "AllocatedBytes": 80.46599049385892,
             "WorkerReadBytes": 0
           }
         },
         "sql_range20": {
           "Optimized": {
-            "Us": 3.1425398368397017,
-            "CpuUs": 3.1425327137655503,
-            "CpuMs": 750,
-            "AllocatedBytes": 9072.290018059088,
+            "Us": 3.1848575311053553,
+            "CpuUs": 3.251199626311096,
+            "CpuMs": 765.625,
+            "AllocatedBytes": 9072.293923308845,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 14.46533202183263,
-            "CpuUs": 14.465081293756871,
+            "Us": 14.827059939901945,
+            "CpuUs": 14.826822710738574,
             "CpuMs": 750,
-            "AllocatedBytes": 7544.378483673745,
+            "AllocatedBytes": 7544.387948758501,
             "WorkerReadBytes": 0
           }
         },
         "sql_range1000": {
           "Optimized": {
-            "Us": 126.42513062531602,
-            "CpuUs": 126.41159615708747,
+            "Us": 131.66762021762023,
+            "CpuUs": 131.62513162513162,
             "CpuMs": 750,
-            "AllocatedBytes": 407408.9452216417,
+            "AllocatedBytes": 407408.9842049842,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 498.48013289036544,
-            "CpuUs": 502.04918032786884,
+            "Us": 511.49925017041585,
+            "CpuUs": 511.2474437627812,
             "CpuMs": 750,
-            "AllocatedBytes": 376026.41328903654,
+            "AllocatedBytes": 376026.50306748465,
             "WorkerReadBytes": 0
           }
         },
         "sql_count": {
           "Optimized": {
-            "Us": 0.17715639458912477,
-            "CpuUs": 0.17698567902679588,
+            "Us": 0.18112910085340786,
+            "CpuUs": 0.18112910085340786,
             "CpuMs": 750,
-            "AllocatedBytes": 280.4957845550969,
+            "AllocatedBytes": 280.2615635422847,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 17.733591847350628,
-            "CpuUs": 17.382068214632298,
-            "CpuMs": 734.375,
-            "AllocatedBytes": 80.45870475019507,
+            "Us": 18.203924757281555,
+            "CpuUs": 18.203883495145632,
+            "CpuMs": 750,
+            "AllocatedBytes": 80.47087378640776,
             "WorkerReadBytes": 0
           }
         },
         "sql_sum_scan": {
           "Optimized": {
-            "Us": 1158.0708333333334,
-            "CpuUs": 1157.4074074074074,
+            "Us": 1378.390642201835,
+            "CpuUs": 1376.1467889908256,
             "CpuMs": 750,
-            "AllocatedBytes": 757.4938271604939,
+            "AllocatedBytes": 758.5321100917431,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 3028.795161290323,
-            "CpuUs": 3012.0481927710844,
+            "Us": 3222.1639484978537,
+            "CpuUs": 3218.8841201716737,
             "CpuMs": 750,
-            "AllocatedBytes": 91.80645161290323,
+            "AllocatedBytes": 92.56652360515021,
             "WorkerReadBytes": 0
           }
         },
         "sql_group": {
           "Optimized": {
-            "Us": 18.21370634804993,
-            "CpuUs": 18.213609208800815,
+            "Us": 20.118248390557937,
+            "CpuUs": 20.11802575107296,
             "CpuMs": 750,
-            "AllocatedBytes": 73136.48608480257,
+            "AllocatedBytes": 73136.53690987124,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 4405.45380116959,
-            "CpuUs": 4503.676470588235,
-            "CpuMs": 765.625,
-            "AllocatedBytes": 88042.432748538,
+            "Us": 4673.675155279503,
+            "CpuUs": 4658.385093167702,
+            "CpuMs": 750,
+            "AllocatedBytes": 88043.57763975156,
             "WorkerReadBytes": 0
           }
         },
         "sql_join": {
           "Optimized": {
-            "Us": 1.2457722698106595,
-            "CpuUs": 1.245770608783181,
+            "Us": 1.2594906486271389,
+            "CpuUs": 1.241140326635037,
             "CpuMs": 750,
-            "AllocatedBytes": 1000.8116577552543,
+            "AllocatedBytes": 1000.8102428828877,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 10.198131705260868,
-            "CpuUs": 10.095750677059705,
-            "CpuMs": 734.375,
-            "AllocatedBytes": 1704.4029207402473,
+            "Us": 10.562256365479945,
+            "CpuUs": 10.562190175754845,
+            "CpuMs": 750,
+            "AllocatedBytes": 1704.417305092384,
             "WorkerReadBytes": 0
           }
         },
         "sql_left_join": {
           "Optimized": {
-            "Us": 1.0575685233807217,
-            "CpuUs": 1.0575683823716042,
+            "Us": 1.0599614456741566,
+            "CpuUs": 1.041604459733655,
             "CpuMs": 750,
-            "AllocatedBytes": 840.7454870031896,
+            "AllocatedBytes": 840.7458057331187,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 7.08509404196227,
-            "CpuUs": 7.085029804358711,
+            "Us": 7.473851519681116,
+            "CpuUs": 7.473841554559043,
             "CpuMs": 750,
-            "AllocatedBytes": 904.3403837252142,
+            "AllocatedBytes": 904.3590632785251,
             "WorkerReadBytes": 0
           }
         },
         "json_index": {
           "Optimized": {
-            "Us": 2.3527880516107174,
-            "CpuUs": 2.352786169381782,
-            "CpuMs": 750,
-            "AllocatedBytes": 1384.4090380734153,
+            "Us": 2.5834860457586135,
+            "CpuUs": 2.529658360488588,
+            "CpuMs": 734.375,
+            "AllocatedBytes": 1384.464254958561,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 21.730233231928146,
-            "CpuUs": 21.729682746631898,
+            "Us": 21.853876861213905,
+            "CpuUs": 21.8537836184038,
             "CpuMs": 750,
-            "AllocatedBytes": 2103.766594234391,
+            "AllocatedBytes": 2103.7699233660655,
             "WorkerReadBytes": 0
           }
         },
         "json_scan": {
           "Optimized": {
-            "Us": 4.334960002774374,
-            "CpuUs": 4.334959424779784,
+            "Us": 4.044589690076739,
+            "CpuUs": 4.044587532963388,
             "CpuMs": 750,
-            "AllocatedBytes": 2936.400064735394,
+            "AllocatedBytes": 2936.373266894242,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 509.30767141887304,
-            "CpuUs": 509.1649694501018,
+            "Us": 515.4048763736264,
+            "CpuUs": 515.1098901098901,
             "CpuMs": 750,
-            "AllocatedBytes": 82.32993890020367,
+            "AllocatedBytes": 82.38461538461539,
             "WorkerReadBytes": 0
           }
         },
         "json_binary_conversion": {
           "Optimized": {
-            "Us": 1.0006713737545163,
-            "CpuUs": 1.007911902740204,
+            "Us": 1.0283912545677674,
+            "CpuUs": 1.0498152325190766,
             "CpuMs": 765.625,
-            "AllocatedBytes": 784.2666709361341,
+            "AllocatedBytes": 784.2764752260745,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 5.759645821974089,
-            "CpuUs": 5.87960865324804,
+            "Us": 6.1652086707055425,
+            "CpuUs": 6.195322979322912,
             "CpuMs": 765.625,
-            "AllocatedBytes": 80.27670734235929,
+            "AllocatedBytes": 80.3039725992728,
             "WorkerReadBytes": 0
           }
         },
         "parallel_get_8": {
           "Optimized": {
-            "Us": 0.18421700000000002,
-            "CpuUs": 1.3671875,
-            "CpuMs": 546.875,
+            "Us": 0.20226400000000003,
+            "CpuUs": 1.2890625,
+            "CpuMs": 515.625,
             "AllocatedBytes": 320.06958,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 1.9439315,
-            "CpuUs": 13.828125,
-            "CpuMs": 5531.25,
+            "Us": 2.06107275,
+            "CpuUs": 14.4921875,
+            "CpuMs": 5796.875,
             "AllocatedBytes": 376.06464,
             "WorkerReadBytes": 0
           }
         },
         "reopen_and_first_range": {
           "Optimized": {
-            "Us": 698.76,
+            "Us": 626.54,
             "CpuUs": 0.0,
             "CpuMs": 0,
             "AllocatedBytes": 236134.4,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 642.9599999999999,
+            "Us": 637.02,
             "CpuUs": 0.0,
             "CpuMs": 0,
             "AllocatedBytes": 9084.8,
@@ -985,999 +327,337 @@
         },
         "cache_limited_2MiB": {
           "Optimized": {
-            "Us": 5.542665947352085,
-            "CpuUs": 5.542663730286593,
+            "Us": 5.708475917919991,
+            "CpuUs": 5.708457650855507,
             "CpuMs": 750,
-            "AllocatedBytes": 4705.755974991501,
+            "AllocatedBytes": 4708.380632927395,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 10.629280045351473,
-            "CpuUs": 10.629251700680273,
+            "Us": 11.04073398006801,
+            "CpuUs": 11.040614741428803,
             "CpuMs": 750,
-            "AllocatedBytes": 376.51065759637186,
+            "AllocatedBytes": 376.51023818289957,
             "WorkerReadBytes": 0
           }
         },
         "Full_single": {
           "Optimized": {
-            "Us": 18341.519,
-            "CpuUs": 3437.5,
-            "CpuMs": 343.75,
-            "AllocatedBytes": 3986.96,
+            "Us": 28343.375999999997,
+            "CpuUs": 3593.75,
+            "CpuMs": 359.375,
+            "AllocatedBytes": 3979.36,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 15602.437,
-            "CpuUs": 468.75,
-            "CpuMs": 46.875,
-            "AllocatedBytes": 82.48,
+            "Us": 31760.512,
+            "CpuUs": 625.0,
+            "CpuMs": 62.5,
+            "AllocatedBytes": 82.8,
             "WorkerReadBytes": 0
           }
         },
         "Full_concurrent8": {
           "Optimized": {
-            "Us": 4555.714,
+            "Us": 7796.116,
             "CpuUs": 468.75,
             "CpuMs": 46.875,
-            "AllocatedBytes": 3642.4,
+            "AllocatedBytes": 3689.84,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 24558.607000000004,
-            "CpuUs": 312.5,
-            "CpuMs": 31.25,
-            "AllocatedBytes": 266.24,
+            "Us": 36475.911,
+            "CpuUs": 468.75,
+            "CpuMs": 46.875,
+            "AllocatedBytes": 266.56,
             "WorkerReadBytes": 0
           }
         },
         "Full_batch1000": {
           "Optimized": {
-            "Us": 23.230690000000003,
-            "CpuUs": 6.25,
-            "CpuMs": 62.5,
+            "Us": 35.72886,
+            "CpuUs": 14.0625,
+            "CpuMs": 140.625,
             "AllocatedBytes": 1965.9096,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 30.430840000000003,
-            "CpuUs": 4.6875,
-            "CpuMs": 46.875,
-            "AllocatedBytes": 0.3656,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_compact": {
-          "Optimized": {
-            "Us": 51528.7,
-            "CpuUs": 15625.0,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 3658304.0,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 61588.2,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 3360.0,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_batch_unique": {
-          "Optimized": {
-            "Us": 41.9094,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 2157.056,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 17.5825,
-            "CpuUs": 31.25,
-            "CpuMs": 31.25,
-            "AllocatedBytes": 3.448,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_batch_update": {
-          "Optimized": {
-            "Us": 21.89779,
-            "CpuUs": 10.9375,
-            "CpuMs": 109.375,
-            "AllocatedBytes": 2022.1736,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 45.00558,
+            "Us": 57.302580000000006,
             "CpuUs": 3.125,
             "CpuMs": 31.25,
-            "AllocatedBytes": 0.7424,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_batch_delete": {
-          "Optimized": {
-            "Us": 17.13963,
-            "CpuUs": 4.6875,
-            "CpuMs": 46.875,
-            "AllocatedBytes": 1353.5856,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 38.1681,
-            "CpuUs": 1.5625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 0.736,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_update": {
-          "Optimized": {
-            "Us": 19950.198,
-            "CpuUs": 2187.5,
-            "CpuMs": 218.75,
-            "AllocatedBytes": 3560.96,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 21077.292999999998,
-            "CpuUs": 156.25,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 56.0,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_delete": {
-          "Optimized": {
-            "Us": 16723.946,
-            "CpuUs": 937.5,
-            "CpuMs": 93.75,
-            "AllocatedBytes": 2817.92,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 15977.900999999998,
-            "CpuUs": 312.5,
-            "CpuMs": 31.25,
-            "AllocatedBytes": 56.0,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_mixed": {
-          "Optimized": {
-            "Us": 16892.167,
-            "CpuUs": 937.5,
-            "CpuMs": 93.75,
-            "AllocatedBytes": 10154.08,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 17827.075,
-            "CpuUs": 156.25,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 1938.88,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_single": {
-          "Optimized": {
-            "Us": 4.9491,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 2953.376,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 267.278,
-            "CpuUs": 62.5,
-            "CpuMs": 62.5,
-            "AllocatedBytes": 20.056,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_concurrent8": {
-          "Optimized": {
-            "Us": 8.0317,
-            "CpuUs": 15.625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 2939.616,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 293.7764,
-            "CpuUs": 62.5,
-            "CpuMs": 62.5,
-            "AllocatedBytes": 5.976,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_batch1000": {
-          "Optimized": {
-            "Us": 1.3524,
-            "CpuUs": 1.5625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 1965.0416,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 1.6690200000000002,
-            "CpuUs": 1.5625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 0.3704,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_compact": {
-          "Optimized": {
-            "Us": 64954.1,
-            "CpuUs": 46875.0,
-            "CpuMs": 46.875,
-            "AllocatedBytes": 3658960.0,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 20108.699999999997,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 3408.0,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_batch_unique": {
-          "Optimized": {
-            "Us": 1.5177,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 2152.632,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 1.6408,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 3.52,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_batch_update": {
-          "Optimized": {
-            "Us": 1.8144799999999999,
-            "CpuUs": 1.5625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 2010.352,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 17.559540000000002,
-            "CpuUs": 7.8125,
-            "CpuMs": 78.125,
-            "AllocatedBytes": 0.7952,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_batch_delete": {
-          "Optimized": {
-            "Us": 1.9990700000000001,
-            "CpuUs": 1.5625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 1353.176,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 16.24541,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 0.7504,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_update": {
-          "Optimized": {
-            "Us": 5.0284,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 3051.216,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 323.4381,
-            "CpuUs": 15.625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 20.056,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_delete": {
-          "Optimized": {
-            "Us": 4.7832,
-            "CpuUs": 0.0,
-            "CpuMs": 0,
-            "AllocatedBytes": 2329.224,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 370.3258,
-            "CpuUs": 46.875,
-            "CpuMs": 46.875,
-            "AllocatedBytes": 20.056,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Buffered_mixed": {
-          "Optimized": {
-            "Us": 12.7635,
-            "CpuUs": 15.625,
-            "CpuMs": 15.625,
-            "AllocatedBytes": 9648.344,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 373.716,
-            "CpuUs": 46.875,
-            "CpuMs": 46.875,
-            "AllocatedBytes": 1900.024,
-            "WorkerReadBytes": 0
-          }
-        }
-      }
-    },
-    "Linux ARM64": {
-      "BeforeSHA256": "F57A192E23B4467BAEAF12D40B4A5849C3E09E80A8D408120B55E8F517DCC41B",
-      "AfterSHA256": "A240817D6F98A3264CB24AD474A870BC1AACA56A9466411CAB12387EB7EB04F5",
-      "Before": {
-        "shared_read": {
-          "Optimized": {
-            "Us": 68.3168,
-            "CpuUs": 168.82299999999998,
-            "CpuMs": 675.2919999999999,
-            "AllocatedBytes": 25.86,
-            "WorkerReadBytes": -4
-          },
-          "SQLite": {
-            "Us": 31.9792,
-            "CpuUs": 17.676500000000004,
-            "CpuMs": 70.70600000000002,
-            "AllocatedBytes": 26.97,
-            "WorkerReadBytes": -4
-          }
-        },
-        "shared_update": {
-          "Optimized": {
-            "Us": 297.6582,
-            "CpuUs": 366.5565,
-            "CpuMs": 1466.226,
-            "AllocatedBytes": 18.07,
-            "WorkerReadBytes": -4
-          },
-          "SQLite": {
-            "Us": 60.26075,
-            "CpuUs": 18.33449999999999,
-            "CpuMs": 73.33799999999997,
-            "AllocatedBytes": 18.61,
-            "WorkerReadBytes": -4
-          }
-        },
-        "kv_get": {
-          "Optimized": {
-            "Us": 1.084641627366506,
-            "CpuUs": 1.1508272918826912,
-            "CpuMs": 795.7660000000001,
-            "AllocatedBytes": 292.28913927224926,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 4.455358596149392,
-            "CpuUs": 4.649542287197704,
-            "CpuMs": 782.418,
-            "AllocatedBytes": 376.4653997635695,
-            "WorkerReadBytes": 0
-          }
-        },
-        "kv_miss": {
-          "Optimized": {
-            "Us": 0.12206078032864577,
-            "CpuUs": 0.12427268146670643,
-            "CpuMs": 763.5920000000001,
-            "AllocatedBytes": 0.3418738876209051,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 2.3351419764617973,
-            "CpuUs": 2.432990333062299,
-            "CpuMs": 780.9680000000003,
-            "AllocatedBytes": 0.41651410424061275,
-            "WorkerReadBytes": 0
-          }
-        },
-        "kv_range_20": {
-          "Optimized": {
-            "Us": 14.799958560265214,
-            "CpuUs": 18.203034967242882,
-            "CpuMs": 922.4570000000003,
-            "AllocatedBytes": 7024.3888231115325,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 29.081129076034273,
-            "CpuUs": 30.258617347136603,
-            "CpuMs": 777.4670000000006,
-            "AllocatedBytes": 7520.418750726998,
-            "WorkerReadBytes": 0
-          }
-        },
-        "kv_range_1000": {
-          "Optimized": {
-            "Us": 287.53602912993483,
-            "CpuUs": 310.5676504407822,
-            "CpuMs": 813.8099999999995,
-            "AllocatedBytes": 335897.62821004214,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 983.1769633507853,
-            "CpuUs": 987.2787958115183,
-            "CpuMs": 753.9760000000006,
-            "AllocatedBytes": 376003.6439790576,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_point": {
-          "Optimized": {
-            "Us": 1.1271761295586955,
-            "CpuUs": 1.4134860299432426,
-            "CpuMs": 940.6170000000002,
-            "AllocatedBytes": 631.8556157091008,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 3.5789093442513433,
-            "CpuUs": 3.5851776562544737,
-            "CpuMs": 752.4499999999998,
-            "AllocatedBytes": 400.3255170307594,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_projection": {
-          "Optimized": {
-            "Us": 0.7593242835534696,
-            "CpuUs": 0.7611888770322003,
-            "CpuMs": 751.7840000000015,
-            "AllocatedBytes": 288.26886107629474,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 2.9831044961338975,
-            "CpuUs": 3.1551452572628627,
-            "CpuMs": 793.5700000000006,
-            "AllocatedBytes": 80.27132720272377,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_range20": {
-          "Optimized": {
-            "Us": 6.5636930077885705,
-            "CpuUs": 7.075641070248073,
-            "CpuMs": 797.3459999999995,
-            "AllocatedBytes": 9072.316023453224,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 19.315086273499873,
-            "CpuUs": 19.48027298480556,
-            "CpuMs": 756.530999999999,
-            "AllocatedBytes": 7544.489724439866,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_range1000": {
-          "Optimized": {
-            "Us": 342.08148654810765,
-            "CpuUs": 344.4646602827177,
-            "CpuMs": 755.4110000000001,
-            "AllocatedBytes": 407409.93707250344,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 939.4215269086359,
-            "CpuUs": 965.7684605757213,
-            "CpuMs": 771.3889999999992,
-            "AllocatedBytes": 376027.4843554443,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_count": {
-          "Optimized": {
-            "Us": 0.45905959013990283,
-            "CpuUs": 0.45915385025006517,
-            "CpuMs": 750.1560000000009,
-            "AllocatedBytes": 280.32301103516573,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 20.249310186560113,
-            "CpuUs": 20.62604281973057,
-            "CpuMs": 763.223,
-            "AllocatedBytes": 80.51340478954616,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_sum_scan": {
-          "Optimized": {
-            "Us": 2739.8974452554744,
-            "CpuUs": 3525.962962962964,
-            "CpuMs": 952.0100000000002,
-            "AllocatedBytes": 764.1167883211679,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 5110.226530612245,
-            "CpuUs": 5110.680272108847,
-            "CpuMs": 752.7040000000015,
-            "AllocatedBytes": 97.3061224489796,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_group": {
-          "Optimized": {
-            "Us": 69.71009387489543,
-            "CpuUs": 71.32737263667697,
-            "CpuMs": 800.4990000000016,
-            "AllocatedBytes": 73136.68482200948,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 7097.956603773585,
-            "CpuUs": 7715.2358490566085,
-            "CpuMs": 781.0010000000002,
-            "AllocatedBytes": 88048.0,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_join": {
-          "Optimized": {
-            "Us": 6.0644061355348375,
-            "CpuUs": 7.166616803991163,
-            "CpuMs": 857.505000000001,
-            "AllocatedBytes": 1005.5496122539465,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 12.246665686946868,
-            "CpuUs": 12.248636556611466,
-            "CpuMs": 750.1069999999982,
-            "AllocatedBytes": 1704.2190653473106,
-            "WorkerReadBytes": 0
-          }
-        },
-        "sql_left_join": {
-          "Optimized": {
-            "Us": 5.298861805849937,
-            "CpuUs": 5.299809241203889,
-            "CpuMs": 758.255000000001,
-            "AllocatedBytes": 840.8563515613961,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 6.806516076922378,
-            "CpuUs": 6.807276588407187,
-            "CpuMs": 750.0910000000003,
-            "AllocatedBytes": 904.3214839956802,
-            "WorkerReadBytes": 0
-          }
-        },
-        "json_index": {
-          "Optimized": {
-            "Us": 5.710843125913297,
-            "CpuUs": 6.017354064462511,
-            "CpuMs": 753.119999999999,
-            "AllocatedBytes": 1384.5225027109416,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 30.09701043338684,
-            "CpuUs": 30.1701444622793,
-            "CpuMs": 750.8539999999994,
-            "AllocatedBytes": 2103.6308186195824,
-            "WorkerReadBytes": 0
-          }
-        },
-        "json_scan": {
-          "Optimized": {
-            "Us": 12.967100053597054,
-            "CpuUs": 12.969173049326574,
-            "CpuMs": 750.145999999997,
-            "AllocatedBytes": 2936.34066979028,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 668.0518254674978,
-            "CpuUs": 676.3855743544096,
-            "CpuMs": 759.581000000002,
-            "AllocatedBytes": 82.72840605520926,
-            "WorkerReadBytes": 0
-          }
-        },
-        "json_binary_conversion": {
-          "Optimized": {
-            "Us": 2.960878628051669,
-            "CpuUs": 3.294996731446087,
-            "CpuMs": 772.0360000000001,
-            "AllocatedBytes": 784.2068669936664,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 3.9267430719532563,
-            "CpuUs": 3.9943003899733225,
-            "CpuMs": 758.969000000001,
-            "AllocatedBytes": 80.3571537023754,
-            "WorkerReadBytes": 0
-          }
-        },
-        "parallel_get_8": {
-          "Optimized": {
-            "Us": 0.84572875,
-            "CpuUs": 2.338125,
-            "CpuMs": 935.25,
-            "AllocatedBytes": 320.0737,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 1.5264785,
-            "CpuUs": 4.902239999999993,
-            "CpuMs": 1960.895999999997,
-            "AllocatedBytes": 376.0691,
-            "WorkerReadBytes": 0
-          }
-        },
-        "reopen_and_first_range": {
-          "Optimized": {
-            "Us": 1244.56,
-            "CpuUs": 1291.3999999997031,
-            "CpuMs": 6.456999999998516,
-            "AllocatedBytes": 233572.8,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 407.92,
-            "CpuUs": 423.7999999997555,
-            "CpuMs": 2.1189999999987776,
-            "AllocatedBytes": 9024.0,
-            "WorkerReadBytes": 0
-          }
-        },
-        "cache_limited_2MiB": {
-          "Optimized": {
-            "Us": 4.123878307343788,
-            "CpuUs": 4.124518881826372,
-            "CpuMs": 750.6229999999996,
-            "AllocatedBytes": 4707.227659621264,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 7.159055200786537,
-            "CpuUs": 7.1893989290112055,
-            "CpuMs": 750.1189999999988,
-            "AllocatedBytes": 376.33813464677417,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_single": {
-          "Optimized": {
-            "Us": 2113.026,
-            "CpuUs": 1848.0900000000008,
-            "CpuMs": 184.80900000000008,
-            "AllocatedBytes": 4034.24,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 1035.954,
-            "CpuUs": 314.3100000000004,
-            "CpuMs": 31.43100000000004,
-            "AllocatedBytes": 162.16,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_concurrent8": {
-          "Optimized": {
-            "Us": 322.613,
-            "CpuUs": 373.3299999999997,
-            "CpuMs": 37.33299999999997,
-            "AllocatedBytes": 3753.36,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 2325.447,
-            "CpuUs": 750.4000000000001,
-            "CpuMs": 75.04000000000002,
-            "AllocatedBytes": 286.64,
-            "WorkerReadBytes": 0
-          }
-        },
-        "Full_batch1000": {
-          "Optimized": {
-            "Us": 41.43103,
-            "CpuUs": 49.98419999999999,
-            "CpuMs": 499.84199999999987,
-            "AllocatedBytes": 2093.8296,
-            "WorkerReadBytes": 0
-          },
-          "SQLite": {
-            "Us": 17.64658,
-            "CpuUs": 13.5937,
-            "CpuMs": 135.937,
-            "AllocatedBytes": 0.332,
+            "AllocatedBytes": 0.3712,
             "WorkerReadBytes": 0
           }
         },
         "Full_compact": {
           "Optimized": {
-            "Us": 63191.4,
-            "CpuUs": 57975.00000000014,
-            "CpuMs": 57.975000000000136,
-            "AllocatedBytes": 3654048.0,
+            "Us": 65607.20000000001,
+            "CpuUs": 15625.0,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 3658296.0,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 34414.1,
-            "CpuUs": 26169.000000000095,
-            "CpuMs": 26.169000000000096,
-            "AllocatedBytes": 3024.0,
+            "Us": 81425.70000000001,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 3416.0,
             "WorkerReadBytes": 0
           }
         },
         "Full_batch_unique": {
           "Optimized": {
-            "Us": 39.9606,
-            "CpuUs": 37.624000000000024,
-            "CpuMs": 37.624000000000024,
-            "AllocatedBytes": 2283.088,
+            "Us": 48.9436,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 2157.096,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 8.0845,
-            "CpuUs": 5.708000000000084,
-            "CpuMs": 5.708000000000084,
-            "AllocatedBytes": 3.136,
+            "Us": 91.3767,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 3.504,
             "WorkerReadBytes": 0
           }
         },
         "Full_batch_update": {
           "Optimized": {
-            "Us": 32.69565,
-            "CpuUs": 34.63020000000001,
-            "CpuMs": 346.30200000000013,
-            "AllocatedBytes": 2008.0224,
+            "Us": 31.939429999999998,
+            "CpuUs": 15.625,
+            "CpuMs": 156.25,
+            "AllocatedBytes": 2020.8616,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 13.797819999999998,
-            "CpuUs": 11.088199999999993,
-            "CpuMs": 110.88199999999995,
-            "AllocatedBytes": 0.7112,
+            "Us": 54.92161,
+            "CpuUs": 6.25,
+            "CpuMs": 62.5,
+            "AllocatedBytes": 0.748,
             "WorkerReadBytes": 0
           }
         },
         "Full_batch_delete": {
           "Optimized": {
-            "Us": 11.8849,
-            "CpuUs": 20.932500000000026,
-            "CpuMs": 209.32500000000027,
-            "AllocatedBytes": 1350.0392,
+            "Us": 24.94315,
+            "CpuUs": 6.25,
+            "CpuMs": 62.5,
+            "AllocatedBytes": 1353.628,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 9.678230000000001,
-            "CpuUs": 8.81679999999999,
-            "CpuMs": 88.16799999999989,
-            "AllocatedBytes": 0.6952,
+            "Us": 59.05003000000001,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 0.7416,
             "WorkerReadBytes": 0
           }
         },
         "Full_update": {
           "Optimized": {
-            "Us": 1113.355,
-            "CpuUs": 579.659999999999,
-            "CpuMs": 57.965999999999894,
-            "AllocatedBytes": 3552.48,
+            "Us": 25180.728,
+            "CpuUs": 781.25,
+            "CpuMs": 78.125,
+            "AllocatedBytes": 3561.28,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 1362.9409999999998,
-            "CpuUs": 1346.6699999999992,
-            "CpuMs": 134.66699999999992,
-            "AllocatedBytes": 52.64,
+            "Us": 30655.057999999997,
+            "CpuUs": 156.25,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 56.32,
             "WorkerReadBytes": 0
           }
         },
         "Full_delete": {
           "Optimized": {
-            "Us": 1368.5710000000001,
-            "CpuUs": 775.7299999999987,
-            "CpuMs": 77.57299999999987,
-            "AllocatedBytes": 2809.44,
+            "Us": 29270.291,
+            "CpuUs": 781.25,
+            "CpuMs": 78.125,
+            "AllocatedBytes": 2818.24,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 1484.8410000000001,
-            "CpuUs": 297.43999999999915,
-            "CpuMs": 29.743999999999915,
-            "AllocatedBytes": 52.4,
+            "Us": 24983.782000000003,
+            "CpuUs": 312.5,
+            "CpuMs": 31.25,
+            "AllocatedBytes": 56.32,
             "WorkerReadBytes": 0
           }
         },
         "Full_mixed": {
           "Optimized": {
-            "Us": 2055.724,
-            "CpuUs": 1777.6800000000003,
-            "CpuMs": 177.76800000000003,
-            "AllocatedBytes": 10145.12,
+            "Us": 29408.25,
+            "CpuUs": 937.5,
+            "CpuMs": 93.75,
+            "AllocatedBytes": 10154.4,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 2034.48,
-            "CpuUs": 576.5599999999995,
-            "CpuMs": 57.65599999999995,
-            "AllocatedBytes": 1935.92,
+            "Us": 24654.002,
+            "CpuUs": 625.0,
+            "CpuMs": 62.5,
+            "AllocatedBytes": 1939.44,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_single": {
           "Optimized": {
-            "Us": 49.5726,
-            "CpuUs": 50.029,
-            "CpuMs": 50.028999999999996,
-            "AllocatedBytes": 3016.832,
+            "Us": 5.0326,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 2953.408,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 97.2847,
-            "CpuUs": 158.5949999999998,
-            "CpuMs": 158.5949999999998,
-            "AllocatedBytes": 19.72,
+            "Us": 459.1131,
+            "CpuUs": 78.125,
+            "CpuMs": 78.125,
+            "AllocatedBytes": 20.088,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_concurrent8": {
           "Optimized": {
-            "Us": 68.5392,
-            "CpuUs": 161.212,
-            "CpuMs": 161.212,
-            "AllocatedBytes": 3006.056,
+            "Us": 7.4825,
+            "CpuUs": 15.625,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 2941.832,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 194.8528,
-            "CpuUs": 136.93100000000004,
-            "CpuMs": 136.93100000000004,
-            "AllocatedBytes": 5.52,
+            "Us": 491.5071,
+            "CpuUs": 46.875,
+            "CpuMs": 46.875,
+            "AllocatedBytes": 5.84,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_batch1000": {
           "Optimized": {
-            "Us": 9.17914,
-            "CpuUs": 10.417000000000007,
-            "CpuMs": 104.17000000000007,
-            "AllocatedBytes": 2028.9664,
+            "Us": 1.42031,
+            "CpuUs": 1.5625,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 1965.0448,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 7.37229,
-            "CpuUs": 9.068000000000005,
-            "CpuMs": 90.68000000000006,
-            "AllocatedBytes": 0.3392,
+            "Us": 1.76078,
+            "CpuUs": 1.5625,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 0.376,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_compact": {
           "Optimized": {
-            "Us": 48037.799999999996,
-            "CpuUs": 86021.00000000019,
-            "CpuMs": 86.02100000000019,
-            "AllocatedBytes": 3654720.0,
+            "Us": 75067.2,
+            "CpuUs": 31250.0,
+            "CpuMs": 31.25,
+            "AllocatedBytes": 3659008.0,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 19336.1,
-            "CpuUs": 36421.00000000005,
-            "CpuMs": 36.42100000000005,
-            "AllocatedBytes": 3096.0,
+            "Us": 31659.199999999997,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 3488.0,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_batch_unique": {
           "Optimized": {
-            "Us": 12.058,
-            "CpuUs": 13.634000000000015,
-            "CpuMs": 13.634000000000015,
-            "AllocatedBytes": 2214.68,
+            "Us": 1.4941,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 2152.672,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 5.8188,
-            "CpuUs": 6.1460000000001855,
-            "CpuMs": 6.1460000000001855,
-            "AllocatedBytes": 3.208,
+            "Us": 1.8293,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 3.552,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_batch_update": {
           "Optimized": {
-            "Us": 9.50712,
-            "CpuUs": 12.781499999999959,
-            "CpuMs": 127.8149999999996,
-            "AllocatedBytes": 2006.6472,
+            "Us": 1.78555,
+            "CpuUs": 1.5625,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 2010.0496,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 14.22525,
-            "CpuUs": 21.318399999999972,
-            "CpuMs": 213.18399999999974,
-            "AllocatedBytes": 0.7184,
+            "Us": 25.32095,
+            "CpuUs": 6.25,
+            "CpuMs": 62.5,
+            "AllocatedBytes": 0.8008,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_batch_delete": {
           "Optimized": {
-            "Us": 10.67309,
-            "CpuUs": 20.34480000000003,
-            "CpuMs": 203.44800000000032,
-            "AllocatedBytes": 1349.5832,
+            "Us": 1.6204100000000001,
+            "CpuUs": 3.125,
+            "CpuMs": 31.25,
+            "AllocatedBytes": 1353.1192,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 6.917330000000001,
-            "CpuUs": 9.4317,
-            "CpuMs": 94.31700000000001,
-            "AllocatedBytes": 0.7024,
+            "Us": 23.192989999999998,
+            "CpuUs": 1.5625,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 0.7512,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_update": {
           "Optimized": {
-            "Us": 26.0379,
-            "CpuUs": 26.420999999999367,
-            "CpuMs": 26.420999999999367,
-            "AllocatedBytes": 3043.832,
+            "Us": 5.2384,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 3051.248,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 115.2819,
-            "CpuUs": 130.692,
-            "CpuMs": 130.692,
-            "AllocatedBytes": 19.72,
+            "Us": 413.9407,
+            "CpuUs": 46.875,
+            "CpuMs": 46.875,
+            "AllocatedBytes": 20.088,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_delete": {
           "Optimized": {
-            "Us": 20.3841,
-            "CpuUs": 38.77300000000014,
-            "CpuMs": 38.77300000000014,
-            "AllocatedBytes": 2321.84,
+            "Us": 13.6394,
+            "CpuUs": 15.625,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 2329.256,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 105.9603,
-            "CpuUs": 88.69799999999987,
-            "CpuMs": 88.69799999999987,
-            "AllocatedBytes": 19.72,
+            "Us": 478.587,
+            "CpuUs": 46.875,
+            "CpuMs": 46.875,
+            "AllocatedBytes": 20.088,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_mixed": {
           "Optimized": {
-            "Us": 74.6772,
-            "CpuUs": 146.78800000000047,
-            "CpuMs": 146.78800000000047,
-            "AllocatedBytes": 9648.296,
+            "Us": 11.737,
+            "CpuUs": 15.625,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 9648.376,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 131.2046,
-            "CpuUs": 151.038,
-            "CpuMs": 151.038,
-            "AllocatedBytes": 1899.688,
+            "Us": 448.9065,
+            "CpuUs": 46.875,
+            "CpuMs": 46.875,
+            "AllocatedBytes": 1900.08,
             "WorkerReadBytes": 0
           }
         }
@@ -1985,657 +665,1977 @@
       "After": {
         "shared_read": {
           "Optimized": {
-            "Us": 59.753275,
-            "CpuUs": 147.68575,
-            "CpuMs": 590.743,
-            "AllocatedBytes": 25.8,
-            "WorkerReadBytes": -4
+            "Us": 36.18925,
+            "CpuUs": 89.84375,
+            "CpuMs": 359.375,
+            "AllocatedBytes": 65.008,
+            "WorkerReadBytes": 18184
           },
           "SQLite": {
-            "Us": 33.189275,
-            "CpuUs": 17.830749999999988,
-            "CpuMs": 71.32299999999995,
-            "AllocatedBytes": 27.304,
-            "WorkerReadBytes": -4
+            "Us": 15.670975,
+            "CpuUs": 7.8125,
+            "CpuMs": 31.25,
+            "AllocatedBytes": 67.256,
+            "WorkerReadBytes": 16384
           }
         },
         "shared_update": {
           "Optimized": {
-            "Us": 332.04807500000004,
-            "CpuUs": 404.04325000000006,
-            "CpuMs": 1616.1730000000002,
-            "AllocatedBytes": 18.106,
-            "WorkerReadBytes": -4
+            "Us": 228.205775,
+            "CpuUs": 152.34375,
+            "CpuMs": 609.375,
+            "AllocatedBytes": 63.674,
+            "WorkerReadBytes": 9000876
           },
           "SQLite": {
-            "Us": 51.1059,
-            "CpuUs": 20.146499999999996,
-            "CpuMs": 80.58599999999998,
-            "AllocatedBytes": 18.138,
-            "WorkerReadBytes": -4
+            "Us": 179.76,
+            "CpuUs": 27.34375,
+            "CpuMs": 109.375,
+            "AllocatedBytes": 63.626,
+            "WorkerReadBytes": 81920
           }
         },
         "kv_get": {
           "Optimized": {
-            "Us": 1.1000554426982114,
-            "CpuUs": 1.1516849650992327,
-            "CpuMs": 770.6879999999999,
-            "AllocatedBytes": 291.0450863695747,
+            "Us": 0.3260752650772754,
+            "CpuUs": 0.3328682778542001,
+            "CpuMs": 765.625,
+            "AllocatedBytes": 290.79531262314737,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 4.369553666622,
-            "CpuUs": 4.561362727309617,
-            "CpuMs": 763.291,
-            "AllocatedBytes": 376.45624930815706,
+            "Us": 5.662091952287484,
+            "CpuUs": 5.78004680658312,
+            "CpuMs": 765.625,
+            "AllocatedBytes": 376.52339916217835,
             "WorkerReadBytes": 0
           }
         },
         "kv_miss": {
           "Optimized": {
-            "Us": 0.11630418061798066,
-            "CpuUs": 0.11864246661077188,
-            "CpuMs": 763.6669999999999,
-            "AllocatedBytes": 0.32574307417281473,
+            "Us": 0.052888263318675056,
+            "CpuUs": 0.052888263318675056,
+            "CpuMs": 750,
+            "AllocatedBytes": 0.29602646951802575,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 2.3483109409197227,
-            "CpuUs": 2.3795334070179943,
-            "CpuMs": 759.973,
-            "AllocatedBytes": 0.4187626612895651,
+            "Us": 4.787870102013458,
+            "CpuUs": 4.787865633338866,
+            "CpuMs": 750,
+            "AllocatedBytes": 0.43793010992939496,
             "WorkerReadBytes": 0
           }
         },
         "kv_range_20": {
           "Optimized": {
-            "Us": 15.04003449174805,
-            "CpuUs": 18.32528525878838,
-            "CpuMs": 913.8270000000002,
-            "AllocatedBytes": 7024.394168488178,
+            "Us": 2.706004069821981,
+            "CpuUs": 2.7059986578246655,
+            "CpuMs": 750,
+            "AllocatedBytes": 7024.48627156681,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 28.812488955476162,
-            "CpuUs": 29.205473151661494,
-            "CpuMs": 759.4589999999998,
-            "AllocatedBytes": 7520.413660635396,
+            "Us": 16.659110193021036,
+            "CpuUs": 16.658892516825482,
+            "CpuMs": 750,
+            "AllocatedBytes": 7520.4358854756665,
             "WorkerReadBytes": 0
           }
         },
         "kv_range_1000": {
           "Optimized": {
-            "Us": 247.915333773959,
-            "CpuUs": 260.8139458030403,
-            "CpuMs": 789.223,
-            "AllocatedBytes": 335897.38797091873,
+            "Us": 95.3224933282501,
+            "CpuUs": 97.29635277671876,
+            "CpuMs": 765.625,
+            "AllocatedBytes": 335896.74793278205,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 986.1513797634691,
-            "CpuUs": 990.1445466491458,
-            "CpuMs": 753.5,
-            "AllocatedBytes": 376003.61629434954,
+            "Us": 525.7760336370008,
+            "CpuUs": 525.5781359495445,
+            "CpuMs": 750,
+            "AllocatedBytes": 376002.5732305536,
             "WorkerReadBytes": 0
           }
         },
         "sql_point": {
           "Optimized": {
-            "Us": 1.0948621863043215,
-            "CpuUs": 1.3695693112161846,
-            "CpuMs": 938.1809999999996,
-            "AllocatedBytes": 631.8135993308215,
+            "Us": 0.3226957482904657,
+            "CpuUs": 0.3226957052643717,
+            "CpuMs": 750,
+            "AllocatedBytes": 605.398872218323,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 3.5611437416610086,
-            "CpuUs": 3.568323939850053,
-            "CpuMs": 751.5140000000001,
-            "AllocatedBytes": 400.32374992284207,
+            "Us": 5.303642522257501,
+            "CpuUs": 5.303614236314908,
+            "CpuMs": 750,
+            "AllocatedBytes": 400.48668792826686,
             "WorkerReadBytes": 0
           }
         },
         "sql_projection": {
           "Optimized": {
-            "Us": 0.7434271174277043,
-            "CpuUs": 0.7452088632313094,
-            "CpuMs": 751.7939999999999,
-            "AllocatedBytes": 288.26318491894665,
+            "Us": 0.25572808674841097,
+            "CpuUs": 0.2557280526513373,
+            "CpuMs": 750,
+            "AllocatedBytes": 288.358821236885,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 3.030049571551505,
-            "CpuUs": 3.0958746934603525,
-            "CpuMs": 766.2790000000005,
-            "AllocatedBytes": 80.27546753608785,
+            "Us": 5.0780952509919155,
+            "CpuUs": 5.089542009079743,
+            "CpuMs": 750,
+            "AllocatedBytes": 80.46599049385892,
             "WorkerReadBytes": 0
           }
         },
         "sql_range20": {
           "Optimized": {
-            "Us": 6.607647240209682,
-            "CpuUs": 7.171234747367969,
-            "CpuMs": 809.1620000000003,
-            "AllocatedBytes": 9072.317730496454,
+            "Us": 2.305168169118845,
+            "CpuUs": 2.34815153511156,
+            "CpuMs": 765.625,
+            "AllocatedBytes": 8544.414240357515,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 19.493504873294345,
-            "CpuUs": 19.55025341130604,
-            "CpuMs": 752.1959999999999,
-            "AllocatedBytes": 7544.493411306043,
+            "Us": 14.827059939901945,
+            "CpuUs": 14.826822710738574,
+            "CpuMs": 750,
+            "AllocatedBytes": 7544.387948758501,
             "WorkerReadBytes": 0
           }
         },
         "sql_range1000": {
           "Optimized": {
-            "Us": 343.6477324782409,
-            "CpuUs": 346.0032065964273,
-            "CpuMs": 755.4359999999997,
-            "AllocatedBytes": 407409.92395785614,
+            "Us": 106.6970839260313,
+            "CpuUs": 106.68563300142247,
+            "CpuMs": 750,
+            "AllocatedBytes": 382928.7977240398,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 950.5210126582278,
-            "CpuUs": 976.9911392405068,
-            "CpuMs": 756.5509999999995,
-            "AllocatedBytes": 376027.4835443038,
+            "Us": 511.49925017041585,
+            "CpuUs": 511.2474437627812,
+            "CpuMs": 750,
+            "AllocatedBytes": 376026.50306748465,
             "WorkerReadBytes": 0
           }
         },
         "sql_count": {
           "Optimized": {
-            "Us": 0.4562214557708919,
-            "CpuUs": 0.45630254145528426,
-            "CpuMs": 750.134,
-            "AllocatedBytes": 280.32098495078895,
+            "Us": 0.1945082042252882,
+            "CpuUs": 0.19450817829086442,
+            "CpuMs": 734.375,
+            "AllocatedBytes": 280.27292142725435,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 19.934792547112142,
-            "CpuUs": 20.028494794986173,
-            "CpuMs": 754.1929999999993,
-            "AllocatedBytes": 80.50458496132684,
+            "Us": 18.203924757281555,
+            "CpuUs": 18.203883495145632,
+            "CpuMs": 750,
+            "AllocatedBytes": 80.47087378640776,
             "WorkerReadBytes": 0
           }
         },
         "sql_sum_scan": {
           "Optimized": {
-            "Us": 2710.7216606498196,
-            "CpuUs": 3376.6209386281607,
-            "CpuMs": 935.3240000000005,
-            "AllocatedBytes": 763.8122743682311,
+            "Us": 1254.7964882943143,
+            "CpuUs": 1280.309364548495,
+            "CpuMs": 765.625,
+            "AllocatedBytes": 757.9531772575251,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 5069.989189189188,
-            "CpuUs": 5070.749999999997,
-            "CpuMs": 751.4400000000005,
-            "AllocatedBytes": 96.97297297297297,
+            "Us": 3222.1639484978537,
+            "CpuUs": 3218.8841201716737,
+            "CpuMs": 750,
+            "AllocatedBytes": 92.56652360515021,
             "WorkerReadBytes": 0
           }
         },
         "sql_group": {
           "Optimized": {
-            "Us": 57.10919058859362,
-            "CpuUs": 61.465392522652756,
-            "CpuMs": 803.5300000000007,
-            "AllocatedBytes": 73136.55737455265,
+            "Us": 19.665258659115338,
+            "CpuUs": 20.074595558352343,
+            "CpuMs": 765.625,
+            "AllocatedBytes": 73136.52481711634,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 7139.050943396227,
-            "CpuUs": 7398.5094339622665,
-            "CpuMs": 784.2560000000012,
-            "AllocatedBytes": 88047.69811320755,
+            "Us": 4673.675155279503,
+            "CpuUs": 4658.385093167702,
+            "CpuMs": 750,
+            "AllocatedBytes": 88043.57763975156,
             "WorkerReadBytes": 0
           }
         },
         "sql_join": {
           "Optimized": {
-            "Us": 6.313394390383515,
-            "CpuUs": 7.172463275876686,
-            "CpuMs": 844.7009999999973,
-            "AllocatedBytes": 1004.494998726331,
+            "Us": 0.9506882341682058,
+            "CpuUs": 0.9506872201018376,
+            "CpuMs": 750,
+            "AllocatedBytes": 998.2360108263016,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 12.466319831125444,
-            "CpuUs": 12.468261223675661,
-            "CpuMs": 750.1039999999994,
-            "AllocatedBytes": 1704.2224623107224,
+            "Us": 10.562256365479945,
+            "CpuUs": 10.562190175754845,
+            "CpuMs": 750,
+            "AllocatedBytes": 1704.417305092384,
             "WorkerReadBytes": 0
           }
         },
         "sql_left_join": {
           "Optimized": {
-            "Us": 5.667149506581433,
-            "CpuUs": 5.78557071829051,
-            "CpuMs": 763.9559999999983,
-            "AllocatedBytes": 840.8888485892611,
+            "Us": 0.7782925923158663,
+            "CpuUs": 0.7782924885435346,
+            "CpuMs": 750,
+            "AllocatedBytes": 838.1723865975958,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 6.935238200917295,
-            "CpuUs": 6.936750998668456,
-            "CpuMs": 750.0119999999988,
-            "AllocatedBytes": 904.3272673472408,
+            "Us": 7.473851519681116,
+            "CpuUs": 7.473841554559043,
+            "CpuMs": 750,
+            "AllocatedBytes": 904.3590632785251,
             "WorkerReadBytes": 0
           }
         },
         "json_index": {
           "Optimized": {
-            "Us": 5.840203705001519,
-            "CpuUs": 6.075883227821,
-            "CpuMs": 780.2710000000006,
-            "AllocatedBytes": 1384.2809160305344,
+            "Us": 2.069262901160994,
+            "CpuUs": 2.069262349357701,
+            "CpuMs": 750,
+            "AllocatedBytes": 1384.371849203196,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 30.4932509351114,
-            "CpuUs": 30.513091559603186,
-            "CpuMs": 750.6630000000005,
-            "AllocatedBytes": 2103.6376646609206,
+            "Us": 21.853876861213905,
+            "CpuUs": 21.8537836184038,
+            "CpuMs": 750,
+            "AllocatedBytes": 2103.7699233660655,
             "WorkerReadBytes": 0
           }
         },
         "json_scan": {
           "Optimized": {
-            "Us": 12.927336815071445,
-            "CpuUs": 12.926952444973029,
-            "CpuMs": 749.9889999999978,
-            "AllocatedBytes": 2936.3387972490823,
+            "Us": 4.783840207171925,
+            "CpuUs": 4.6841712485170115,
+            "CpuMs": 750,
+            "AllocatedBytes": 2520.4414905152507,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 672.055376344086,
-            "CpuUs": 680.6353046594982,
-            "CpuMs": 759.3450000000012,
-            "AllocatedBytes": 82.7168458781362,
+            "Us": 515.4048763736264,
+            "CpuUs": 515.1098901098901,
+            "CpuMs": 750,
+            "AllocatedBytes": 82.38461538461539,
             "WorkerReadBytes": 0
           }
         },
         "json_binary_conversion": {
           "Optimized": {
-            "Us": 3.001636950599455,
-            "CpuUs": 3.3160730787232535,
-            "CpuMs": 828.9420000000027,
-            "AllocatedBytes": 784.1874412445945,
+            "Us": 0.8462219604577719,
+            "CpuUs": 0.8638508935532606,
+            "CpuMs": 765.625,
+            "AllocatedBytes": 784.2116139922125,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 4.080551036730341,
-            "CpuUs": 4.273842621559412,
-            "CpuMs": 780.887999999999,
-            "AllocatedBytes": 80.37097046229849,
+            "Us": 6.1652086707055425,
+            "CpuUs": 6.195322979322912,
+            "CpuMs": 765.625,
+            "AllocatedBytes": 80.3039725992728,
             "WorkerReadBytes": 0
           }
         },
         "parallel_get_8": {
           "Optimized": {
-            "Us": 0.6312807500000001,
-            "CpuUs": 1.4861499999999976,
-            "CpuMs": 594.4599999999991,
-            "AllocatedBytes": 320.07358,
+            "Us": 0.18912575,
+            "CpuUs": 1.328125,
+            "CpuMs": 531.25,
+            "AllocatedBytes": 320.06928,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 1.439333,
-            "CpuUs": 4.8042025000000015,
-            "CpuMs": 1921.6810000000005,
-            "AllocatedBytes": 376.06902,
+            "Us": 2.06107275,
+            "CpuUs": 14.4921875,
+            "CpuMs": 5796.875,
+            "AllocatedBytes": 376.06464,
             "WorkerReadBytes": 0
           }
         },
         "reopen_and_first_range": {
           "Optimized": {
-            "Us": 655.9,
-            "CpuUs": 675.5999999993946,
-            "CpuMs": 3.377999999996973,
-            "AllocatedBytes": 233515.2,
+            "Us": 721.3199999999999,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 235950.4,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 422.38,
-            "CpuUs": 438.79999999990105,
-            "CpuMs": 2.1939999999995052,
-            "AllocatedBytes": 9009.6,
+            "Us": 637.02,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 9084.8,
             "WorkerReadBytes": 0
           }
         },
         "cache_limited_2MiB": {
           "Optimized": {
-            "Us": 4.067336059350528,
-            "CpuUs": 4.070532983361896,
-            "CpuMs": 750.5900000000001,
-            "AllocatedBytes": 4707.106065782178,
+            "Us": 5.839826674660707,
+            "CpuUs": 5.839802536810222,
+            "CpuMs": 750,
+            "AllocatedBytes": 4708.284515179594,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 6.948409749951361,
-            "CpuUs": 6.9489897071494,
-            "CpuMs": 750.0669999999991,
-            "AllocatedBytes": 376.32788890021214,
+            "Us": 11.04073398006801,
+            "CpuUs": 11.040614741428803,
+            "CpuMs": 750,
+            "AllocatedBytes": 376.51023818289957,
             "WorkerReadBytes": 0
           }
         },
         "Full_single": {
           "Optimized": {
-            "Us": 2628.7610000000004,
-            "CpuUs": 2536.42,
-            "CpuMs": 253.642,
-            "AllocatedBytes": 4034.0,
+            "Us": 26346.146,
+            "CpuUs": 3437.5,
+            "CpuMs": 343.75,
+            "AllocatedBytes": 3976.08,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 1091.539,
-            "CpuUs": 362.77000000000044,
-            "CpuMs": 36.277000000000044,
-            "AllocatedBytes": 161.84,
+            "Us": 31760.512,
+            "CpuUs": 625.0,
+            "CpuMs": 62.5,
+            "AllocatedBytes": 82.8,
             "WorkerReadBytes": 0
           }
         },
         "Full_concurrent8": {
           "Optimized": {
-            "Us": 407.376,
-            "CpuUs": 444.369999999999,
-            "CpuMs": 44.4369999999999,
-            "AllocatedBytes": 3789.6,
+            "Us": 7644.061000000001,
+            "CpuUs": 625.0,
+            "CpuMs": 62.5,
+            "AllocatedBytes": 3692.8,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 2262.825,
-            "CpuUs": 661.2400000000002,
-            "CpuMs": 66.12400000000002,
-            "AllocatedBytes": 286.32,
+            "Us": 36475.911,
+            "CpuUs": 468.75,
+            "CpuMs": 46.875,
+            "AllocatedBytes": 266.56,
             "WorkerReadBytes": 0
           }
         },
         "Full_batch1000": {
           "Optimized": {
-            "Us": 32.76093,
-            "CpuUs": 37.66700000000001,
-            "CpuMs": 376.6700000000001,
-            "AllocatedBytes": 2093.8304,
+            "Us": 42.38414,
+            "CpuUs": 7.8125,
+            "CpuMs": 78.125,
+            "AllocatedBytes": 1965.856,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 20.766569999999998,
-            "CpuUs": 18.438499999999994,
-            "CpuMs": 184.38499999999993,
-            "AllocatedBytes": 0.3288,
+            "Us": 57.302580000000006,
+            "CpuUs": 3.125,
+            "CpuMs": 31.25,
+            "AllocatedBytes": 0.3712,
             "WorkerReadBytes": 0
           }
         },
         "Full_compact": {
           "Optimized": {
-            "Us": 77412.3,
-            "CpuUs": 69531.99999999993,
-            "CpuMs": 69.53199999999993,
-            "AllocatedBytes": 3653960.0,
+            "Us": 91024.8,
+            "CpuUs": 15625.0,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 3658352.0,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 32217.9,
-            "CpuUs": 22689.99999999994,
-            "CpuMs": 22.68999999999994,
-            "AllocatedBytes": 2992.0,
+            "Us": 81425.70000000001,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 3416.0,
             "WorkerReadBytes": 0
           }
         },
         "Full_batch_unique": {
           "Optimized": {
-            "Us": 42.6214,
-            "CpuUs": 37.71699999999987,
-            "CpuMs": 37.71699999999987,
-            "AllocatedBytes": 2283.064,
+            "Us": 56.3822,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 2157.168,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 13.7724,
-            "CpuUs": 11.33000000000004,
-            "CpuMs": 11.330000000000041,
-            "AllocatedBytes": 3.104,
+            "Us": 91.3767,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 3.504,
             "WorkerReadBytes": 0
           }
         },
         "Full_batch_update": {
           "Optimized": {
-            "Us": 37.54423,
-            "CpuUs": 43.22950000000001,
-            "CpuMs": 432.2950000000001,
-            "AllocatedBytes": 2012.328,
+            "Us": 38.61618000000001,
+            "CpuUs": 14.0625,
+            "CpuMs": 140.625,
+            "AllocatedBytes": 1995.8664,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 11.72359,
-            "CpuUs": 9.648199999999997,
-            "CpuMs": 96.48199999999997,
-            "AllocatedBytes": 0.708,
+            "Us": 54.92161,
+            "CpuUs": 6.25,
+            "CpuMs": 62.5,
+            "AllocatedBytes": 0.748,
             "WorkerReadBytes": 0
           }
         },
         "Full_batch_delete": {
           "Optimized": {
-            "Us": 18.98377,
-            "CpuUs": 24.313000000000013,
-            "CpuMs": 243.1300000000001,
-            "AllocatedBytes": 1350.0368,
+            "Us": 36.580529999999996,
+            "CpuUs": 6.25,
+            "CpuMs": 62.5,
+            "AllocatedBytes": 1327.2616,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 10.6981,
-            "CpuUs": 6.445399999999995,
-            "CpuMs": 64.45399999999995,
-            "AllocatedBytes": 0.692,
+            "Us": 59.05003000000001,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 0.7416,
             "WorkerReadBytes": 0
           }
         },
         "Full_update": {
           "Optimized": {
-            "Us": 1072.193,
-            "CpuUs": 649.7299999999996,
-            "CpuMs": 64.97299999999996,
-            "AllocatedBytes": 3552.24,
+            "Us": 24950.604,
+            "CpuUs": 625.0,
+            "CpuMs": 62.5,
+            "AllocatedBytes": 3512.88,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 983.539,
-            "CpuUs": 1097.9700000000003,
-            "CpuMs": 109.79700000000003,
-            "AllocatedBytes": 52.08,
+            "Us": 30655.057999999997,
+            "CpuUs": 156.25,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 56.32,
             "WorkerReadBytes": 0
           }
         },
         "Full_delete": {
           "Optimized": {
-            "Us": 1829.338,
-            "CpuUs": 828.8200000000006,
-            "CpuMs": 82.88200000000006,
-            "AllocatedBytes": 2809.2,
+            "Us": 25818.259,
+            "CpuUs": 625.0,
+            "CpuMs": 62.5,
+            "AllocatedBytes": 2770.88,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 1094.9720000000002,
-            "CpuUs": 284.52,
-            "CpuMs": 28.451999999999998,
-            "AllocatedBytes": 52.08,
+            "Us": 24983.782000000003,
+            "CpuUs": 312.5,
+            "CpuMs": 31.25,
+            "AllocatedBytes": 56.32,
             "WorkerReadBytes": 0
           }
         },
         "Full_mixed": {
           "Optimized": {
-            "Us": 1917.5559999999998,
-            "CpuUs": 1422.230000000004,
-            "CpuMs": 142.2230000000004,
-            "AllocatedBytes": 10144.88,
+            "Us": 26908.626,
+            "CpuUs": 781.25,
+            "CpuMs": 78.125,
+            "AllocatedBytes": 9848.24,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 974.903,
-            "CpuUs": 183.6200000000008,
-            "CpuMs": 18.36200000000008,
-            "AllocatedBytes": 1935.6,
+            "Us": 24654.002,
+            "CpuUs": 625.0,
+            "CpuMs": 62.5,
+            "AllocatedBytes": 1939.44,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_single": {
           "Optimized": {
-            "Us": 60.266,
-            "CpuUs": 60.634000000000015,
-            "CpuMs": 60.634000000000015,
-            "AllocatedBytes": 3080.808,
+            "Us": 4.964,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 2953.472,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 74.2013,
-            "CpuUs": 49.830999999999904,
-            "CpuMs": 49.830999999999904,
-            "AllocatedBytes": 19.688,
+            "Us": 459.1131,
+            "CpuUs": 78.125,
+            "CpuMs": 78.125,
+            "AllocatedBytes": 20.088,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_concurrent8": {
           "Optimized": {
-            "Us": 73.3391,
-            "CpuUs": 139.38099999999986,
-            "CpuMs": 139.38099999999986,
-            "AllocatedBytes": 3066.984,
+            "Us": 8.0597,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 2941.896,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 127.6741,
-            "CpuUs": 82.13499999999999,
-            "CpuMs": 82.13499999999999,
-            "AllocatedBytes": 6.568,
+            "Us": 491.5071,
+            "CpuUs": 46.875,
+            "CpuMs": 46.875,
+            "AllocatedBytes": 5.84,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_batch1000": {
           "Optimized": {
-            "Us": 14.027289999999999,
-            "CpuUs": 27.321699999999964,
-            "CpuMs": 273.21699999999964,
-            "AllocatedBytes": 2092.9664,
+            "Us": 2.14556,
+            "CpuUs": 1.5625,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 1965.2864,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 7.49827,
-            "CpuUs": 7.5471000000000235,
-            "CpuMs": 75.47100000000023,
-            "AllocatedBytes": 0.336,
+            "Us": 1.76078,
+            "CpuUs": 1.5625,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 0.376,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_compact": {
           "Optimized": {
-            "Us": 67674.0,
-            "CpuUs": 57032.99999999945,
-            "CpuMs": 57.03299999999945,
-            "AllocatedBytes": 3654688.0,
+            "Us": 91242.5,
+            "CpuUs": 31250.0,
+            "CpuMs": 31.25,
+            "AllocatedBytes": 3659008.0,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 23799.1,
-            "CpuUs": 22358.999999999924,
-            "CpuMs": 22.358999999999924,
-            "AllocatedBytes": 3064.0,
+            "Us": 31659.199999999997,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 3488.0,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_batch_unique": {
           "Optimized": {
-            "Us": 10.7961,
-            "CpuUs": 11.097999999999956,
-            "CpuMs": 11.097999999999956,
-            "AllocatedBytes": 2278.656,
+            "Us": 1.9297,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 2152.744,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 7.7179,
-            "CpuUs": 11.512000000000171,
-            "CpuMs": 11.512000000000171,
-            "AllocatedBytes": 3.176,
+            "Us": 1.8293,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 3.552,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_batch_update": {
           "Optimized": {
-            "Us": 12.87995,
-            "CpuUs": 21.45679999999993,
-            "CpuMs": 214.5679999999993,
-            "AllocatedBytes": 2007.5144,
+            "Us": 2.44169,
+            "CpuUs": 1.5625,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 1983.8744,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 9.619240000000001,
-            "CpuUs": 16.403899999999975,
-            "CpuMs": 164.03899999999976,
-            "AllocatedBytes": 0.7152,
+            "Us": 25.32095,
+            "CpuUs": 6.25,
+            "CpuMs": 62.5,
+            "AllocatedBytes": 0.8008,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_batch_delete": {
           "Optimized": {
-            "Us": 5.71111,
-            "CpuUs": 8.548599999999988,
-            "CpuMs": 85.48599999999988,
-            "AllocatedBytes": 1349.5808,
+            "Us": 1.38735,
+            "CpuUs": 1.5625,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 1326.6824,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 8.79568,
-            "CpuUs": 11.068699999999989,
-            "CpuMs": 110.6869999999999,
-            "AllocatedBytes": 0.6992,
+            "Us": 23.192989999999998,
+            "CpuUs": 1.5625,
+            "CpuMs": 15.625,
+            "AllocatedBytes": 0.7512,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_update": {
           "Optimized": {
-            "Us": 38.092699999999994,
-            "CpuUs": 59.676000000000386,
-            "CpuMs": 59.676000000000386,
-            "AllocatedBytes": 3043.808,
+            "Us": 5.9343,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 3003.384,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 104.427,
-            "CpuUs": 134.048,
-            "CpuMs": 134.048,
-            "AllocatedBytes": 19.688,
+            "Us": 413.9407,
+            "CpuUs": 46.875,
+            "CpuMs": 46.875,
+            "AllocatedBytes": 20.088,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_delete": {
           "Optimized": {
-            "Us": 15.9377,
-            "CpuUs": 30.501999999999498,
-            "CpuMs": 30.501999999999498,
-            "AllocatedBytes": 2321.816,
+            "Us": 4.8464,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 2281.32,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 123.4877,
-            "CpuUs": 132.9459999999999,
-            "CpuMs": 132.9459999999999,
-            "AllocatedBytes": 19.688,
+            "Us": 478.587,
+            "CpuUs": 46.875,
+            "CpuMs": 46.875,
+            "AllocatedBytes": 20.088,
             "WorkerReadBytes": 0
           }
         },
         "Buffered_mixed": {
           "Optimized": {
-            "Us": 53.5767,
-            "CpuUs": 105.10500000000046,
-            "CpuMs": 105.10500000000047,
-            "AllocatedBytes": 9648.272,
+            "Us": 11.3789,
+            "CpuUs": 0.0,
+            "CpuMs": 0,
+            "AllocatedBytes": 9360.664,
             "WorkerReadBytes": 0
           },
           "SQLite": {
-            "Us": 123.7673,
-            "CpuUs": 132.07600000000002,
-            "CpuMs": 132.07600000000002,
-            "AllocatedBytes": 1899.68,
+            "Us": 448.9065,
+            "CpuUs": 46.875,
+            "CpuMs": 46.875,
+            "AllocatedBytes": 1900.08,
+            "WorkerReadBytes": 0
+          }
+        }
+      }
+    },
+    "Linux ARM64": {
+      "BeforeSHA256": "A240817D6F98A3264CB24AD474A870BC1AACA56A9466411CAB12387EB7EB04F5",
+      "AfterSHA256": "30C7DB3221A39E08DF491CB88D85EB04E6ABD226990A2C89C7E6A916E62CC510",
+      "Before": {
+        "shared_read": {
+          "Optimized": {
+            "Us": 84.331875,
+            "CpuUs": 148.70324999999997,
+            "CpuMs": 594.8129999999999,
+            "AllocatedBytes": 25.118,
+            "WorkerReadBytes": -4
+          },
+          "SQLite": {
+            "Us": 36.852575,
+            "CpuUs": 18.457250000000002,
+            "CpuMs": 73.82900000000001,
+            "AllocatedBytes": 28.078,
+            "WorkerReadBytes": -4
+          }
+        },
+        "shared_update": {
+          "Optimized": {
+            "Us": 241.927625,
+            "CpuUs": 238.38250000000002,
+            "CpuMs": 953.5300000000001,
+            "AllocatedBytes": 18.498,
+            "WorkerReadBytes": -4
+          },
+          "SQLite": {
+            "Us": 59.53235,
+            "CpuUs": 21.704,
+            "CpuMs": 86.816,
+            "AllocatedBytes": 18.614,
+            "WorkerReadBytes": -4
+          }
+        },
+        "kv_get": {
+          "Optimized": {
+            "Us": 1.221800836689213,
+            "CpuUs": 1.2509986185505206,
+            "CpuMs": 767.923,
+            "AllocatedBytes": 290.4808617116941,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 4.543421738129567,
+            "CpuUs": 4.614330542665714,
+            "CpuMs": 761.7060000000001,
+            "AllocatedBytes": 376.47658625828416,
+            "WorkerReadBytes": 0
+          }
+        },
+        "kv_miss": {
+          "Optimized": {
+            "Us": 0.1202037950080833,
+            "CpuUs": 0.12317590301321663,
+            "CpuMs": 769.9569999999999,
+            "AllocatedBytes": 0.33675123292966785,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 2.375350205705273,
+            "CpuUs": 2.4171157529060703,
+            "CpuMs": 764.1469999999997,
+            "AllocatedBytes": 0.42472517205448734,
+            "WorkerReadBytes": 0
+          }
+        },
+        "kv_range_20": {
+          "Optimized": {
+            "Us": 13.781035591569742,
+            "CpuUs": 14.790695110523128,
+            "CpuMs": 810.4230000000002,
+            "AllocatedBytes": 7024.371019605682,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 30.046390513580643,
+            "CpuUs": 30.721576796731025,
+            "CpuMs": 759.7639999999997,
+            "AllocatedBytes": 7520.44579761237,
+            "WorkerReadBytes": 0
+          }
+        },
+        "kv_range_1000": {
+          "Optimized": {
+            "Us": 245.99363725811742,
+            "CpuUs": 251.78812725483772,
+            "CpuMs": 767.7020000000002,
+            "AllocatedBytes": 335897.5532961627,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 1046.1662482566248,
+            "CpuUs": 1055.7336122733616,
+            "CpuMs": 755.1149999999998,
+            "AllocatedBytes": 376004.340306834,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_point": {
+          "Optimized": {
+            "Us": 1.151666999370422,
+            "CpuUs": 1.335154946419257,
+            "CpuMs": 858.6989999999996,
+            "AllocatedBytes": 631.8345285075933,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 3.5370993072029204,
+            "CpuUs": 3.546083503506432,
+            "CpuMs": 751.9080000000004,
+            "AllocatedBytes": 400.3232612868387,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_projection": {
+          "Optimized": {
+            "Us": 0.8161354174147902,
+            "CpuUs": 0.8172870378229448,
+            "CpuMs": 751.0590000000002,
+            "AllocatedBytes": 288.2895079905024,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 3.029764285281464,
+            "CpuUs": 3.0598693951469818,
+            "CpuMs": 763.6009999999997,
+            "AllocatedBytes": 80.27689510998,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_range20": {
+          "Optimized": {
+            "Us": 7.275557064558375,
+            "CpuUs": 7.485010936645571,
+            "CpuMs": 768.4040000000005,
+            "AllocatedBytes": 9072.355046806033,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 20.52051218911598,
+            "CpuUs": 20.57987906645875,
+            "CpuMs": 752.3559999999998,
+            "AllocatedBytes": 7544.529262086514,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_range1000": {
+          "Optimized": {
+            "Us": 342.8071755027422,
+            "CpuUs": 343.92367458866505,
+            "CpuMs": 752.5049999999992,
+            "AllocatedBytes": 407410.1645338208,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 1000.1776,
+            "CpuUs": 1009.8093333333334,
+            "CpuMs": 757.4310000000005,
+            "AllocatedBytes": 376028.1493333333,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_count": {
+          "Optimized": {
+            "Us": 0.49629355136698955,
+            "CpuUs": 0.49640088300454505,
+            "CpuMs": 750.1419999999998,
+            "AllocatedBytes": 280.3495332198697,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 20.628263380824027,
+            "CpuUs": 20.737361791077596,
+            "CpuMs": 754.7489999999998,
+            "AllocatedBytes": 80.53204246658233,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_sum_scan": {
+          "Optimized": {
+            "Us": 2875.1459770114943,
+            "CpuUs": 3172.762452107274,
+            "CpuMs": 821.1839999999993,
+            "AllocatedBytes": 766.5882352941177,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 5357.262142857144,
+            "CpuUs": 5356.635714285715,
+            "CpuMs": 754.273000000001,
+            "AllocatedBytes": 100.51428571428572,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_group": {
+          "Optimized": {
+            "Us": 59.93632731340898,
+            "CpuUs": 61.67276650151823,
+            "CpuMs": 766.4049999999988,
+            "AllocatedBytes": 73136.62777688989,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 7400.288235294117,
+            "CpuUs": 7705.166666666663,
+            "CpuMs": 779.0619999999999,
+            "AllocatedBytes": 88052.1568627451,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_join": {
+          "Optimized": {
+            "Us": 6.162441457282303,
+            "CpuUs": 6.174280643517972,
+            "CpuMs": 751.4469999999983,
+            "AllocatedBytes": 1000.6703367130626,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 12.535280451932078,
+            "CpuUs": 12.53720417168071,
+            "CpuMs": 750.1260000000002,
+            "AllocatedBytes": 1704.243080625752,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_left_join": {
+          "Optimized": {
+            "Us": 5.85480207024145,
+            "CpuUs": 5.852350879384229,
+            "CpuMs": 752.4039999999986,
+            "AllocatedBytes": 840.6654900500332,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 7.017751141552512,
+            "CpuUs": 7.005558050752287,
+            "CpuMs": 748.6979999999985,
+            "AllocatedBytes": 904.3345310277715,
+            "WorkerReadBytes": 0
+          }
+        },
+        "json_index": {
+          "Optimized": {
+            "Us": 6.291281991058022,
+            "CpuUs": 6.323496598525335,
+            "CpuMs": 750.1479999999974,
+            "AllocatedBytes": 1384.3070134968502,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 31.08503398541114,
+            "CpuUs": 31.079658488063785,
+            "CpuMs": 750.2359999999971,
+            "AllocatedBytes": 2103.658819628647,
+            "WorkerReadBytes": 0
+          }
+        },
+        "json_scan": {
+          "Optimized": {
+            "Us": 13.63733616912981,
+            "CpuUs": 13.650469906018788,
+            "CpuMs": 750.9259999999995,
+            "AllocatedBytes": 2936.367053861955,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 684.0876025524158,
+            "CpuUs": 686.5597082953501,
+            "CpuMs": 754.2219999999979,
+            "AllocatedBytes": 83.09206927985414,
+            "WorkerReadBytes": 0
+          }
+        },
+        "json_binary_conversion": {
+          "Optimized": {
+            "Us": 3.028873102924666,
+            "CpuUs": 3.075802243778723,
+            "CpuMs": 768.6939999999995,
+            "AllocatedBytes": 784.1913915789644,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 4.07181612864697,
+            "CpuUs": 4.1505152176509545,
+            "CpuMs": 766.7150000000001,
+            "AllocatedBytes": 80.372129385322,
+            "WorkerReadBytes": 0
+          }
+        },
+        "parallel_get_8": {
+          "Optimized": {
+            "Us": 0.5974342500000001,
+            "CpuUs": 1.2183775000000059,
+            "CpuMs": 487.3510000000024,
+            "AllocatedBytes": 320.07534,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 1.77929275,
+            "CpuUs": 4.485380000000005,
+            "CpuMs": 1794.1520000000019,
+            "AllocatedBytes": 376.07262,
+            "WorkerReadBytes": 0
+          }
+        },
+        "reopen_and_first_range": {
+          "Optimized": {
+            "Us": 773.84,
+            "CpuUs": 794.7999999996682,
+            "CpuMs": 3.973999999998341,
+            "AllocatedBytes": 234150.4,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 506.55999999999995,
+            "CpuUs": 525.7999999994354,
+            "CpuMs": 2.628999999997177,
+            "AllocatedBytes": 9169.6,
+            "WorkerReadBytes": 0
+          }
+        },
+        "cache_limited_2MiB": {
+          "Optimized": {
+            "Us": 4.369049530991783,
+            "CpuUs": 4.373007006028455,
+            "CpuMs": 751.510000000002,
+            "AllocatedBytes": 4708.369015199125,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 6.092566266724072,
+            "CpuUs": 6.093776654941888,
+            "CpuMs": 750.0869999999995,
+            "AllocatedBytes": 376.2904281849863,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_single": {
+          "Optimized": {
+            "Us": 1221.091,
+            "CpuUs": 794.95,
+            "CpuMs": 79.495,
+            "AllocatedBytes": 4058.72,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 871.288,
+            "CpuUs": 218.99,
+            "CpuMs": 21.899,
+            "AllocatedBytes": 175.52,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_concurrent8": {
+          "Optimized": {
+            "Us": 280.408,
+            "CpuUs": 253.51,
+            "CpuMs": 25.351,
+            "AllocatedBytes": 3812.32,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 2102.165,
+            "CpuUs": 525.2099999999998,
+            "CpuMs": 52.52099999999999,
+            "AllocatedBytes": 300.0,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_batch1000": {
+          "Optimized": {
+            "Us": 20.77651,
+            "CpuUs": 19.3313,
+            "CpuMs": 193.313,
+            "AllocatedBytes": 2093.852,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 9.51598,
+            "CpuUs": 7.142099999999998,
+            "CpuMs": 71.42099999999999,
+            "AllocatedBytes": 0.3608,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_compact": {
+          "Optimized": {
+            "Us": 32642.899999999998,
+            "CpuUs": 27927.999999999996,
+            "CpuMs": 27.927999999999997,
+            "AllocatedBytes": 3664584.0,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 26478.2,
+            "CpuUs": 20576.000000000022,
+            "CpuMs": 20.576000000000022,
+            "AllocatedBytes": 3312.0,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_batch_unique": {
+          "Optimized": {
+            "Us": 22.4902,
+            "CpuUs": 20.760999999999967,
+            "CpuMs": 20.760999999999967,
+            "AllocatedBytes": 2283.312,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 8.437,
+            "CpuUs": 6.584000000000004,
+            "CpuMs": 6.584000000000003,
+            "AllocatedBytes": 3.424,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_batch_update": {
+          "Optimized": {
+            "Us": 19.808690000000002,
+            "CpuUs": 17.990099999999984,
+            "CpuMs": 179.90099999999984,
+            "AllocatedBytes": 2008.912,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 16.87434,
+            "CpuUs": 11.608000000000004,
+            "CpuMs": 116.08000000000004,
+            "AllocatedBytes": 0.74,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_batch_delete": {
+          "Optimized": {
+            "Us": 11.25442,
+            "CpuUs": 13.236000000000011,
+            "CpuMs": 132.36000000000013,
+            "AllocatedBytes": 1350.0616,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 7.403879999999999,
+            "CpuUs": 4.20619999999999,
+            "CpuMs": 42.0619999999999,
+            "AllocatedBytes": 0.724,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_update": {
+          "Optimized": {
+            "Us": 906.4870000000001,
+            "CpuUs": 431.7900000000009,
+            "CpuMs": 43.17900000000009,
+            "AllocatedBytes": 3554.72,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 1165.722,
+            "CpuUs": 1314.8699999999997,
+            "CpuMs": 131.48699999999997,
+            "AllocatedBytes": 122.56,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_delete": {
+          "Optimized": {
+            "Us": 959.35,
+            "CpuUs": 514.1400000000021,
+            "CpuMs": 51.414000000000215,
+            "AllocatedBytes": 2811.68,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 1084.716,
+            "CpuUs": 1056.7399999999998,
+            "CpuMs": 105.67399999999998,
+            "AllocatedBytes": 55.28,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_mixed": {
+          "Optimized": {
+            "Us": 1428.2830000000001,
+            "CpuUs": 1356.7700000000013,
+            "CpuMs": 135.67700000000013,
+            "AllocatedBytes": 10147.36,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 1175.545,
+            "CpuUs": 283.8200000000006,
+            "CpuMs": 28.382000000000062,
+            "AllocatedBytes": 1938.8,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_single": {
+          "Optimized": {
+            "Us": 70.30859999999998,
+            "CpuUs": 70.68700000000035,
+            "CpuMs": 70.68700000000035,
+            "AllocatedBytes": 3081.056,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 100.8565,
+            "CpuUs": 85.60500000000002,
+            "CpuMs": 85.60500000000002,
+            "AllocatedBytes": 20.008,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_concurrent8": {
+          "Optimized": {
+            "Us": 41.0356,
+            "CpuUs": 77.08899999999994,
+            "CpuMs": 77.08899999999994,
+            "AllocatedBytes": 3069.272,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 107.203,
+            "CpuUs": 74.21299999999997,
+            "CpuMs": 74.21299999999997,
+            "AllocatedBytes": 5.784,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_batch1000": {
+          "Optimized": {
+            "Us": 11.415479999999999,
+            "CpuUs": 17.937300000000008,
+            "CpuMs": 179.37300000000005,
+            "AllocatedBytes": 2092.9888,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 3.3314,
+            "CpuUs": 3.3125,
+            "CpuMs": 33.125,
+            "AllocatedBytes": 0.368,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_compact": {
+          "Optimized": {
+            "Us": 51321.6,
+            "CpuUs": 94894.99999999999,
+            "CpuMs": 94.89499999999998,
+            "AllocatedBytes": 3655072.0,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 11694.699999999999,
+            "CpuUs": 16163.999999999987,
+            "CpuMs": 16.163999999999987,
+            "AllocatedBytes": 3384.0,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_batch_unique": {
+          "Optimized": {
+            "Us": 8.0893,
+            "CpuUs": 10.383000000000266,
+            "CpuMs": 10.383000000000266,
+            "AllocatedBytes": 2278.904,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 2.4931,
+            "CpuUs": 3.880000000000109,
+            "CpuMs": 3.880000000000109,
+            "AllocatedBytes": 3.496,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_batch_update": {
+          "Optimized": {
+            "Us": 8.82238,
+            "CpuUs": 11.487400000000024,
+            "CpuMs": 114.87400000000025,
+            "AllocatedBytes": 2006.6696,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 8.29772,
+            "CpuUs": 10.384399999999994,
+            "CpuMs": 103.84399999999994,
+            "AllocatedBytes": 0.7472,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_batch_delete": {
+          "Optimized": {
+            "Us": 5.16881,
+            "CpuUs": 5.30640000000003,
+            "CpuMs": 53.064000000000306,
+            "AllocatedBytes": 1349.6536,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 5.14561,
+            "CpuUs": 2.4548,
+            "CpuMs": 24.548000000000002,
+            "AllocatedBytes": 0.7312,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_update": {
+          "Optimized": {
+            "Us": 18.8881,
+            "CpuUs": 19.228000000000065,
+            "CpuMs": 19.228000000000065,
+            "AllocatedBytes": 3044.056,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 83.7933,
+            "CpuUs": 88.0129999999999,
+            "CpuMs": 88.01299999999992,
+            "AllocatedBytes": 20.008,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_delete": {
+          "Optimized": {
+            "Us": 16.028,
+            "CpuUs": 28.682999999999993,
+            "CpuMs": 28.682999999999993,
+            "AllocatedBytes": 2322.064,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 70.4379,
+            "CpuUs": 65.88400000000001,
+            "CpuMs": 65.88400000000001,
+            "AllocatedBytes": 20.008,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_mixed": {
+          "Optimized": {
+            "Us": 48.5768,
+            "CpuUs": 49.62199999999984,
+            "CpuMs": 49.621999999999844,
+            "AllocatedBytes": 9648.52,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 135.2123,
+            "CpuUs": 107.88100000000009,
+            "CpuMs": 107.88100000000009,
+            "AllocatedBytes": 1899.976,
+            "WorkerReadBytes": 0
+          }
+        }
+      },
+      "After": {
+        "shared_read": {
+          "Optimized": {
+            "Us": 92.304575,
+            "CpuUs": 157.40075000000002,
+            "CpuMs": 629.6030000000001,
+            "AllocatedBytes": 24.31,
+            "WorkerReadBytes": -4
+          },
+          "SQLite": {
+            "Us": 36.852575,
+            "CpuUs": 18.457250000000002,
+            "CpuMs": 73.82900000000001,
+            "AllocatedBytes": 28.078,
+            "WorkerReadBytes": -4
+          }
+        },
+        "shared_update": {
+          "Optimized": {
+            "Us": 265.253525,
+            "CpuUs": 265.14549999999997,
+            "CpuMs": 1060.5819999999999,
+            "AllocatedBytes": 18.28,
+            "WorkerReadBytes": -4
+          },
+          "SQLite": {
+            "Us": 59.53235,
+            "CpuUs": 21.704,
+            "CpuMs": 86.816,
+            "AllocatedBytes": 18.614,
+            "WorkerReadBytes": -4
+          }
+        },
+        "kv_get": {
+          "Optimized": {
+            "Us": 1.246318960804157,
+            "CpuUs": 1.3007546034800497,
+            "CpuMs": 762.655,
+            "AllocatedBytes": 291.10914560402574,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 4.543421738129567,
+            "CpuUs": 4.614330542665714,
+            "CpuMs": 761.7060000000001,
+            "AllocatedBytes": 376.47658625828416,
+            "WorkerReadBytes": 0
+          }
+        },
+        "kv_miss": {
+          "Optimized": {
+            "Us": 0.11931600846219709,
+            "CpuUs": 0.12199153080305283,
+            "CpuMs": 765.3879999999999,
+            "AllocatedBytes": 0.33426378471732804,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 2.375350205705273,
+            "CpuUs": 2.4171157529060703,
+            "CpuMs": 764.1469999999997,
+            "AllocatedBytes": 0.42472517205448734,
+            "WorkerReadBytes": 0
+          }
+        },
+        "kv_range_20": {
+          "Optimized": {
+            "Us": 13.824561306495612,
+            "CpuUs": 15.077398068273984,
+            "CpuMs": 817.9790000000003,
+            "AllocatedBytes": 7024.372189043722,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 30.046390513580643,
+            "CpuUs": 30.721576796731025,
+            "CpuMs": 759.7639999999997,
+            "AllocatedBytes": 7520.44579761237,
+            "WorkerReadBytes": 0
+          }
+        },
+        "kv_range_1000": {
+          "Optimized": {
+            "Us": 229.8618755746246,
+            "CpuUs": 229.63622433343545,
+            "CpuMs": 759.5999999999995,
+            "AllocatedBytes": 335897.45142506895,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 1046.1662482566248,
+            "CpuUs": 1055.7336122733616,
+            "CpuMs": 755.1149999999998,
+            "AllocatedBytes": 376004.340306834,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_point": {
+          "Optimized": {
+            "Us": 0.886532512680365,
+            "CpuUs": 0.9893934519121806,
+            "CpuMs": 836.1229999999996,
+            "AllocatedBytes": 605.2711830948956,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 3.5370993072029204,
+            "CpuUs": 3.546083503506432,
+            "CpuMs": 751.9080000000004,
+            "AllocatedBytes": 400.3232612868387,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_projection": {
+          "Optimized": {
+            "Us": 0.6480757781439643,
+            "CpuUs": 0.6522004747367305,
+            "CpuMs": 751.0389999999998,
+            "AllocatedBytes": 288.45643162849217,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 3.029764285281464,
+            "CpuUs": 3.0598693951469818,
+            "CpuMs": 763.6009999999997,
+            "AllocatedBytes": 80.27689510998,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_range20": {
+          "Optimized": {
+            "Us": 5.186367471129244,
+            "CpuUs": 5.347769863771526,
+            "CpuMs": 769.1229999999996,
+            "AllocatedBytes": 8544.479856164857,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 20.52051218911598,
+            "CpuUs": 20.57987906645875,
+            "CpuMs": 752.3559999999998,
+            "AllocatedBytes": 7544.529262086514,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_range1000": {
+          "Optimized": {
+            "Us": 258.55580834195104,
+            "CpuUs": 258.59703550499785,
+            "CpuMs": 751.9499999999989,
+            "AllocatedBytes": 382929.6325405033,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 1000.1776,
+            "CpuUs": 1009.8093333333334,
+            "CpuMs": 757.4310000000005,
+            "AllocatedBytes": 376028.1493333333,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_count": {
+          "Optimized": {
+            "Us": 0.5003499780846739,
+            "CpuUs": 0.5003258945756065,
+            "CpuMs": 750.0529999999999,
+            "AllocatedBytes": 280.3523904383799,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 20.628263380824027,
+            "CpuUs": 20.737361791077596,
+            "CpuMs": 754.7489999999998,
+            "AllocatedBytes": 80.53204246658233,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_sum_scan": {
+          "Optimized": {
+            "Us": 2465.2337704918036,
+            "CpuUs": 2697.285245901641,
+            "CpuMs": 822.6720000000005,
+            "AllocatedBytes": 764.4852459016394,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 5357.262142857144,
+            "CpuUs": 5356.635714285715,
+            "CpuMs": 754.273000000001,
+            "AllocatedBytes": 100.51428571428572,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_group": {
+          "Optimized": {
+            "Us": 59.6833770987507,
+            "CpuUs": 61.547943025383944,
+            "CpuMs": 766.6220000000012,
+            "AllocatedBytes": 73136.62512930692,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 7400.288235294117,
+            "CpuUs": 7705.166666666663,
+            "CpuMs": 779.0619999999999,
+            "AllocatedBytes": 88052.1568627451,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_join": {
+          "Optimized": {
+            "Us": 5.431049639740759,
+            "CpuUs": 5.432202469314614,
+            "CpuMs": 750.1599999999999,
+            "AllocatedBytes": 998.3556950514799,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 12.535280451932078,
+            "CpuUs": 12.53720417168071,
+            "CpuMs": 750.1260000000002,
+            "AllocatedBytes": 1704.243080625752,
+            "WorkerReadBytes": 0
+          }
+        },
+        "sql_left_join": {
+          "Optimized": {
+            "Us": 4.889086985997758,
+            "CpuUs": 4.893490391384843,
+            "CpuMs": 750.6810000000005,
+            "AllocatedBytes": 838.2581940496989,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 7.017751141552512,
+            "CpuUs": 7.005558050752287,
+            "CpuMs": 748.6979999999985,
+            "AllocatedBytes": 904.3345310277715,
+            "WorkerReadBytes": 0
+          }
+        },
+        "json_index": {
+          "Optimized": {
+            "Us": 5.155803338191218,
+            "CpuUs": 5.154927544202165,
+            "CpuMs": 750.0989999999983,
+            "AllocatedBytes": 1384.4770258751066,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 31.08503398541114,
+            "CpuUs": 31.079658488063785,
+            "CpuMs": 750.2359999999971,
+            "AllocatedBytes": 2103.658819628647,
+            "WorkerReadBytes": 0
+          }
+        },
+        "json_scan": {
+          "Optimized": {
+            "Us": 13.441835582558202,
+            "CpuUs": 13.450042116959722,
+            "CpuMs": 750.4720000000016,
+            "AllocatedBytes": 2520.361883255372,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 684.0876025524158,
+            "CpuUs": 686.5597082953501,
+            "CpuMs": 754.2219999999979,
+            "AllocatedBytes": 83.09206927985414,
+            "WorkerReadBytes": 0
+          }
+        },
+        "json_binary_conversion": {
+          "Optimized": {
+            "Us": 2.598754331254331,
+            "CpuUs": 2.7761138252260915,
+            "CpuMs": 782.9320000000007,
+            "AllocatedBytes": 784.3791822591822,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 4.07181612864697,
+            "CpuUs": 4.1505152176509545,
+            "CpuMs": 766.7150000000001,
+            "AllocatedBytes": 80.372129385322,
+            "WorkerReadBytes": 0
+          }
+        },
+        "parallel_get_8": {
+          "Optimized": {
+            "Us": 0.6507292499999999,
+            "CpuUs": 1.2245149999999922,
+            "CpuMs": 489.80599999999686,
+            "AllocatedBytes": 320.07742,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 1.77929275,
+            "CpuUs": 4.485380000000005,
+            "CpuMs": 1794.1520000000019,
+            "AllocatedBytes": 376.07262,
+            "WorkerReadBytes": 0
+          }
+        },
+        "reopen_and_first_range": {
+          "Optimized": {
+            "Us": 647.32,
+            "CpuUs": 670.0000000004366,
+            "CpuMs": 3.350000000002183,
+            "AllocatedBytes": 233966.4,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 506.55999999999995,
+            "CpuUs": 525.7999999994354,
+            "CpuMs": 2.628999999997177,
+            "AllocatedBytes": 9169.6,
+            "WorkerReadBytes": 0
+          }
+        },
+        "cache_limited_2MiB": {
+          "Optimized": {
+            "Us": 4.391000210767898,
+            "CpuUs": 4.391893632467636,
+            "CpuMs": 750.4389999999985,
+            "AllocatedBytes": 4708.369015199125,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 6.092566266724072,
+            "CpuUs": 6.093776654941888,
+            "CpuMs": 750.0869999999995,
+            "AllocatedBytes": 376.2904281849863,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_single": {
+          "Optimized": {
+            "Us": 1011.3679999999999,
+            "CpuUs": 626.13,
+            "CpuMs": 62.613,
+            "AllocatedBytes": 3879.36,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 871.288,
+            "CpuUs": 218.99,
+            "CpuMs": 21.899,
+            "AllocatedBytes": 175.52,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_concurrent8": {
+          "Optimized": {
+            "Us": 254.03799999999998,
+            "CpuUs": 222.47000000000074,
+            "CpuMs": 22.24700000000007,
+            "AllocatedBytes": 3765.28,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 2102.165,
+            "CpuUs": 525.2099999999998,
+            "CpuMs": 52.52099999999999,
+            "AllocatedBytes": 300.0,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_batch1000": {
+          "Optimized": {
+            "Us": 17.69624,
+            "CpuUs": 15.849599999999997,
+            "CpuMs": 158.49599999999998,
+            "AllocatedBytes": 2093.808,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 9.51598,
+            "CpuUs": 7.142099999999998,
+            "CpuMs": 71.42099999999999,
+            "AllocatedBytes": 0.3608,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_compact": {
+          "Optimized": {
+            "Us": 30531.4,
+            "CpuUs": 24470.00000000003,
+            "CpuMs": 24.470000000000027,
+            "AllocatedBytes": 3654344.0,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 26478.2,
+            "CpuUs": 20576.000000000022,
+            "CpuMs": 20.576000000000022,
+            "AllocatedBytes": 3312.0,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_batch_unique": {
+          "Optimized": {
+            "Us": 21.6492,
+            "CpuUs": 19.918999999999983,
+            "CpuMs": 19.918999999999983,
+            "AllocatedBytes": 2283.384,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 8.437,
+            "CpuUs": 6.584000000000004,
+            "CpuMs": 6.584000000000003,
+            "AllocatedBytes": 3.424,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_batch_update": {
+          "Optimized": {
+            "Us": 19.95957,
+            "CpuUs": 18.211199999999984,
+            "CpuMs": 182.11199999999985,
+            "AllocatedBytes": 1987.4984,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 16.87434,
+            "CpuUs": 11.608000000000004,
+            "CpuMs": 116.08000000000004,
+            "AllocatedBytes": 0.74,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_batch_delete": {
+          "Optimized": {
+            "Us": 10.20958,
+            "CpuUs": 18.74580000000001,
+            "CpuMs": 187.45800000000008,
+            "AllocatedBytes": 1323.7,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 7.403879999999999,
+            "CpuUs": 4.20619999999999,
+            "CpuMs": 42.0619999999999,
+            "AllocatedBytes": 0.724,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_update": {
+          "Optimized": {
+            "Us": 1070.35,
+            "CpuUs": 318.2600000000002,
+            "CpuMs": 31.826000000000022,
+            "AllocatedBytes": 3506.32,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 1165.722,
+            "CpuUs": 1314.8699999999997,
+            "CpuMs": 131.48699999999997,
+            "AllocatedBytes": 122.56,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_delete": {
+          "Optimized": {
+            "Us": 912.815,
+            "CpuUs": 597.0600000000013,
+            "CpuMs": 59.70600000000013,
+            "AllocatedBytes": 2764.32,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 1084.716,
+            "CpuUs": 1056.7399999999998,
+            "CpuMs": 105.67399999999998,
+            "AllocatedBytes": 55.28,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Full_mixed": {
+          "Optimized": {
+            "Us": 1356.961,
+            "CpuUs": 1197.3599999999988,
+            "CpuMs": 119.73599999999988,
+            "AllocatedBytes": 9841.68,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 1175.545,
+            "CpuUs": 283.8200000000006,
+            "CpuMs": 28.382000000000062,
+            "AllocatedBytes": 1938.8,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_single": {
+          "Optimized": {
+            "Us": 41.0176,
+            "CpuUs": 41.24400000000015,
+            "CpuMs": 41.24400000000014,
+            "AllocatedBytes": 3081.12,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 100.8565,
+            "CpuUs": 85.60500000000002,
+            "CpuMs": 85.60500000000002,
+            "AllocatedBytes": 20.008,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_concurrent8": {
+          "Optimized": {
+            "Us": 36.868,
+            "CpuUs": 81.00200000000041,
+            "CpuMs": 81.00200000000041,
+            "AllocatedBytes": 3069.952,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 107.203,
+            "CpuUs": 74.21299999999997,
+            "CpuMs": 74.21299999999997,
+            "AllocatedBytes": 5.784,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_batch1000": {
+          "Optimized": {
+            "Us": 12.141070000000001,
+            "CpuUs": 14.382000000000017,
+            "CpuMs": 143.82000000000016,
+            "AllocatedBytes": 2092.996,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 3.3314,
+            "CpuUs": 3.3125,
+            "CpuMs": 33.125,
+            "AllocatedBytes": 0.368,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_compact": {
+          "Optimized": {
+            "Us": 57012.700000000004,
+            "CpuUs": 94543.00000000012,
+            "CpuMs": 94.54300000000012,
+            "AllocatedBytes": 3655072.0,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 11694.699999999999,
+            "CpuUs": 16163.999999999987,
+            "CpuMs": 16.163999999999987,
+            "AllocatedBytes": 3384.0,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_batch_unique": {
+          "Optimized": {
+            "Us": 11.6891,
+            "CpuUs": 11.894999999999982,
+            "CpuMs": 11.894999999999982,
+            "AllocatedBytes": 2278.976,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 2.4931,
+            "CpuUs": 3.880000000000109,
+            "CpuMs": 3.880000000000109,
+            "AllocatedBytes": 3.496,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_batch_update": {
+          "Optimized": {
+            "Us": 11.528830000000001,
+            "CpuUs": 22.099400000000013,
+            "CpuMs": 220.99400000000014,
+            "AllocatedBytes": 1980.38,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 8.29772,
+            "CpuUs": 10.384399999999994,
+            "CpuMs": 103.84399999999994,
+            "AllocatedBytes": 0.7472,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_batch_delete": {
+          "Optimized": {
+            "Us": 5.15596,
+            "CpuUs": 5.2712999999999735,
+            "CpuMs": 52.71299999999974,
+            "AllocatedBytes": 1323.2728,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 5.14561,
+            "CpuUs": 2.4548,
+            "CpuMs": 24.548000000000002,
+            "AllocatedBytes": 0.7312,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_update": {
+          "Optimized": {
+            "Us": 16.6548,
+            "CpuUs": 16.916999999999916,
+            "CpuMs": 16.916999999999916,
+            "AllocatedBytes": 2996.192,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 83.7933,
+            "CpuUs": 88.0129999999999,
+            "CpuMs": 88.01299999999992,
+            "AllocatedBytes": 20.008,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_delete": {
+          "Optimized": {
+            "Us": 15.3574,
+            "CpuUs": 15.617999999999938,
+            "CpuMs": 15.617999999999938,
+            "AllocatedBytes": 2274.128,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 70.4379,
+            "CpuUs": 65.88400000000001,
+            "CpuMs": 65.88400000000001,
+            "AllocatedBytes": 20.008,
+            "WorkerReadBytes": 0
+          }
+        },
+        "Buffered_mixed": {
+          "Optimized": {
+            "Us": 37.0911,
+            "CpuUs": 38.04999999999972,
+            "CpuMs": 38.04999999999973,
+            "AllocatedBytes": 9360.808,
+            "WorkerReadBytes": 0
+          },
+          "SQLite": {
+            "Us": 135.2123,
+            "CpuUs": 107.88100000000009,
+            "CpuMs": 107.88100000000009,
+            "AllocatedBytes": 1899.976,
             "WorkerReadBytes": 0
           }
         }

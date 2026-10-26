@@ -1,16 +1,16 @@
 ﻿[
     {
         "Engine":  "Optimized",
-        "StartUtc":  "2026-10-24T15:30:30.6382653Z",
-        "EndUtc":  "2026-10-24T15:30:42.1255465Z",
+        "StartUtc":  "2026-10-26T18:35:22.5713299Z",
+        "EndUtc":  "2026-10-26T18:35:38.8372762Z",
         "CounterFile":  "Optimized-counters.jsonl",
         "Scope":  "Host physical disk counters, not attributable to F: or to one process",
         "DriveMapping":  "Get-Partition -DriveLetter F: access denied"
     },
     {
         "Engine":  "SQLite",
-        "StartUtc":  "2026-10-24T15:30:49.0535015Z",
-        "EndUtc":  "2026-10-24T15:31:09.8714128Z",
+        "StartUtc":  "2026-10-26T18:35:45.5304545Z",
+        "EndUtc":  "2026-10-26T18:36:09.2735739Z",
         "CounterFile":  "SQLite-counters.jsonl",
         "Scope":  "Host physical disk counters, not attributable to F: or to one process",
         "DriveMapping":  "Get-Partition -DriveLetter F: access denied"

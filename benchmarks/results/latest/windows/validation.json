@@ -2,15 +2,24 @@
   "Passed": true,
   "TestGroups": 77,
   "DifferentialQueries": 524,
-  "Groups": {
-    "PureDb.Tests": "11 test groups passed",
-    "PureDb.SqlTests": "17 SQL/shared test groups passed",
-    "PureDb.AdoNetTests": "11 ADO.NET/cache test groups passed",
-    "PureDb.StorageTests": "12 storage/exchange groups passed",
-    "PureDb.CompatibilityTests": "10 managed SQLite compatibility test groups passed",
-    "PureDb.FeatureTests": "7 feature test groups passed",
-    "PureDb.SortTests": "160",
-    "PureDb.SqlCompatibilityTests": "230 extended SQL differential queries",
-    "PureDb.AotTests": "7 AOT feature groups; dynamic code=True"
-  }
+  "AdditionalSQLCases": 175,
+  "FileProfiles": 64,
+  "CoreSHA256": "30C7DB3221A39E08DF491CB88D85EB04E6ABD226990A2C89C7E6A916E62CC510",
+  "Runtime": "10.0.13",
+  "Markers": [
+    "11 test groups passed",
+    "17 SQL/shared test groups passed",
+    "11 ADO.NET/cache test groups passed",
+    "12 storage/exchange groups passed",
+    "10 managed SQLite compatibility test groups passed",
+    "7 feature test groups passed",
+    "PASS sort semantics:",
+    "PASS sort plans:",
+    "160",
+    "230 extended SQL differential queries",
+    "7 AOT feature groups; dynamic code=True",
+    "PASS 134 differential",
+    "SQL PARITY 175/175",
+    "PASS 64 SQLite interoperability cases:"
+  ]
 }

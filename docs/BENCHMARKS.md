@@ -6,6 +6,8 @@
 
 Windows x64 12 逻辑核、Linux ARM64 8 逻辑核。Linux 测量绑定 CPU 4–7 同规格大核，子进程继承亲和性；报告 CPU 占用仍按整机 8 核折算。运行时和程序集哈希在每平台环境及原始数据中记录。
 
+本轮 ARM 主机文件系统接近满，`df` 普通可用空间为 0，但 root 仍有保留块可写；测试没有因空间不足失败。经用户批准清理了两处旧测试数据库副本，业务数据、SDK 和原始数值保留。写入及设备忙碌率仅代表该主机的实际状态，不能外推到空闲磁盘；CI 只验证功能，不替代实机跑分。
+
 主套件的串行查询预热至少 500 ms、至少 64 次，计时至少 750 ms；按操作耗时计算三轮中位数。固定工作量的写入、压缩、并发和重开使用各自单位。另有双方访问全部 10 万个主键两遍后测量 50 万次随机 SQL 查询的补充测试。基准进程在同一主机串行运行，轮换引擎次序。操作系统文件缓存未清空。
 
 CPU 是进程及工作子进程 CPU 时间总和。Windows 任一引擎区间 CPU 时间不足 100 ms、Linux 不足 5 ms 时不排名；0 不能解读为零成本。隔离内存进程只打开一个 SQL 库，主键 10 万次，范围/JSON 各 1000 次，GC 后取 RSS；该结果不是峰值，不能代表所有长期负载。
@@ -41,4 +43,12 @@ python scripts/verify-public.py
 
 在对应操作系统与架构上运行 `python scripts/publish-deployment.py artifacts/deployment --rid win-x64 --sqlite <SQLite动态库路径>`（Linux ARM64 使用 linux-arm64），再运行 `python scripts/run-deployment.py --help` 查看测量参数。脚本发布独立 PureDb / SQLite 宿主的框架依赖、自包含 JIT 和 Native AOT，文件清单区分运行文件与符号 / 文档，SQLite 行包含原生库。
 
-[AOT 完整报告](AOT-PERFORMANCE.md) 使用相同 .NET 10.0.13、10 万行 BLOB / JSON 数据，三轮 15 项热查询及写入、独立 RSS 和每组合 21 次新进程启动；与原有 41 项全面报告的工作负载不同，不可混算名次。Linux 全面报告运行时为 10.0.1，AOT / 自包含 JIT 配对为 10.0.13，报告分别列出。首轮缓存构建、操作系统热页缓存与 Full / Buffered 的边界也分别说明。
+[AOT 完整报告](AOT-PERFORMANCE.md) 使用相同 .NET 10.0.13、10 万行 BLOB / JSON 数据，三轮 15 项热查询及写入、独立 RSS 和每组合 21 次新进程启动；与原有 41 项全面报告的工作负载不同，不可混算名次。本轮 Windows 与 Linux 的全面测试及 AOT / 自包含 JIT 均为 10.0.13。首轮缓存构建、操作系统热页缓存与 Full / Buffered 的边界也分别说明。
+
+## preview.3 的冻结配对与兼容性复现
+
+`python scripts/run-release-pair.py <新输出目录> <数据集> --before <preview.2的PureDb.dll>` 在同一测试宿主下只替换内核，三轮轮换旧版、新版和 SQLite。保留全部 41 项、隔离内存、ADO.NET 和稳态样本；测量后仅清理本次输出目录内自动生成的数据文件，数值与日志保留。已有数据不会被该脚本清理。正式环境、构建 SHA256 和顺序写入 environment.json。
+
+本轮“至少 10%”以固定 19 项读取/重开三轮中位数比值的几何平均验收：归一化耗时下降 = 1 − 1 / 几何平均吞吐倍率。全部 41 项及退化项仍公开，这个阈值不等于所有 CRUD 改善 10%。
+
+`python scripts/run-file-pair.py <新输出目录> --before <旧核心与兼容DLL所在目录>` 单独比较 SQLite 文件模式的 DELETE/FULL 路径，不混入原版成绩。`PureDb.SqliteParityTests` 分别生成 SQL 固定语料和文件 profile 的逐项 JSON；分母、语料哈希、通过率与未覆盖能力见 [兼容性报告](COMPATIBILITY-REPORT.md)。`scripts/make-release-article.py` 需要仅用于文档生成的 matplotlib，生成中文 PNG/SVG 和博客园草稿，不是生产依赖。

@@ -1,14 +1,14 @@
 ﻿{
   "Engine": "Optimized",
   "Operations": 500000,
-  "Milliseconds": 1069.553,
-  "CpuMilliseconds": 1069.6709999999998,
+  "Milliseconds": 1069.3775,
+  "CpuMilliseconds": 1069.4729999999995,
   "AllocatedBytes": 315671920,
-  "WorkingSetBytes": 97947648,
-  "PrivateBytes": 119566336,
-  "ManagedLiveBytes": 35524232,
+  "WorkingSetBytes": 97828864,
+  "PrivateBytes": 119009280,
+  "ManagedLiveBytes": 35539976,
   "CPUs": 4,
-  "Runtime": "10.0.1",
+  "Runtime": "10.0.13",
   "SQLite": "3.54.1",
-  "LibrarySHA256": "F57A192E23B4467BAEAF12D40B4A5849C3E09E80A8D408120B55E8F517DCC41B"
+  "LibrarySHA256": "A240817D6F98A3264CB24AD474A870BC1AACA56A9466411CAB12387EB7EB04F5"
 }

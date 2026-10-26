@@ -47,18 +47,18 @@ def generate():
             json.dumps(data, indent=2, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
     assert results['windows_before']['CoreSHA256'] == results['linux_before']['CoreSHA256']
     assert results['windows_after']['CoreSHA256'] == results['linux_after']['CoreSHA256']
-    summary = {'BeforeCommit': '21571bcf875303db7002f82f36a0eaa96f712940', 'Platforms': {}}
+    summary = {'BeforeCommit': '09cdfffbfb4ab6f10ba373ac6e46745049397cc2', 'Platforms': {}}
     lines = ['# 小分页排序：优化前后与 SQLite 对比', '',
-             '日期：2026-10-24。PureDb `1.0.0-preview.2` 本轮发布构建。本次测排序分页及一个索引对照项，同一构建的 [完整对比](PERFORMANCE.md) 另外覆盖查询、写入、CPU 和 RSS。', '',
+             '日期：2026-10-27。PureDb `1.0.0-preview.3` 本轮发布构建。本次测排序分页及一个索引对照项，同一构建的 [完整对比](PERFORMANCE.md) 另外覆盖查询、写入、CPU 和 RSS。', '',
              '## 测量方法', '',
              '- 相同的 100,000 行数据：整数主键，未建索引的整数 n（每 13 行一个 NULL）、文本和 BLOB。n 使用固定排列 `(id * 7919) % 100000`。',
-             '- 优化前基于提交 `21571bc`，已含紧凑堆及整数比较；本轮将分页结果复制移出绑定闭包，并对候选数组直接一次分配结果。两平台分别运行完全相同的前后 DLL，校验值见下文。',
+             '- 优化前基于提交 `09cdfff`，基线为已发布 preview.2，包含小分页堆排序；本轮主要调整计划缓存、标量装箱和投影解码。两平台分别运行完全相同的前后 DLL，校验值见下文。',
              '- Release 构建，缓存预热后，每项每引擎预热 500 ms，测量至少 750 ms，三轮交替 PureDb / SQLite 顺序，取归一化指标中位数。每台主机的前后测量串行运行。',
              '- PureDb 复用 SQL 解析缓存，SQLite 复用 prepared statement；双方均生成结果行数组，并核对全部结果。数据创建、JIT 和首次表缓存加载不在热查询时间内。',
              '- 测量连接在语义检查后保留相同的用户函数注册状态；测量 SQL 不调用这些函数。',
              '- CPU 是完成一次查询的进程 CPU 时间，不是占用百分比。分配是查询线程累计申请的托管字节，不是 RSS 或峰值内存；SQLite 内核的原生分配不在该指标内，因此不拿双方托管分配判断总内存胜负。',
              '- 此专项是热缓存只读查询，不测落盘、重开、大库首次读取或新增 SQL 功能。Linux ARM64 使用同一组 4 个大核。', '']
-    readme = ['10 万行热缓存排序，三轮中位数；数值越低越好。此表对应主分支 `preview.2` 源码，CPU 是每次查询消耗的时间。', '',
+    readme = ['10 万行热缓存排序，三轮中位数；数值越低越好。此表对应主分支 `preview.3` 源码，CPU 是每次查询消耗的时间。', '',
               '| 平台 | 场景 | PureDb 耗时 µs | SQLite 耗时 µs | 耗时谁更低 | PureDb CPU µs | SQLite CPU µs | CPU 谁更低 |',
               '| --- | --- | ---: | ---: | --- | ---: | ---: | --- |']
     for key, platform in [('windows', 'Windows x64'), ('linux', 'Linux ARM64')]:

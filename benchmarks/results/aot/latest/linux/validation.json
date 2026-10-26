@@ -1,17 +1,7 @@
 {
-  "CompilerWarnings": 0,
   "FeatureGroups": 7,
   "DifferentialQueries": 230,
-  "FeatureTranscript": "PASS CRUD, CHECK, UPSERT, indexes and C# function\nPASS JSON/JSONB/JSON5 constructors, edits, paths and table functions\nPASS CTE, windows, subqueries, UNION, views, triggers, foreign keys and savepoints\nPASS source-generated catalog reopen and persisted constraints\nPASS ADO.NET typed reader and GetSchemaTable\nPASS Shared large tail and compaction generation\nPASS managed SQLite file update and import/export\nPASS 7 AOT feature groups; dynamic code=False; /root/puredb-validation-20261024-v8/aot/published/artifacts/aot-tests/8ff248dd397645518f70fbcb13343957\n",
-  "DifferentialTranscript": "PASS 230 extended SQL differential queries; SQLite 3.54.1: /root/puredb-validation-20261024-v8/aot/published/artifacts/sql-compatibility-tests/6b8513a4795d483f8b237f8fedd95dee\n",
-  "CompilerLogsChecked": [
-    "PureDb-aot.build.log",
-    "PureDb-framework.build.log",
-    "PureDb-jit.build.log",
-    "PureDb.AotTests.build.log",
-    "PureDb.SqlCompatibilityTests.build.log",
-    "SQLite-aot.build.log",
-    "SQLite-framework.build.log",
-    "SQLite-jit.build.log"
-  ]
+  "CompilerWarnings": 0,
+  "FeatureTranscript": "PASS CRUD, CHECK, UPSERT, indexes and C# function\nPASS JSON/JSONB/JSON5 constructors, edits, paths and table functions\nPASS CTE, windows, subqueries, UNION, views, triggers, foreign keys and savepoints\nPASS source-generated catalog reopen and persisted constraints\nPASS ADO.NET typed reader and GetSchemaTable\nPASS Shared large tail and compaction generation\nPASS managed SQLite file update and import/export\nPASS 7 AOT feature groups; dynamic code=False; /root/puredb-validation-20261027-preview3/artifacts/preview3/linux-published/artifacts/aot-tests/2736988195e9414ab9c55b679b60287e\n",
+  "DifferentialTranscript": "PASS 230 extended SQL differential queries; SQLite 3.54.1: /root/puredb-validation-20261027-preview3/artifacts/preview3/linux-published/artifacts/sql-compatibility-tests/75a2ac80ffdd484d812a15d195f30fb5\n"
 }

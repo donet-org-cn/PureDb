@@ -85,7 +85,11 @@ public sealed partial class Database
             p += 16;
         }
 
-        var entries = _primary.OrderBy(p => p.Key).Select(p => new DiskIndex.Item(p.Key, p.Value.Key, p.Value.Offset, p.Value.Length, p.Value.Crc)).ToArray();
+        // 基索引已经有序，只排序尚未写入检查点的增量，再归并，避免反复排序整个大库。
+        var entries = new DiskIndex.Item[_primary.Count];
+        int at = 0;
+        foreach (var pair in _primary.Range(long.MinValue, long.MaxValue))
+            entries[at++] = new(pair.Key, pair.Value.Key, pair.Value.Offset, pair.Value.Length, pair.Value.Crc);
         DiskIndex.Write(_path + ".pidx", _generation, _scanOffset, File.GetLastWriteTimeUtc(_path).Ticks, metadata, entries);
         _checkpointOffset = _scanOffset;
     }
@@ -179,16 +183,29 @@ public sealed partial class Database
         }
 
         private readonly ConcurrentDictionary<long, HotPage> _hotPages = new();
+        /// <summary>有界低位页号目录，密集 KV 主键避免并发字典散列；稀疏及 SQL 编码键保留字典路径。</summary>
+        private HotPage?[]? _denseHotPages;
         private readonly object _hotGate = new();
         private int _hotPageCount;
         internal int MaxHotEntries = 524288;
+        /// <summary>从有界密集目录或稀疏目录定位已发布的不可变热点页。</summary>
+        /// <param name="key">记录 ID 右移八位后的页号。</param>
+        /// <returns>已发布的热点页；未缓存时为空。</returns>
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        private HotPage? FindHot(long key)
+        {
+            var dense = Volatile.Read(ref _denseHotPages);
+            if (dense is not null && (ulong)key < (ulong)dense.Length)
+                return Volatile.Read(ref dense[(int)key]);
+            return _hotPages.TryGetValue(key, out var page) ? page : null;
+        }
         /// <summary>将不可变记录已通过校验的状态发布到热点页，避免另外创建校验字典节点。</summary>
         /// <param name="id">原生记录 ID 或受支持的整数主键。</param>
         /// <param name="entry">已定位记录的日志偏移、长度、索引键及 CRC 信息。</param>
         /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
         public bool RememberVerified(long id, Entry entry)
         {
-            if (_hotPages.TryGetValue(id >> 8, out var page))
+            if (FindHot(id >> 8) is { } page)
             {
                 int slot = (int)(id & 255);
                 if (Volatile.Read(ref page.Flags[slot]) != 0 && page.Entries[slot] == entry)
@@ -227,7 +244,8 @@ public sealed partial class Database
                 return change.HasValue;
             }
 
-            if (_hotPages.TryGetValue(id >> 8, out var hot))
+            var hot = FindHot(id >> 8);
+            if (hot is not null)
             {
                 int slot = (int)(id & 255), flag = Volatile.Read(ref hot.Flags[slot]);
                 if (flag != 0)
@@ -275,12 +293,27 @@ public sealed partial class Database
                     return;
                 lock (_hotGate)
                 {
-                    if (!_hotPages.TryGetValue(id >> 8, out page))
+                    long key = id >> 8;
+                    page = FindHot(key);
+                    if (page is null)
                     {
                         if (_hotPageCount >= MaxHotEntries / 256)
                             return;
                         page = new();
-                        _hotPages[id >> 8] = page;
+                        // 小库只分配与已有记录数量相称的目录，稀疏高位键不扩张数组。
+                        int denseLength = (int)Math.Min(Math.Min(2048, MaxHotEntries / 256), ((_base?.Count ?? 1) + 255L) / 256);
+                        if ((ulong)key < (ulong)denseLength)
+                        {
+                            var dense = _denseHotPages;
+                            if (dense is null)
+                            {
+                                dense = new HotPage?[denseLength];
+                                Volatile.Write(ref _denseHotPages, dense);
+                            }
+                            Volatile.Write(ref dense[(int)key], page);
+                        }
+                        else
+                            _hotPages[key] = page;
                         _hotPageCount++;
                     }
                 }
@@ -382,6 +415,7 @@ public sealed partial class Database
             _base = null;
             _changes.Clear();
             _hotPages.Clear();
+            Volatile.Write(ref _denseHotPages, null);
             _hotPageCount = 0;
             _count = 0;
         }

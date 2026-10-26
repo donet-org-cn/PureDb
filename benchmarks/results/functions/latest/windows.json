@@ -2,73 +2,73 @@
   "Runtime": "10.0.13",
   "OS": "Microsoft Windows 10.0.26300",
   "Architecture": "X64",
-  "CoreSHA256": "B1C917A7C5E8E1C8FFE1A65E0190723261FE1C58A117B94F566975A5005E064B",
+  "CoreSHA256": "30C7DB3221A39E08DF491CB88D85EB04E6ABD226990A2C89C7E6A916E62CC510",
   "Samples": [
     {
       "Function": "typed_reject",
       "Round": 1,
       "RowsPerQuery": 20000,
-      "Repetitions": 3103,
+      "Repetitions": 1755,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.0866,
-      "CpuMilliseconds": 812.5,
-      "AllocatedBytes": 8926400
+      "ElapsedMilliseconds": 750.2259,
+      "CpuMilliseconds": 921.875,
+      "AllocatedBytes": 5230600
     },
     {
       "Function": "array_reject",
       "Round": 1,
       "RowsPerQuery": 20000,
-      "Repetitions": 1492,
+      "Repetitions": 1274,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.3503,
+      "ElapsedMilliseconds": 750.0827,
       "CpuMilliseconds": 750,
-      "AllocatedBytes": 2391413448
+      "AllocatedBytes": 2042150696
     },
     {
       "Function": "array_reject",
       "Round": 2,
       "RowsPerQuery": 20000,
-      "Repetitions": 1519,
+      "Repetitions": 1392,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.0092,
-      "CpuMilliseconds": 750,
-      "AllocatedBytes": 2434689696
+      "ElapsedMilliseconds": 750.0703,
+      "CpuMilliseconds": 765.625,
+      "AllocatedBytes": 2231298088
     },
     {
       "Function": "typed_reject",
       "Round": 2,
       "RowsPerQuery": 20000,
-      "Repetitions": 3147,
+      "Repetitions": 2746,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.1085,
-      "CpuMilliseconds": 750,
-      "AllocatedBytes": 8987872
-    },
-    {
-      "Function": "typed_reject",
-      "Round": 3,
-      "RowsPerQuery": 20000,
-      "Repetitions": 2913,
-      "WarmupMilliseconds": 500,
-      "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.0981,
-      "CpuMilliseconds": 750,
-      "AllocatedBytes": 8319568
-    },
-    {
-      "Function": "array_reject",
-      "Round": 3,
-      "RowsPerQuery": 20000,
-      "Repetitions": 1378,
-      "WarmupMilliseconds": 500,
-      "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.0033,
+      "ElapsedMilliseconds": 750.091,
       "CpuMilliseconds": 734.375,
-      "AllocatedBytes": 2208691512
+      "AllocatedBytes": 8172136
+    },
+    {
+      "Function": "typed_reject",
+      "Round": 3,
+      "RowsPerQuery": 20000,
+      "Repetitions": 2898,
+      "WarmupMilliseconds": 500,
+      "MeasurementMilliseconds": 750,
+      "ElapsedMilliseconds": 750.186,
+      "CpuMilliseconds": 750,
+      "AllocatedBytes": 8624488
+    },
+    {
+      "Function": "array_reject",
+      "Round": 3,
+      "RowsPerQuery": 20000,
+      "Repetitions": 1358,
+      "WarmupMilliseconds": 500,
+      "MeasurementMilliseconds": 750,
+      "ElapsedMilliseconds": 750.3536,
+      "CpuMilliseconds": 750,
+      "AllocatedBytes": 2176797992
     }
   ]
 }

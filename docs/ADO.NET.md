@@ -1,4 +1,4 @@
-﻿# PureDb ADO.NET 提供程序
+# PureDb ADO.NET 提供程序
 
 命名空间：`PureDb.AdoNet`。与数据库核心一同编译到 `PureDb.dll`，目标 .NET 10，仅使用标准库。
 
@@ -107,4 +107,4 @@ dotnet run -c Release --project tests/PureDb.AdoNetTests
 
 接口约定参考 [.NET DbConnection](https://learn.microsoft.com/en-us/dotnet/api/system.data.common.dbconnection?view=net-10.0)。Full/Buffered 与 SQLite WAL 同步行为的对比参考 [SQLite WAL 文档](https://www.sqlite.org/wal.html)；两者的 Buffered 持久化过程不同，不能将吞吐倍率当成相同断电保证。
 
-当前预览版：`1.0.0-preview.2`。GetFieldType 与 GetSchemaTable 通过真实 Native AOT 测试；用户提供的反射或动态代码仍需满足 AOT 约束。最新接口开销见 [全面性能报告](PERFORMANCE.md)。
+当前预览版：`1.0.0-preview.3`。GetFieldType 与 GetSchemaTable 通过真实 Native AOT 测试；用户提供的反射或动态代码仍需满足 AOT 约束。最新接口开销见 [全面性能报告](PERFORMANCE.md)。

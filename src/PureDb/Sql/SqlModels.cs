@@ -162,7 +162,19 @@ internal sealed partial record Expr(string Op, object? Value = null, Expr[]? Ite
     /// <summary>构造一个携带 SQL 标量的字面量节点。</summary>
     /// <param name = "value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
-    public static Expr Literal(object? value) => new("literal", value);
+    public static Expr Literal(object? value) => new("literal", value) { BlobLiteral = value as byte[], RealLiteral = value is double number ? number : null };
+    /// <summary>为持久化 BLOB 字面量保留明确类型，避免 object JSON 的 Base64 文本被误读为 TEXT。</summary>
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public byte[]? BlobLiteral
+    {
+        get; init;
+    }
+    /// <summary>保留实数字面量的存储类别，避免 JSON 将 1.0 写为 1 后重开变成整数。</summary>
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public double? RealLiteral
+    {
+        get; init;
+    }
 }
 
 /// <summary>所有已解析 SQL 语句节点的基类。</summary>
@@ -307,7 +319,7 @@ internal static class SqlAst
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     public static Expr Normalize(Expr e) => e with
     {
-        Value = e.Value is System.Text.Json.JsonElement j ? j.ValueKind switch
+        Value = e.RealLiteral is { } real ? (object)real : e.BlobLiteral is { } blob ? blob : e.Value is System.Text.Json.JsonElement j ? j.ValueKind switch
         {
             System.Text.Json.JsonValueKind.String => j.GetString(),
             System.Text.Json.JsonValueKind.Number => j.TryGetInt64(out long n) ? n : (object)j.GetDouble(),

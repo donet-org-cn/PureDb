@@ -1,32 +1,45 @@
 {
+  "Date": "2026-10-27T02:25:00+0800",
   "Platform": "Linux-5.10.110-g1cf46ce40714-dirty-aarch64-with-glibc2.29",
   "Machine": "aarch64",
   "CPUs": 8,
-  "Date": "2026-10-24T19:23:19+0800",
-  "Dotnet": "Microsoft.AspNetCore.App 8.0.8 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.1 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.8 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.1 [/usr/share/dotnet/shared/Microsoft.NETCore.App]",
-  "ComprehensiveSHA256": "A888F8C5C0FF6CDB72F9E12FA7E656BE9A606EA04692A2F3C4275AEAFC345269",
-  "AdoHarnessSHA256": "619015E1104C4BBBCFD301815C487018A92C7B805DF4A8869DD9DAC2358A2CDB",
+  "BeforeCommit": "09cdfffbfb4ab6f10ba373ac6e46745049397cc2",
+  "BeforeSHA256": "A240817D6F98A3264CB24AD474A870BC1AACA56A9466411CAB12387EB7EB04F5",
+  "AfterSHA256": "30C7DB3221A39E08DF491CB88D85EB04E6ABD226990A2C89C7E6A916E62CC510",
+  "IdenticalHarnessSHA256": {
+    "PureDb.Comprehensive": "B44C7202361021A8B009122CE323DC23D2379D4A3E089F28B7476EBDABE10DE9",
+    "PureDb.AdoBenchmarks": "1B103F933DD77611D14805E1ED7629C333B4AF9EBEDE1CBA2FE9DEF080AC39E3",
+    "PureDb.CacheBenchmarks": "9DAA14E10EA71EB6E2B8D769A25D9AF3807FED69C93625B24E1FD45067822C74"
+  },
+  "Dotnet": "Microsoft.AspNetCore.App 10.0.13 [/root/puredb-validation-20261024-v8/aot/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 10.0.13 [/root/puredb-validation-20261024-v8/aot/dotnet/shared/Microsoft.NETCore.App]",
+  "RoundOrder": [
+    [
+      "before",
+      "after",
+      "SQLite"
+    ],
+    [
+      "after",
+      "SQLite",
+      "before"
+    ],
+    [
+      "SQLite",
+      "before",
+      "after"
+    ]
+  ],
+  "Method": "Identical current harness; only PureDb.dll differs; sequential rotated three-engine order",
   "Device": [
     179,
     6
   ],
-  "Load": "1.11 0.72 0.67 1/869 2471680\n",
-  "MemInfo": "MemTotal:        8109588 kB\nMemFree:         3022240 kB\nMemAvailable:    3783292 kB\nBuffers:           58156 kB\nCached:           891476 kB\nSwapCached:        49192 kB\nActive:           819608 kB\nInactive:        3980716 kB\nActive(anon):     390148 kB\nInactive(anon):  3645896 kB\nActive(file):     429460 kB\nInactive(file):   334820 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       8388604 kB\nSwapFree:        6580988 kB\nDirty:               472 kB\nWriteback:           100 kB\nAnonPages:       3812756 kB\nMapped:           321708 kB\nShmem:            185052 kB\nKReclaimable:      80068 kB\nSlab:             169704 kB\nSReclaimable:      80068 kB\nSUnreclaim:        89636 kB\nKernelStack:       14032 kB\nPageTables:        28360 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    12443396 kB\nCommitted_AS:   10723520 kB\nVmallocTotal:   262930368 kB\nVmallocUsed:       22348 kB\nVmallocChunk:          0 kB\nPercpu:             8256 kB\nCmaTotal:         131072 kB\nCmaAllocated:       4256 kB\nCmaReleased:      126816 kB\nCmaFree:           10148 kB\n",
-  "ProcessIoAvailable": false,
+  "Load": "3.87 3.37 3.28 2/859 2960684\n",
   "Affinity": [
     4,
     5,
     6,
     7
   ],
-  "CpuCapacity": {
-    "cpu7": 1024,
-    "cpu5": 1024,
-    "cpu3": 414,
-    "cpu1": 414,
-    "cpu6": 1024,
-    "cpu4": 1024,
-    "cpu2": 414,
-    "cpu0": 414
-  }
+  "MemInfo": "MemTotal:        8109588 kB\nMemFree:         2594424 kB\nMemAvailable:    5563372 kB\nBuffers:          168380 kB\nCached:          2875732 kB\nSwapCached:       160240 kB\nActive:          2872956 kB\nInactive:        2283456 kB\nActive(anon):    1401724 kB\nInactive(anon):   798272 kB\nActive(file):    1471232 kB\nInactive(file):  1485184 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       8388604 kB\nSwapFree:        5907452 kB\nDirty:              8600 kB\nWriteback:             8 kB\nAnonPages:       1966740 kB\nMapped:           479524 kB\nShmem:             87696 kB\nKReclaimable:     139676 kB\nSlab:             233300 kB\nSReclaimable:     139676 kB\nSUnreclaim:        93624 kB\nKernelStack:       13920 kB\nPageTables:        25048 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    12443396 kB\nCommitted_AS:    9331132 kB\nVmallocTotal:   262930368 kB\nVmallocUsed:       25068 kB\nVmallocChunk:          0 kB\nPercpu:            19776 kB\nCmaTotal:         131072 kB\nCmaAllocated:       4256 kB\nCmaReleased:      126816 kB\nCmaFree:           63312 kB\n"
 }

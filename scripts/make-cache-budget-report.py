@@ -6,11 +6,11 @@ root = Path(__file__).resolve().parents[1]
 base = root / 'benchmarks/results/cache-budget/latest'
 read = lambda p: json.loads(p.read_text(encoding='utf-8-sig'))
 lines = ['# BLOB / JSON 表缓存：优化前后配对验证',
-         '本轮发现的主要瓶颈是缓存容量估算过高：10 万行、五列、256 字节 BLOB 和 JSON 的表，在默认 64 MiB 行缓存预算下被拒绝缓存，导致重复解码整表。修复按实际表示估算容量，保持默认预算。此报告专门验证这一阈值问题；巨大倍数不能解释为所有 SQL 的普遍加速。',
-         '同一台机器、同一自包含 JIT 测试宿主、.NET 10.0.13、相同数据和查询，仅替换 PureDb.dll。优化前为 main 提交 21571bcf875303db7002f82f36a0eaa96f712940，优化后为本次 preview.2 冻结构建。三轮交替先后顺序；每条查询预热 500 ms，计时至少 750 ms。中位数先按各轮操作数归一化，再取三轮中位数。',
+         '本工具可选地生成单独的缓存配对实验；本次前后构建身份必须来自原始 environment.json，不能复用上一次版本标签。10 万行 BLOB / JSON、默认 64 MiB 缓存，不把个别阈值变化外推到全部 SQL。',
+         '同一台机器、同一自包含 JIT 测试宿主、.NET 10.0.13、相同数据和查询，仅替换 PureDb.dll。三轮交替先后顺序；每条查询预热 500 ms，计时至少 750 ms。中位数先按各轮操作数归一化，再取三轮中位数。',
          '本表仅比较 PureDb 优化前后。与 SQLite 的四种运行方式对照见 [AOT 完整报告](AOT-PERFORMANCE.md)，更广的 41 项测试见 [全面报告](PERFORMANCE.md)。本表采用各平台的 AOT 对照宿主所附 JIT DLL，Linux 在本机构建导致哈希与全面报告复制的 Windows DLL 不同；下方记录各自真实哈希，不将它们冒充同一二进制。缓存首次构建不计入热查询；首次打开和首次查询另在 AOT 报告测量。',
          '行缓存估算计入行数组、装箱数值、UTF-16 文本、BLOB 视图、源编码及后备数据；辅助索引不在同一预算内，因此 64 MiB 不是进程 RSS 上限。保留缓存可以增加常驻内存，本次不声称此修复降低 RSS。回归测试覆盖缓存复用、写后失效、预算为零时不保留缓存。']
-summary = {'BeforeCommit': '21571bcf875303db7002f82f36a0eaa96f712940', 'Platforms': {}}
+summary = {'BeforeCommit': read(base/'windows/environment.json')['BeforeCommit'], 'Platforms': {}}
 for key, platform in [('windows', 'Windows x64'), ('linux', 'Linux ARM64')]:
     p = base / key
     environment = read(p / 'environment.json')

@@ -10,13 +10,13 @@
     {
       "Scenario": "open_first_range_close",
       "Operations": 1,
-      "Milliseconds": 9.8672,
-      "CpuMilliseconds": 9.884000000000004,
-      "AllocatedBytes": 539232,
-      "WorkingSetBytes": 15265792,
-      "PrivateBytes": 12902400,
-      "PeakWorkingSetBytes": 15265792,
-      "ManagedLiveBytes": 631520,
+      "Milliseconds": 5.593,
+      "CpuMilliseconds": 5.603,
+      "AllocatedBytes": 597680,
+      "WorkingSetBytes": 15613952,
+      "PrivateBytes": 12976128,
+      "PeakWorkingSetBytes": 15613952,
+      "ManagedLiveBytes": 699408,
       "StorageBytes": 40753572
     }
   ]

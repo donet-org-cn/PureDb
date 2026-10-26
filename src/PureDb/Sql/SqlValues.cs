@@ -3,9 +3,9 @@ using System.Text;
 
 namespace PureDb;
 /// <summary>SQL 存储类别排序及 NULL、整数、实数、文本和 BLOB 的一致比较与哈希。</summary>
-internal sealed class SqlValueComparer : IComparer<object?>, IEqualityComparer<object?>
+internal sealed partial class SqlValueComparer : IComparer<object?>, IEqualityComparer<object?>
 {
-    /// <summary>所有 SQL 值比较和哈希共享的无状态比较器。</summary>
+    /// <summary>所有 SQL 值比较和哈希共享的比较器；文本编码由同步执行作用域提供。</summary>
     public static readonly SqlValueComparer Instance = new();
     /// <summary>将受支持 CLR 标量转换为内部 SQL 存储类型，拒绝非有限实数和未知类型。</summary>
     /// <param name = "v">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
@@ -80,7 +80,7 @@ internal sealed class SqlValueComparer : IComparer<object?>, IEqualityComparer<o
         }
 
         if (x is string s)
-            return StringComparer.Ordinal.Compare(s, (string)y!);
+            return CompareText(s, (string)y!);
         return Blob(x).SequenceCompareTo(Blob(y!));
     }
 
@@ -126,7 +126,7 @@ internal sealed class SqlValueComparer : IComparer<object?>, IEqualityComparer<o
     /// <summary>将可空布尔值转换为 SQL NULL、0 或 1。</summary>
     /// <param name = "value">SQL 三值逻辑中的真、假或未知。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
-    public static object? Boolean(bool? value) => value is null ? null : value.Value ? 1L : 0L;
+    public static object? Boolean(bool? value) => value is null ? null : SqlIntegerBoxes.Get(value.Value ? 1 : 0);
 }
 
 /// <summary>按 SQL 值语义比较的复合行键，用于分组及去重；构造后键值不可变。</summary>
@@ -271,6 +271,8 @@ internal sealed class SqlBinding(SqlDatabase? owner = null, SqlSession? context 
                         return value;
                 return null;
             };
+        if (expr.Op is "IFNULL" or "IIF" or "IF")
+            return row => expr.Op == "IFNULL" ? args[0](row) ?? args[1](row) : SqlValueComparer.Truth(args[0](row)) == true ? args[1](row) : args[2](row);
         if (expr.Op == "JSON_EXTRACT" && expr.Args.Length == 2 && expr.Args[1].Op == "literal" && expr.Args[1].Value is string path)
             return r => SqlJsonFunctions.ExtractCached(args[0](r), path);
         if (expr.Op is "=" or "!=" or "<>" or "<" or ">" or "<=" or ">=" or "+" or "-" or "*" or "/" or "%" or "AND" or "OR")
@@ -367,6 +369,11 @@ internal sealed class SqlBinding(SqlDatabase? owner = null, SqlSession? context 
     /// <param name = "n">表达式参数数量。</param>
     internal static void Validate(string op, int n)
     {
+        if (SqliteScalarFunctions.Handles(op))
+        {
+            SqliteScalarFunctions.Validate(op, n);
+            return;
+        }
         if (op is "case" or "casebase")
         {
             if (op == "case" ? n >= 3 && n % 2 == 1 : n >= 4 && n % 2 == 0)
@@ -405,6 +412,8 @@ internal sealed class SqlBinding(SqlDatabase? owner = null, SqlSession? context 
             return (long)cached.Length;
         for (int i = 0; i < a.Length; i++)
             a[i] = SqlJsonFunctions.Unwrap(a[i]);
+        if (SqliteScalarFunctions.Handles(op))
+            return SqliteScalarFunctions.Eval(op, a);
         var cmp = SqlValueComparer.Instance;
         if (op == "IS NULL")
             return a[0] is null ? 1L : 0L;
@@ -660,6 +669,14 @@ internal static class SqlCodec
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
     public static object?[] DecodeProjection(ReadOnlySpan<byte> bytes, int columns, int[] projection)
     {
+        if (projection.Length == columns)
+        {
+            int ordinal = 0;
+            while (ordinal < columns && projection[ordinal] == ordinal)
+                ordinal++;
+            if (ordinal == columns)
+                return Decode(bytes, columns);
+        }
         var row = new object?[projection.Length];
         var reader = new RowReader(bytes);
         for (int column = 0; column < columns; column++)
@@ -707,7 +724,7 @@ internal static class SqlCodec
             if (tag == 1)
             {
                 long n = System.Buffers.Binary.BinaryPrimitives.ReadInt64LittleEndian(Take(8));
-                return materialize ? n : null;
+                return materialize ? SqlIntegerBoxes.Get(n) : null;
             }
 
             if (tag == 2)

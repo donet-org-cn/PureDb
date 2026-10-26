@@ -1,74 +1,74 @@
 {
-  "Runtime": "10.0.1",
+  "Runtime": "10.0.13",
   "OS": "Ubuntu 20.04.5 LTS",
   "Architecture": "Arm64",
-  "CoreSHA256": "B1C917A7C5E8E1C8FFE1A65E0190723261FE1C58A117B94F566975A5005E064B",
+  "CoreSHA256": "30C7DB3221A39E08DF491CB88D85EB04E6ABD226990A2C89C7E6A916E62CC510",
   "Samples": [
     {
       "Function": "typed_reject",
       "Round": 1,
       "RowsPerQuery": 20000,
-      "Repetitions": 914,
+      "Repetitions": 562,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.4659,
-      "CpuMilliseconds": 1068.506,
-      "AllocatedBytes": 2657848
+      "ElapsedMilliseconds": 750.6796,
+      "CpuMilliseconds": 1092.929,
+      "AllocatedBytes": 1677416
     },
     {
       "Function": "array_reject",
       "Round": 1,
       "RowsPerQuery": 20000,
-      "Repetitions": 446,
+      "Repetitions": 306,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 751.0029,
-      "CpuMilliseconds": 757.269,
-      "AllocatedBytes": 714859544
+      "ElapsedMilliseconds": 750.546,
+      "CpuMilliseconds": 752.514,
+      "AllocatedBytes": 490500904
     },
     {
       "Function": "array_reject",
       "Round": 2,
       "RowsPerQuery": 20000,
-      "Repetitions": 464,
+      "Repetitions": 324,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.8115,
-      "CpuMilliseconds": 768.359,
-      "AllocatedBytes": 743710376
+      "ElapsedMilliseconds": 751.8367,
+      "CpuMilliseconds": 758.88,
+      "AllocatedBytes": 519353896
     },
     {
       "Function": "typed_reject",
       "Round": 2,
       "RowsPerQuery": 20000,
-      "Repetitions": 1184,
+      "Repetitions": 1054,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.4731,
-      "CpuMilliseconds": 755.102,
-      "AllocatedBytes": 3381544
+      "ElapsedMilliseconds": 750.054,
+      "CpuMilliseconds": 750.106,
+      "AllocatedBytes": 3136744
     },
     {
       "Function": "typed_reject",
       "Round": 3,
       "RowsPerQuery": 20000,
-      "Repetitions": 1186,
+      "Repetitions": 1057,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 750.0122,
-      "CpuMilliseconds": 750.019,
-      "AllocatedBytes": 3387256
+      "ElapsedMilliseconds": 750.3466,
+      "CpuMilliseconds": 753.29,
+      "AllocatedBytes": 3145672
     },
     {
       "Function": "array_reject",
       "Round": 3,
       "RowsPerQuery": 20000,
-      "Repetitions": 435,
+      "Repetitions": 317,
       "WarmupMilliseconds": 500,
       "MeasurementMilliseconds": 750,
-      "ElapsedMilliseconds": 751.4417,
-      "CpuMilliseconds": 766.227,
-      "AllocatedBytes": 697228480
+      "ElapsedMilliseconds": 750.5788,
+      "CpuMilliseconds": 751.482,
+      "AllocatedBytes": 508133288
     }
   ]
 }

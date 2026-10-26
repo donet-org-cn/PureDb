@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 [assembly: InternalsVisibleTo("PureDb.CompatibilityTests")]
+[assembly: InternalsVisibleTo("PureDb.SqliteParityTests")]
 namespace PureDb.SqliteCompatibility;
 /// <summary>纯托管 SQLite 文件存储，负责连接级独占锁、模式适配及回滚日志提交。</summary>
 internal sealed class SqliteStorage : ISqlStorage, ISqlSnapshot
@@ -124,8 +125,8 @@ internal sealed class SqliteStorage : ISqlStorage, ISqlSnapshot
         var schema = _reader.Table(1).Select(r => r.Values).ToArray();
         if (schema.Any(r => r.Length != 5 || r[0] is not string || r[1] is not string || r[2] is not string || r[3] is not long))
             throw new InvalidDataException("Invalid sqlite_schema.");
-        if (schema.Any(r => (string)r[0]! is not ("table" or "index")))
-            throw new NotSupportedException("Views and triggers are not supported in phase 1.");
+        if (schema.Any(r => (string)r[0]! is not ("table" or "index" or "view" or "trigger")))
+            throw new NotSupportedException("Unsupported SQLite schema object.");
         var catalog = new SqlCatalog();
         _roots.Clear();
         _indexRoots.Clear();
@@ -135,7 +136,7 @@ internal sealed class SqliteStorage : ISqlStorage, ISqlSnapshot
             string name = (string)item[1]!;
             if (name.StartsWith("sqlite_", StringComparison.OrdinalIgnoreCase))
                 throw new NotSupportedException("AUTOINCREMENT and SQLite statistics/internal tables are not supported in phase 1.");
-            if (item[4] is not string sql || new SqlParser(sql, sqliteFile: true).Parse() is not [CreateTable create])
+            if (item[4] is not string sql || SqliteSchema.Parse(sql) is not [CreateTable create])
                 throw new NotSupportedException("Unsupported SQLite table definition.");
             if (!name.Equals(create.Name, StringComparison.Ordinal) || !name.Equals((string)item[2]!, StringComparison.Ordinal))
                 throw new InvalidDataException("SQLite table name mismatch.");
@@ -143,8 +144,11 @@ internal sealed class SqliteStorage : ISqlStorage, ISqlSnapshot
             {
                 Id = catalog.NextId++,
                 Name = name,
-                Columns = create.Columns
+                Columns = create.Columns,
+                ForeignKeys = create.ForeignKeys,
+                Checks = create.Checks
             };
+            SqliteSchema.AddUniqueConstraints(table, create.UniqueColumns);
             catalog.Tables.Add(table);
             _roots.Add(table.Id, (long)item[3]!);
         }
@@ -154,7 +158,7 @@ internal sealed class SqliteStorage : ISqlStorage, ISqlSnapshot
             string name = (string)item[1]!;
             if (name.StartsWith("sqlite_autoindex_", StringComparison.Ordinal) && item[4] is null)
                 continue;
-            if (name.StartsWith("sqlite_", StringComparison.OrdinalIgnoreCase) || item[4] is not string sql || new SqlParser(sql, sqliteFile: true).Parse() is not [CreateIndex create])
+            if (name.StartsWith("sqlite_", StringComparison.OrdinalIgnoreCase) || item[4] is not string sql || SqliteSchema.Parse(sql) is not [CreateIndex create])
                 throw new NotSupportedException("Unsupported SQLite index definition.");
             var table = catalog.Table(create.Table);
             if (!name.Equals(create.Name, StringComparison.Ordinal) || !table.Name.Equals((string)item[2]!, StringComparison.Ordinal))
@@ -162,8 +166,24 @@ internal sealed class SqliteStorage : ISqlStorage, ISqlSnapshot
             string column = create.Expression.Op == "column" ? (string)create.Expression.Value! : "";
             if (column.Length > 0)
                 table.Column(column);
-            table.Indexes.Add(new(name, column, create.Unique, column.Length == 0 ? create.Expression : null));
+            table.Indexes.Add(new(name, column, create.Unique, column.Length == 0 ? create.Expression : null)
+            {
+                Descending = create.Descending
+            });
             _indexRoots.Add(name, checked((uint)(long)item[3]!));
+        }
+
+        foreach (var item in schema.Where(r => (string)r[0]! is "view" or "trigger"))
+        {
+            if (item[3] is not 0L || item[4] is not string sql)
+                throw new InvalidDataException("Invalid SQLite view or trigger schema.");
+            var parsed = SqliteSchema.Parse(sql);
+            if (parsed is [CreateView view] && (string)item[0]! == "view" && view.View.Name == (string)item[1]!)
+                catalog.Views.Add(view.View);
+            else if (parsed is [CreateTrigger trigger] && (string)item[0]! == "trigger" && trigger.Trigger.Name == (string)item[1]!)
+                catalog.Triggers.Add(trigger.Trigger);
+            else
+                throw new NotSupportedException("Unsupported SQLite view or trigger definition.");
         }
 
         _catalog = catalog;
@@ -190,6 +210,7 @@ internal sealed class SqliteStorage : ISqlStorage, ISqlSnapshot
         lock (_sync)
         {
             Check();
+            using var text = new SqlValueComparer.TextScope(_reader.TextEncoding);
             return action(this);
         }
     }
@@ -205,6 +226,7 @@ internal sealed class SqliteStorage : ISqlStorage, ISqlSnapshot
             Check();
             ObjectDisposedException.ThrowIf(_draining, this);
             token.ThrowIfCancellationRequested();
+            using var text = new SqlValueComparer.TextScope(_reader.TextEncoding);
             var result = transform(this);
             if (result.Mutations.Length == 0)
                 return ValueTask.FromResult(result.Affected);
@@ -218,14 +240,16 @@ internal sealed class SqliteStorage : ISqlStorage, ISqlSnapshot
                 if (_options.EnableIncrementalUpdates && TryIncremental(changes, token, out var pages))
                 {
                     token.ThrowIfCancellationRequested();
+                    CommitStage?.Invoke("before-incremental-commit");
                     SqliteJournal.CommitIncremental(_file, _path, pages, CommitStage);
                 }
                 else
                 {
                     var overlay = new Overlay(this, changes);
-                    SqlDatabase.WriteSqliteSnapshot(overlay, catalog, temp, token, unchecked(_reader.ChangeCounter + 1), unchecked(_reader.SchemaCookie + 1), _reader.UserVersion, _reader.ApplicationId);
+                    SqlDatabase.WriteSqliteSnapshot(overlay, catalog, temp, token, unchecked(_reader.ChangeCounter + 1), unchecked(_reader.SchemaCookie + 1), _reader.UserVersion, _reader.ApplicationId, _reader.PageSize, _reader.TextEncoding);
                     token.ThrowIfCancellationRequested();
                     // 取消只影响准入边界；开始持久化后必须完成事务或完成回滚。
+                    CommitStage?.Invoke("before-image-commit");
                     SqliteJournal.Commit(_file, _path, temp, CommitStage);
                 }
 
@@ -261,9 +285,15 @@ internal sealed class SqliteStorage : ISqlStorage, ISqlSnapshot
     /// <returns>匹配、校验或操作成功时为 true，否则为 false；具体条件见方法说明。</returns>
     private bool TryIncremental(Dictionary<long, Mutation> changes, CancellationToken token, out Dictionary<uint, byte[]> pages)
     {
+        pages = [];
+        if (_reader.PageSize != 4096 || _reader.TextEncoding.CodePage != 65001)
+            return false;
         var editor = new SqlitePageEditor(_file, Math.Max(4 * 1024 * 1024, _options.PageCacheBytes));
         pages = editor.Dirty;
         if (changes.ContainsKey(-1))
+            return false;
+        // 扩展模式先走完整镜像提交，不能让尚未覆盖的复合键或触发器绕过索引维护。
+        if (_catalog.Views.Count > 0 || _catalog.Triggers.Count > 0 || _catalog.Tables.Any(t => t.ForeignKeys.Count > 0 || t.Checks.Count > 0 || t.Indexes.Any(i => i.Expression?.Op == "composite" || i.Descending?.Any(d => d) == true)))
             return false;
         foreach (var mutation in changes.Values)
         {

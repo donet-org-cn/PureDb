@@ -7,7 +7,7 @@ namespace PureDb.SqliteCompatibility;
 /// <summary>SQLite 回滚日志的生成和热日志恢复；先持久化旧页，再修改主文件。</summary>
 internal static class SqliteJournal
 {
-    private const int PageSize = 4096, SectorSize = 4096, RecordSize = PageSize + 8;
+    private const int PageSize = 4096, SectorSize = 4096;
     /// <summary>SQLite 回滚日志的有效头部魔数。</summary>
     private static ReadOnlySpan<byte> Magic => [0xd9, 0xd5, 0x05, 0xf9, 0x20, 0xa1, 0x63, 0xd7];
 
@@ -38,6 +38,23 @@ internal static class SqliteJournal
         }
     }
 
+    /// <summary>读取并验证文件头页尺寸，包含以一表示的 65536 字节页。</summary>
+    /// <param name="database">已打开的主文件或候选镜像。</param>
+    /// <returns>经过边界校验的页字节数。</returns>
+    private static int ReadPageSize(FileStream database)
+    {
+        Span<byte> header = stackalloc byte[18];
+        ReadAt(database, header, 0);
+        if (!header[..16].SequenceEqual("SQLite format 3\0"u8))
+            throw new InvalidDataException("Invalid SQLite header.");
+        int size = BinaryPrimitives.ReadUInt16BigEndian(header[16..]);
+        if (size == 1)
+            size = 65536;
+        if (size < 512 || size > 65536 || (size & (size - 1)) != 0)
+            throw new InvalidDataException("Invalid SQLite page size.");
+        return size;
+    }
+
     /// <summary>比较完整候选镜像与主文件，在持久化旧页日志后写入发生变化的页。</summary>
     /// <param name="database">持有独占锁的 SQLite 主文件句柄。</param>
     /// <param name="path">当前数据库或索引文件路径。</param>
@@ -45,23 +62,26 @@ internal static class SqliteJournal
     /// <param name="stage">持久化阶段测试钩子，用于在指定提交步骤注入进程故障。</param>
     internal static void Commit(FileStream database, string path, string image, Action<string>? stage)
     {
+        int pageSize = ReadPageSize(database);
         using var input = File.OpenRead(image);
+        if (ReadPageSize(input) != pageSize || database.Length % pageSize != 0 || input.Length % pageSize != 0)
+            throw new InvalidDataException("SQLite image page size mismatch.");
         var changed = new List<uint>();
-        var before = new byte[PageSize];
-        var after = new byte[PageSize];
-        uint oldPages = checked((uint)(database.Length / PageSize)), newPages = checked((uint)(input.Length / PageSize));
+        var before = new byte[pageSize];
+        var after = new byte[pageSize];
+        uint oldPages = checked((uint)(database.Length / pageSize)), newPages = checked((uint)(input.Length / pageSize));
         for (uint page = 1; page <= Math.Max(oldPages, newPages); page++)
         {
             if (page <= oldPages)
-                ReadAt(database, before, ((long)page - 1) * PageSize);
+                ReadAt(database, before, ((long)page - 1) * pageSize);
             if (page <= newPages)
-                ReadAt(input, after, ((long)page - 1) * PageSize);
+                ReadAt(input, after, ((long)page - 1) * pageSize);
             // SequenceEqual 使用运行时在 x64 和 ARM64 上的 SIMD 实现。
             if (page > oldPages || page > newPages || !before.AsSpan().SequenceEqual(after))
                 changed.Add(page);
         }
 
-        CommitPages(database, path, changed, input.Length, (page, buffer) => ReadAt(input, buffer, ((long)page - 1) * PageSize), stage, journalAll: true);
+        CommitPages(database, path, changed, input.Length, (page, buffer) => ReadAt(input, buffer, ((long)page - 1) * pageSize), stage, journalAll: false, pageSize: pageSize);
     }
 
     /// <summary>将事务私有脏页通过旧页回滚日志原子提交到现有主文件。</summary>
@@ -84,15 +104,18 @@ internal static class SqliteJournal
     /// <param name="readPage">按页号读取候选新页完整内容的回调。</param>
     /// <param name="stage">持久化阶段测试钩子，用于在指定提交步骤注入进程故障。</param>
     /// <param name="journalAll">是否记录全部旧页；关闭时仅记录被覆盖的旧页。</param>
-    private static void CommitPages(FileStream database, string path, IReadOnlyList<uint> changed, long newLength, Action<uint, byte[]> readPage, Action<string>? stage, bool journalAll)
+    /// <param name="pageSize">经过文件头校验的数据库页字节数。</param>
+    private static void CommitPages(FileStream database, string path, IReadOnlyList<uint> changed, long newLength, Action<uint, byte[]> readPage, Action<string>? stage, bool journalAll, int pageSize = PageSize)
     {
         if (changed.Count == 0)
             return;
         string journalPath = path + "-journal";
         if (File.Exists(journalPath))
             throw new IOException("Unresolved journal before commit.");
-        uint pages = checked((uint)(database.Length / PageSize));
-        uint records = journalAll ? pages : checked((uint)changed.Count);
+        uint pages = checked((uint)(database.Length / pageSize));
+        // 新增页没有旧版本；恢复时截断到旧长度即可。缩短文件时 changed 包含所有被截断的旧页。
+        var rollbackPages = journalAll ? null : changed.Where(page => page <= pages).ToArray();
+        uint records = journalAll ? pages : checked((uint)rollbackPages!.Length);
         uint nonce = BinaryPrimitives.ReadUInt32BigEndian(RandomNumberGenerator.GetBytes(4));
         using (var journal = new FileStream(journalPath, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.Read, 65536))
         {
@@ -100,13 +123,13 @@ internal static class SqliteJournal
             // 零头部的日志可以安全丢弃。
             var header = new byte[SectorSize];
             journal.Write(header);
-            var record = new byte[RecordSize];
+            var record = new byte[pageSize + 8];
             for (uint i = 0; i < records; i++)
             {
-                uint page = journalAll ? i + 1 : changed[checked((int)i)];
+                uint page = journalAll ? i + 1 : rollbackPages![checked((int)i)];
                 BinaryPrimitives.WriteUInt32BigEndian(record, page);
-                ReadAt(database, record.AsSpan(4, PageSize), ((long)page - 1) * PageSize);
-                BinaryPrimitives.WriteUInt32BigEndian(record.AsSpan(PageSize + 4), Checksum(record.AsSpan(4, PageSize), nonce));
+                ReadAt(database, record.AsSpan(4, pageSize), ((long)page - 1) * pageSize);
+                BinaryPrimitives.WriteUInt32BigEndian(record.AsSpan(pageSize + 4), Checksum(record.AsSpan(4, pageSize), nonce));
                 journal.Write(record);
             }
 
@@ -117,18 +140,18 @@ internal static class SqliteJournal
             BinaryPrimitives.WriteUInt32BigEndian(header.AsSpan(12), nonce);
             BinaryPrimitives.WriteUInt32BigEndian(header.AsSpan(16), pages);
             BinaryPrimitives.WriteUInt32BigEndian(header.AsSpan(20), SectorSize);
-            BinaryPrimitives.WriteUInt32BigEndian(header.AsSpan(24), PageSize);
+            BinaryPrimitives.WriteUInt32BigEndian(header.AsSpan(24), (uint)pageSize);
             journal.Position = 0;
             journal.Write(header);
             journal.Flush(true);
         }
 
         stage?.Invoke("after-journal-sync");
-        var buffer = new byte[PageSize];
+        var buffer = new byte[pageSize];
         bool first = true;
         foreach (uint page in changed)
         {
-            long offset = ((long)page - 1) * PageSize;
+            long offset = ((long)page - 1) * pageSize;
             if (offset >= newLength)
                 continue;
             readPage(page, buffer);
@@ -174,32 +197,32 @@ internal static class SqliteJournal
                 } // Unarmed or persisted committed journal.
                 else
                 {
-                    if (!header.AsSpan(0, 8).SequenceEqual(Magic) || journal.Length < SectorSize)
+                    if (!header.AsSpan(0, 8).SequenceEqual(Magic) || journal.Length < 28)
                         throw new InvalidDataException("Invalid SQLite journal magic.");
                     journal.ReadExactly(header.AsSpan(8));
                     uint count = BinaryPrimitives.ReadUInt32BigEndian(header.AsSpan(8)), nonce = BinaryPrimitives.ReadUInt32BigEndian(header.AsSpan(12)), pages = BinaryPrimitives.ReadUInt32BigEndian(header.AsSpan(16));
                     int sector = BinaryPrimitives.ReadInt32BigEndian(header.AsSpan(20)), size = BinaryPrimitives.ReadInt32BigEndian(header.AsSpan(24));
-                    if (size != PageSize || sector != SectorSize || count == uint.MaxValue || count == 0 || journal.Length != SectorSize + (long)count * RecordSize)
-                        throw new NotSupportedException("Phase 1 recovery supports a complete single-header 4096-byte journal without a super-journal. Recover other native journals in SQLite first.");
-                    var record = new byte[RecordSize];
+                    if (size < 512 || size > 65536 || (size & (size - 1)) != 0 || sector < 512 || sector > 65536 || (sector & (sector - 1)) != 0 || count == uint.MaxValue || count == 0 || journal.Length != sector + (long)count * (size + 8))
+                        throw new NotSupportedException("Recovery supports a complete single-header journal without a super-journal. Recover multi-header native journals in SQLite first.");
+                    var record = new byte[size + 8];
                     var seen = new HashSet<uint>();
                     // 先验证整个日志，再修改数据库的任何字节。
                     for (uint i = 0; i < count; i++)
                     {
-                        ReadAt(journal, record, SectorSize + (long)i * RecordSize);
+                        ReadAt(journal, record, sector + (long)i * (size + 8));
                         uint page = BinaryPrimitives.ReadUInt32BigEndian(record);
-                        if (page == 0 || page > pages || !seen.Add(page) || Checksum(record.AsSpan(4, PageSize), nonce) != BinaryPrimitives.ReadUInt32BigEndian(record.AsSpan(PageSize + 4)))
+                        if (page == 0 || page > pages || !seen.Add(page) || Checksum(record.AsSpan(4, size), nonce) != BinaryPrimitives.ReadUInt32BigEndian(record.AsSpan(size + 4)))
                             throw new InvalidDataException("SQLite rollback journal page/checksum is invalid; database left untouched.");
                     }
 
                     for (uint i = 0; i < count; i++)
                     {
-                        ReadAt(journal, record, SectorSize + (long)i * RecordSize);
+                        ReadAt(journal, record, sector + (long)i * (size + 8));
                         uint page = BinaryPrimitives.ReadUInt32BigEndian(record);
-                        RandomAccess.Write(database.SafeFileHandle, record.AsSpan(4, PageSize), ((long)page - 1) * PageSize);
+                        RandomAccess.Write(database.SafeFileHandle, record.AsSpan(4, size), ((long)page - 1) * size);
                     }
 
-                    database.SetLength((long)pages * PageSize);
+                    database.SetLength((long)pages * size);
                     database.Flush(true);
                 }
             }

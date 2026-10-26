@@ -1,0 +1,414 @@
+{
+  "Windows x64": {
+    "point": {
+      "Before": {
+        "Us": 2.0537998192657967,
+        "CpuUs": 2.4755598065909306,
+        "CpuReliable": true,
+        "RSSMiB": 47.71875,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 1562.9886160923857
+      },
+      "After": {
+        "Us": 1.266017923188917,
+        "CpuUs": 1.441225143105179,
+        "CpuReliable": true,
+        "RSSMiB": 47.63671875,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 1520.5027982337365
+      },
+      "Incremental": {
+        "Us": 1.2608189915255001,
+        "CpuUs": 1.4399169870577957,
+        "CpuReliable": true,
+        "RSSMiB": 47.59765625,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 1520.6151208134079
+      },
+      "SQLite": {
+        "Us": 0.6374002810024667,
+        "CpuUs": 0.6544735028150328,
+        "CpuReliable": true,
+        "RSSMiB": 43.89453125,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 376.0025131782508
+      }
+    },
+    "range20": {
+      "Before": {
+        "Us": 4.443174965882764,
+        "CpuUs": 5.454790694722143,
+        "CpuReliable": true,
+        "RSSMiB": 52.59375,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 10207.414414929068
+      },
+      "After": {
+        "Us": 3.8534248611393997,
+        "CpuUs": 4.730756315473667,
+        "CpuReliable": true,
+        "RSSMiB": 52.4765625,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 10210.29435493383
+      },
+      "Incremental": {
+        "Us": 3.7950756302521005,
+        "CpuUs": 4.65912171320141,
+        "CpuReliable": true,
+        "RSSMiB": 52.5390625,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 10209.066797796131
+      },
+      "SQLite": {
+        "Us": 8.808798731532983,
+        "CpuUs": 9.044748697556187,
+        "CpuReliable": true,
+        "RSSMiB": 43.78515625,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 7520.034731834999
+      }
+    },
+    "count": {
+      "Before": {
+        "Us": 0.19600250323053942,
+        "CpuUs": 0.2056275086556056,
+        "CpuReliable": true,
+        "RSSMiB": 47.9921875,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 360.0007907296469
+      },
+      "After": {
+        "Us": 0.19512573203498548,
+        "CpuUs": 0.2134187389248741,
+        "CpuReliable": true,
+        "RSSMiB": 48.19140625,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 360.0055764044242
+      },
+      "Incremental": {
+        "Us": 0.19662852354752636,
+        "CpuUs": 0.2106733879904371,
+        "CpuReliable": true,
+        "RSSMiB": 48.23046875,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 360.00566514785197
+      },
+      "SQLite": {
+        "Us": 0.47408631753610675,
+        "CpuUs": 0.4762025702240057,
+        "CpuReliable": true,
+        "RSSMiB": 43.16796875,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 56.00186925382232
+      }
+    },
+    "reopen": {
+      "Before": {
+        "Us": 2980.0032258064516,
+        "CpuUs": 3024.1935483870966,
+        "CpuReliable": false,
+        "RSSMiB": 33.8046875,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 42120.25806451613
+      },
+      "After": {
+        "Us": 3226.2580645161293,
+        "CpuUs": 3528.2258064516127,
+        "CpuReliable": false,
+        "RSSMiB": 33.9453125,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 43478.45161290323
+      },
+      "Incremental": {
+        "Us": 3181.6612903225805,
+        "CpuUs": 3528.2258064516127,
+        "CpuReliable": false,
+        "RSSMiB": 33.92578125,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 43462.1935483871
+      },
+      "SQLite": {
+        "Us": 355.2483870967742,
+        "CpuUs": 504.03225806451616,
+        "CpuReliable": false,
+        "RSSMiB": 29.0625,
+        "WriteBytesPerOperation": 0.0,
+        "AllocatedBytesPerOperation": 586.5806451612904
+      }
+    },
+    "single_update": {
+      "Before": {
+        "Us": 185160.73,
+        "CpuUs": 62500.0,
+        "CpuReliable": true,
+        "RSSMiB": 53.53515625,
+        "WriteBytesPerOperation": 1250013.6,
+        "AllocatedBytesPerOperation": 9778252.8
+      },
+      "After": {
+        "Us": 157588.52,
+        "CpuUs": 53125.0,
+        "CpuReliable": true,
+        "RSSMiB": 53.80859375,
+        "WriteBytesPerOperation": 732909.6,
+        "AllocatedBytesPerOperation": 9733357.6
+      },
+      "Incremental": {
+        "Us": 79471.51,
+        "CpuUs": 15625.0,
+        "CpuReliable": true,
+        "RSSMiB": 36.56640625,
+        "WriteBytesPerOperation": 32792.0,
+        "AllocatedBytesPerOperation": 171759.2
+      },
+      "SQLite": {
+        "Us": 103901.84,
+        "CpuUs": 1562.5,
+        "CpuReliable": false,
+        "RSSMiB": 29.19921875,
+        "WriteBytesPerOperation": 17772.0,
+        "AllocatedBytesPerOperation": 325.6
+      }
+    },
+    "batch1000": {
+      "Before": {
+        "Us": 278.2122,
+        "CpuUs": 140.625,
+        "CpuReliable": true,
+        "RSSMiB": 48.40625,
+        "WriteBytesPerOperation": 2319.472,
+        "AllocatedBytesPerOperation": 14381.112
+      },
+      "After": {
+        "Us": 327.7522,
+        "CpuUs": 156.25,
+        "CpuReliable": true,
+        "RSSMiB": 48.5546875,
+        "WriteBytesPerOperation": 2319.472,
+        "AllocatedBytesPerOperation": 14320.712
+      },
+      "Incremental": {
+        "Us": 287.19259999999997,
+        "CpuUs": 140.625,
+        "CpuReliable": true,
+        "RSSMiB": 48.26171875,
+        "WriteBytesPerOperation": 2319.472,
+        "AllocatedBytesPerOperation": 14320.968
+      },
+      "SQLite": {
+        "Us": 118.64580000000001,
+        "CpuUs": 15.625,
+        "CpuReliable": false,
+        "RSSMiB": 29.484375,
+        "WriteBytesPerOperation": 352.88,
+        "AllocatedBytesPerOperation": 3.712
+      }
+    }
+  },
+  "Linux ARM64": {
+    "point": {
+      "Before": {
+        "Us": 7.824917838538756,
+        "CpuUs": 10.260613919381163,
+        "CpuReliable": true,
+        "RSSMiB": 54.625,
+        "WriteBytesPerOperation": -1.1178430101276577e-05,
+        "AllocatedBytesPerOperation": 1583.1407811486954
+      },
+      "After": {
+        "Us": 4.97063915300333,
+        "CpuUs": 6.136720941296768,
+        "CpuReliable": true,
+        "RSSMiB": 54.640625,
+        "WriteBytesPerOperation": -7.100911046887316e-06,
+        "AllocatedBytesPerOperation": 1536.3180856983863
+      },
+      "Incremental": {
+        "Us": 5.160916430124968,
+        "CpuUs": 6.75003502045932,
+        "CpuReliable": true,
+        "RSSMiB": 54.62109375,
+        "WriteBytesPerOperation": -7.37272827809931e-06,
+        "AllocatedBytesPerOperation": 1539.0747815829247
+      },
+      "SQLite": {
+        "Us": 1.5159639460923915,
+        "CpuUs": 1.568329821354707,
+        "CpuReliable": true,
+        "RSSMiB": 44.66015625,
+        "WriteBytesPerOperation": -2.165659995711993e-06,
+        "AllocatedBytesPerOperation": 376.0024775150351
+      }
+    },
+    "range20": {
+      "Before": {
+        "Us": 19.54170737835348,
+        "CpuUs": 27.161218279780016,
+        "CpuReliable": true,
+        "RSSMiB": 58.44140625,
+        "WriteBytesPerOperation": -2.791658524329304e-05,
+        "AllocatedBytesPerOperation": 10231.453504927278
+      },
+      "After": {
+        "Us": 17.91575296887797,
+        "CpuUs": 26.602144758394754,
+        "CpuReliable": true,
+        "RSSMiB": 58.5390625,
+        "WriteBytesPerOperation": -2.5593775593775595e-05,
+        "AllocatedBytesPerOperation": 10239.128992628992
+      },
+      "Incremental": {
+        "Us": 15.823606401736063,
+        "CpuUs": 22.84861431348614,
+        "CpuReliable": true,
+        "RSSMiB": 58.71484375,
+        "WriteBytesPerOperation": -2.260500022605e-05,
+        "AllocatedBytesPerOperation": 10234.558343505583
+      },
+      "SQLite": {
+        "Us": 19.301850217834886,
+        "CpuUs": 19.848783984999724,
+        "CpuReliable": true,
+        "RSSMiB": 44.55078125,
+        "WriteBytesPerOperation": -2.7574036287431753e-05,
+        "AllocatedBytesPerOperation": 7520.031765289803
+      }
+    },
+    "count": {
+      "Before": {
+        "Us": 0.5868476560469612,
+        "CpuUs": 0.6376551583063242,
+        "CpuReliable": true,
+        "RSSMiB": 53.921875,
+        "WriteBytesPerOperation": -8.383536745879911e-07,
+        "AllocatedBytesPerOperation": 360.00097249026254
+      },
+      "After": {
+        "Us": 0.5890350349423799,
+        "CpuUs": 0.6391304164896057,
+        "CpuReliable": true,
+        "RSSMiB": 54.41796875,
+        "WriteBytesPerOperation": -8.414781405016051e-07,
+        "AllocatedBytesPerOperation": 360.000976114643
+      },
+      "Incremental": {
+        "Us": 0.6366988624012093,
+        "CpuUs": 0.7055195416496503,
+        "CpuReliable": true,
+        "RSSMiB": 54.37109375,
+        "WriteBytesPerOperation": -9.095696734917743e-07,
+        "AllocatedBytesPerOperation": 360.00105510082125
+      },
+      "SQLite": {
+        "Us": 1.0166213060375626,
+        "CpuUs": 1.0345171634551147,
+        "CpuReliable": true,
+        "RSSMiB": 43.82421875,
+        "WriteBytesPerOperation": -1.4523146991675333e-06,
+        "AllocatedBytesPerOperation": 56.001661448015845
+      }
+    },
+    "reopen": {
+      "Before": {
+        "Us": 5269.570967741935,
+        "CpuUs": 5402.935483870968,
+        "CpuReliable": true,
+        "RSSMiB": 42.84765625,
+        "WriteBytesPerOperation": -0.03225806451612903,
+        "AllocatedBytesPerOperation": 41173.67741935484
+      },
+      "After": {
+        "Us": 6074.922580645161,
+        "CpuUs": 6226.580645161291,
+        "CpuReliable": true,
+        "RSSMiB": 43.1328125,
+        "WriteBytesPerOperation": -0.03225806451612903,
+        "AllocatedBytesPerOperation": 42523.6129032258
+      },
+      "Incremental": {
+        "Us": 5991.316129032258,
+        "CpuUs": 6121.645161290324,
+        "CpuReliable": true,
+        "RSSMiB": 43.0390625,
+        "WriteBytesPerOperation": -0.03225806451612903,
+        "AllocatedBytesPerOperation": 42515.6129032258
+      },
+      "SQLite": {
+        "Us": 288.2129032258065,
+        "CpuUs": 406.7096774193547,
+        "CpuReliable": true,
+        "RSSMiB": 33.4140625,
+        "WriteBytesPerOperation": -0.03225806451612903,
+        "AllocatedBytesPerOperation": 554.3225806451613
+      }
+    },
+    "single_update": {
+      "Before": {
+        "Us": 79953.1,
+        "CpuUs": 70459.4,
+        "CpuReliable": true,
+        "RSSMiB": 63.28515625,
+        "WriteBytesPerOperation": -0.1,
+        "AllocatedBytesPerOperation": 9800156.8
+      },
+      "After": {
+        "Us": 68138.2,
+        "CpuUs": 61878.10000000001,
+        "CpuReliable": true,
+        "RSSMiB": 67.76953125,
+        "WriteBytesPerOperation": -0.1,
+        "AllocatedBytesPerOperation": 9732384.0
+      },
+      "Incremental": {
+        "Us": 15595.710000000001,
+        "CpuUs": 13433.1,
+        "CpuReliable": true,
+        "RSSMiB": 47.05859375,
+        "WriteBytesPerOperation": -0.1,
+        "AllocatedBytesPerOperation": 170774.4
+      },
+      "SQLite": {
+        "Us": 2449.1099999999997,
+        "CpuUs": 840.8000000000002,
+        "CpuReliable": true,
+        "RSSMiB": 33.421875,
+        "WriteBytesPerOperation": -0.1,
+        "AllocatedBytesPerOperation": 202.4
+      }
+    },
+    "batch1000": {
+      "Before": {
+        "Us": 315.0003,
+        "CpuUs": 252.534,
+        "CpuReliable": true,
+        "RSSMiB": 61.44921875,
+        "WriteBytesPerOperation": -0.001,
+        "AllocatedBytesPerOperation": 14367.168
+      },
+      "After": {
+        "Us": 299.2714,
+        "CpuUs": 245.533,
+        "CpuReliable": true,
+        "RSSMiB": 61.65234375,
+        "WriteBytesPerOperation": -0.001,
+        "AllocatedBytesPerOperation": 14306.088
+      },
+      "Incremental": {
+        "Us": 295.4593,
+        "CpuUs": 251.68899999999996,
+        "CpuReliable": true,
+        "RSSMiB": 61.953125,
+        "WriteBytesPerOperation": -0.001,
+        "AllocatedBytesPerOperation": 14306.656
+      },
+      "SQLite": {
+        "Us": 12.6986,
+        "CpuUs": 9.738,
+        "CpuReliable": true,
+        "RSSMiB": 33.484375,
+        "WriteBytesPerOperation": -0.001,
+        "AllocatedBytesPerOperation": 2.512
+      }
+    }
+  }
+}

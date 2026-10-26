@@ -2,7 +2,7 @@
 import argparse,json,os,pathlib,platform,subprocess,time,xml.etree.ElementTree as ET
 
 root=pathlib.Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser();p.add_argument('published',type=pathlib.Path);p.add_argument('output',type=pathlib.Path);p.add_argument('--rounds',type=int,default=3);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('published',type=pathlib.Path);p.add_argument('output',type=pathlib.Path);p.add_argument('--rounds',type=int,default=3);p.add_argument('--reuse-fixture',type=pathlib.Path);p.add_argument('--discard-generated-writes',action='store_true');a=p.parse_args()
 published=a.published.resolve();output=a.output.resolve();output.mkdir(parents=True,exist_ok=True)
 assert not (output/'environment.json').exists(),'Use a fresh result directory'
 manifest=json.loads((published/'manifest.json').read_text())
@@ -24,13 +24,28 @@ def command(engine,mode,args):
 
 def run(engine,mode,args,name):
  cmd,env=command(engine,mode,args);start=time.perf_counter()
+ previous=set(fixture.iterdir()) if a.discard_generated_writes and args[0]=='writes' else None
  with (logs/(name+'.log')).open('w',encoding='utf-8') as stream:
   subprocess.run(cmd,env=env,cwd=root,stdout=stream,stderr=subprocess.STDOUT,check=True)
  elapsed=(time.perf_counter()-start)*1000
+ if previous is not None:
+  # 子进程已正常退出，JSON 已落盘；只移除本次调用新建的写入测试文件，初始查询库不动。
+  for file in set(fixture.iterdir())-previous:
+   assert file.is_file() and not file.is_symlink() and file.resolve().parent==fixture.resolve() and file.name.startswith(engine+'-') and '.db' in file.name
+   file.unlink()
  print(name,round(elapsed,2),'ms',flush=True)
  return elapsed
 
-for engine in ['PureDb','SQLite']:run(engine,'jit',['create',fixture],engine+'-create')
+if a.reuse_fixture:
+ # 仅复用已完成测试的初始查询库；不复用旧写入场景数据，目标仍是新的隔离目录。
+ import shutil
+ source=a.reuse_fixture.resolve()
+ for prefix in ['pure.pdb','sqlite.sqlite']:
+  assert (source/prefix).is_file(),source/prefix
+  for file in source.glob(prefix+'*'):
+   if file.is_file():shutil.copyfile(file,fixture/file.name)
+else:
+ for engine in ['PureDb','SQLite']:run(engine,'jit',['create',fixture],engine+'-create')
 environment={'Date':time.strftime('%Y-%m-%dT%H:%M:%S%z'),'Platform':platform.platform(),'CPUs':os.cpu_count(),
  'Affinity':sorted(os.sched_getaffinity(0)) if hasattr(os,'sched_getaffinity') else None,
  'Version':ET.parse(root/'Directory.Build.props').findtext('.//Version'),'Manifest':manifest,'Rounds':a.rounds,

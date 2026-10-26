@@ -1,0 +1,25 @@
+﻿{
+  "Engine": "SQLite",
+  "Scenario": "single_update",
+  "Repeat": 2,
+  "Rows": 2000,
+  "Operations": 10,
+  "Milliseconds": 25.7176,
+  "MicrosecondsPerOperation": 2571.7599999999998,
+  "CpuMilliseconds": 8.408000000000001,
+  "AllocatedBytes": 2024,
+  "PrivateMemorySize64": 60903424,
+  "WorkingSet64": 35303424,
+  "PeakWorkingSet64": 35303424,
+  "IO": {
+    "ReadBytes": -1,
+    "WriteBytes": -1
+  },
+  "StorageBefore": 581632,
+  "StorageAfter": 594456,
+  "SQLite": "3.54.1",
+  "Runtime": "10.0.13",
+  "CoreSHA256": "30C7DB3221A39E08DF491CB88D85EB04E6ABD226990A2C89C7E6A916E62CC510",
+  "CompatibilitySHA256": "9BA2342069349C30DC87032DEA880FF8195188B49899DA3668F53D24C409CAA6",
+  "Date": "2026-10-27T02:32:02.5245762+08:00"
+}

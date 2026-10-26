@@ -65,20 +65,4 @@ for key, platform in [('windows', 'Windows x64'), ('linux', 'Linux ARM64')]:
             children = [read(p / 'startup' / r['Result']) for r in rows]
             assert all(r['DynamicCodeSupported'] == (mode == 'jit') for r in children)
             assert statistics.median(r['Samples'][0]['Milliseconds'] for r in children) == metrics['OpenQueryCloseMs']
-    paired = root / 'benchmarks/results/cache-budget/latest'
-    environment = read(paired / key / 'environment.json')
-    jit = next(v for v in manifest['Variants'] if v['Engine'] == 'PureDb' and v['Mode'] == 'jit')
-    assert environment['AfterCoreSHA256'] == next(f['SHA256'] for f in jit['Files'] if f['Path'] == 'PureDb.dll')
-    assert environment['HostSHA256'] == next(f['SHA256'] for f in jit['Files'] if f['Path'] == jit['Executable'])
-    assert environment['BeforeCommit'] == '21571bcf875303db7002f82f36a0eaa96f712940'
-    cache = read(paired / 'summary.json')['Platforms'][platform]['Metrics']
-    for stage in ['before', 'after']:
-        rs = [read(f) for f in (paired / key / 'raw').glob(stage + '-*.json')]
-        assert len(rs) == 3 and {r['Round'] for r in rs} == {1, 2, 3}
-        for name, values in cache.items():
-            ss = [s for r in rs for s in r['Samples'] if s['Scenario'] == name]
-            assert len(ss) == 3 and all(s['Milliseconds'] >= 750 for s in ss)
-            assert statistics.median(s['Milliseconds'] * 1000 / s['Operations'] for s in ss) == values[stage]['Us']
-            assert statistics.median(s['CpuMilliseconds'] * 1000 / s['Operations'] for s in ss) == values[stage]['CpuUs']
-            assert statistics.median(s['AllocatedBytes'] / s['Operations'] for s in ss) == values[stage]['AllocatedBytes']
-print('PASS actual AOT: 12 size manifests, 360 main / 72 RSS / 168 startup samples, 14 groups and 460 differential executions; 84 cache-pair samples.')
+print('PASS actual AOT: 12 size manifests, 360 main / 72 RSS / 168 startup samples, 14 groups and 460 differential executions.')

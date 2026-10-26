@@ -402,6 +402,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     /// <returns>回调或类型转换得到的结果。</returns>
     internal T Read<T>(Func<ISqlSnapshot, T> action)
     {
+        using var text = new SqlValueComparer.TextScope(null);
         using var lease = new ReadLease(this);
         return action(_snapshot);
     }
@@ -414,6 +415,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     /// <returns>回调或类型转换得到的结果。</returns>
     internal T Read<T, TState>(Func<ISqlSnapshot, TState, T> action, TState state)
     {
+        using var text = new SqlValueComparer.TextScope(null);
         using var lease = new ReadLease(this);
         return action(_snapshot, state);
     }
@@ -759,6 +761,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     /// <returns>按方法规定计算的数量、位置、版本或比较结果。</returns>
     private int TransformBuffered(Func<ISqlSnapshot, (Mutation[] Mutations, int Affected)> transform, CancellationToken token)
     {
+        using var text = new SqlValueComparer.TextScope(null);
         token.ThrowIfCancellationRequested();
         EnterProcess();
         _gate.EnterWriteLock();
@@ -878,6 +881,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
                             {
                                 try
                                 {
+                                    using var text = new SqlValueComparer.TextScope(null);
                                     var result = r.Transform(_snapshot);
                                     r.Affected = result.Affected;
                                     r.Frame = result.Mutations.Length == 0 ? null : Encode(result.Mutations);
@@ -972,7 +976,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
             if (exists && (length < 0 || old.Key != key))
             {
                 _secondary?.Remove((old.Key, id));
-                _keyCounts[old.Key]--;
+                System.Runtime.InteropServices.CollectionsMarshal.GetValueRefOrAddDefault(_keyCounts, old.Key, out _)--;
                 _keyVersions[old.Key] = _version;
             }
 
@@ -982,7 +986,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
                 if (!exists || old.Key != key)
                 {
                     _secondary?.Add((key, id));
-                    _keyCounts[key] = _keyCounts.GetValueOrDefault(key) + 1;
+                    System.Runtime.InteropServices.CollectionsMarshal.GetValueRefOrAddDefault(_keyCounts, key, out _)++;
                 }
 
                 _keyVersions[key] = _version;

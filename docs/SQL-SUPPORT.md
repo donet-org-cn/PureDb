@@ -1,6 +1,6 @@
 ﻿# SQL 语句支持清单
 
-适用版本：`1.0.0-preview.2` NuGet 包与源码（2026-10-24）。本文以解析器、执行器和自动测试为依据；✅ 表示已实现，⚠️ 表示有限制，❌ 表示尚未实现。PureDb 是具有明确支持范围的 SQL 方言，不能视为完整 SQLite 替代品。
+适用版本：`1.0.0-preview.3` NuGet 包与源码（2026-10-27）。本文以解析器、执行器和自动测试为依据；✅ 表示已实现，⚠️ 表示有限制，❌ 表示尚未实现。PureDb 是具有明确支持范围的 SQL 方言，不能视为完整 SQLite 替代品。两类兼容性分别验收，见 [兼容性测试报告](COMPATIBILITY-REPORT.md)。
 
 ## 一眼查看
 
@@ -31,7 +31,7 @@
 | ALTER TABLE / RETURNING / INSERT OR ... | ❌ | 尚未实现，不能依赖这些语法 |
 | PRAGMA / ATTACH / VACUUM / FTS / RTree | ❌ | SQL 入口尚未实现；维护操作使用对应 C# API |
 
-**文件格式范围：**上表主要针对 `new SqlDatabase(...)` 使用的 PureDb 原版文件。可选的 `PureDb.SqliteCompatibility` 使用相同查询执行器，可在其已有表上执行受支持的 CTE、子查询、集合、窗口和 JSON 查询；但本轮新增的复合索引、外键、默认值、CHECK、视图和触发器尚未接入 SQLite 页格式写入及导入导出，兼容包明确拒绝这些持久化模式，避免丢失定义或生成不正确的文件。该后端仍不支持 SQLite WAL 和任意模式；详见 [SQLite 文件兼容](SQLITE-COMPATIBILITY.md)。
+**文件格式范围：**上表主要针对 `new SqlDatabase(...)` 使用的 PureDb 原版文件。可选的 `PureDb.SqliteCompatibility` 使用相同查询执行器；preview.3 已接入复合索引、外键、常量默认值、CHECK、视图和行触发器的 SQLite 文件读写及导入导出。支持 512–65536 字节的八种页大小，以及 UTF-8 / UTF-16LE / UTF-16BE。仍不支持 SQLite WAL 和任意模式；详见 [SQLite 文件兼容](SQLITE-COMPATIBILITY.md)。
 
 ## 建表、约束与索引
 
@@ -57,11 +57,11 @@ DROP INDEX IF EXISTS employees_age;
 - 类型为 `INTEGER`、`REAL`、`TEXT`、`BLOB`、`JSON`、`JSONB`。使用严格类型校验；没有实现 SQLite 全部类型亲和性、任意类型名、STRICT 表语法。
 - 主键可在列内或表级声明，但必须且只能是单列 INTEGER，值范围 `[0, 2^40)`。省略或传入 NULL 时，从当前最大值加一分配，空表从 1 开始；不提供 AUTOINCREMENT 的永不复用保证。复合主键、隐式 rowid 表、WITHOUT ROWID 均不支持。
 - 支持列级及表级 UNIQUE，复合唯一键中任一分量为 NULL 时不产生唯一冲突。支持带名称的 `CONSTRAINT` 语法，名称不作为独立可操作对象。
-- DEFAULT 支持数字、文本、NULL 及受支持的常量表达式；不支持 BLOB 字面量默认值、业务函数、列引用或子查询默认值。没有 DEFAULT 的省略列为 NULL，再执行非空校验。
+- DEFAULT 支持数字、文本、BLOB 字面量、NULL 及受支持的常量表达式；不支持业务函数、列引用或子查询默认值。BLOB 默认值在模式重开后保留其类型。没有 DEFAULT 的省略列为 NULL，再执行非空校验。
 - CHECK 支持列内、表级及带名称的约束，插入与更新统一执行；数值结果为 0 时失败，非零或 NULL 通过。沿用严格谓词类型，文本或 BLOB 结果报错，不执行 SQLite 的宽松数值转换。表达式不支持参数、子查询、聚合或窗口。可调用已注册的 C# 标量函数；函数不持久化，重开后须重新注册，替换注册后后续语句重新绑定。语句、显式事务和保存点均保留约束与原子撤销。
 - 索引项支持列和受支持的 `JSON_EXTRACT` 路径表达式，可组合 ASC / DESC。支持左前缀等值、下一项范围、匹配排序和反向扫描；不支持任意函数索引、部分索引 WHERE、COLLATE 或 INCLUDE。
 - 复合索引**定义持久化**，排序键与行引用按数据版本在内存中惰性构建、二分定位并复用。第一次访问可能扫描并排序整表；增删改后需要重建。它还不是分页持久化的增量复合 B-tree，不应把热缓存查询表现外推到首次查询或超内存场景。
-- 支持 `IF NOT EXISTS` / `IF EXISTS` 的对应建删语句。不支持 `CREATE TABLE AS SELECT`、TEMP 表、生成列、CHECK、ALTER TABLE。
+- 支持 `IF NOT EXISTS` / `IF EXISTS` 的对应建删语句。不支持 `CREATE TABLE AS SELECT`、TEMP 表、生成列、ALTER TABLE。
 
 外键支持列级 REFERENCES 和表级多列 FOREIGN KEY，引用父表 INTEGER PRIMARY KEY 或完整 UNIQUE 键。采用 MATCH SIMPLE：子键含 NULL 即不要求父键存在。支持 `NO ACTION`、`RESTRICT`、`CASCADE`、`SET NULL`、`SET DEFAULT`，同时适用于 ON DELETE 和 ON UPDATE。SET DEFAULT 的结果仍须满足外键。
 
@@ -96,13 +96,13 @@ ORDER BY total DESC,department_id LIMIT 20 OFFSET 0;
 
 支持投影列、表达式、`*`、`alias.*`、别名、参数、无 FROM 常量查询、多表及自连接、ON 条件、DISTINCT、GROUP BY、HAVING。普通连接包括 INNER、LEFT、RIGHT、FULL OUTER、CROSS 及逗号连接；暂不支持 NATURAL、USING 和普通派生表 LATERAL。
 
-支持 `+ - * / %`、比较、`AND OR NOT`、`BETWEEN`、`IN` / `NOT IN`、`IS NULL` / `IS NOT NULL`、LIKE、`||`、`CASE`。LIKE 的 ESCAPE 子句、GLOB、REGEXP、位运算、CAST、通用 IS 比较、行值元组比较未实现。NULL 使用 SQL 三值逻辑；整数算术溢出报错，表中 REAL 必须为有限 double。文本排序使用 .NET ordinal，LIKE 和大小写转换使用 invariant Unicode，与 SQLite 的部分规则不同。
+支持 `+ - * / %`、比较、`AND OR NOT`、`BETWEEN`、`IN` / `NOT IN`、`IS NULL` / `IS NOT NULL`、LIKE、`||`、`CASE` 和显式 `CAST(... AS INTEGER/REAL/NUMERIC/TEXT/BLOB)`。LIKE 的 ESCAPE 子句、GLOB、REGEXP、位运算、通用 IS 比较、行值元组比较未实现。NULL 使用 SQL 三值逻辑；整数算术溢出报错，表中 REAL 必须为有限 double。有效 Unicode 文本采用文件编码对应的 BINARY 顺序，原版为 UTF-8；LIKE 和大小写转换仍使用 invariant Unicode，与 SQLite 的部分规则不同。不承诺畸形 UTF 或嵌入 NUL 文本的完整兼容。
 
-支持 `COUNT(*)`、`COUNT(expr)`、`SUM`、`AVG`、单参数 `MIN` / `MAX`；标量函数包括 `LENGTH`、`LOWER`、`UPPER`、`COALESCE`。未实现聚合 DISTINCT、FILTER、GROUP_CONCAT、TOTAL、STRING_AGG、日期时间、数学及完整 SQLite 内置函数集合。
+支持 `COUNT(*)`、`COUNT(expr)`、`SUM`、`AVG`、单参数 `MIN` / `MAX`。标量函数包括 `LENGTH`、`LOWER`、`UPPER`、`COALESCE`、`ABS`、`SIGN`、`ROUND`、`TYPEOF`、`IFNULL`、`NULLIF`、三参数 `IIF/IF`、`HEX`、`ZEROBLOB`、`UNICODE`、`CHAR`、`SUBSTR/SUBSTRING`、`INSTR`、`REPLACE`、`TRIM/LTRIM/RTRIM`、`OCTET_LENGTH`、`CONCAT/CONCAT_WS`。IFNULL、IIF/IF 和 COALESCE 惰性求值；不支持 SQLite 新版本的可变参数 IIF。ZEROBLOB 上限 64 MiB；CAST 保留有限实数限制，不能代替完整类型亲和性。未实现聚合 DISTINCT、FILTER、GROUP_CONCAT、TOTAL、STRING_AGG、日期时间及完整 SQLite 内置函数集合。
 
 LIMIT 支持 `LIMIT count OFFSET skip` 和 `LIMIT skip,count`；负 count 表示不限制，负 skip 按 0 处理。ORDER BY 支持表达式、输出别名、从 1 开始的结果序号、多列 ASC / DESC。未提供 COLLATE、NULLS FIRST / LAST。相同排序键未指定唯一补充键时，不保证与 SQLite 返回相同的并列行顺序。
 
-DML 还不支持 `INSERT OR ...`、`REPLACE`、`ON CONFLICT DO ...`、`RETURNING`、`UPDATE FROM`、UPDATE / DELETE 的 ORDER BY / LIMIT。
+DML 还不支持 `INSERT OR ...`、作为语句的 `REPLACE`、多分支 UPSERT、`RETURNING`、`UPDATE FROM`、UPDATE / DELETE 的 ORDER BY / LIMIT。
 
 ## CTE、子查询和集合运算
 
@@ -252,11 +252,11 @@ var result = db.Query("SELECT * FROM Awards WHERE RELIGIBLE(User)");
 | --- | --- |
 | 表结构 | ALTER TABLE、生成列、TEMP、WITHOUT ROWID、AUTOINCREMENT、复合主键、CREATE TABLE AS SELECT |
 | 写入扩展 | 多分支 UPSERT、无目标 DO UPDATE、INSERT OR ...、REPLACE、RETURNING、UPDATE FROM、UPDATE / DELETE ORDER BY LIMIT |
-| 表达式及查询 | CAST、COLLATE、自定义排序规则、USING / NATURAL JOIN、普通 LATERAL、独立 VALUES、聚合 DISTINCT / FILTER |
+| 表达式及查询 | COLLATE、自定义排序规则、USING / NATURAL JOIN、普通 LATERAL、独立 VALUES、聚合 DISTINCT / FILTER |
 | 内置函数 | SQLite 完整的数学、字符串、日期、JSON 聚合及格式诊断函数集合 |
 | 模式及维护 SQL | PRAGMA、ATTACH / DETACH、VACUUM、REINDEX、ANALYZE、EXPLAIN SQL、sqlite_schema 系统表查询 |
 | 扩展机制 | 虚拟表 API、FTS、RTree、加载原生扩展、自定义聚合 / 窗口 / 表值回调 |
-| 完整协议 | SQLite WAL、任意 SQLite 页和编码、全部事务锁语义、全部 SQL 类型亲和性和错误码 |
+| 完整协议 | SQLite WAL、保留字节和指针图页等未实现格式、全部事务锁语义、全部 SQL 类型亲和性和错误码 |
 
 本清单不是 SQLite 全部语法的逐项认证。清单之外的语法应先作为不支持处理，不依赖未测试的偶然接受行为。新增持久化模式由新版读取；旧预览版不了解外键和触发器等语义，不支持降级打开并写入使用了这些特性的文件。
 

@@ -245,6 +245,12 @@ await Test("native SQLite UTF16, integer serial types and blobs import; unsuppor
         Check((long)read.Query("SELECT k FROM t WHERE id=0").Rows[0][0]! == long.MinValue, "signed serial");
     using (var db = new Sqlite(sqlite, Durability.Buffered))
         db.Exec("CREATE VIEW v AS SELECT * FROM t");
+    string withView = Path.Combine(folder, "with-view.pdb");
+    await SqlDatabase.ImportSqliteAsync(sqlite, withView);
+    using (var imported = new SqlDatabase(withView))
+        Check(imported.Query("SELECT * FROM v").Rows.Count == 4, "import preserves view definition");
+    using (var db = new Sqlite(sqlite, Durability.Buffered))
+        db.Exec("CREATE TABLE generated(id INTEGER PRIMARY KEY AUTOINCREMENT)");
     string refused = Path.Combine(folder, "refused.pdb");
     await Reject<NotSupportedException>(() => SqlDatabase.ImportSqliteAsync(sqlite, refused));
     Check(!File.Exists(refused), "partial import published");
@@ -258,7 +264,7 @@ await Test("native SQLite UTF16, integer serial types and blobs import; unsuppor
 await Test("paged primary hot cache publishes immutable entries across concurrent readers", async () =>
 {
     string path = Path.Combine(folder, "hot-pages.pdb");
-    long[] ids = Enumerable.Range(0, 4096).Select(i => (long)i).Concat(new[] { long.MinValue, -1L, 1L << 50, long.MaxValue }).ToArray();
+    long[] ids = Enumerable.Range(0, 4096).Select(i => (long)i).Concat(new[] { long.MinValue, -1L, 16383L, 16384L, 524287L, 524288L, 1L << 50, long.MaxValue }).ToArray();
     using (var db = new Database(path, new() { Durability = Durability.Buffered }))
         await db.WriteAsync(ids.Select(id => Mutation.Put(id, 1, BitConverter.GetBytes(id))).ToArray());
     using (var db = new Database(path, new() { CacheBytes = 2 * 1024 * 1024, Durability = Durability.Buffered }))

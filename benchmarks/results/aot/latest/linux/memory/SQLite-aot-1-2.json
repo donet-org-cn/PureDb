@@ -13,10 +13,10 @@
       "Milliseconds": 0,
       "CpuMilliseconds": 0,
       "AllocatedBytes": 0,
-      "WorkingSetBytes": 11288576,
-      "PrivateBytes": 13656064,
-      "PeakWorkingSetBytes": 11288576,
-      "ManagedLiveBytes": 60864,
+      "WorkingSetBytes": 11534336,
+      "PrivateBytes": 13660160,
+      "PeakWorkingSetBytes": 11534336,
+      "ManagedLiveBytes": 61704,
       "StorageBytes": 33873920
     }
   ]

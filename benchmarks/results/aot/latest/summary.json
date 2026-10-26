@@ -1,310 +1,310 @@
 {
-  "Version": "1.0.0-preview.2",
+  "Version": "1.0.0-preview.3",
   "Platforms": {
     "Windows x64": {
       "Metrics": {
         "point": {
           "PureDb": {
             "aot": {
-              "Us": 0.6363126311333057,
-              "CpuUs": 0.6363120372420709,
+              "Us": 0.5111833204401626,
+              "CpuUs": 0.5111829796515095,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.333323333345334,
-              "AllocatedBytes": 693.7673015363966
+              "CpuPercent": 8.333325555562814,
+              "AllocatedBytes": 669.5293929582017
             },
             "jit": {
-              "Us": 0.5340929593088535,
-              "CpuUs": 0.5896197028565895,
-              "CpuTotalMs": 828.125,
-              "CpuPercent": 9.199704729609723,
-              "AllocatedBytes": 698.0877816913693
+              "Us": 0.5222390777966368,
+              "CpuUs": 0.6091677306796363,
+              "CpuTotalMs": 875,
+              "CpuPercent": 9.720447916462538,
+              "AllocatedBytes": 675.5472916054598
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 5.565734597859803,
-              "CpuUs": 5.565697493209849,
+              "Us": 5.477513803277731,
+              "CpuUs": 5.4774911629809235,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.333294444625924,
-              "AllocatedBytes": 496.00029683719964
+              "CpuPercent": 8.33329777792948,
+              "AllocatedBytes": 496.000292132862
             },
             "jit": {
-              "Us": 5.314917103585092,
-              "CpuUs": 5.313872750460535,
+              "Us": 5.406360989391144,
+              "CpuUs": 5.405327490774908,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.331703652098982,
-              "AllocatedBytes": 496.00056681309337
+              "CpuPercent": 8.331758075606507,
+              "AllocatedBytes": 496.00057656826567
             }
           }
         },
         "range20": {
           "PureDb": {
             "aot": {
-              "Us": 5.046840093666729,
-              "CpuUs": 5.046698786100719,
-              "CpuTotalMs": 750,
-              "CpuPercent": 8.33310000653315,
-              "AllocatedBytes": 8647.038615429892
+              "Us": 4.595865580822472,
+              "CpuUs": 4.500094980728104,
+              "CpuTotalMs": 734.375,
+              "CpuPercent": 8.159688495509775,
+              "AllocatedBytes": 8137.284117191133
             },
             "jit": {
-              "Us": 3.320833038149552,
-              "CpuUs": 3.3515808289576583,
+              "Us": 3.044143910121116,
+              "CpuUs": 3.044127674773517,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.333320000021333,
-              "AllocatedBytes": 8647.037157734405
+              "CpuPercent": 8.333288889125924,
+              "AllocatedBytes": 8137.281435388313
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 16.876200976531738,
-              "CpuUs": 16.875548455324797,
+              "Us": 17.190524651034863,
+              "CpuUs": 17.190400880148523,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.333150004033245,
-              "AllocatedBytes": 8312.00090002925
+              "CpuPercent": 8.333213335061307,
+              "AllocatedBytes": 8312.00091682138
             },
             "jit": {
-              "Us": 16.251359667179475,
-              "CpuUs": 16.251002145132283,
-              "CpuTotalMs": 750,
-              "CpuPercent": 8.333150004033245,
-              "AllocatedBytes": 8312.006240384824
+              "Us": 15.68032238506408,
+              "CpuUs": 15.576323987538942,
+              "CpuTotalMs": 734.375,
+              "CpuPercent": 8.159668912385328,
+              "AllocatedBytes": 8312.006355710731
             }
           }
         },
         "json_index": {
           "PureDb": {
             "aot": {
-              "Us": 4.0863440467693515,
-              "CpuUs": 4.086324977252791,
+              "Us": 3.587369599219389,
+              "CpuUs": 3.5873667293260056,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.333304444544591,
-              "AllocatedBytes": 1392.000217937332
+              "CpuPercent": 8.333312222275703,
+              "AllocatedBytes": 1392.0001913262256
             },
             "jit": {
-              "Us": 4.535491615415782,
-              "CpuUs": 4.913432871924191,
-              "CpuTotalMs": 812.5,
-              "CpuPercent": 9.027752500070777,
-              "AllocatedBytes": 1397.0775082696855
+              "Us": 3.883925206551674,
+              "CpuUs": 4.281333758456801,
+              "CpuTotalMs": 828.125,
+              "CpuPercent": 9.198131523911888,
+              "AllocatedBytes": 1396.1820989807
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 22.639661313692347,
-              "CpuUs": 22.639459067858006,
-              "CpuTotalMs": 750,
-              "CpuPercent": 8.33319111353833,
-              "AllocatedBytes": 2871.2018836029943
+              "Us": 24.756629806898832,
+              "CpuUs": 24.240798811685096,
+              "CpuTotalMs": 734.375,
+              "CpuPercent": 8.159640625815962,
+              "AllocatedBytes": 2871.2011883149034
             },
             "jit": {
-              "Us": 21.086892712550608,
-              "CpuUs": 20.731403930674187,
+              "Us": 20.714430911149776,
+              "CpuUs": 20.71422653078134,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.333167781066749,
-              "AllocatedBytes": 2871.2017027393094
+              "CpuPercent": 8.333251111922364,
+              "AllocatedBytes": 2871.2023641837213
             }
           }
         },
         "json_scan": {
           "PureDb": {
             "aot": {
-              "Us": 53.712933256946435,
-              "CpuUs": 53.709538814093385,
+              "Us": 49.21995668722929,
+              "CpuUs": 49.21905761911012,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.332806699949897,
-              "AllocatedBytes": 3032.002864508737
+              "CpuPercent": 8.33304667652766,
+              "AllocatedBytes": 2552.0026250164065
             },
             "jit": {
-              "Us": 32.621591057370274,
-              "CpuUs": 32.62146057152799,
+              "Us": 27.81611096688054,
+              "CpuUs": 27.81589585728591,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.33310000653315,
-              "AllocatedBytes": 2992.003479622461
+              "CpuPercent": 8.333132227075586,
+              "AllocatedBytes": 2576.0029670288914
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 5012.384666666667,
-              "CpuUs": 4895.833333333333,
-              "CpuTotalMs": 734.375,
-              "CpuPercent": 8.139561072084074,
-              "AllocatedBytes": 176.26666666666668
+              "Us": 5262.7566433566435,
+              "CpuUs": 5244.755244755244,
+              "CpuTotalMs": 750,
+              "CpuPercent": 8.304828945770396,
+              "AllocatedBytes": 176.27972027972027
             },
             "jit": {
-              "Us": 5001.598666666666,
-              "CpuUs": 5000.0,
+              "Us": 4896.137662337662,
+              "CpuUs": 4971.590909090909,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.29727228169412,
-              "AllocatedBytes": 176.53333333333333
+              "CpuPercent": 8.32869702532257,
+              "AllocatedBytes": 176.5194805194805
             }
           }
         },
         "sort20": {
           "PureDb": {
             "aot": {
-              "Us": 2046.1155313351499,
-              "CpuUs": 2043.5967302452316,
+              "Us": 1838.9892156862745,
+              "CpuUs": 1838.235294117647,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.323074866125006,
-              "AllocatedBytes": 5864.108991825613
+              "CpuPercent": 8.324937356511379,
+              "AllocatedBytes": 5864.098039215686
             },
             "jit": {
-              "Us": 1727.0602298850577,
-              "CpuUs": 1703.8863109048723,
+              "Us": 1569.6780334728032,
+              "CpuUs": 1569.0376569037658,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.319232788372561,
-              "AllocatedBytes": 5728.183908045977
+              "CpuPercent": 8.328729211825037,
+              "AllocatedBytes": 5728.167364016736
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 8641.147126436783,
-              "CpuUs": 8700.28409090909,
-              "CpuTotalMs": 750,
-              "CpuPercent": 8.31978428729533,
-              "AllocatedBytes": 2552.4597701149423
+              "Us": 9064.036144578313,
+              "CpuUs": 8847.89156626506,
+              "CpuTotalMs": 734.375,
+              "CpuPercent": 8.134613382249013,
+              "AllocatedBytes": 2552.4819277108436
             },
             "jit": {
-              "Us": 8479.376404494382,
-              "CpuUs": 8413.461538461539,
+              "Us": 8177.176086956522,
+              "CpuUs": 8064.5161290322585,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.281825897468345,
-              "AllocatedBytes": 2552.8988764044943
+              "CpuPercent": 8.268969876870408,
+              "AllocatedBytes": 2552.8695652173915
             }
           }
         },
         "sort4096": {
           "PureDb": {
             "aot": {
-              "Us": 7433.869306930693,
-              "CpuUs": 7425.742574257426,
+              "Us": 7192.115238095238,
+              "CpuUs": 7142.857142857143,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.326089635350579,
-              "AllocatedBytes": 429808.396039604
+              "CpuPercent": 8.260709580414108,
+              "AllocatedBytes": 429808.38095238095
             },
             "jit": {
-              "Us": 7534.022,
-              "CpuUs": 7735.148514851485,
+              "Us": 6985.325925925927,
+              "CpuUs": 7233.7962962962965,
               "CpuTotalMs": 781.25,
-              "CpuPercent": 8.606249199963075,
-              "AllocatedBytes": 429672.8
+              "CpuPercent": 8.59935812299606,
+              "AllocatedBytes": 429672.74074074073
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 17860.3488372093,
-              "CpuUs": 17805.232558139534,
+              "Us": 24617.52258064516,
+              "CpuUs": 24193.548387096773,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.249039151919584,
-              "AllocatedBytes": 459040.93023255817
+              "CpuPercent": 8.189812868672616,
+              "AllocatedBytes": 459041.29032258067
             },
             "jit": {
-              "Us": 17991.585714285717,
-              "CpuUs": 17857.14285714286,
-              "CpuTotalMs": 765.625,
-              "CpuPercent": 8.351122519576176,
-              "AllocatedBytes": 459041.90476190473
+              "Us": 17647.83488372093,
+              "CpuUs": 17441.86046511628,
+              "CpuTotalMs": 750,
+              "CpuPercent": 8.27648382126185,
+              "AllocatedBytes": 459041.8604651163
             }
           }
         },
         "sum_scan": {
           "PureDb": {
             "aot": {
-              "Us": 1033.6637741046832,
-              "CpuUs": 1033.0578512396694,
+              "Us": 742.3450049455985,
+              "CpuUs": 741.839762611276,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.332026871519878,
-              "AllocatedBytes": 776.0550964187328
+              "CpuPercent": 8.327661640578656,
+              "AllocatedBytes": 776.0395647873393
             },
             "jit": {
-              "Us": 1384.0763837638376,
-              "CpuUs": 1354.9354243542437,
+              "Us": 1088.4814492753621,
+              "CpuUs": 1086.9565217391305,
               "CpuTotalMs": 734.375,
-              "CpuPercent": 8.15787962914332,
-              "AllocatedBytes": 808.1476014760148
+              "CpuPercent": 8.150163710222873,
+              "AllocatedBytes": 808.1159420289855
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 2963.0181102362203,
-              "CpuUs": 2952.755905511811,
+              "Us": 3678.5985294117645,
+              "CpuUs": 3676.470588235294,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.304471419729778,
-              "AllocatedBytes": 176.15748031496062
+              "CpuPercent": 8.312352954476234,
+              "AllocatedBytes": 176.19607843137254
             },
             "jit": {
-              "Us": 2960.5165354330707,
-              "CpuUs": 2952.755905511811,
+              "Us": 2940.2132812500004,
+              "CpuUs": 2929.6875,
               "CpuTotalMs": 750,
-              "CpuPercent": 8.311488525092452,
-              "AllocatedBytes": 176.31496062992127
+              "CpuPercent": 8.303500516677015,
+              "AllocatedBytes": 176.3125
             }
           }
         },
         "Buffered_single": {
           "PureDb": {
             "aot": {
-              "Us": 14.8094,
+              "Us": 14.5023,
               "CpuUs": 15.625,
               "CpuTotalMs": 15.625,
-              "CpuPercent": 8.13680031328634,
-              "AllocatedBytes": 6076.384
+              "CpuPercent": 8.978460887813197,
+              "AllocatedBytes": 6076.752
             },
             "jit": {
-              "Us": 57.0625,
+              "Us": 74.6779,
               "CpuUs": 62.5,
               "CpuTotalMs": 62.5,
-              "CpuPercent": 9.127418765972983,
-              "AllocatedBytes": 6174.192
+              "CpuPercent": 6.974397155427956,
+              "AllocatedBytes": 6173.664
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 393.068,
-              "CpuUs": 31.25,
-              "CpuTotalMs": 31.25,
-              "CpuPercent": 0.6625231936119621,
+              "Us": 601.8886,
+              "CpuUs": 46.875,
+              "CpuTotalMs": 46.875,
+              "CpuPercent": 0.532124156536385,
               "AllocatedBytes": 178.872
             },
             "jit": {
-              "Us": 383.3356,
-              "CpuUs": 62.5,
-              "CpuTotalMs": 62.5,
-              "CpuPercent": 1.358687618194953,
-              "AllocatedBytes": 177.104
+              "Us": 533.453,
+              "CpuUs": 46.875,
+              "CpuTotalMs": 46.875,
+              "CpuPercent": 0.7322575747066753,
+              "AllocatedBytes": 177.2
             }
           }
         },
         "Buffered_batch_insert": {
           "PureDb": {
             "aot": {
-              "Us": 3.86464,
+              "Us": 3.9476799999999996,
               "CpuUs": 3.125,
               "CpuTotalMs": 15.625,
-              "CpuPercent": 6.947816451362172,
-              "AllocatedBytes": 3647.992
+              "CpuPercent": 6.59670152258204,
+              "AllocatedBytes": 3647.68
             },
             "jit": {
-              "Us": 11.931280000000001,
-              "CpuUs": 9.375,
-              "CpuTotalMs": 46.875,
-              "CpuPercent": 6.54791438973857,
-              "AllocatedBytes": 3671.9808
+              "Us": 18.94096,
+              "CpuUs": 18.75,
+              "CpuTotalMs": 93.75,
+              "CpuPercent": 8.249317880403105,
+              "AllocatedBytes": 3672.0048
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 2.8044599999999997,
+              "Us": 2.9424200000000003,
               "CpuUs": 3.125,
               "CpuTotalMs": 15.625,
-              "CpuPercent": 9.285804278423178,
+              "CpuPercent": 8.836670059947972,
               "AllocatedBytes": 174.0784
             },
             "jit": {
-              "Us": 2.86092,
-              "CpuUs": 0.0,
-              "CpuTotalMs": 0,
-              "CpuPercent": 0.0,
+              "Us": 2.92476,
+              "CpuUs": 3.125,
+              "CpuTotalMs": 15.625,
+              "CpuPercent": 9.50238517469793,
               "AllocatedBytes": 174.0784
             }
           }
@@ -312,33 +312,33 @@
         "Buffered_batch_update": {
           "PureDb": {
             "aot": {
-              "Us": 3.75826,
+              "Us": 3.83808,
               "CpuUs": 3.125,
               "CpuTotalMs": 15.625,
-              "CpuPercent": 6.929181766739572,
-              "AllocatedBytes": 3140.4016
+              "CpuPercent": 7.123305906895998,
+              "AllocatedBytes": 3111.3376
             },
             "jit": {
-              "Us": 15.247160000000001,
+              "Us": 18.4448,
               "CpuUs": 15.625,
               "CpuTotalMs": 78.125,
-              "CpuPercent": 8.633211026287396,
-              "AllocatedBytes": 3140.7248
+              "CpuPercent": 7.709027233887551,
+              "AllocatedBytes": 3111.624
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 2.86448,
+              "Us": 3.116,
               "CpuUs": 3.125,
               "CpuTotalMs": 15.625,
-              "CpuPercent": 9.091237036623285,
+              "CpuPercent": 8.357402652973898,
               "AllocatedBytes": 0.3792
             },
             "jit": {
-              "Us": 2.6558599999999997,
+              "Us": 3.0406400000000002,
               "CpuUs": 3.125,
               "CpuTotalMs": 15.625,
-              "CpuPercent": 9.805361226369865,
+              "CpuPercent": 8.164658030156719,
               "AllocatedBytes": 0.3792
             }
           }
@@ -346,33 +346,33 @@
         "Buffered_batch_delete": {
           "PureDb": {
             "aot": {
-              "Us": 1.2881799999999999,
+              "Us": 1.5150800000000002,
               "CpuUs": 0.0,
               "CpuTotalMs": 0,
               "CpuPercent": 0.0,
-              "AllocatedBytes": 1496.3328
+              "AllocatedBytes": 1467.264
             },
             "jit": {
-              "Us": 3.27944,
+              "Us": 3.5456800000000004,
               "CpuUs": 3.125,
               "CpuTotalMs": 15.625,
-              "CpuPercent": 7.940888281739158,
-              "AllocatedBytes": 1496.5488
+              "CpuPercent": 7.344618427682889,
+              "AllocatedBytes": 1467.48
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 3.68448,
+              "Us": 3.7015799999999994,
               "CpuUs": 3.125,
               "CpuTotalMs": 15.625,
-              "CpuPercent": 7.067935411962249,
+              "CpuPercent": 7.0352840318638705,
               "AllocatedBytes": 0.3632
             },
             "jit": {
-              "Us": 3.5652199999999996,
+              "Us": 3.6708199999999995,
               "CpuUs": 3.125,
               "CpuTotalMs": 15.625,
-              "CpuPercent": 7.304364574042181,
+              "CpuPercent": 7.094236891666349,
               "AllocatedBytes": 0.3632
             }
           }
@@ -380,33 +380,33 @@
         "Full_single": {
           "PureDb": {
             "aot": {
-              "Us": 24303.328,
-              "CpuUs": 312.5,
-              "CpuTotalMs": 15.625,
-              "CpuPercent": 0.13263836095284207,
-              "AllocatedBytes": 7060.32
+              "Us": 25804.86,
+              "CpuUs": 0.0,
+              "CpuTotalMs": 0,
+              "CpuPercent": 0.0,
+              "AllocatedBytes": 7061.6
             },
             "jit": {
-              "Us": 24931.326,
-              "CpuUs": 5000.0,
-              "CpuTotalMs": 250,
-              "CpuPercent": 1.8441312529290335,
-              "AllocatedBytes": 7545.12
+              "Us": 27765.257999999998,
+              "CpuUs": 9062.5,
+              "CpuTotalMs": 453.125,
+              "CpuPercent": 2.7199759257894645,
+              "AllocatedBytes": 7484.48
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 22775.766,
+              "Us": 28991.024000000005,
               "CpuUs": 312.5,
               "CpuTotalMs": 15.625,
-              "CpuPercent": 0.1143393669686748,
+              "CpuPercent": 0.08982665347269785,
               "AllocatedBytes": 143.84
             },
             "jit": {
-              "Us": 23159.306,
-              "CpuUs": 0.0,
-              "CpuTotalMs": 0,
-              "CpuPercent": 0.0,
+              "Us": 25158.056,
+              "CpuUs": 312.5,
+              "CpuTotalMs": 15.625,
+              "CpuPercent": 0.10351223745851694,
               "AllocatedBytes": 143.84
             }
           }
@@ -414,33 +414,33 @@
         "Full_batch_insert": {
           "PureDb": {
             "aot": {
-              "Us": 31.42212,
-              "CpuUs": 6.25,
-              "CpuTotalMs": 31.25,
-              "CpuPercent": 1.6460117214996626,
-              "AllocatedBytes": 3644.4704
+              "Us": 34.95092,
+              "CpuUs": 3.125,
+              "CpuTotalMs": 15.625,
+              "CpuPercent": 0.7450924515482473,
+              "AllocatedBytes": 3628.0896
             },
             "jit": {
-              "Us": 31.2481,
-              "CpuUs": 12.5,
-              "CpuTotalMs": 62.5,
-              "CpuPercent": 3.526504530965869,
-              "AllocatedBytes": 3676.4464
+              "Us": 41.22164,
+              "CpuUs": 9.375,
+              "CpuTotalMs": 46.875,
+              "CpuPercent": 2.1404578730492725,
+              "AllocatedBytes": 3612.4704
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 30.095940000000002,
-              "CpuUs": 0.0,
-              "CpuTotalMs": 0,
-              "CpuPercent": 0.0,
+              "Us": 43.43486,
+              "CpuUs": 3.125,
+              "CpuTotalMs": 15.625,
+              "CpuPercent": 0.47370154540998516,
               "AllocatedBytes": 174.0784
             },
             "jit": {
-              "Us": 28.332619999999995,
-              "CpuUs": 0.0,
-              "CpuTotalMs": 0,
-              "CpuPercent": 0.0,
+              "Us": 37.95344,
+              "CpuUs": 6.25,
+              "CpuTotalMs": 31.25,
+              "CpuPercent": 1.5583631691312243,
               "AllocatedBytes": 174.0784
             }
           }
@@ -448,33 +448,33 @@
         "Full_batch_update": {
           "PureDb": {
             "aot": {
-              "Us": 30.7447,
+              "Us": 39.49248,
               "CpuUs": 3.125,
               "CpuTotalMs": 15.625,
-              "CpuPercent": 0.9040173663905726,
-              "AllocatedBytes": 3152.4144
+              "CpuPercent": 0.5979928260762072,
+              "AllocatedBytes": 3123.4112
             },
             "jit": {
-              "Us": 28.809420000000003,
-              "CpuUs": 31.25,
-              "CpuTotalMs": 156.25,
-              "CpuPercent": 7.719754865051272,
-              "AllocatedBytes": 3124.296
+              "Us": 36.001819999999995,
+              "CpuUs": 15.625,
+              "CpuTotalMs": 78.125,
+              "CpuPercent": 3.6167153030967136,
+              "AllocatedBytes": 3095.3472
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 29.808839999999996,
+              "Us": 44.99178,
               "CpuUs": 3.125,
               "CpuTotalMs": 15.625,
-              "CpuPercent": 0.9444879261499298,
+              "CpuPercent": 0.5788094328934456,
               "AllocatedBytes": 0.3792
             },
             "jit": {
-              "Us": 28.2269,
-              "CpuUs": 6.25,
-              "CpuTotalMs": 31.25,
-              "CpuPercent": 1.9424729638842992,
+              "Us": 35.02516,
+              "CpuUs": 3.125,
+              "CpuTotalMs": 15.625,
+              "CpuPercent": 0.9194010389084636,
               "AllocatedBytes": 0.408
             }
           }
@@ -482,33 +482,33 @@
         "Full_batch_delete": {
           "PureDb": {
             "aot": {
-              "Us": 20.36586,
+              "Us": 26.797959999999996,
               "CpuUs": 0.0,
               "CpuTotalMs": 0,
               "CpuPercent": 0.0,
-              "AllocatedBytes": 1496.8528
+              "AllocatedBytes": 1467.784
             },
             "jit": {
-              "Us": 24.520840000000003,
-              "CpuUs": 15.625,
-              "CpuTotalMs": 78.125,
-              "CpuPercent": 5.310109006597381,
-              "AllocatedBytes": 1497.0128
+              "Us": 30.068620000000003,
+              "CpuUs": 21.875,
+              "CpuTotalMs": 109.375,
+              "CpuPercent": 5.196447326149322,
+              "AllocatedBytes": 1478.9184
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 38.245979999999996,
+              "Us": 38.464980000000004,
               "CpuUs": 3.125,
               "CpuTotalMs": 15.625,
-              "CpuPercent": 0.6808994479071178,
+              "CpuPercent": 0.6554406566336635,
               "AllocatedBytes": 0.3632
             },
             "jit": {
-              "Us": 28.814940000000004,
-              "CpuUs": 0.0,
-              "CpuTotalMs": 0,
-              "CpuPercent": 0.0,
+              "Us": 33.41492,
+              "CpuUs": 3.125,
+              "CpuTotalMs": 15.625,
+              "CpuPercent": 0.6281560570405098,
               "AllocatedBytes": 0.4112
             }
           }
@@ -518,90 +518,90 @@
         "point": {
           "PureDb": {
             "jit": {
-              "WorkingSetBytes": 81.54296875,
-              "PrivateBytes": 57.3671875,
-              "PeakWorkingSetBytes": 84.1796875,
-              "ManagedLiveBytes": 38.182647705078125
+              "WorkingSetBytes": 84.51953125,
+              "PrivateBytes": 60.0703125,
+              "PeakWorkingSetBytes": 84.51953125,
+              "ManagedLiveBytes": 38.22151184082031
             },
             "aot": {
-              "WorkingSetBytes": 55.9921875,
-              "PrivateBytes": 47.89453125,
-              "PeakWorkingSetBytes": 58.6484375,
-              "ManagedLiveBytes": 37.982460021972656
+              "WorkingSetBytes": 58.57421875,
+              "PrivateBytes": 50.3515625,
+              "PeakWorkingSetBytes": 58.71484375,
+              "ManagedLiveBytes": 38.0208740234375
             }
           },
           "SQLite": {
             "jit": {
-              "WorkingSetBytes": 72.984375,
-              "PrivateBytes": 54.05859375,
-              "PeakWorkingSetBytes": 72.984375,
-              "ManagedLiveBytes": 0.2566986083984375
+              "WorkingSetBytes": 73.1015625,
+              "PrivateBytes": 54.09765625,
+              "PeakWorkingSetBytes": 73.1015625,
+              "ManagedLiveBytes": 0.2601165771484375
             },
             "aot": {
-              "WorkingSetBytes": 53.17578125,
-              "PrivateBytes": 46.39453125,
-              "PeakWorkingSetBytes": 53.17578125,
-              "ManagedLiveBytes": 0.04261016845703125
+              "WorkingSetBytes": 53.15625,
+              "PrivateBytes": 46.37109375,
+              "PeakWorkingSetBytes": 53.15625,
+              "ManagedLiveBytes": 0.042694091796875
             }
           }
         },
         "range20": {
           "PureDb": {
             "jit": {
-              "WorkingSetBytes": 42.4375,
-              "PrivateBytes": 18.03515625,
-              "PeakWorkingSetBytes": 42.4375,
-              "ManagedLiveBytes": 1.7181625366210938
+              "WorkingSetBytes": 42.75390625,
+              "PrivateBytes": 18.26171875,
+              "PeakWorkingSetBytes": 42.75390625,
+              "ManagedLiveBytes": 1.7571640014648438
             },
             "aot": {
-              "WorkingSetBytes": 22.58203125,
-              "PrivateBytes": 13.84765625,
-              "PeakWorkingSetBytes": 22.58203125,
-              "ManagedLiveBytes": 1.5336456298828125
+              "WorkingSetBytes": 22.80078125,
+              "PrivateBytes": 14.0078125,
+              "PeakWorkingSetBytes": 22.80078125,
+              "ManagedLiveBytes": 1.5722198486328125
             }
           },
           "SQLite": {
             "jit": {
-              "WorkingSetBytes": 34.25390625,
-              "PrivateBytes": 14.48828125,
-              "PeakWorkingSetBytes": 34.25390625,
-              "ManagedLiveBytes": 0.2563323974609375
+              "WorkingSetBytes": 34.29296875,
+              "PrivateBytes": 14.5234375,
+              "PeakWorkingSetBytes": 34.29296875,
+              "ManagedLiveBytes": 0.2597503662109375
             },
             "aot": {
-              "WorkingSetBytes": 19.56640625,
-              "PrivateBytes": 11.75,
-              "PeakWorkingSetBytes": 19.56640625,
-              "ManagedLiveBytes": 0.04261016845703125
+              "WorkingSetBytes": 19.67578125,
+              "PrivateBytes": 11.859375,
+              "PeakWorkingSetBytes": 19.67578125,
+              "ManagedLiveBytes": 0.042694091796875
             }
           }
         },
         "json_index": {
           "PureDb": {
             "jit": {
-              "WorkingSetBytes": 130.796875,
-              "PrivateBytes": 106.7890625,
-              "PeakWorkingSetBytes": 134.8046875,
-              "ManagedLiveBytes": 78.17088317871094
+              "WorkingSetBytes": 134.63671875,
+              "PrivateBytes": 110.72265625,
+              "PeakWorkingSetBytes": 135.98046875,
+              "ManagedLiveBytes": 75.8741683959961
             },
             "aot": {
-              "WorkingSetBytes": 116.4765625,
-              "PrivateBytes": 108.3359375,
-              "PeakWorkingSetBytes": 119.8203125,
-              "ManagedLiveBytes": 81.9758529663086
+              "WorkingSetBytes": 112.84765625,
+              "PrivateBytes": 104.6640625,
+              "PeakWorkingSetBytes": 112.84765625,
+              "ManagedLiveBytes": 79.6786880493164
             }
           },
           "SQLite": {
             "jit": {
-              "WorkingSetBytes": 31.65625,
-              "PrivateBytes": 12.10546875,
-              "PeakWorkingSetBytes": 31.65625,
-              "ManagedLiveBytes": 0.25630950927734375
+              "WorkingSetBytes": 31.66015625,
+              "PrivateBytes": 12.09765625,
+              "PeakWorkingSetBytes": 31.66015625,
+              "ManagedLiveBytes": 0.25972747802734375
             },
             "aot": {
-              "WorkingSetBytes": 16.61328125,
-              "PrivateBytes": 8.80078125,
-              "PeakWorkingSetBytes": 16.61328125,
-              "ManagedLiveBytes": 0.04261016845703125
+              "WorkingSetBytes": 16.609375,
+              "PrivateBytes": 8.8125,
+              "PeakWorkingSetBytes": 16.609375,
+              "ManagedLiveBytes": 0.042694091796875
             }
           }
         }
@@ -609,22 +609,22 @@
       "Startup": {
         "PureDb": {
           "jit": {
-            "ProcessMs": 216.72249998664483,
-            "OpenQueryCloseMs": 119.7536
+            "ProcessMs": 225.75169999618083,
+            "OpenQueryCloseMs": 128.842
           },
           "aot": {
-            "ProcessMs": 33.74370001256466,
-            "OpenQueryCloseMs": 3.9985
+            "ProcessMs": 34.64559995336458,
+            "OpenQueryCloseMs": 4.0945
           }
         },
         "SQLite": {
           "jit": {
-            "ProcessMs": 119.44969999603927,
-            "OpenQueryCloseMs": 5.1528
+            "ProcessMs": 124.40040003275499,
+            "OpenQueryCloseMs": 5.4045
           },
           "aot": {
-            "ProcessMs": 32.63079997850582,
-            "OpenQueryCloseMs": 2.0331
+            "ProcessMs": 34.27740000188351,
+            "OpenQueryCloseMs": 2.2889
           }
         }
       },
@@ -633,9 +633,9 @@
         "SQLite": 33841152
       },
       "AotScore": [
-        10,
-        3,
-        2
+        13,
+        2,
+        0
       ]
     },
     "Linux ARM64": {
@@ -643,305 +643,305 @@
         "point": {
           "PureDb": {
             "aot": {
-              "Us": 1.3649015818246673,
-              "CpuUs": 1.3647077664460996,
-              "CpuTotalMs": 749.8960000000001,
-              "CpuPercent": 12.498225005916646,
-              "AllocatedBytes": 693.76545127297
+              "Us": 1.3002437514844396,
+              "CpuUs": 1.2999304805510241,
+              "CpuTotalMs": 749.8699999999999,
+              "CpuPercent": 12.497790007661305,
+              "AllocatedBytes": 669.5108778000648
             },
             "jit": {
-              "Us": 8.563215492057695,
-              "CpuUs": 13.046308901148766,
-              "CpuTotalMs": 1092.524,
-              "CpuPercent": 18.194553711141115,
-              "AllocatedBytes": 1069.076066967591
+              "Us": 2.6331727395222186,
+              "CpuUs": 3.664086404850799,
+              "CpuTotalMs": 1044.2060000000001,
+              "CpuPercent": 17.393875978279137,
+              "AllocatedBytes": 785.1923195688179
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 3.5475009105228055,
-              "CpuUs": 3.5473164409673785,
-              "CpuTotalMs": 749.9630000000002,
-              "CpuPercent": 12.499350001733331,
-              "AllocatedBytes": 496.000189199544
+              "Us": 3.796730772151322,
+              "CpuUs": 3.7967338095262195,
+              "CpuTotalMs": 749.997,
+              "CpuPercent": 12.499886667240887,
+              "AllocatedBytes": 496.0002024916599
             },
             "jit": {
-              "Us": 3.5991673701174123,
-              "CpuUs": 3.605671092011357,
-              "CpuTotalMs": 752.8739999999999,
-              "CpuPercent": 12.541737826148083,
-              "AllocatedBytes": 496.0003837004067
+              "Us": 3.8051226152512387,
+              "CpuUs": 3.8143102670310225,
+              "CpuTotalMs": 751.9409999999999,
+              "CpuPercent": 12.525305768036056,
+              "AllocatedBytes": 496.00040559107293
             }
           }
         },
         "range20": {
           "PureDb": {
             "aot": {
-              "Us": 10.532300238730516,
-              "CpuUs": 10.532130318775454,
-              "CpuTotalMs": 749.9930000000002,
-              "CpuPercent": 12.49979833470466,
-              "AllocatedBytes": 8647.043259488937
+              "Us": 11.524005101256877,
+              "CpuUs": 11.523723917519439,
+              "CpuTotalMs": 749.9999999999998,
+              "CpuPercent": 12.499850001799974,
+              "AllocatedBytes": 8137.285393810885
             },
             "jit": {
-              "Us": 9.000565229391928,
-              "CpuUs": 9.589494653721994,
-              "CpuTotalMs": 754.5649999999996,
-              "CpuPercent": 12.575999493336704,
-              "AllocatedBytes": 8647.047071117426
+              "Us": 9.33551201782447,
+              "CpuUs": 9.331146765580849,
+              "CpuTotalMs": 751.5219999999999,
+              "CpuPercent": 12.525254774390682,
+              "AllocatedBytes": 8137.276679794867
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 23.36437182642285,
-              "CpuUs": 23.361764431014613,
-              "CpuTotalMs": 749.9360000000001,
-              "CpuPercent": 12.49860503664104,
-              "AllocatedBytes": 8312.0012460671
+              "Us": 27.41768274853801,
+              "CpuUs": 27.417361111111116,
+              "CpuTotalMs": 750.0010000000002,
+              "CpuPercent": 12.499853362230752,
+              "AllocatedBytes": 8312.001461988304
             },
             "jit": {
-              "Us": 22.267721631732083,
-              "CpuUs": 22.34490232171486,
-              "CpuTotalMs": 751.3629999999998,
-              "CpuPercent": 12.52264153081748,
-              "AllocatedBytes": 8312.009263107891
+              "Us": 26.921576510283927,
+              "CpuUs": 26.96852004738145,
+              "CpuTotalMs": 751.3159999999998,
+              "CpuPercent": 12.521796428359048,
+              "AllocatedBytes": 8312.012922215443
             }
           }
         },
         "json_index": {
           "PureDb": {
             "aot": {
-              "Us": 13.524273297749568,
-              "CpuUs": 13.524325591459899,
-              "CpuTotalMs": 750.0050000000001,
-              "CpuPercent": 12.500048333198002,
-              "AllocatedBytes": 1407.148730525101
+              "Us": 14.497815707575436,
+              "CpuUs": 14.498018672800734,
+              "CpuTotalMs": 750.0389999999998,
+              "CpuPercent": 12.500174996383414,
+              "AllocatedBytes": 1408.2389190652002
             },
             "jit": {
-              "Us": 17.375341132862275,
-              "CpuUs": 25.200880342870366,
-              "CpuTotalMs": 1087.7959999999994,
-              "CpuPercent": 18.12977379132396,
-              "AllocatedBytes": 1411.4516853932585
+              "Us": 16.288173279246838,
+              "CpuUs": 21.213106574979918,
+              "CpuTotalMs": 942.3520000000008,
+              "CpuPercent": 15.625810431224041,
+              "AllocatedBytes": 1410.2098527083017
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 31.717211485600707,
-              "CpuUs": 31.716623673193222,
-              "CpuTotalMs": 749.9549999999999,
-              "CpuPercent": 12.499150006799944,
-              "AllocatedBytes": 2871.202559181062
+              "Us": 35.713256511594686,
+              "CpuUs": 35.71182324651207,
+              "CpuTotalMs": 749.9919999999997,
+              "CpuPercent": 12.499800001066657,
+              "AllocatedBytes": 2871.203147877013
             },
             "jit": {
-              "Us": 30.840795262963113,
-              "CpuUs": 30.890291541592994,
-              "CpuTotalMs": 751.1329999999998,
-              "CpuPercent": 12.518661335738976,
-              "AllocatedBytes": 2871.203914634648
+              "Us": 34.60067355600664,
+              "CpuUs": 34.633465584056104,
+              "CpuTotalMs": 750.7150000000001,
+              "CpuPercent": 12.511846600325708,
+              "AllocatedBytes": 2871.202804945562
             }
           }
         },
         "json_scan": {
           "PureDb": {
             "aot": {
-              "Us": 97.42413300428628,
-              "CpuUs": 97.42252240550727,
-              "CpuTotalMs": 750.0560000000005,
-              "CpuPercent": 12.499664986157615,
-              "AllocatedBytes": 3032.0051954799324
+              "Us": 98.93288484368817,
+              "CpuUs": 98.93035219628017,
+              "CpuTotalMs": 749.9959999999992,
+              "CpuPercent": 12.49968000435194,
+              "AllocatedBytes": 2552.0052763487665
             },
             "jit": {
-              "Us": 103.25925110132158,
-              "CpuUs": 105.23155286343612,
-              "CpuTotalMs": 764.402,
-              "CpuPercent": 12.738756060725645,
-              "AllocatedBytes": 2992.011013215859
+              "Us": 103.11653661875428,
+              "CpuUs": 103.11403148528399,
+              "CpuTotalMs": 753.2479999999996,
+              "CpuPercent": 12.499739530347677,
+              "AllocatedBytes": 2576.0109514031487
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 6733.501785714286,
-              "CpuUs": 6733.383928571429,
-              "CpuTotalMs": 754.1390000000001,
-              "CpuPercent": 12.49978121127274,
-              "AllocatedBytes": 176.35714285714286
+              "Us": 7065.01214953271,
+              "CpuUs": 6996.514018691593,
+              "CpuTotalMs": 750.2309999999998,
+              "CpuPercent": 12.49983172076283,
+              "AllocatedBytes": 176.37383177570092
             },
             "jit": {
-              "Us": 6769.817117117117,
-              "CpuUs": 6771.63063063063,
-              "CpuTotalMs": 752.893,
-              "CpuPercent": 12.499506921494067,
-              "AllocatedBytes": 176.72072072072072
+              "Us": 7134.180188679246,
+              "CpuUs": 7000.650943396231,
+              "CpuTotalMs": 754.8209999999999,
+              "CpuPercent": 12.499623137406225,
+              "AllocatedBytes": 176.75471698113208
             }
           }
         },
         "sort20": {
           "PureDb": {
             "aot": {
-              "Us": 9171.413414634146,
-              "CpuUs": 9169.890243902444,
-              "CpuTotalMs": 751.9870000000001,
-              "CpuPercent": 12.49978808811508,
-              "AllocatedBytes": 5864.487804878048
+              "Us": 3938.5554973821986,
+              "CpuUs": 3938.507853403142,
+              "CpuTotalMs": 752.2550000000001,
+              "CpuPercent": 12.498755354306034,
+              "AllocatedBytes": 5864.20942408377
             },
             "jit": {
-              "Us": 3880.068041237113,
-              "CpuUs": 4523.984536082476,
-              "CpuTotalMs": 877.6530000000002,
-              "CpuPercent": 14.57443686554546,
-              "AllocatedBytes": 5736.0
+              "Us": 3461.229953917051,
+              "CpuUs": 3863.2093023255775,
+              "CpuTotalMs": 830.5899999999992,
+              "CpuPercent": 13.798257936502651,
+              "AllocatedBytes": 5731.2
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 16433.739130434784,
-              "CpuUs": 16432.565217391308,
-              "CpuTotalMs": 755.8980000000001,
-              "CpuPercent": 12.499107086164203,
-              "AllocatedBytes": 2552.8695652173915
+              "Us": 17504.623255813956,
+              "CpuUs": 17504.279069767446,
+              "CpuTotalMs": 758.2530000000006,
+              "CpuPercent": 12.499813719306061,
+              "AllocatedBytes": 2552.9302325581393
             },
             "jit": {
-              "Us": 16302.336170212764,
-              "CpuUs": 16301.723404255328,
-              "CpuTotalMs": 761.0200000000004,
-              "CpuPercent": 12.499530154795732,
-              "AllocatedBytes": 2553.7021276595747
+              "Us": 17376.136363636364,
+              "CpuUs": 17436.659090909085,
+              "CpuTotalMs": 763.1129999999994,
+              "CpuPercent": 12.543538682885355,
+              "AllocatedBytes": 2553.818181818182
             }
           }
         },
         "sort4096": {
           "PureDb": {
             "aot": {
-              "Us": 22820.593939393937,
-              "CpuUs": 22820.33333333333,
-              "CpuTotalMs": 759.6639999999998,
-              "CpuPercent": 12.49979267493562,
-              "AllocatedBytes": 429809.2121212121
+              "Us": 21471.77142857143,
+              "CpuUs": 21466.68571428571,
+              "CpuTotalMs": 752.1440000000002,
+              "CpuPercent": 12.4994942713422,
+              "AllocatedBytes": 429809.14285714284
             },
             "jit": {
-              "Us": 20706.640540540542,
-              "CpuUs": 20912.567567567552,
-              "CpuTotalMs": 769.0589999999993,
-              "CpuPercent": 12.624312190226991,
-              "AllocatedBytes": 429674.1621621622
+              "Us": 19741.353846153845,
+              "CpuUs": 19740.692307692323,
+              "CpuTotalMs": 769.8870000000006,
+              "CpuPercent": 12.499756156559197,
+              "AllocatedBytes": 429674.0512820513
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 32407.55833333333,
-              "CpuUs": 32403.041666666657,
-              "CpuTotalMs": 764.6109999999999,
-              "CpuPercent": 12.498563159957467,
-              "AllocatedBytes": 459041.6666666667
+              "Us": 33559.217391304344,
+              "CpuUs": 33558.608695652176,
+              "CpuTotalMs": 776.7829999999994,
+              "CpuPercent": 12.499831970426794,
+              "AllocatedBytes": 459041.73913043475
             },
             "jit": {
-              "Us": 31754.558333333334,
-              "CpuUs": 31940.37500000002,
-              "CpuTotalMs": 766.5690000000004,
-              "CpuPercent": 12.633670187906374,
-              "AllocatedBytes": 459043.3333333333
+              "Us": 33234.02608695652,
+              "CpuUs": 33314.217391304344,
+              "CpuTotalMs": 766.2269999999999,
+              "CpuPercent": 12.521444477101745,
+              "AllocatedBytes": 459043.47826086957
             }
           }
         },
         "sum_scan": {
           "PureDb": {
             "aot": {
-              "Us": 1956.8070312500001,
-              "CpuUs": 1954.4557291666679,
-              "CpuTotalMs": 750.7729999999992,
-              "CpuPercent": 12.499643925082376,
-              "AllocatedBytes": 776.1041666666666
+              "Us": 1756.0705607476636,
+              "CpuUs": 1755.8831775700935,
+              "CpuTotalMs": 751.485999999999,
+              "CpuPercent": 12.499091865429476,
+              "AllocatedBytes": 776.0934579439253
             },
             "jit": {
-              "Us": 2921.624513618677,
-              "CpuUs": 2941.163424124517,
-              "CpuTotalMs": 755.8790000000008,
-              "CpuPercent": 12.577732729314361,
-              "AllocatedBytes": 808.3112840466927
+              "Us": 2751.334432234432,
+              "CpuUs": 2761.2783882783874,
+              "CpuTotalMs": 753.1549999999988,
+              "CpuPercent": 12.538181142594187,
+              "AllocatedBytes": 808.2930402930403
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 5023.960666666667,
-              "CpuUs": 5023.640000000001,
-              "CpuTotalMs": 753.5460000000003,
-              "CpuPercent": 12.499587069552351,
-              "AllocatedBytes": 176.26666666666668
+              "Us": 5312.09014084507,
+              "CpuUs": 5311.992957746478,
+              "CpuTotalMs": 752.1149999999989,
+              "CpuPercent": 12.499771316242724,
+              "AllocatedBytes": 176.28169014084506
             },
             "jit": {
-              "Us": 5048.771812080537,
-              "CpuUs": 5050.107382550338,
-              "CpuTotalMs": 752.4660000000003,
-              "CpuPercent": 12.49970195714805,
-              "AllocatedBytes": 176.53691275167785
+              "Us": 5286.392253521127,
+              "CpuUs": 5286.288732394368,
+              "CpuTotalMs": 750.4200000000001,
+              "CpuPercent": 12.499808367188479,
+              "AllocatedBytes": 176.56338028169014
             }
           }
         },
         "Buffered_single": {
           "PureDb": {
             "aot": {
-              "Us": 53.736,
-              "CpuUs": 54.211,
-              "CpuTotalMs": 54.211,
-              "CpuPercent": 12.555030305543458,
-              "AllocatedBytes": 6071.784
+              "Us": 24.194,
+              "CpuUs": 24.179000000000002,
+              "CpuTotalMs": 24.179000000000002,
+              "CpuPercent": 12.406958937284092,
+              "AllocatedBytes": 6071.512
             },
             "jit": {
-              "Us": 93.2318,
-              "CpuUs": 94.26599999999999,
-              "CpuTotalMs": 94.26599999999999,
-              "CpuPercent": 12.604122900200565,
-              "AllocatedBytes": 6177.096
+              "Us": 103.463,
+              "CpuUs": 103.79700000000003,
+              "CpuTotalMs": 103.79700000000003,
+              "CpuPercent": 12.521847895772204,
+              "AllocatedBytes": 6176.032
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 128.0227,
-              "CpuUs": 56.813,
-              "CpuTotalMs": 56.813,
-              "CpuPercent": 6.1944265943446775,
+              "Us": 128.0984,
+              "CpuUs": 41.271,
+              "CpuTotalMs": 41.271,
+              "CpuPercent": 4.425669850240762,
               "AllocatedBytes": 178.832
             },
             "jit": {
-              "Us": 157.7757,
-              "CpuUs": 121.56400000000002,
-              "CpuTotalMs": 121.56400000000002,
-              "CpuPercent": 10.049840808352304,
-              "AllocatedBytes": 180.184
+              "Us": 98.7329,
+              "CpuUs": 43.747,
+              "CpuTotalMs": 43.747,
+              "CpuPercent": 5.706274292660453,
+              "AllocatedBytes": 180.472
             }
           }
         },
         "Buffered_batch_insert": {
           "PureDb": {
             "aot": {
-              "Us": 15.52558,
-              "CpuUs": 15.5486,
-              "CpuTotalMs": 77.743,
-              "CpuPercent": 12.51853392916722,
-              "AllocatedBytes": 3649.7232
+              "Us": 10.35012,
+              "CpuUs": 10.346800000000002,
+              "CpuTotalMs": 51.73400000000001,
+              "CpuPercent": 12.498330458818952,
+              "AllocatedBytes": 3648.1184
             },
             "jit": {
-              "Us": 28.810939999999995,
-              "CpuUs": 28.8192,
-              "CpuTotalMs": 144.096,
-              "CpuPercent": 12.50613933512345,
-              "AllocatedBytes": 3674.0496
+              "Us": 28.0921,
+              "CpuUs": 27.963800000000006,
+              "CpuTotalMs": 139.81900000000002,
+              "CpuPercent": 12.500825682013343,
+              "AllocatedBytes": 3674.0736
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 12.99488,
-              "CpuUs": 12.998199999999997,
-              "CpuTotalMs": 64.99099999999999,
-              "CpuPercent": 12.50319356546578,
+              "Us": 9.202060000000001,
+              "CpuUs": 9.119600000000002,
+              "CpuTotalMs": 45.598000000000006,
+              "CpuPercent": 12.483064138368583,
               "AllocatedBytes": 174.0784
             },
             "jit": {
-              "Us": 9.074580000000001,
-              "CpuUs": 9.0452,
-              "CpuTotalMs": 45.226,
-              "CpuPercent": 12.507315893938632,
+              "Us": 9.2407,
+              "CpuUs": 9.241200000000003,
+              "CpuTotalMs": 46.20600000000002,
+              "CpuPercent": 12.500676355687347,
               "AllocatedBytes": 174.0784
             }
           }
@@ -949,33 +949,33 @@
         "Buffered_batch_update": {
           "PureDb": {
             "aot": {
-              "Us": 10.80414,
-              "CpuUs": 10.835400000000005,
-              "CpuTotalMs": 54.17700000000002,
-              "CpuPercent": 12.53616669165709,
-              "AllocatedBytes": 3178.1856
+              "Us": 9.0812,
+              "CpuUs": 9.099199999999996,
+              "CpuTotalMs": 45.49599999999998,
+              "CpuPercent": 12.521710227565316,
+              "AllocatedBytes": 3149.1888
             },
             "jit": {
-              "Us": 41.8553,
-              "CpuUs": 43.6654,
-              "CpuTotalMs": 218.327,
-              "CpuPercent": 13.040582674117735,
-              "AllocatedBytes": 3178.5792
+              "Us": 42.73524,
+              "CpuUs": 42.55059999999999,
+              "CpuTotalMs": 212.75299999999993,
+              "CpuPercent": 12.690790654821441,
+              "AllocatedBytes": 3149.4784
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 4.7788200000000005,
-              "CpuUs": 4.775599999999997,
-              "CpuTotalMs": 23.877999999999986,
-              "CpuPercent": 12.50750810875746,
+              "Us": 4.58026,
+              "CpuUs": 4.580399999999997,
+              "CpuTotalMs": 22.901999999999987,
+              "CpuPercent": 12.506070908207867,
               "AllocatedBytes": 0.3792
             },
             "jit": {
-              "Us": 4.5843,
-              "CpuUs": 8.941999999999995,
-              "CpuTotalMs": 44.70999999999998,
-              "CpuPercent": 24.38213031433369,
+              "Us": 3.5085,
+              "CpuUs": 3.9885999999999973,
+              "CpuTotalMs": 19.942999999999984,
+              "CpuPercent": 13.140943423115296,
               "AllocatedBytes": 0.3792
             }
           }
@@ -983,33 +983,33 @@
         "Buffered_batch_delete": {
           "PureDb": {
             "aot": {
-              "Us": 6.441020000000001,
-              "CpuUs": 6.445599999999991,
-              "CpuTotalMs": 32.22799999999995,
-              "CpuPercent": 12.508888343771618,
-              "AllocatedBytes": 1550.5248
+              "Us": 2.9268400000000003,
+              "CpuUs": 2.929399999999998,
+              "CpuTotalMs": 14.646999999999991,
+              "CpuPercent": 12.511356627960199,
+              "AllocatedBytes": 1521.456
             },
             "jit": {
-              "Us": 9.02044,
-              "CpuUs": 9.913599999999997,
-              "CpuTotalMs": 49.567999999999984,
-              "CpuPercent": 13.737689070599654,
-              "AllocatedBytes": 1550.7408
+              "Us": 9.595059999999998,
+              "CpuUs": 9.701600000000008,
+              "CpuTotalMs": 48.50800000000004,
+              "CpuPercent": 12.880815759885742,
+              "AllocatedBytes": 1521.672
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 5.484920000000001,
-              "CpuUs": 5.4873999999999965,
-              "CpuTotalMs": 27.436999999999983,
-              "CpuPercent": 12.502609790256681,
+              "Us": 4.43472,
+              "CpuUs": 4.426999999999999,
+              "CpuTotalMs": 22.13499999999999,
+              "CpuPercent": 12.499658625842205,
               "AllocatedBytes": 0.3632
             },
             "jit": {
-              "Us": 3.9922800000000005,
-              "CpuUs": 7.93159999999998,
-              "CpuTotalMs": 39.6579999999999,
-              "CpuPercent": 24.223741281284802,
+              "Us": 5.0428,
+              "CpuUs": 5.549199999999996,
+              "CpuTotalMs": 27.74599999999998,
+              "CpuPercent": 13.755255017054008,
               "AllocatedBytes": 0.3632
             }
           }
@@ -1017,33 +1017,33 @@
         "Full_single": {
           "PureDb": {
             "aot": {
-              "Us": 1152.684,
-              "CpuUs": 721.1199999999985,
-              "CpuTotalMs": 36.055999999999926,
-              "CpuPercent": 6.499726491821802,
-              "AllocatedBytes": 7449.6
+              "Us": 829.8539999999999,
+              "CpuUs": 273.4000000000003,
+              "CpuTotalMs": 13.670000000000016,
+              "CpuPercent": 4.118194284777809,
+              "AllocatedBytes": 7854.88
             },
             "jit": {
-              "Us": 1471.522,
-              "CpuUs": 1201.1400000000003,
-              "CpuTotalMs": 60.057000000000016,
-              "CpuPercent": 10.203211368909201,
-              "AllocatedBytes": 7350.88
+              "Us": 698.176,
+              "CpuUs": 429.659999999999,
+              "CpuTotalMs": 21.482999999999947,
+              "CpuPercent": 7.480963897103579,
+              "AllocatedBytes": 7052.32
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 1295.9119999999998,
-              "CpuUs": 309.1199999999992,
-              "CpuTotalMs": 15.45599999999996,
-              "CpuPercent": 2.7909597174369907,
+              "Us": 1073.9279999999999,
+              "CpuUs": 104.60000000000036,
+              "CpuTotalMs": 5.230000000000018,
+              "CpuPercent": 1.2174931652773786,
               "AllocatedBytes": 143.84
             },
             "jit": {
-              "Us": 1097.448,
-              "CpuUs": 260.0999999999999,
-              "CpuTotalMs": 13.004999999999995,
-              "CpuPercent": 2.9625549456557385,
+              "Us": 919.1339999999999,
+              "CpuUs": 909.3600000000015,
+              "CpuTotalMs": 45.468000000000075,
+              "CpuPercent": 11.245577458287785,
               "AllocatedBytes": 143.84
             }
           }
@@ -1051,102 +1051,102 @@
         "Full_batch_insert": {
           "PureDb": {
             "aot": {
-              "Us": 34.620839999999994,
-              "CpuUs": 30.050800000000006,
-              "CpuTotalMs": 150.25400000000002,
-              "CpuPercent": 11.061816749453909,
-              "AllocatedBytes": 3628.0656
+              "Us": 27.683539999999997,
+              "CpuUs": 25.548400000000004,
+              "CpuTotalMs": 127.74200000000002,
+              "CpuPercent": 11.53591628816257,
+              "AllocatedBytes": 3628.0896
             },
             "jit": {
-              "Us": 87.66517999999999,
-              "CpuUs": 103.38140000000004,
-              "CpuTotalMs": 516.9070000000002,
-              "CpuPercent": 15.865786183104987,
-              "AllocatedBytes": 3676.4464
+              "Us": 41.86088,
+              "CpuUs": 47.27380000000003,
+              "CpuTotalMs": 236.36900000000014,
+              "CpuPercent": 14.116342035810053,
+              "AllocatedBytes": 3676.5296
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 19.552,
-              "CpuUs": 16.6846,
-              "CpuTotalMs": 83.423,
-              "CpuPercent": 10.666811579378068,
+              "Us": 18.85746,
+              "CpuUs": 16.132399999999993,
+              "CpuTotalMs": 80.66199999999998,
+              "CpuPercent": 10.693645909894542,
               "AllocatedBytes": 174.0784
             },
             "jit": {
-              "Us": 15.9845,
-              "CpuUs": 28.879999999999995,
-              "CpuTotalMs": 144.39999999999998,
-              "CpuPercent": 22.367993610778186,
-              "AllocatedBytes": 174.0784
+              "Us": 7.878879999999999,
+              "CpuUs": 12.79559999999999,
+              "CpuTotalMs": 63.97799999999995,
+              "CpuPercent": 20.300474179071124,
+              "AllocatedBytes": 174.0832
             }
           }
         },
         "Full_batch_update": {
           "PureDb": {
             "aot": {
-              "Us": 18.8027,
-              "CpuUs": 16.54080000000001,
-              "CpuTotalMs": 82.70400000000006,
-              "CpuPercent": 10.996293085567507,
-              "AllocatedBytes": 3217.6192
+              "Us": 13.588319999999998,
+              "CpuUs": 11.182399999999983,
+              "CpuTotalMs": 55.91199999999992,
+              "CpuPercent": 10.369397248910262,
+              "AllocatedBytes": 3161.2256
             },
             "jit": {
-              "Us": 41.22294,
-              "CpuUs": 76.89780000000002,
-              "CpuTotalMs": 384.48900000000003,
-              "CpuPercent": 23.10696912355689,
-              "AllocatedBytes": 3205.8672
+              "Us": 38.59096,
+              "CpuUs": 39.54260000000004,
+              "CpuTotalMs": 197.7130000000002,
+              "CpuPercent": 12.80824576532951,
+              "AllocatedBytes": 3188.4128
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 9.597140000000001,
-              "CpuUs": 6.532600000000002,
-              "CpuTotalMs": 32.66300000000001,
-              "CpuPercent": 8.508524414565175,
+              "Us": 7.617939999999999,
+              "CpuUs": 5.292999999999995,
+              "CpuTotalMs": 26.464999999999975,
+              "CpuPercent": 8.685090720063421,
               "AllocatedBytes": 0.3792
             },
             "jit": {
-              "Us": 7.008440000000001,
-              "CpuUs": 10.817000000000007,
-              "CpuTotalMs": 54.085000000000036,
-              "CpuPercent": 19.316457757726596,
-              "AllocatedBytes": 0.384
+              "Us": 6.097659999999999,
+              "CpuUs": 3.4480000000000013,
+              "CpuTotalMs": 17.24000000000001,
+              "CpuPercent": 7.23581712689374,
+              "AllocatedBytes": 0.3792
             }
           }
         },
         "Full_batch_delete": {
           "PureDb": {
             "aot": {
-              "Us": 4.72962,
-              "CpuUs": 3.5519999999999987,
-              "CpuTotalMs": 17.75999999999999,
-              "CpuPercent": 9.404686784167572,
-              "AllocatedBytes": 1551.0448
+              "Us": 3.72304,
+              "CpuUs": 2.941200000000004,
+              "CpuTotalMs": 14.706000000000017,
+              "CpuPercent": 9.87499462804591,
+              "AllocatedBytes": 1521.976
             },
             "jit": {
-              "Us": 20.29162,
-              "CpuUs": 33.42979999999998,
-              "CpuTotalMs": 167.1489999999999,
-              "CpuPercent": 22.067436058841903,
-              "AllocatedBytes": 1552.9008
+              "Us": 11.26512,
+              "CpuUs": 18.90659999999998,
+              "CpuTotalMs": 94.5329999999999,
+              "CpuPercent": 23.07803854859781,
+              "AllocatedBytes": 1522.088
             }
           },
           "SQLite": {
             "aot": {
-              "Us": 11.42342,
-              "CpuUs": 8.057399999999983,
-              "CpuTotalMs": 40.28699999999992,
-              "CpuPercent": 8.838042240470788,
+              "Us": 7.476839999999999,
+              "CpuUs": 4.761999999999989,
+              "CpuTotalMs": 23.809999999999945,
+              "CpuPercent": 7.961251009784864,
               "AllocatedBytes": 0.3632
             },
             "jit": {
-              "Us": 9.5405,
-              "CpuUs": 10.500800000000027,
-              "CpuTotalMs": 52.50400000000013,
-              "CpuPercent": 9.628856934522917,
-              "AllocatedBytes": 0.392
+              "Us": 7.287439999999999,
+              "CpuUs": 4.6844000000000054,
+              "CpuTotalMs": 23.422000000000025,
+              "CpuPercent": 8.128205588955545,
+              "AllocatedBytes": 0.3632
             }
           }
         }
@@ -1155,90 +1155,90 @@
         "point": {
           "PureDb": {
             "jit": {
-              "WorkingSetBytes": 99.73828125,
-              "PrivateBytes": 119.375,
-              "PeakWorkingSetBytes": 103.4140625,
-              "ManagedLiveBytes": 37.946617126464844
+              "WorkingSetBytes": 98.77734375,
+              "PrivateBytes": 118.0390625,
+              "PeakWorkingSetBytes": 102.05859375,
+              "ManagedLiveBytes": 37.992225646972656
             },
             "aot": {
-              "WorkingSetBytes": 59.1796875,
-              "PrivateBytes": 65.45703125,
-              "PeakWorkingSetBytes": 60.31640625,
-              "ManagedLiveBytes": 37.953468322753906
+              "WorkingSetBytes": 60.66796875,
+              "PrivateBytes": 66.46875,
+              "PeakWorkingSetBytes": 61.3828125,
+              "ManagedLiveBytes": 37.99272155761719
             }
           },
           "SQLite": {
             "jit": {
-              "WorkingSetBytes": 71.23046875,
-              "PrivateBytes": 94.60546875,
-              "PeakWorkingSetBytes": 71.23046875,
-              "ManagedLiveBytes": 0.0694427490234375
+              "WorkingSetBytes": 71.55859375,
+              "PrivateBytes": 94.63671875,
+              "PeakWorkingSetBytes": 71.55859375,
+              "ManagedLiveBytes": 0.07933807373046875
             },
             "aot": {
-              "WorkingSetBytes": 42.25390625,
-              "PrivateBytes": 44.38671875,
-              "PeakWorkingSetBytes": 42.25390625,
-              "ManagedLiveBytes": 0.05804443359375
+              "WorkingSetBytes": 42.546875,
+              "PrivateBytes": 44.390625,
+              "PeakWorkingSetBytes": 42.546875,
+              "ManagedLiveBytes": 0.05884552001953125
             }
           }
         },
         "range20": {
           "PureDb": {
             "jit": {
-              "WorkingSetBytes": 53.82421875,
-              "PrivateBytes": 66.953125,
-              "PeakWorkingSetBytes": 53.82421875,
-              "ManagedLiveBytes": 1.4420394897460938
+              "WorkingSetBytes": 54.35546875,
+              "PrivateBytes": 67.109375,
+              "PeakWorkingSetBytes": 54.35546875,
+              "ManagedLiveBytes": 1.4877853393554688
             },
             "aot": {
-              "WorkingSetBytes": 22.26171875,
-              "PrivateBytes": 20.00390625,
-              "PeakWorkingSetBytes": 22.26171875,
-              "ManagedLiveBytes": 1.448974609375
+              "WorkingSetBytes": 22.46484375,
+              "PrivateBytes": 20.01171875,
+              "PeakWorkingSetBytes": 22.46484375,
+              "ManagedLiveBytes": 1.48846435546875
             }
           },
           "SQLite": {
             "jit": {
-              "WorkingSetBytes": 32.15625,
-              "PrivateBytes": 58.6640625,
-              "PeakWorkingSetBytes": 32.15625,
-              "ManagedLiveBytes": 0.0690765380859375
+              "WorkingSetBytes": 32.9921875,
+              "PrivateBytes": 58.6953125,
+              "PeakWorkingSetBytes": 32.9921875,
+              "ManagedLiveBytes": 0.0789794921875
             },
             "aot": {
-              "WorkingSetBytes": 10.8359375,
-              "PrivateBytes": 13.0234375,
-              "PeakWorkingSetBytes": 10.8359375,
-              "ManagedLiveBytes": 0.05804443359375
+              "WorkingSetBytes": 11.0,
+              "PrivateBytes": 13.02734375,
+              "PeakWorkingSetBytes": 11.0,
+              "ManagedLiveBytes": 0.05884552001953125
             }
           }
         },
         "json_index": {
           "PureDb": {
             "jit": {
-              "WorkingSetBytes": 151.76953125,
-              "PrivateBytes": 171.43359375,
-              "PeakWorkingSetBytes": 155.3203125,
-              "ManagedLiveBytes": 77.95494079589844
+              "WorkingSetBytes": 151.91796875,
+              "PrivateBytes": 170.984375,
+              "PeakWorkingSetBytes": 152.43359375,
+              "ManagedLiveBytes": 75.66450500488281
             },
             "aot": {
-              "WorkingSetBytes": 118.53125,
-              "PrivateBytes": 125.2578125,
-              "PeakWorkingSetBytes": 120.109375,
-              "ManagedLiveBytes": 81.96431732177734
+              "WorkingSetBytes": 113.9375,
+              "PrivateBytes": 120.60546875,
+              "PeakWorkingSetBytes": 118.30078125,
+              "ManagedLiveBytes": 79.67327880859375
             }
           },
           "SQLite": {
             "jit": {
-              "WorkingSetBytes": 32.54296875,
-              "PrivateBytes": 58.82421875,
-              "PeakWorkingSetBytes": 32.54296875,
-              "ManagedLiveBytes": 0.0690765380859375
+              "WorkingSetBytes": 33.046875,
+              "PrivateBytes": 58.9140625,
+              "PeakWorkingSetBytes": 33.046875,
+              "ManagedLiveBytes": 0.0789794921875
             },
             "aot": {
-              "WorkingSetBytes": 11.12109375,
-              "PrivateBytes": 13.15625,
-              "PeakWorkingSetBytes": 11.12109375,
-              "ManagedLiveBytes": 0.05804443359375
+              "WorkingSetBytes": 11.265625,
+              "PrivateBytes": 13.15234375,
+              "PeakWorkingSetBytes": 11.265625,
+              "ManagedLiveBytes": 0.05884552001953125
             }
           }
         }
@@ -1246,22 +1246,22 @@
       "Startup": {
         "PureDb": {
           "jit": {
-            "ProcessMs": 429.1139040142298,
-            "OpenQueryCloseMs": 267.6553
+            "ProcessMs": 379.5534488745034,
+            "OpenQueryCloseMs": 294.0006
           },
           "aot": {
-            "ProcessMs": 43.428962118923664,
-            "OpenQueryCloseMs": 9.9421
+            "ProcessMs": 20.302017917856574,
+            "OpenQueryCloseMs": 5.6992
           }
         },
         "SQLite": {
           "jit": {
-            "ProcessMs": 211.64631005376577,
-            "OpenQueryCloseMs": 9.558
+            "ProcessMs": 134.23464307561517,
+            "OpenQueryCloseMs": 7.4119
           },
           "aot": {
-            "ProcessMs": 32.842756947502494,
-            "OpenQueryCloseMs": 2.0644
+            "ProcessMs": 13.198964996263385,
+            "OpenQueryCloseMs": 1.1045
           }
         }
       },
@@ -1270,8 +1270,8 @@
         "SQLite": 33841152
       },
       "AotScore": [
-        10,
-        5,
+        11,
+        4,
         0
       ]
     }

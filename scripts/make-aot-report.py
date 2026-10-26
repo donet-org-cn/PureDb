@@ -13,10 +13,9 @@ def winner(p,s):
 def higher(p,s):
  return f'**{"PureDb" if p>s else "SQLite"} 更高**：多 {abs(p-s):.2f} MiB，高 {(max(p,s)/min(p,s)-1)*100:.1f}%'
 lines=['# Native AOT：文件大小、启动、CPU、内存和 SQLite 对比',
- '版本：`1.0.0-preview.2`。Windows x64 与指定 Linux ARM64 主机，.NET SDK 10.0.402 / 运行时 10.0.13。AOT 和自包含 JIT 使用相同源码、相同数据、相同 SQL 和相同适配层；每台机器串行、三轮交替顺序，不能跨平台比较绝对耗时。',
+ '版本：`1.0.0-preview.3`。Windows x64 与指定 Linux ARM64 主机，.NET SDK 10.0.402 / 运行时 10.0.13。AOT 和自包含 JIT 使用相同源码、相同数据、相同 SQL 和相同适配层；每台机器串行、三轮交替顺序，不能跨平台比较绝对耗时。',
  '## 实际支持与验证',
  '核心与可选 SQLite 兼容库启用 IsAotCompatible；内置 JSON 及兼容目录序列化改用源生成元数据，ADO.NET GetFieldType 保留所需的标量类型元数据。每个平台真正发布并运行 AOT，报告验证 DynamicCodeSupported=false；编译及裁剪警告为 0。额外运行 7 组 AOT 功能测试和 230 条 SQLite 差分查询，覆盖 JSON 修改、模式重开、CHECK/UPSERT、CTE/窗口/子查询、外键/触发器/保存点、ADO.NET 模式表和纯托管 SQLite 文件交换。',
- 'GetSchemaTable 有一处精确限定的 IL2111 抑制：DataColumn 保存 Type 对象，不会访问 Type.TypeInitializer；该路径通过实际 AOT 运行验证。没有关闭全局裁剪分析或全局屏蔽 AOT 警告。这里的零警告指本轮完整发布日志未产生 IL 警告，不表示应用可以任意使用反射。',
  'GetSchemaTable 有一处精确限定的 IL2111 抑制：DataColumn 保存 Type 对象，不会访问 Type.TypeInitializer；该路径通过实际 AOT 运行验证。没有关闭全局裁剪分析或全局屏蔽 AOT 警告。这里的零警告指本轮完整发布日志未产生 IL 警告，不表示应用可以任意使用反射。',
  '## 对比口径',
  '- 应用文件大小是本次 SQL 测量宿主的实际发布闭包，不是一个通用的“PureDb AOT 库大小”。AOT 只保留应用可达代码，引用更多 API、兼容库或业务代码会改变大小。调试符号和 XML 文档不计入运行文件，但清单另外保留全部文件字节。',
@@ -27,9 +26,8 @@ lines=['# Native AOT：文件大小、启动、CPU、内存和 SQLite 对比',
  '- 新进程启动每组合 21 次，OS 文件缓存已热。全进程耗时由父进程测量，包含进程创建、运行时、库加载、查询、JSON 报告输出及退出；内部打开/首次查询/关闭另列。不是断电后或清空 OS 缓存的冷盘启动。',
  '- 编译使用 Release、IlcOptimizationPreference=Speed，保留正常全球化，未使用仅适用于当前 CPU 的 native 指令集选项。CI 只检查正确性，CI 机器不参与性能排名。',
  '## 本轮实现优化',
- '表缓存此前按“源编码 + 每列 80 字节 + 固定开销”估算；BLOB/JSON 组合表会被过度计费并反复整表解码。本轮按行数组、数值装箱、UTF-16 文本、BLOB 视图和源后备数据计费，没有扩大默认预算。新增测试验证可容纳表复用缓存、写后失效及预算为 0 时不保留缓存。预算仍是行缓存估算，不含全部辅助索引，也不是进程 RSS 硬上限。',
- '分页结果物化独立为小方法，避免查询绑定作用域捕获投影列；已知候选数组直接按最终分页一次分配结果。所有 BLOB 输出继续复制，计算表达式的逐行求值语义保持。']
-summary={'Version':'1.0.0-preview.2','Platforms':{}};readme=[]
+ '本轮主要优化 AST 身份计划缓存、小整数装箱、全列顺序投影、JSON 表达式规范化缓存和检查点归并。兼容库同步增加页大小、编码及持久模式；生产代码仍为纯托管。详细前后对照见 [优化报告](OPTIMIZATION.md)。本报告重新发布并实测 preview.3，不复用 preview.2 的 AOT 体积或耗时。']
+summary={'Version':'1.0.0-preview.3','Platforms':{}};readme=[]
 for key,platform in [('windows','Windows x64'),('linux','Linux ARM64')]:
  p=base/key;environment=read(p/'environment.json');manifest=environment['Manifest'];cpus=environment['CPUs']
  variants={(v['Engine'],v['Mode']):v for v in manifest['Variants']};assert len(variants)==6
@@ -90,7 +88,7 @@ for key,platform in [('windows','Windows x64'),('linux','Linux ARM64')]:
  readme.append([platform,f'{pure:.2f} / {sqlite:.2f}',f'{startup["PureDb"]["jit"]["ProcessMs"]:.2f} → {startup["PureDb"]["aot"]["ProcessMs"]:.2f}',f'{wins} / {losses} / {len(metrics)-wins-losses}'])
  lines+=['### 本平台结论',f'PureDb AOT 的运行文件比自身自包含 JIT 减少 {(1-variants["PureDb","aot"]["RuntimeBytes"]/variants["PureDb","jit"]["RuntimeBytes"])*100:.1f}%；全进程启动中位数由 {startup["PureDb"]["jit"]["ProcessMs"]:.2f} ms 变为 {startup["PureDb"]["aot"]["ProcessMs"]:.2f} ms。AOT 对比 SQLite：{wins} 项耗时领先、{losses} 项落后、{len(metrics)-wins-losses} 项接近。体积、热查询、写入、CPU 与 RSS 仍需分别判断，不能宣称全面领先。',f'[原始清单、各轮样本及环境](../benchmarks/results/aot/latest/{key})。']
 lines+=['## 使用已发布包启用 AOT','```xml\n<PropertyGroup>\n  <TargetFramework>net10.0</TargetFramework>\n  <PublishAot>true</PublishAot>\n  <IlcOptimizationPreference>Speed</IlcOptimizationPreference>\n</PropertyGroup>\n```',
- '```bash\ndotnet add package PureDb --version 1.0.0-preview.2\ndotnet publish -c Release -r win-x64\n# Linux ARM64 应在对应 Linux 编译环境发布：\ndotnet publish -c Release -r linux-arm64\n```',
+ '```bash\ndotnet add package PureDb --version 1.0.0-preview.3\ndotnet publish -c Release -r win-x64\n# Linux ARM64 应在对应 Linux 编译环境发布：\ndotnet publish -c Release -r linux-arm64\n```',
  'Native AOT 是应用发布选项，NuGet 仍分发托管库，主库和可选兼容包均无原生 SQLite 依赖。应用自己的反射或 JSON 模型仍需满足 AOT 要求。官方说明见 [Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/) 和 [JSON 源生成](https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/source-generation)。',
  '复现：先运行 `scripts/publish-deployment.py` 发布两种引擎和三种部署方式，再用 `scripts/run-deployment.py` 串行测量；`scripts/make-aot-report.py` 从本轮公开原始结果生成本页。CI 及发布流水线在 Windows x64、Linux x64、Linux ARM64 真正编译和运行 AOT，发布前还以实际 NuGet 包运行 AOT 功能检查。']
 (base/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
@@ -100,6 +98,6 @@ readme_path=root/'README.md';content=readme_path.read_text(encoding='utf-8-sig')
 if '<!-- AOT:START -->' in content:
  import re
  content=re.sub(r'<!-- AOT:START -->.*?<!-- AOT:END -->',lambda _:block,content,flags=re.S)
-else:content=content.replace('## 主分支 preview.2 排序专项','## Native AOT 发布对比\n\n'+block+'\n\n## 主分支 preview.2 排序专项')
+else:content=content.replace('## 主分支 preview.3 排序专项','## Native AOT 发布对比\n\n'+block+'\n\n## 主分支 preview.3 排序专项')
 readme_path.write_text(content,encoding='utf-8-sig',newline='\n')
 print('Generated AOT comparison: 360 main, 72 memory and 168 fresh-process startup samples.')

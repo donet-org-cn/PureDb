@@ -1,0 +1,25 @@
+﻿{
+  "Engine": "Compatibility",
+  "Scenario": "range20",
+  "Repeat": 3,
+  "Rows": 2000,
+  "Operations": 146897,
+  "Milliseconds": 700.0002,
+  "MicrosecondsPerOperation": 4.765245035637215,
+  "CpuMilliseconds": 859.375,
+  "AllocatedBytes": 1500365552,
+  "PrivateMemorySize64": 28987392,
+  "WorkingSet64": 55173120,
+  "PeakWorkingSet64": 55173120,
+  "IO": {
+    "ReadBytes": 0,
+    "WriteBytes": 0
+  },
+  "StorageBefore": 581632,
+  "StorageAfter": 581632,
+  "SQLite": "3.54.1",
+  "Runtime": "10.0.13",
+  "CoreSHA256": "A240817D6F98A3264CB24AD474A870BC1AACA56A9466411CAB12387EB7EB04F5",
+  "CompatibilitySHA256": "DF198F237F9F0AAE3FA65F60B17698A334FDD697252C803FEAEADF8DA379105E",
+  "Date": "2026-10-27T02:33:35.4195182+08:00"
+}

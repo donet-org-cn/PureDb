@@ -18,6 +18,8 @@ using (var db = new SqlDatabase(sqlPath, new() { Storage = new() { Durability = 
     Check(db.Query("SELECT id FROM t WHERE eligible(k) ORDER BY id").Rows.Count == 2, "C# function");
     await db.ExecuteAsync("INSERT INTO t VALUES(1,4,'unused','{}',NULL) ON CONFLICT(id) DO UPDATE SET k=k+excluded.k");
     Check(Equals(db.Query("SELECT k FROM t WHERE id=1").Rows[0][0], 6L), "UPSERT");
+    await db.ExecuteAsync("CREATE TABLE binary_defaults(id INTEGER PRIMARY KEY,b BLOB DEFAULT X'0102',CHECK(typeof(1000000000000000.0)='real'));INSERT INTO binary_defaults(id) VALUES(1)");
+    Check(db.Query("SELECT hex(b),CAST('12.5' AS REAL),iif(1,abs(-3),0) FROM binary_defaults").Rows[0][0] is "0102", "AOT scalar functions and BLOB default");
     Pass("CRUD, CHECK, UPSERT, indexes and C# function");
     string[] expressions = [
         "json('{unquoted:1,}')", "json_quote('quoted')", "json_quote(2)", "json_quote(NULL)",
@@ -44,6 +46,8 @@ using (var db = new SqlDatabase(sqlPath, new() { Storage = new() { Durability = 
 using (var db = new SqlDatabase(sqlPath))
 {
     Check(Equals(db.Query("SELECT k FROM t WHERE id=1").Rows[0][0], 6L), "reopen");
+    await db.ExecuteAsync("INSERT INTO binary_defaults(id) VALUES(2)");
+    Check(db.Query("SELECT hex(b) FROM binary_defaults WHERE id=2").Rows[0][0] is "0102", "reopened REAL expression and BLOB default");
     bool rejected = false;
     try { await db.ExecuteAsync("INSERT INTO t(id,k,s) VALUES(3,-1,'three')"); } catch (SqlException) { rejected = true; }
     Check(rejected, "persisted CHECK");

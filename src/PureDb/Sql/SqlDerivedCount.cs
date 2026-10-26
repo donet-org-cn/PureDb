@@ -5,6 +5,8 @@ namespace PureDb;
 /// <remarks>本部分实现确定性派生列的缓存及保持 NULL 语义的 SIMD 谓词计数。</remarks>
 internal sealed partial class SqlSession
 {
+    /// <summary>按不可变表达式实例弱缓存去限定名的 JSON 列，不保存行值或最终计数。</summary>
+    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Expr, Expr> NormalizedJsonColumns = new();
     // 缓存确定性的派生列，不缓存最终筛选结果；每次查询重新计算整数谓词，
     // 避免表达式树每个节点、每一行都创建装箱临时值。
     // 派生列的有效期由所属表的已提交版本控制。
@@ -37,15 +39,12 @@ internal sealed partial class SqlSession
         Find(filter);
         if (variable is null || incompatible)
             return null;
-        Expr Unqualify(Expr e) => e.Op == "column" ? e with
+        // 当前变量已确认是 JSON_EXTRACT(column, literal_path)，只规范化列节点。
+        // 弱引用键允许解析缓存淘汰后释放计划，不缓存本次查询的参数或结果。
+        var normalized = NormalizedJsonColumns.GetValue(variable, static e => e with
         {
-            Value = ((string)e.Value!).Split('.')[^1]
-        }
-
-        : e with
-        {
-            Items = e.Args.Select(Unqualify).ToArray()
-        };
+            Items = [e.Args[0] with { Value = ((string)e.Args[0].Value!).Split('.')[^1] }, e.Args[1]]
+        });
         // 正的二次幂除数取余等于零，可精确转换为位测试，负整数也成立。
         // NULL 槽位先置零，统计后再扣除，保持 SQL NULL 语义。
         if (filter.Op == "=" && filter.Args.Length == 2)
@@ -57,7 +56,7 @@ internal sealed partial class SqlSession
             object? Value(Expr e) => e.Op == "literal" ? e.Value : SqlPrimaryPlan.Parameter(e, parameters);
             if (modulo.Op == "%" && modulo.Args.Length == 2 && SqlAst.Equal(modulo.Args[0], variable) && modulo.Args[1].Op is "literal" or "parameter" && expected.Op is "literal" or "parameter" && Value(expected) is long zero && zero == 0 && Value(modulo.Args[1]) is long divisor && divisor > 0 && (divisor & (divisor - 1)) == 0)
             {
-                var derived = Data(table).Derived(Unqualify(variable));
+                var derived = Data(table).Derived(normalized);
                 if (derived.Integers)
                 {
                     var numbers = derived.Numbers();
@@ -151,7 +150,7 @@ internal sealed partial class SqlSession
         if (predicate is null)
             return null;
         // 先按实际源别名解析，再持久化不依赖查询别名的表达式。
-        var column = Data(table).Derived(Unqualify(variable));
+        var column = Data(table).Derived(normalized);
         if (!column.Integers)
             return null;
         long count = 0;

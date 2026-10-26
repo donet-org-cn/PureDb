@@ -1,0 +1,328 @@
+{
+  "Scope": "INTEGER PRIMARY KEY typed tables; rollback journal mode; no auto_vacuum/reserved bytes; tested schema and file profiles, not all SQLite features",
+  "Total": 64,
+  "Passed": 64,
+  "Rate": 1,
+  "Cases": [
+    {
+      "Family": "schema",
+      "Name": "defaults",
+      "Passed": true
+    },
+    {
+      "Family": "schema",
+      "Name": "blob-default",
+      "Passed": true
+    },
+    {
+      "Family": "schema",
+      "Name": "check",
+      "Passed": true
+    },
+    {
+      "Family": "schema",
+      "Name": "unique",
+      "Passed": true
+    },
+    {
+      "Family": "schema",
+      "Name": "composite",
+      "Passed": true
+    },
+    {
+      "Family": "schema",
+      "Name": "foreign",
+      "Passed": true
+    },
+    {
+      "Family": "schema",
+      "Name": "view",
+      "Passed": true
+    },
+    {
+      "Family": "schema",
+      "Name": "trigger",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "512/UTF-8",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "512/UTF-16le",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "512/UTF-16be",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "1024/UTF-8",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "1024/UTF-16le",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "1024/UTF-16be",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "2048/UTF-8",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "2048/UTF-16le",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "2048/UTF-16be",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "4096/UTF-8",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "4096/UTF-16le",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "4096/UTF-16be",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "8192/UTF-8",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "8192/UTF-16le",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "8192/UTF-16be",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "16384/UTF-8",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "16384/UTF-16le",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "16384/UTF-16be",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "32768/UTF-8",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "32768/UTF-16le",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "32768/UTF-16be",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "65536/UTF-8",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "65536/UTF-16le",
+      "Passed": true
+    },
+    {
+      "Family": "format",
+      "Name": "65536/UTF-16be",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "512/after-journal-sync/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "512/after-journal-sync/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "512/after-first-page/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "512/after-first-page/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "512/after-database-sync/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "512/after-database-sync/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "512/after-commit/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "512/after-commit/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "65536/after-journal-sync/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "65536/after-journal-sync/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "65536/after-first-page/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "65536/after-first-page/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "65536/after-database-sync/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "65536/after-database-sync/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "65536/after-commit/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "recovery",
+      "Name": "65536/after-commit/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "grow/after-journal-sync/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "grow/after-journal-sync/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "grow/after-first-page/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "grow/after-first-page/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "grow/after-database-sync/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "grow/after-database-sync/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "grow/after-commit/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "grow/after-commit/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "shrink/after-journal-sync/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "shrink/after-journal-sync/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "shrink/after-first-page/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "shrink/after-first-page/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "shrink/after-database-sync/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "shrink/after-database-sync/native=True",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "shrink/after-commit/native=False",
+      "Passed": true
+    },
+    {
+      "Family": "resize-recovery",
+      "Name": "shrink/after-commit/native=True",
+      "Passed": true
+    }
+  ]
+}

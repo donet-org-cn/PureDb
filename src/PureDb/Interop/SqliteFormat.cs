@@ -57,9 +57,11 @@ internal static class SqliteRecord
 
     /// <summary>按 SQLite 记录头和存储类型编码全部列值。</summary>
     /// <param name="values">按对应模式列序或函数参数顺序排列的 SQL 标量值。</param>
+    /// <param name="encoding">SQLite 文本编码；未指定时使用 UTF-8。</param>
     /// <returns>本次编码或复制得到的字节数组。</returns>
-    internal static byte[] Encode(object?[] values)
+    internal static byte[] Encode(object?[] values, Encoding? encoding = null)
     {
+        encoding ??= Encoding.UTF8;
         Span<ulong> types = values.Length <= 128 ? stackalloc ulong[values.Length] : new ulong[values.Length];
         int header = 0, body = 0;
         for (int i = 0; i < values.Length; i++)
@@ -87,7 +89,7 @@ internal static class SqliteRecord
             }
             else
             {
-                width = v is byte[] b ? b.Length : Encoding.UTF8.GetByteCount((string)v);
+                width = v is byte[] b ? b.Length : encoding.GetByteCount((string)v);
                 type = (ulong)width * 2 + (v is byte[]? 12UL : 13UL);
                 body = checked(body + width);
             }
@@ -131,7 +133,7 @@ internal static class SqliteRecord
                 at += b.Length;
             }
             else
-                at += Encoding.UTF8.GetBytes((string)v!, result.AsSpan(at));
+                at += encoding.GetBytes((string)v!, result.AsSpan(at));
         }
 
         return result;
@@ -246,6 +248,8 @@ internal sealed class SqliteFileReader : IDisposable
     private readonly int _cachePages;
     /// <summary>文件头声明并已校验的页大小。</summary>
     internal int PageSize => _size;
+    /// <summary>文件头声明的文本编码，用于原地提交时保持编码不变。</summary>
+    internal Encoding TextEncoding => _encoding;
     /// <summary>文件头声明的数据库页数。</summary>
     internal long PageCount => _pages;
     /// <summary>SQLite 文件头中的数据变化计数器。</summary>
@@ -329,8 +333,8 @@ internal sealed class SqliteFileReader : IDisposable
                 3 => new UnicodeEncoding(true, false, true),
                 _ => throw new NotSupportedException("Unsupported SQLite text encoding.")
             };
-            if (rollbackOnly && (_size != 4096 || h[18] != 1 || h[19] != 1 || h[20] != 0 || BinaryPrimitives.ReadInt32BigEndian(h.AsSpan(56)) != 1))
-                throw new NotSupportedException("In-place phase 1 requires 4096-byte pages, UTF-8, no reserved bytes and rollback journal mode. Checkpoint WAL and select journal_mode=DELETE in SQLite first.");
+            if (rollbackOnly && (h[18] != 1 || h[19] != 1 || h[20] != 0))
+                throw new NotSupportedException("In-place access requires no reserved bytes and rollback journal mode. Checkpoint WAL and select journal_mode=DELETE in SQLite first.");
             if (rollbackOnly && (BinaryPrimitives.ReadUInt32BigEndian(h.AsSpan(52)) != 0 || BinaryPrimitives.ReadUInt32BigEndian(h.AsSpan(44)) != 4))
                 throw new NotSupportedException("In-place phase 1 requires schema format 4 and auto_vacuum=NONE.");
             _cachePages = (int)Math.Min(int.MaxValue, cacheBytes / _size);
@@ -564,13 +568,20 @@ internal sealed class SqliteFileReader : IDisposable
 /// <summary>生成受支持的 SQLite 表和索引 B-tree，并写入文件头及模式表。</summary>
 internal sealed class SqliteFileWriter : IDisposable
 {
-    private const int Size = 4096;
+    private readonly int Size;
+    private readonly Encoding _encoding;
     private readonly FileStream _file;
     private uint _pages = 1;
     /// <summary>创建新的 SQLite 目标文件并预留模式根页。</summary>
     /// <param name="path">当前数据库或索引文件路径。</param>
-    internal SqliteFileWriter(string path)
+    /// <param name="pageSize">目标文件页大小，支持 512 至 65536 的二次幂。</param>
+    /// <param name="encoding">需要保留的 SQLite 文本编码，默认为 UTF-8。</param>
+    internal SqliteFileWriter(string path, int pageSize = 4096, Encoding? encoding = null)
     {
+        if (pageSize < 512 || pageSize > 65536 || (pageSize & (pageSize - 1)) != 0)
+            throw new ArgumentOutOfRangeException(nameof(pageSize));
+        Size = pageSize;
+        _encoding = encoding ?? Encoding.UTF8;
         _file = new FileStream(path, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None, 65536);
         _file.SetLength(Size);
     }
@@ -640,7 +651,7 @@ internal sealed class SqliteFileWriter : IDisposable
     /// <param name="right">内部 B-tree 页的最右子页号。</param>
     /// <param name="offset">文件或缓冲区中的字节偏移。</param>
     /// <returns>本次编码或复制得到的字节数组。</returns>
-    private static byte[] Node(byte type, List<byte[]> cells, uint right = 0, int offset = 0)
+    private byte[] Node(byte type, List<byte[]> cells, uint right = 0, int offset = 0)
     {
         var b = new byte[Size];
         b[offset] = type;
@@ -673,7 +684,7 @@ internal sealed class SqliteFileWriter : IDisposable
         long max = 0;
         foreach (var row in rows)
         {
-            byte[] cell = Cell(SqliteRecord.Encode(row.Values), row.Id);
+            byte[] cell = Cell(SqliteRecord.Encode(row.Values, _encoding), row.Id);
             if (used + 2 + cell.Length > Size && cells.Count > 0)
             {
                 nodes.Add((Page(Node(13, cells)), max));
@@ -731,7 +742,7 @@ internal sealed class SqliteFileWriter : IDisposable
         int used = 8;
         for (int at = 0; at < records.Count; at++)
         {
-            byte[] payload = SqliteRecord.Encode(records[at]);
+            byte[] payload = SqliteRecord.Encode(records[at], _encoding);
             int local = SqliteFileReader.Local(payload.Length, Size, false);
             int size = SqliteRecord.Varint((ulong)payload.Length).Length + local + (local < payload.Length ? 4 : 0);
             if (used + 2 + size > Size && cells.Count > 0)
@@ -794,7 +805,7 @@ internal sealed class SqliteFileWriter : IDisposable
         uint root = Table(schema.Select((r, i) => ((long)i + 1, r)));
         var first = Node(5, [], root, 100);
         "SQLite format 3\0"u8.CopyTo(first);
-        BinaryPrimitives.WriteUInt16BigEndian(first.AsSpan(16), Size);
+        BinaryPrimitives.WriteUInt16BigEndian(first.AsSpan(16), (ushort)(Size == 65536 ? 1 : Size));
         first[18] = first[19] = 1;
         first[21] = 64;
         first[22] = first[23] = 32;
@@ -813,6 +824,7 @@ internal sealed class SqliteFileWriter : IDisposable
         BinaryPrimitives.WriteUInt32BigEndian(first.AsSpan(40), schemaCookie);
         BinaryPrimitives.WriteUInt32BigEndian(first.AsSpan(60), userVersion);
         BinaryPrimitives.WriteUInt32BigEndian(first.AsSpan(68), applicationId);
+        BinaryPrimitives.WriteUInt32BigEndian(first.AsSpan(56), _encoding.CodePage == 1200 ? 2u : _encoding.CodePage == 1201 ? 3u : 1u);
         BinaryPrimitives.WriteUInt32BigEndian(first.AsSpan(28), _pages);
         BinaryPrimitives.WriteUInt32BigEndian(first.AsSpan(44), 4);
         BinaryPrimitives.WriteUInt32BigEndian(first.AsSpan(96), 3054001);

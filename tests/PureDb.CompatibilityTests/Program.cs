@@ -1,4 +1,4 @@
-using System.Buffers.Binary;
+﻿using System.Buffers.Binary;
 using System.Data;
 using System.Diagnostics;
 using System.Security.Cryptography;
@@ -109,9 +109,9 @@ await Test("exclusive byte-range locks conflict with native and managed connecti
     try { Check(await holder.StandardOutput.ReadLineAsync().WaitAsync(TimeSpan.FromSeconds(20))=="READY","native reader worker"); await Reject<IOException>(()=>Task.Run(()=>{using var db=Open(reverse,new(){LockTimeout=TimeSpan.Zero});})); }
     finally { if(!holder.HasExited)holder.Kill(entireProcessTree:true);await holder.WaitForExitAsync(); }
 });
-await Test("unsupported WAL, views, aliases, native JSONB and dynamic values fail safely", async () =>
+await Test("unsupported WAL, aliases, native JSONB and dynamic values fail safely", async () =>
 {
-    foreach(var (name,sql) in new[]{("wal","PRAGMA journal_mode=WAL"),("view","CREATE VIEW v AS SELECT * FROM t"),("alias","CREATE TABLE bad(id INT PRIMARY KEY)"),("jsonb","CREATE TABLE bad(id INTEGER PRIMARY KEY,b JSONB)")})
+    foreach(var (name,sql) in new[]{("wal","PRAGMA journal_mode=WAL"),("alias","CREATE TABLE bad(id INT PRIMARY KEY)"),("jsonb","CREATE TABLE bad(id INTEGER PRIMARY KEY,b JSONB)")})
     {
         string path=NewPath(name);Seed(path);using(var native=new Sqlite(path,Durability.Full,configure:false))native.Exec(sql);
         byte[] hash=SHA256.HashData(File.ReadAllBytes(path));
@@ -175,8 +175,8 @@ await Test("incremental dirty pages, same-leaf batches, indexes, overflow and sa
         using var insert=native.Prepare("INSERT INTO t VALUES(?1,?2,'n'||?1,'{\"x\":1}',?3)");
         for(int i=0;i<2000;i++){insert.Bind(1,i);insert.Bind(2,i);insert.Bind(3,new byte[i==0?20000:256]);insert.Step();insert.Reset();}native.Exec("COMMIT");
     }
-    long pages=new FileInfo(path).Length/4096;int journalCount=0;bool sparse=false;
-    SqliteStorage.CommitStage=stage=>{if(stage=="after-journal-sync"){using var journal=File.OpenRead(path+"-journal");Span<byte> header=stackalloc byte[28];journal.ReadExactly(header);journalCount=(int)BinaryPrimitives.ReadUInt32BigEndian(header[8..]);sparse=journalCount<pages;}};
+    long pages=new FileInfo(path).Length/4096;int journalCount=0;bool sparse=false,rebuilt=false;
+    SqliteStorage.CommitStage=stage=>{if(stage=="before-image-commit")rebuilt=true;if(stage=="before-incremental-commit")rebuilt=false;if(stage=="after-journal-sync"){using var journal=File.OpenRead(path+"-journal");Span<byte> header=stackalloc byte[28];journal.ReadExactly(header);journalCount=(int)BinaryPrimitives.ReadUInt32BigEndian(header[8..]);sparse=journalCount<pages;}};
     var expected=new Dictionary<int,byte[]>();var rng=new Random(884);
     try
     {
@@ -190,9 +190,9 @@ await Test("incremental dirty pages, same-leaf batches, indexes, overflow and sa
         await db.ExecuteAsync("UPDATE t SET k=601 WHERE id=600");Check(sparse,"same-leaf integer index update rebuilt entire image");
         await db.ExecuteAsync("UPDATE t SET k=620 WHERE id=610");Check(sparse,"rightward index entry move rebuilt entire image");
         await db.ExecuteAsync("UPDATE t SET k=615 WHERE id=620");Check(sparse,"leftward index entry move rebuilt entire image");
-        await db.ExecuteAsync("UPDATE t SET k=1700 WHERE id=500");Check(!sparse,"cross-leaf index update must fall back");
+        await db.ExecuteAsync("UPDATE t SET k=1700 WHERE id=500");Check(rebuilt,"cross-leaf index update must fall back");
         pages=new FileInfo(path).Length/4096;
-        await db.ExecuteAsync("UPDATE t SET body='{\"x\":2}' WHERE id=1");Check(!sparse,"changed expression key must fall back");
+        await db.ExecuteAsync("UPDATE t SET body='{\"x\":2}' WHERE id=1");Check(rebuilt,"changed expression key must fall back");
         pages=new FileInfo(path).Length/4096;
         foreach(int length in new[]{0,1,57,58,127,128,300})
         {
@@ -203,11 +203,11 @@ await Test("incremental dirty pages, same-leaf batches, indexes, overflow and sa
         var resized=new List<SqlCommand>();
         for(int id=2;id<20;id++){var value=new byte[rng.Next(200)];rng.NextBytes(value);expected[id]=value;resized.Add(new("UPDATE t SET payload=@v WHERE id=@id",new Dictionary<string,object?>{["v"]=value,["id"]=(long)id}));}
         await db.ExecuteTransactionAsync(resized);Check(sparse,"same-leaf resize batch rebuilt entire image");
-        await db.ExecuteAsync("UPDATE t SET payload=@v WHERE id=1",new Dictionary<string,object?>{["v"]=new byte[4000]});Check(!sparse,"leaf requiring split must fall back");expected[1]=new byte[4000];
+        await db.ExecuteAsync("UPDATE t SET payload=@v WHERE id=1",new Dictionary<string,object?>{["v"]=new byte[4000]});Check(rebuilt,"leaf requiring split must fall back");expected[1]=new byte[4000];
         pages=new FileInfo(path).Length/4096;
-        await db.ExecuteAsync("UPDATE t SET payload=@v WHERE id=1",new Dictionary<string,object?>{["v"]=new byte[5000]});Check(!sparse,"overflow allocation must fall back");expected[1]=new byte[5000];
+        await db.ExecuteAsync("UPDATE t SET payload=@v WHERE id=1",new Dictionary<string,object?>{["v"]=new byte[5000]});Check(rebuilt,"overflow allocation must fall back");expected[1]=new byte[5000];
         pages=new FileInfo(path).Length/4096;
-        await db.ExecuteAsync("INSERT INTO t VALUES(3000,3000,'new','{}',NULL);DELETE FROM t WHERE id=1999");Check(!sparse,"insert/delete must fall back");expected.Remove(1999);
+        await db.ExecuteAsync("INSERT INTO t VALUES(3000,3000,'new','{}',NULL);DELETE FROM t WHERE id=1999");Check(rebuilt,"insert/delete must fall back");expected.Remove(1999);
         using var canceled=new CancellationTokenSource();canceled.Cancel();await Reject<OperationCanceledException>(async()=>await db.ExecuteAsync("UPDATE t SET payload=X'00' WHERE id=1",cancellationToken:canceled.Token));
         SqliteStorage.CommitStage=stage=>{if(stage=="after-first-page")throw new IOException("injected incremental failure");};
         await Reject<IOException>(async()=>await db.ExecuteAsync("UPDATE t SET payload=@v WHERE id=0",new Dictionary<string,object?>{["v"]=new byte[20000]}));

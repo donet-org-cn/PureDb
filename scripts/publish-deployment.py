@@ -8,6 +8,7 @@ p.add_argument('--rid', required=True)
 p.add_argument('--dotnet', default='dotnet')
 p.add_argument('--sqlite', required=True, type=pathlib.Path)
 p.add_argument('--validate-only', action='store_true')
+p.add_argument('--refresh-existing', action='store_true', help='Rebuild only previously generated variants in this output, retaining old measurement evidence')
 a = p.parse_args()
 output = a.output.resolve(); output.mkdir(parents=True, exist_ok=True)
 assert a.sqlite.is_file()
@@ -46,7 +47,7 @@ for engine, host in ([] if a.validate_only else [('PureDb', 'PureDbHost'), ('SQL
     project = f'benchmarks/PureDb.DeploymentBenchmarks/{host}/{name}.csproj'
     for mode in ['framework', 'jit', 'aot']:
         target = output / (engine + '-' + mode)
-        assert not target.exists(), 'Use a fresh publish output directory'
+        assert not target.exists() or (a.refresh_existing and (output/'PUBLISH_COMPLETE').is_file()), 'Use a fresh publish output directory'
         print('PUBLISH', engine, mode, a.rid, flush=True)
         publish(project, target, mode)
         native = None

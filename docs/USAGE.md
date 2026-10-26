@@ -1,6 +1,6 @@
-﻿# PureDb 使用与支持范围
+# PureDb 使用与支持范围
 
-当前包与主分支版本：`1.0.0-preview.2`。用户函数等 API 见 [README](../README.md) 和 [用户函数](USER-FUNCTIONS.md)。
+当前包与主分支版本：`1.0.0-preview.3`。用户函数等 API 见 [README](../README.md) 和 [用户函数](USER-FUNCTIONS.md)。
 
 ## SQL、JSON 和 JOIN 示例
 
@@ -59,7 +59,7 @@ await db.ExecuteAsync("""
 - 表达式：算术、比较、AND/OR/NOT、BETWEEN、IN、IS NULL、LIKE、字符串拼接和 NULL 三值逻辑。
 - 函数：COUNT、SUM、AVG、MIN、MAX、LENGTH、LOWER、UPPER、COALESCE 与 JSON 函数。
 
-preview.2 还支持普通及受控递归 CTE、相关标量 / IN / EXISTS 子查询、FROM 派生表、集合运算、窗口函数、CASE、SQL 事务和保存点。逐条语法、例子、实现方式及明确未支持项集中在独立的 [SQL 支持与不支持清单](SQL-SUPPORT.md)，包括原版文件和 SQLite 文件后端的差异。ALTER TABLE、RETURNING、COLLATE 等仍未实现；ON CONFLICT 支持已列出的单分支 UPSERT 子集。采用严格类型，未实现 SQLite 的全部类型亲和性；排序使用 .NET ordinal，LIKE 和大小写使用 invariant Unicode，与 SQLite 部分规则不同。REAL 为有限 double，整数算术溢出报错。
+preview.2 还支持普通及受控递归 CTE、相关标量 / IN / EXISTS 子查询、FROM 派生表、集合运算、窗口函数、CASE、SQL 事务和保存点。逐条语法、例子、实现方式及明确未支持项集中在独立的 [SQL 支持与不支持清单](SQL-SUPPORT.md)，包括原版文件和 SQLite 文件后端的差异。ALTER TABLE、RETURNING、COLLATE 等仍未实现；ON CONFLICT 支持已列出的单分支 UPSERT 子集。采用严格类型，未实现 SQLite 的全部类型亲和性；有效 Unicode 文本按文件编码的 BINARY 顺序排序（原版 UTF-8），LIKE 和大小写使用 invariant Unicode，与 SQLite 部分规则不同。REAL 为有限 double，整数算术溢出报错。
 
 ## JSON / JSONB
 
@@ -146,3 +146,6 @@ Console.WriteLine(await command.ExecuteScalarAsync());
 
 支持 DbProviderFactory、参数、读取器、多结果集、DataTable/DataAdapter 和事务。事务冲突必须整体重试；未实现连接池、存储过程、KeyInfo、自动 CommandBuilder 或 EF Core。读取器先物化结果，查询取消不打断计算。完整支持边界见 [ADO.NET.md](ADO.NET.md)。
 
+
+
+preview.3 新增常用标量函数、显式 CAST、BLOB DEFAULT；兼容文件支持八种页大小和三种编码，且接入受支持的复合索引、约束、视图、触发器。完整清单与边界见 [SQL 清单](SQL-SUPPORT.md) 和 [兼容验收](COMPATIBILITY-REPORT.md)。

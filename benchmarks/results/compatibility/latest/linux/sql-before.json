@@ -1,0 +1,1060 @@
+{
+  "Scope": "Public common SQL query corpus; not the full SQLite test suite or all SQLite features",
+  "SQLite": "3.54.1",
+  "CorpusSHA256": "5D8E0C5FB5FCFC638965ACE2E750A8BD3B2FA75743DF3DBC37835FE179FCC325",
+  "Total": 175,
+  "Passed": 62,
+  "Rate": 0.35428571428571426,
+  "Cases": [
+    {
+      "Family": "numeric",
+      "Sql": "SELECT abs(-5)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: ABS"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT abs(-1.25)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: ABS"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT abs(\u00275\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: ABS"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT abs(\u0027bad\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: ABS"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT abs(NULL)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: ABS"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT sign(-5)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: SIGN"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT sign(0)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: SIGN"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT sign(3.25)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: SIGN"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT sign(\u0027bad\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: SIGN"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT sign(NULL)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: SIGN"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT round(1.25,1)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: ROUND"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT round(-1.25,1)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: ROUND"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT round(12.7)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: ROUND"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT round(1.2345,20)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: ROUND"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT round(NULL,2)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: ROUND"
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT 1\u002B2*3",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT 7/2",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT 7.0/2",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT 9%4",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT 4/0",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "numeric",
+      "Sql": "SELECT 4%0",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT ifnull(NULL,5)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: IFNULL"
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT ifnull(4,1/0)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: IFNULL"
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT nullif(1,1)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: NULLIF"
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT nullif(1,1.0)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: NULLIF"
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT nullif(1,2)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: NULLIF"
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT nullif(NULL,1)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: NULLIF"
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT iif(1,5,1/0)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: IIF"
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT iif(0,1/0,6)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: IIF"
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT iif(NULL,1,7)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: IIF"
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT if(1,8,9)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: IF"
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT coalesce(NULL,NULL,7)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT NULL IS NULL",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT 1 IS NOT NULL",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT NULL IN (1,NULL)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT 2 IN (1,NULL)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT 2 NOT IN (1,3)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT CASE WHEN 1 THEN \u0027a\u0027 ELSE \u0027b\u0027 END",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "null-and-lazy",
+      "Sql": "SELECT CASE 2 WHEN 1 THEN 4 WHEN 2 THEN 5 ELSE 6 END",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(NULL AS INTEGER),typeof(CAST(NULL AS INTEGER))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(NULL AS REAL),typeof(CAST(NULL AS REAL))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(NULL AS NUMERIC),typeof(CAST(NULL AS NUMERIC))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(NULL AS TEXT),typeof(CAST(NULL AS TEXT))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(NULL AS BLOB),typeof(CAST(NULL AS BLOB))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(123 AS INTEGER),typeof(CAST(123 AS INTEGER))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(123 AS REAL),typeof(CAST(123 AS REAL))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(123 AS NUMERIC),typeof(CAST(123 AS NUMERIC))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(123 AS TEXT),typeof(CAST(123 AS TEXT))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(123 AS BLOB),typeof(CAST(123 AS BLOB))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(-123 AS INTEGER),typeof(CAST(-123 AS INTEGER))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(-123 AS REAL),typeof(CAST(-123 AS REAL))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(-123 AS NUMERIC),typeof(CAST(-123 AS NUMERIC))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(-123 AS TEXT),typeof(CAST(-123 AS TEXT))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(-123 AS BLOB),typeof(CAST(-123 AS BLOB))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(1.75 AS INTEGER),typeof(CAST(1.75 AS INTEGER))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(1.75 AS REAL),typeof(CAST(1.75 AS REAL))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(1.75 AS NUMERIC),typeof(CAST(1.75 AS NUMERIC))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(1.75 AS TEXT),typeof(CAST(1.75 AS TEXT))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(1.75 AS BLOB),typeof(CAST(1.75 AS BLOB))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027123.5tail\u0027 AS INTEGER),typeof(CAST(\u0027123.5tail\u0027 AS INTEGER))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027123.5tail\u0027 AS REAL),typeof(CAST(\u0027123.5tail\u0027 AS REAL))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027123.5tail\u0027 AS NUMERIC),typeof(CAST(\u0027123.5tail\u0027 AS NUMERIC))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027123.5tail\u0027 AS TEXT),typeof(CAST(\u0027123.5tail\u0027 AS TEXT))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027123.5tail\u0027 AS BLOB),typeof(CAST(\u0027123.5tail\u0027 AS BLOB))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027123e2\u0027 AS INTEGER),typeof(CAST(\u0027123e2\u0027 AS INTEGER))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027123e2\u0027 AS REAL),typeof(CAST(\u0027123e2\u0027 AS REAL))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027123e2\u0027 AS NUMERIC),typeof(CAST(\u0027123e2\u0027 AS NUMERIC))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027123e2\u0027 AS TEXT),typeof(CAST(\u0027123e2\u0027 AS TEXT))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027123e2\u0027 AS BLOB),typeof(CAST(\u0027123e2\u0027 AS BLOB))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027  -45.2\u0027 AS INTEGER),typeof(CAST(\u0027  -45.2\u0027 AS INTEGER))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027  -45.2\u0027 AS REAL),typeof(CAST(\u0027  -45.2\u0027 AS REAL))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027  -45.2\u0027 AS NUMERIC),typeof(CAST(\u0027  -45.2\u0027 AS NUMERIC))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027  -45.2\u0027 AS TEXT),typeof(CAST(\u0027  -45.2\u0027 AS TEXT))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027  -45.2\u0027 AS BLOB),typeof(CAST(\u0027  -45.2\u0027 AS BLOB))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027bad\u0027 AS INTEGER),typeof(CAST(\u0027bad\u0027 AS INTEGER))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027bad\u0027 AS REAL),typeof(CAST(\u0027bad\u0027 AS REAL))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027bad\u0027 AS NUMERIC),typeof(CAST(\u0027bad\u0027 AS NUMERIC))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027bad\u0027 AS TEXT),typeof(CAST(\u0027bad\u0027 AS TEXT))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u0027bad\u0027 AS BLOB),typeof(CAST(\u0027bad\u0027 AS BLOB))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(X\u00273132\u0027 AS INTEGER),typeof(CAST(X\u00273132\u0027 AS INTEGER))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(X\u00273132\u0027 AS REAL),typeof(CAST(X\u00273132\u0027 AS REAL))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(X\u00273132\u0027 AS NUMERIC),typeof(CAST(X\u00273132\u0027 AS NUMERIC))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(X\u00273132\u0027 AS TEXT),typeof(CAST(X\u00273132\u0027 AS TEXT))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(X\u00273132\u0027 AS BLOB),typeof(CAST(X\u00273132\u0027 AS BLOB))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u00279223372036854775806\u0027 AS INTEGER),typeof(CAST(\u00279223372036854775806\u0027 AS INTEGER))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u00279223372036854775806\u0027 AS REAL),typeof(CAST(\u00279223372036854775806\u0027 AS REAL))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u00279223372036854775806\u0027 AS NUMERIC),typeof(CAST(\u00279223372036854775806\u0027 AS NUMERIC))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u00279223372036854775806\u0027 AS TEXT),typeof(CAST(\u00279223372036854775806\u0027 AS TEXT))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u00279223372036854775806\u0027 AS BLOB),typeof(CAST(\u00279223372036854775806\u0027 AS BLOB))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u002799999999999999999999999\u0027 AS INTEGER),typeof(CAST(\u002799999999999999999999999\u0027 AS INTEGER))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u002799999999999999999999999\u0027 AS REAL),typeof(CAST(\u002799999999999999999999999\u0027 AS REAL))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u002799999999999999999999999\u0027 AS NUMERIC),typeof(CAST(\u002799999999999999999999999\u0027 AS NUMERIC))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u002799999999999999999999999\u0027 AS TEXT),typeof(CAST(\u002799999999999999999999999\u0027 AS TEXT))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "cast",
+      "Sql": "SELECT CAST(\u002799999999999999999999999\u0027 AS BLOB),typeof(CAST(\u002799999999999999999999999\u0027 AS BLOB))",
+      "Passed": false,
+      "Failure": "SqlException: Expected ), found AS"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT hex(X\u002700FF\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: HEX"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT hex(NULL)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: HEX"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT hex(\u0027\u4E2D\u6587\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: HEX"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT hex(123)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: HEX"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT hex(zeroblob(4))",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: ZEROBLOB"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT length(zeroblob(-2))",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: ZEROBLOB"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT unicode(\u0027\uD83D\uDE00\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: UNICODE"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT unicode(\u0027\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: UNICODE"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT unicode(NULL)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: UNICODE"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT char(65,20013,128512)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: CHAR"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT substr(\u0027a\uD83D\uDE00bc\u0027,2,2)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: SUBSTR"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT substr(\u0027abcdef\u0027,-3,2)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: SUBSTR"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT substr(\u0027abcdef\u0027,4,-2)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: SUBSTR"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT substr(\u0027abcdef\u0027,0,3)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: SUBSTR"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT substr(\u0027abcdef\u0027,-20,3)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: SUBSTR"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT substr(\u0027abcdef\u0027,20,3)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: SUBSTR"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT substr(\u0027abcdef\u0027,2)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: SUBSTR"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT hex(substr(X\u002701020304\u0027,2,2))",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: SUBSTR"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT instr(\u0027a\uD83D\uDE00\u4E2D\u0027,\u0027\u4E2D\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: INSTR"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT instr(\u0027abc\u0027,\u0027z\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: INSTR"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT instr(X\u0027010203\u0027,X\u00270203\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: INSTR"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT replace(\u0027abcabc\u0027,\u0027ab\u0027,\u0027X\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: REPLACE"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT replace(\u0027abc\u0027,\u0027\u0027,\u0027X\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: REPLACE"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT trim(\u0027  x  \u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: TRIM"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT trim(\u0027\uD83D\uDE00x\uD83D\uDE00\u0027,\u0027\uD83D\uDE00\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: TRIM"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT ltrim(\u0027aaXaa\u0027,\u0027a\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: LTRIM"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT rtrim(\u0027aaXaa\u0027,\u0027a\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: RTRIM"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT concat(\u0027a\u0027,NULL,\u0027b\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: CONCAT"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT concat_ws(\u0027-\u0027,1,NULL,2)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: CONCAT_WS"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT concat_ws(NULL,1,2)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: CONCAT_WS"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT octet_length(\u0027\u4E2D\u6587\uD83D\uDE00\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: OCTET_LENGTH"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT typeof(NULL),typeof(1),typeof(1.0),typeof(\u0027a\u0027),typeof(X\u002701\u0027)",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: TYPEOF"
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT lower(\u0027ABC\u0027),upper(\u0027abc\u0027)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "text",
+      "Sql": "SELECT length(\u0027a\uD83D\uDE00\u4E2D\u0027)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json",
+      "Sql": "SELECT json_valid(\u0027{a:1}\u0027,2)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json",
+      "Sql": "SELECT json_extract(\u0027{a:1,b:[2,3]}\u0027,\u0027$.b[1]\u0027)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json",
+      "Sql": "SELECT json_type(\u0027{a:null}\u0027,\u0027$.a\u0027)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json",
+      "Sql": "SELECT json_array_length(\u0027[1,2,3]\u0027)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json",
+      "Sql": "SELECT json_set(\u0027{}\u0027,\u0027$.a\u0027,1)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json",
+      "Sql": "SELECT json_insert(\u0027{a:1}\u0027,\u0027$.a\u0027,2)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json",
+      "Sql": "SELECT json_replace(\u0027{a:1}\u0027,\u0027$.a\u0027,2)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json",
+      "Sql": "SELECT json_remove(\u0027{a:1,b:2}\u0027,\u0027$.a\u0027)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json",
+      "Sql": "SELECT json_patch(\u0027{a:1}\u0027,\u0027{b:2}\u0027)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json",
+      "Sql": "SELECT json_quote(\u0027a\u0027)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json",
+      "Sql": "SELECT json_array(1,\u0027a\u0027,NULL)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json",
+      "Sql": "SELECT json_object(\u0027a\u0027,1)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json",
+      "Sql": "SELECT \u0027{\u0022a\u0022:2}\u0027-\u003E\u003E\u0027$.a\u0027",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "select",
+      "Sql": "SELECT id,n,s,b FROM t WHERE 1 ORDER BY id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "aggregate",
+      "Sql": "SELECT COUNT(*),SUM(n),AVG(n),MIN(n),MAX(n) FROM t WHERE 1",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "select",
+      "Sql": "SELECT id,n,s,b FROM t WHERE n=10 ORDER BY id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "aggregate",
+      "Sql": "SELECT COUNT(*),SUM(n),AVG(n),MIN(n),MAX(n) FROM t WHERE n=10",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "select",
+      "Sql": "SELECT id,n,s,b FROM t WHERE n IS NULL ORDER BY id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "aggregate",
+      "Sql": "SELECT COUNT(*),SUM(n),AVG(n),MIN(n),MAX(n) FROM t WHERE n IS NULL",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "select",
+      "Sql": "SELECT id,n,s,b FROM t WHERE id BETWEEN 2 AND 4 ORDER BY id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "aggregate",
+      "Sql": "SELECT COUNT(*),SUM(n),AVG(n),MIN(n),MAX(n) FROM t WHERE id BETWEEN 2 AND 4",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "select",
+      "Sql": "SELECT id,n,s,b FROM t WHERE id IN (1,3) ORDER BY id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "aggregate",
+      "Sql": "SELECT COUNT(*),SUM(n),AVG(n),MIN(n),MAX(n) FROM t WHERE id IN (1,3)",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "select",
+      "Sql": "SELECT id,n,s,b FROM t WHERE n\u003C0 ORDER BY id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "aggregate",
+      "Sql": "SELECT COUNT(*),SUM(n),AVG(n),MIN(n),MAX(n) FROM t WHERE n\u003C0",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "select",
+      "Sql": "SELECT id,n,s,b FROM t WHERE s LIKE \u0027a%\u0027 ORDER BY id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "aggregate",
+      "Sql": "SELECT COUNT(*),SUM(n),AVG(n),MIN(n),MAX(n) FROM t WHERE s LIKE \u0027a%\u0027",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "select",
+      "Sql": "SELECT id,n,s,b FROM t WHERE id\u003E100 ORDER BY id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "aggregate",
+      "Sql": "SELECT COUNT(*),SUM(n),AVG(n),MIN(n),MAX(n) FROM t WHERE id\u003E100",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "join",
+      "Sql": "SELECT t.id,u.id FROM t INNER JOIN u ON t.n=u.n ORDER BY t.id,u.id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "join",
+      "Sql": "SELECT t.id,u.id FROM t LEFT JOIN u ON t.n=u.n ORDER BY t.id,u.id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "join",
+      "Sql": "SELECT t.id,u.id FROM t RIGHT JOIN u ON t.n=u.n ORDER BY t.id,u.id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "join",
+      "Sql": "SELECT t.id,u.id FROM t FULL JOIN u ON t.n=u.n ORDER BY t.id,u.id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "unicode-order",
+      "Sql": "SELECT s FROM (SELECT char(57344) AS s UNION ALL SELECT char(65536) UNION ALL SELECT char(1114111) UNION ALL SELECT char(97) UNION ALL SELECT char(20013)) ORDER BY s",
+      "Passed": false,
+      "Failure": "SqlException: Unsupported expression: CHAR"
+    },
+    {
+      "Family": "group",
+      "Sql": "SELECT n,COUNT(*) FROM t GROUP BY n HAVING COUNT(*)\u003E0 ORDER BY n",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "compound",
+      "Sql": "SELECT n FROM t UNION SELECT n FROM u ORDER BY n",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "compound",
+      "Sql": "SELECT n FROM t INTERSECT SELECT n FROM u ORDER BY n",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "compound",
+      "Sql": "SELECT n FROM t EXCEPT SELECT n FROM u ORDER BY n",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "cte",
+      "Sql": "WITH q AS(SELECT id FROM t WHERE n=10) SELECT * FROM q ORDER BY id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "cte",
+      "Sql": "WITH RECURSIVE q(x) AS(SELECT 1 UNION ALL SELECT x\u002B1 FROM q WHERE x\u003C5) SELECT SUM(x) FROM q",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "subquery",
+      "Sql": "SELECT a.id,(SELECT n FROM u WHERE id=a.id) FROM t a ORDER BY a.id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "subquery",
+      "Sql": "SELECT id FROM t WHERE EXISTS(SELECT 1 FROM u WHERE u.n=t.n) ORDER BY id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "window",
+      "Sql": "SELECT id,row_number() OVER(ORDER BY n,id),rank() OVER(ORDER BY n) FROM t ORDER BY id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "window",
+      "Sql": "SELECT id,sum(n) OVER(ORDER BY id ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) FROM t ORDER BY id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "window",
+      "Sql": "SELECT id,lag(s,1,\u0027missing\u0027) OVER(ORDER BY id) FROM t ORDER BY id",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json-table",
+      "Sql": "SELECT key,value,type,fullkey FROM json_each(\u0027[1,null,true,{\u0022x\u0022:2}]\u0027) ORDER BY key",
+      "Passed": true,
+      "Failure": null
+    },
+    {
+      "Family": "json-table",
+      "Sql": "SELECT fullkey,type,atom FROM json_tree(\u0027{a:[1,2],b:null}\u0027) ORDER BY fullkey",
+      "Passed": true,
+      "Failure": null
+    }
+  ]
+}

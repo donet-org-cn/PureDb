@@ -57,11 +57,11 @@ public sealed partial class SqlDatabase
     /// <param name = "schemaCookie">SQLite 文件头中的模式版本。</param>
     /// <param name = "userVersion">SQLite 文件头中由应用维护的版本号。</param>
     /// <param name = "applicationId">SQLite 文件头中的应用 ID。</param>
-    internal static void WriteSqliteSnapshot(ISqlSnapshot snapshot, SqlCatalog catalog, string temp, CancellationToken cancellationToken = default, uint changeCounter = 1, uint schemaCookie = 1, uint userVersion = 0, uint applicationId = 0)
+    /// <param name="pageSize">目标文件页大小，原地写入时保持源页尺寸。</param>
+    /// <param name="textEncoding">目标文件文本编码，原地写入时保持源编码。</param>
+    internal static void WriteSqliteSnapshot(ISqlSnapshot snapshot, SqlCatalog catalog, string temp, CancellationToken cancellationToken = default, uint changeCounter = 1, uint schemaCookie = 1, uint userVersion = 0, uint applicationId = 0, int pageSize = 4096, Encoding? textEncoding = null)
     {
-        if (catalog.Views.Count > 0 || catalog.Triggers.Count > 0 || catalog.Tables.Any(t => t.Checks.Count > 0 || t.ForeignKeys.Count > 0 || t.Columns.Any(c => c.Default is not null) || t.Indexes.Any(i => i.Expression?.Op == "composite")))
-            throw new NotSupportedException("SQLite file schema encoding for views/triggers/foreign keys/defaults/composite indexes is not implemented; use native PureDb format for these schema features");
-        using var writer = new SqliteFileWriter(temp);
+        using var writer = new SqliteFileWriter(temp, pageSize, textEncoding);
         var schema = new List<object?[]>();
         var names = catalog.Tables.Select(t => t.Name).Concat(catalog.Tables.SelectMany(t => t.Indexes.Select(i => i.Name))).ToHashSet(StringComparer.OrdinalIgnoreCase);
         foreach (var table in catalog.Tables)
@@ -73,7 +73,7 @@ public sealed partial class SqlDatabase
                 for (int c = 0; c < row.Length; c++)
                     if (table.Columns[c].Type == "JSONB" && row[c] is { } value)
                         row[c] = SqlJsonFunctions.Canonical(value);
-            string ddl = "CREATE TABLE " + QuoteIdentifier(table.Name) + "(" + string.Join(",", table.Columns.Select(c => QuoteIdentifier(c.Name) + " " + (c.Type is "JSON" or "JSONB" ? "JSON" : c.Type) + (c.Primary ? " PRIMARY KEY" : "") + (c.NotNull ? " NOT NULL" : ""))) + ")";
+            string ddl = SqliteSchema.Table(table);
             uint root = writer.Table(rows.Select(row =>
             {
                 var copy = row.ToArray();
@@ -97,30 +97,48 @@ public sealed partial class SqlDatabase
                 Expr expression = index.Expression ?? new Expr("column", index.Column);
                 var binding = new SqlBinding();
                 binding.Add(table, table.Name);
-                var get = binding.Bind(expression, EmptyParameters);
-                var values = rows.Select(r => new object?[] { SqlJsonFunctions.Unwrap(get(r)), r[table.Primary] }).ToArray();
+                var expressions = expression.Op == "composite" ? expression.Args : [expression];
+                var getters = expressions.Select(e => binding.Bind(e, EmptyParameters)).ToArray();
+                var values = rows.Select(r =>
+                {
+                    var record = new object?[getters.Length + 1];
+                    for (int i = 0; i < getters.Length; i++)
+                        record[i] = SqlJsonFunctions.Unwrap(getters[i](r));
+                    record[^1] = r[table.Primary];
+                    return record;
+                }).ToArray();
                 Array.Sort(values, (a, b) =>
                 {
-                    int n = SQLiteCompare(a[0], b[0]);
-                    return n == 0 ? ((long)a[1]!).CompareTo((long)b[1]!) : n;
+                    for (int i = 0; i < getters.Length; i++)
+                    {
+                        int n = SQLiteCompare(a[i], b[i], textEncoding ?? Encoding.UTF8);
+                        if (n != 0)
+                            return index.Descending is { } directions && i < directions.Length && directions[i] ? -Math.Sign(n) : n;
+                    }
+                    return ((long)a[^1]!).CompareTo((long)b[^1]!);
                 });
                 uint indexRoot = writer.Index(values);
-                string sql = "CREATE " + (index.Unique ? "UNIQUE " : "") + "INDEX " + QuoteIdentifier(index.Name) + " ON " + QuoteIdentifier(table.Name) + "(" + SqliteExpression(expression) + ")";
+                string sql = "CREATE " + (index.Unique ? "UNIQUE " : "") + "INDEX " + QuoteIdentifier(index.Name) + " ON " + QuoteIdentifier(table.Name) + "(" + string.Join(',', expressions.Select((e, i) => SqliteSchema.Expression(e) + (index.Descending is { } d && i < d.Length && d[i] ? " DESC" : ""))) + ")";
                 schema.Add(["index", index.Name, table.Name, (long)indexRoot, sql]);
             }
         }
 
+        foreach (var view in catalog.Views)
+            schema.Add(["view", view.Name, view.Name, 0L, "CREATE VIEW " + QuoteIdentifier(view.Name) + (view.Columns is null ? "" : "(" + string.Join(',', view.Columns.Select(QuoteIdentifier)) + ")") + " AS " + view.Sql]);
+        foreach (var trigger in catalog.Triggers)
+            schema.Add(["trigger", trigger.Name, trigger.Table, 0L, trigger.Sql]);
         writer.Finish(schema, changeCounter, schemaCookie, userVersion, applicationId);
     }
 
-    /// <summary>按 SQLite 二进制排序比较索引值，文本使用 UTF-8 字节顺序。</summary>
+    /// <summary>按 SQLite 二进制排序比较索引值，文本使用目标文件编码的字节顺序。</summary>
     /// <param name = "left">二元操作的左侧 SQL 标量。</param>
     /// <param name = "right">二元操作的右侧 SQL 标量。</param>
+    /// <param name = "encoding">目标 SQLite 文件的文本编码。</param>
     /// <returns>按方法规定计算的数量、位置、版本或比较结果。</returns>
-    private static int SQLiteCompare(object? left, object? right)
+    private static int SQLiteCompare(object? left, object? right, Encoding encoding)
     {
         if (left is string a && right is string b)
-            return Encoding.UTF8.GetBytes(a).AsSpan().SequenceCompareTo(Encoding.UTF8.GetBytes(b));
+            return encoding.GetBytes(a).AsSpan().SequenceCompareTo(encoding.GetBytes(b));
         return SqlValueComparer.Instance.Compare(left, right);
     }
 
@@ -144,10 +162,11 @@ public sealed partial class SqlDatabase
             var schema = reader.Table(1).Select(r => r.Values).ToArray();
             if (schema.Any(r => r.Length != 5 || r[0] is not string || r[1] is not string))
                 throw new InvalidDataException("Invalid sqlite_schema.");
-            if (schema.Any(r => (string)r[0]! is not ("table" or "index")))
-                throw new NotSupportedException("Views and triggers cannot be imported without changing their semantics.");
+            if (schema.Any(r => (string)r[0]! is not ("table" or "index" or "view" or "trigger")))
+                throw new NotSupportedException("Unsupported SQLite schema object.");
             var tables = new List<(object?[] Schema, CreateTable Create)>();
             var indexes = new List<string>();
+            var deferredSchema = new List<string>();
             foreach (var item in schema)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -161,21 +180,19 @@ public sealed partial class SqlDatabase
 
                 if (item[4] is not string sql)
                     throw new NotSupportedException("Missing SQLite schema SQL.");
-                var parsed = new SqlParser(sql).Parse();
+                var parsed = SqliteSchema.Parse(sql, strict: false);
                 if (parsed.Count != 1)
                     throw new NotSupportedException("Unsupported SQLite schema.");
                 if ((string)item[0]! == "table" && parsed[0] is CreateTable create)
                 {
-                    if (create.Checks.Count > 0 || create.ForeignKeys.Count > 0 || create.UniqueColumns.Count > 0 || create.Columns.Any(c => c.Default is not null))
-                        throw new NotSupportedException("Import of foreign-key, table UNIQUE and DEFAULT schema requires explicit migration");
                     tables.Add((item, create));
                 }
                 else if ((string)item[0]! == "index" && parsed[0] is CreateIndex index)
                 {
-                    if (index.Expression.Op == "composite")
-                        throw new NotSupportedException("Import of composite or descending indexes requires explicit migration");
                     indexes.Add(sql);
                 }
+                else if (parsed[0] is CreateView or CreateTrigger)
+                    deferredSchema.Add(sql);
                 else
                     throw new NotSupportedException("Unsupported SQLite schema object.");
             }
@@ -183,8 +200,9 @@ public sealed partial class SqlDatabase
             await using (var db = new SqlDatabase(temp, options))
             {
                 foreach (var table in tables)
-                {
                     await db.ExecuteAsync((string)table.Schema[4]!, cancellationToken: cancellationToken);
+                foreach (var table in tables)
+                {
                     int primary = table.Create.Columns.FindIndex(c => c.Primary);
                     var batch = new List<SqlCommand>();
                     long bytes = 0;
@@ -216,6 +234,8 @@ public sealed partial class SqlDatabase
 
                 foreach (string index in indexes)
                     await db.ExecuteAsync(index, cancellationToken: cancellationToken);
+                foreach (string definition in deferredSchema)
+                    await db.ExecuteAsync(definition, cancellationToken: cancellationToken);
             }
 
             cancellationToken.ThrowIfCancellationRequested();

@@ -15,6 +15,7 @@
     <Project Path="src/PureDb/PureDb.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/PureDb.SqliteParityTests/PureDb.SqliteParityTests.csproj" />
     <Project Path="tests/PureDb.AotTests/PureDb.AotTests.csproj" />
     <Project Path="tests/PureDb.AdoNetTests/PureDb.AdoNetTests.csproj" />
     <Project Path="tests/PureDb.CompatibilityTests/PureDb.CompatibilityTests.csproj" />

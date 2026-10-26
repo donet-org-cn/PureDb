@@ -1,5 +1,5 @@
 {
-  "Date": "2026-10-24T23:10:33+0800",
+  "Date": "2026-10-27T02:37:05+0800",
   "Platform": "Linux-5.10.110-g1cf46ce40714-dirty-aarch64-with-glibc2.29",
   "CPUs": 8,
   "Affinity": [
@@ -8,11 +8,11 @@
     6,
     7
   ],
-  "Version": "1.0.0-preview.2",
+  "Version": "1.0.0-preview.3",
   "Manifest": {
     "RID": "linux-arm64",
     "Host": "Linux-5.10.110-g1cf46ce40714-dirty-aarch64-with-glibc2.29",
-    "Version": "1.0.0-preview.2",
+    "Version": "1.0.0-preview.3",
     "SDK": "10.0.402",
     "RuntimeVersion": "10.0.13",
     "Variants": [
@@ -23,8 +23,8 @@
         "Executable": "PureDb.Deployment.PureDb",
         "ExecutableBytes": 77480,
         "SQLiteLibrary": null,
-        "RuntimeBytes": 652153,
-        "AllPublishedBytes": 1242538,
+        "RuntimeBytes": 669561,
+        "AllPublishedBytes": 1277538,
         "Files": [
           {
             "Path": "PureDb.Deployment.PureDb",
@@ -35,19 +35,19 @@
           {
             "Path": "PureDb.Deployment.PureDb.deps.json",
             "Bytes": 902,
-            "SHA256": "49040FED5E22047637B35524E0C27313CC8C0613E85BCC0D9048842A012B27DC",
+            "SHA256": "F0D2D5B738324BE79B6461A39C8CB0AA269816F6DEF6107BDF68B8FCF2952C73",
             "DebugOrDocumentation": false
           },
           {
             "Path": "PureDb.Deployment.PureDb.dll",
             "Bytes": 44032,
-            "SHA256": "DBC1F37CEBD6C75DE3BEBDA5D084F941BD64CB3D75A145A5FACD87E063D3E8EE",
+            "SHA256": "EFC0742313AFB3A8A072641A051590874A59E7BF26239D42311284E0C4F7E454",
             "DebugOrDocumentation": false
           },
           {
             "Path": "PureDb.Deployment.PureDb.pdb",
-            "Bytes": 29228,
-            "SHA256": "B570DA1EC79EB66BF93F05C0F88FFD7965BEE826F669C2A73241F9B5FFBB7833",
+            "Bytes": 29176,
+            "SHA256": "C548C438A8CF1BEF1428755C04D42E377F633D55A1596ADC325DC428841A9F9E",
             "DebugOrDocumentation": true
           },
           {
@@ -58,20 +58,20 @@
           },
           {
             "Path": "PureDb.dll",
-            "Bytes": 529408,
-            "SHA256": "96579B17709F19706386F9325BE8D9D9E309CEEF3ECD49515AB14ABB35073568",
+            "Bytes": 546816,
+            "SHA256": "00E125CD482FF74986BEC115B5E19E050AC7701ED16B62316A885C56FE958D57",
             "DebugOrDocumentation": false
           },
           {
             "Path": "PureDb.pdb",
-            "Bytes": 181168,
-            "SHA256": "47AD0BEC00CFE81E6A3A3CB0001ACB18543CA74A152BE2EFCCB813747FF2A123",
+            "Bytes": 186888,
+            "SHA256": "DF6FB6F65A925CA1EE75E2DCF4E917D1BF2C6573A0581F67C6E4E717172F3263",
             "DebugOrDocumentation": true
           },
           {
             "Path": "PureDb.xml",
-            "Bytes": 379989,
-            "SHA256": "D69CF515A6261D4AA038F6B677D8DF158E0D8BE1C071A2EFA429936EF0F0614A",
+            "Bytes": 391913,
+            "SHA256": "28EFF0CF4C6232494CE122FD4BF1D5990652F42BB002445B8508B65CAD9B4524",
             "DebugOrDocumentation": true
           }
         ]
@@ -83,8 +83,8 @@
         "Executable": "PureDb.Deployment.PureDb",
         "ExecutableBytes": 77480,
         "SQLiteLibrary": null,
-        "RuntimeBytes": 89297909,
-        "AllPublishedBytes": 89888294,
+        "RuntimeBytes": 89315317,
+        "AllPublishedBytes": 89923294,
         "Files": [
           {
             "Path": "Microsoft.CSharp.dll",
@@ -125,19 +125,19 @@
           {
             "Path": "PureDb.Deployment.PureDb.deps.json",
             "Bytes": 28229,
-            "SHA256": "E4FFDF708A94D589A7AAE4814D8F8A207004372105C87F29179FADA89E065E8A",
+            "SHA256": "B3591A293F3E248BF51DF0136A73FB7FE24DBAF7A2CD6ADB84DF76847168C764",
             "DebugOrDocumentation": false
           },
           {
             "Path": "PureDb.Deployment.PureDb.dll",
             "Bytes": 44032,
-            "SHA256": "DBC1F37CEBD6C75DE3BEBDA5D084F941BD64CB3D75A145A5FACD87E063D3E8EE",
+            "SHA256": "EFC0742313AFB3A8A072641A051590874A59E7BF26239D42311284E0C4F7E454",
             "DebugOrDocumentation": false
           },
           {
             "Path": "PureDb.Deployment.PureDb.pdb",
-            "Bytes": 29228,
-            "SHA256": "B570DA1EC79EB66BF93F05C0F88FFD7965BEE826F669C2A73241F9B5FFBB7833",
+            "Bytes": 29176,
+            "SHA256": "C548C438A8CF1BEF1428755C04D42E377F633D55A1596ADC325DC428841A9F9E",
             "DebugOrDocumentation": true
           },
           {
@@ -148,20 +148,20 @@
           },
           {
             "Path": "PureDb.dll",
-            "Bytes": 529408,
-            "SHA256": "96579B17709F19706386F9325BE8D9D9E309CEEF3ECD49515AB14ABB35073568",
+            "Bytes": 546816,
+            "SHA256": "00E125CD482FF74986BEC115B5E19E050AC7701ED16B62316A885C56FE958D57",
             "DebugOrDocumentation": false
           },
           {
             "Path": "PureDb.pdb",
-            "Bytes": 181168,
-            "SHA256": "47AD0BEC00CFE81E6A3A3CB0001ACB18543CA74A152BE2EFCCB813747FF2A123",
+            "Bytes": 186888,
+            "SHA256": "DF6FB6F65A925CA1EE75E2DCF4E917D1BF2C6573A0581F67C6E4E717172F3263",
             "DebugOrDocumentation": true
           },
           {
             "Path": "PureDb.xml",
-            "Bytes": 379989,
-            "SHA256": "D69CF515A6261D4AA038F6B677D8DF158E0D8BE1C071A2EFA429936EF0F0614A",
+            "Bytes": 391913,
+            "SHA256": "28EFF0CF4C6232494CE122FD4BF1D5990652F42BB002445B8508B65CAD9B4524",
             "DebugOrDocumentation": true
           },
           {
@@ -1263,33 +1263,33 @@
         "Mode": "aot",
         "Directory": "PureDb-aot",
         "Executable": "PureDb.Deployment.PureDb",
-        "ExecutableBytes": 6354880,
+        "ExecutableBytes": 6412464,
         "SQLiteLibrary": null,
-        "RuntimeBytes": 6354880,
-        "AllPublishedBytes": 27362765,
+        "RuntimeBytes": 6412464,
+        "AllPublishedBytes": 27538417,
         "Files": [
           {
             "Path": "PureDb.Deployment.PureDb",
-            "Bytes": 6354880,
-            "SHA256": "8D2B8D9A8717E4D65CF4CF48CF4E9F0A64DDF7A0518F23868A815474CFCFB839",
+            "Bytes": 6412464,
+            "SHA256": "7EEE4CED9D83B2D13A4863C87F42FC3E9DBF5F6803148F018AF1D4BE74A9B749",
             "DebugOrDocumentation": false
           },
           {
             "Path": "PureDb.Deployment.PureDb.dbg",
-            "Bytes": 20446728,
-            "SHA256": "98EBCE49F43E699FF771C28B3988CE752AA26F16E7953201B90AA3828B397F1C",
+            "Bytes": 20547152,
+            "SHA256": "CF65033605AEB85417029253B1A417285E4DFA5DFB341A3B234BFB765D812D5F",
             "DebugOrDocumentation": true
           },
           {
             "Path": "PureDb.pdb",
-            "Bytes": 181168,
-            "SHA256": "47AD0BEC00CFE81E6A3A3CB0001ACB18543CA74A152BE2EFCCB813747FF2A123",
+            "Bytes": 186888,
+            "SHA256": "DF6FB6F65A925CA1EE75E2DCF4E917D1BF2C6573A0581F67C6E4E717172F3263",
             "DebugOrDocumentation": true
           },
           {
             "Path": "PureDb.xml",
-            "Bytes": 379989,
-            "SHA256": "D69CF515A6261D4AA038F6B677D8DF158E0D8BE1C071A2EFA429936EF0F0614A",
+            "Bytes": 391913,
+            "SHA256": "28EFF0CF4C6232494CE122FD4BF1D5990652F42BB002445B8508B65CAD9B4524",
             "DebugOrDocumentation": true
           }
         ]
@@ -1302,7 +1302,7 @@
         "ExecutableBytes": 77480,
         "SQLiteLibrary": "libsqlite3.so",
         "RuntimeBytes": 1281560,
-        "AllPublishedBytes": 1312316,
+        "AllPublishedBytes": 1312256,
         "Files": [
           {
             "Path": "PureDb.Deployment.Sqlite",
@@ -1313,19 +1313,19 @@
           {
             "Path": "PureDb.Deployment.Sqlite.deps.json",
             "Bytes": 525,
-            "SHA256": "97A6E3BD47BA855066E2C84C30691FB12D8A1E7C67575D9245402D6D056D9F5C",
+            "SHA256": "33E127A039B607025119D34EA144054C6B87D4CFA33940C1CAA4787308FC0432",
             "DebugOrDocumentation": false
           },
           {
             "Path": "PureDb.Deployment.Sqlite.dll",
             "Bytes": 49152,
-            "SHA256": "B5B6DD6538DA833AAE9E0F2E4084B58AC3F8DA2115F636E56937A41776D4B121",
+            "SHA256": "E6AFA3EFBF6EC640E1F045C85CE0EA7EB3E379927F66382301F09195C2ED44F8",
             "DebugOrDocumentation": false
           },
           {
             "Path": "PureDb.Deployment.Sqlite.pdb",
-            "Bytes": 30756,
-            "SHA256": "E59BD9C8AA4E9AE834FF5171FC9AFAF19E50AC378A41E6483013733C8584FDBA",
+            "Bytes": 30696,
+            "SHA256": "D94CB8F34F135F5AF95AD673FE9166F6399B1103D0C498EBB8F774CAFA1A387A",
             "DebugOrDocumentation": true
           },
           {
@@ -1350,7 +1350,7 @@
         "ExecutableBytes": 77480,
         "SQLiteLibrary": "libsqlite3.so",
         "RuntimeBytes": 89927352,
-        "AllPublishedBytes": 89958108,
+        "AllPublishedBytes": 89958048,
         "Files": [
           {
             "Path": "Microsoft.CSharp.dll",
@@ -1391,19 +1391,19 @@
           {
             "Path": "PureDb.Deployment.Sqlite.deps.json",
             "Bytes": 27888,
-            "SHA256": "9E3BDB0B989C23F0DC8679EF844E84B6579FCD93F032707C225F42F7C934BB4D",
+            "SHA256": "D6B3A4964199362E81FD46229406A1971382EED47BD6B0340C64692B8EE14049",
             "DebugOrDocumentation": false
           },
           {
             "Path": "PureDb.Deployment.Sqlite.dll",
             "Bytes": 49152,
-            "SHA256": "B5B6DD6538DA833AAE9E0F2E4084B58AC3F8DA2115F636E56937A41776D4B121",
+            "SHA256": "E6AFA3EFBF6EC640E1F045C85CE0EA7EB3E379927F66382301F09195C2ED44F8",
             "DebugOrDocumentation": false
           },
           {
             "Path": "PureDb.Deployment.Sqlite.pdb",
-            "Bytes": 30756,
-            "SHA256": "E59BD9C8AA4E9AE834FF5171FC9AFAF19E50AC378A41E6483013733C8584FDBA",
+            "Bytes": 30696,
+            "SHA256": "D94CB8F34F135F5AF95AD673FE9166F6399B1103D0C498EBB8F774CAFA1A387A",
             "DebugOrDocumentation": true
           },
           {
@@ -2525,13 +2525,13 @@
           {
             "Path": "PureDb.Deployment.Sqlite",
             "Bytes": 2822160,
-            "SHA256": "E33BFE2DC7A5655D0F6C70C765FE38F21A0D646CE7F7972549837AFBFEE53461",
+            "SHA256": "3177F41194D87DFEF4D3F54928A5F54B779773BCF0B76E5B4DD0D1572F9FD868",
             "DebugOrDocumentation": false
           },
           {
             "Path": "PureDb.Deployment.Sqlite.dbg",
             "Bytes": 9175136,
-            "SHA256": "4C5C6CC637E24AEF8122E5EFCA4E15F350DF1FEBF60186E9311D5F44EE76378A",
+            "SHA256": "C7CF6B382AB97A8A94F7AD91B5F115D1400E69C270E851E6E05DEA11227535BA",
             "DebugOrDocumentation": true
           },
           {
@@ -2545,7 +2545,8 @@
     ],
     "AotFeatureGroups": 7,
     "AotDifferentialQueries": 230,
-    "AotWarnings": 0
+    "AotWarnings": 0,
+    "ValidationOnly": false
   },
   "Rounds": 3,
   "QueryWarmupMilliseconds": 500,

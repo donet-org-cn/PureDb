@@ -1,17 +1,7 @@
 {
-  "CompilerWarnings": 0,
   "FeatureGroups": 7,
   "DifferentialQueries": 230,
-  "FeatureTranscript": "PASS CRUD, CHECK, UPSERT, indexes and C# function\nPASS JSON/JSONB/JSON5 constructors, edits, paths and table functions\nPASS CTE, windows, subqueries, UNION, views, triggers, foreign keys and savepoints\nPASS source-generated catalog reopen and persisted constraints\nPASS ADO.NET typed reader and GetSchemaTable\nPASS Shared large tail and compaction generation\nPASS managed SQLite file update and import/export\nPASS 7 AOT feature groups; dynamic code=False; F:\\db\\artifacts\\deployment\\windows-final\\artifacts\\aot-tests\\89b060d70f9a4f0788a0d83040f7b653\n",
-  "DifferentialTranscript": "PASS 230 extended SQL differential queries; SQLite 3.54.1: F:\\db\\artifacts\\deployment\\windows-final\\artifacts\\sql-compatibility-tests\\bb6a59c8fe394ecd94627a4e1b7ce263\n",
-  "CompilerLogsChecked": [
-    "PureDb-aot.build.log",
-    "PureDb-framework.build.log",
-    "PureDb-jit.build.log",
-    "PureDb.AotTests.build.log",
-    "PureDb.SqlCompatibilityTests.build.log",
-    "SQLite-aot.build.log",
-    "SQLite-framework.build.log",
-    "SQLite-jit.build.log"
-  ]
+  "CompilerWarnings": 0,
+  "FeatureTranscript": "PASS CRUD, CHECK, UPSERT, indexes and C# function\r\nPASS JSON/JSONB/JSON5 constructors, edits, paths and table functions\r\nPASS CTE, windows, subqueries, UNION, views, triggers, foreign keys and savepoints\r\nPASS source-generated catalog reopen and persisted constraints\r\nPASS ADO.NET typed reader and GetSchemaTable\r\nPASS Shared large tail and compaction generation\r\nPASS managed SQLite file update and import/export\r\nPASS 7 AOT feature groups; dynamic code=False; F:\\db\\artifacts\\preview3\\release\\windows-published\\artifacts\\aot-tests\\809aeeaa2bc64dbf90db6c897a0e6349\r\n",
+  "DifferentialTranscript": "PASS 230 extended SQL differential queries; SQLite 3.54.1: F:\\db\\artifacts\\preview3\\release\\windows-published\\artifacts\\sql-compatibility-tests\\65c564e74b3141fba99eeac20b97d5c6\r\n"
 }

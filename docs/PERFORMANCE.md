@@ -1,11 +1,11 @@
 ﻿# PureDb 与 SQLite 最新全面对比
 
-PureDb `1.0.0-preview.2` 原生格式，对照原版 SQLite 3.54.1。每平台 41 场景 × 2 引擎 × 3 轮 = 246 主样本，另有 18 个独立内存、72 个 ADO 和 6 个充分预热样本。只保留最新结果。
+PureDb `1.0.0-preview.3` 原生格式，对照原版 SQLite 3.54.1。每平台 41 场景 × 2 引擎 × 3 轮 = 246 主样本，另有 18 个独立内存、72 个 ADO 和 6 个充分预热样本。只保留最新结果。
 
 | 平台 | PureDb 耗时胜 | SQLite 耗时胜 | 接近 |
 | --- | --- | --- | --- |
-| Windows x64 | 34 | 6 | 1 |
-| Linux ARM64 | 25 | 16 | 0 |
+| Windows x64 | 32 | 8 | 1 |
+| Linux ARM64 | 26 | 14 | 1 |
 
 主套件串行查询预热至少 500 ms 且至少 64 次，测量至少 750 ms；三轮取中位数，低于 5% 标接近，不是统计等价证明。KV 与 SQL、Core 与 ADO、Full 与 Buffered 分开解释。数据集为 10 万行，缓存与 OS 文件缓存已预热。
 
@@ -21,47 +21,47 @@ Full 是各自强制刷盘路径；Buffered 与 SQLite WAL/NORMAL 的 checkpoint
 
 | 场景 | 单位 | PureDb µs | SQLite µs | 耗时胜方 |
 | --- | --- | --- | --- | --- |
-| 四进程读取 · shared_read | queries | 31.869 | 15.548 | 🟥 SQLite 2.05× |
-| 四进程原子更新 · shared_update | updates | 206.377 | 108.771 | 🟥 SQLite 1.90× |
-| KV 主键命中 · kv_get | queries | 0.303 | 5.560 | 🟩 PureDb 18.36× |
-| KV 主键未命中 · kv_miss | queries | 0.051 | 4.666 | 🟩 PureDb 91.29× |
-| KV 范围 20 行 · kv_range_20 | queries | 2.555 | 16.818 | 🟩 PureDb 6.58× |
-| KV 范围 1000 行 · kv_range_1000 | queries | 107.185 | 516.391 | 🟩 PureDb 4.82× |
-| SQL 主键完整行 · sql_point | queries | 0.399 | 5.227 | 🟩 PureDb 13.11× |
-| SQL 主键覆盖投影 · sql_projection | queries | 0.307 | 5.004 | 🟩 PureDb 16.31× |
-| SQL 范围 20 行 · sql_range20 | queries | 3.143 | 14.465 | 🟩 PureDb 4.60× |
-| SQL 范围 1000 行 · sql_range1000 | queries | 126.425 | 498.480 | 🟩 PureDb 3.94× |
-| COUNT(*) · sql_count | queries | 0.177 | 17.734 | 🟩 PureDb 100.10× |
-| SUM 扫描 · sql_sum_scan | queries | 1,158.071 | 3,028.795 | 🟩 PureDb 2.62× |
-| 分组计数 · sql_group | queries | 18.214 | 4,405.454 | 🟩 PureDb 241.88× |
-| INNER JOIN · sql_join | queries | 1.246 | 10.198 | 🟩 PureDb 8.19× |
-| LEFT JOIN · sql_left_join | queries | 1.058 | 7.085 | 🟩 PureDb 6.70× |
-| JSON 表达式索引 · json_index | queries | 2.353 | 21.730 | 🟩 PureDb 9.24× |
-| JSON 整数取余计数 · json_scan | queries | 4.335 | 509.308 | 🟩 PureDb 117.49× |
-| JSONB 转换提取 · json_binary_conversion | queries | 1.001 | 5.760 | 🟩 PureDb 5.76× |
-| 八线程 KV 读取 · parallel_get_8 | queries | 0.184 | 1.944 | 🟩 PureDb 10.55× |
-| 重开并首次范围查询 · reopen_and_first_range | opens | 698.760 | 642.960 | 🟥 SQLite 1.09× |
-| 2 MiB 页缓存读取 · cache_limited_2MiB | queries | 5.543 | 10.629 | 🟩 PureDb 1.92× |
-| Full 逐条新增 · Full_single | rows | 18,341.519 | 15,602.437 | 🟥 SQLite 1.18× |
-| Full 八线程新增 · Full_concurrent8 | rows | 4,555.714 | 24,558.607 | 🟩 PureDb 5.39× |
-| Full 批量新增 · Full_batch1000 | rows | 23.231 | 30.431 | 🟩 PureDb 1.31× |
-| Full 压缩 · Full_compact | compactions | 51,528.700 | 61,588.200 | 🟩 PureDb 1.20× |
-| Full 唯一索引批量新增 · Full_batch_unique | rows | 41.909 | 17.582 | 🟥 SQLite 2.38× |
-| Full 批量更新 · Full_batch_update | rows | 21.898 | 45.006 | 🟩 PureDb 2.06× |
-| Full 批量删除 · Full_batch_delete | rows | 17.140 | 38.168 | 🟩 PureDb 2.23× |
-| Full 逐条更新 · Full_update | rows | 19,950.198 | 21,077.293 | 🟩 PureDb 1.06× |
-| Full 逐条删除 · Full_delete | rows | 16,723.946 | 15,977.901 | 🟨 接近 |
-| Full 一次更新加五次读取 · Full_mixed | write+5reads | 16,892.167 | 17,827.075 | 🟩 PureDb 1.06× |
-| Buffered 逐条新增 · Buffered_single | rows | 4.949 | 267.278 | 🟩 PureDb 54.01× |
-| Buffered 八线程新增 · Buffered_concurrent8 | rows | 8.032 | 293.776 | 🟩 PureDb 36.58× |
-| Buffered 批量新增 · Buffered_batch1000 | rows | 1.352 | 1.669 | 🟩 PureDb 1.23× |
-| Buffered 压缩 · Buffered_compact | compactions | 64,954.100 | 20,108.700 | 🟥 SQLite 3.23× |
-| Buffered 唯一索引批量新增 · Buffered_batch_unique | rows | 1.518 | 1.641 | 🟩 PureDb 1.08× |
-| Buffered 批量更新 · Buffered_batch_update | rows | 1.814 | 17.560 | 🟩 PureDb 9.68× |
-| Buffered 批量删除 · Buffered_batch_delete | rows | 1.999 | 16.245 | 🟩 PureDb 8.13× |
-| Buffered 逐条更新 · Buffered_update | rows | 5.028 | 323.438 | 🟩 PureDb 64.32× |
-| Buffered 逐条删除 · Buffered_delete | rows | 4.783 | 370.326 | 🟩 PureDb 77.42× |
-| Buffered 一次更新加五次读取 · Buffered_mixed | write+5reads | 12.764 | 373.716 | 🟩 PureDb 29.28× |
+| 四进程读取 · shared_read | queries | 36.189 | 15.671 | 🟥 SQLite 2.31× |
+| 四进程原子更新 · shared_update | updates | 228.206 | 179.760 | 🟥 SQLite 1.27× |
+| KV 主键命中 · kv_get | queries | 0.326 | 5.662 | 🟩 PureDb 17.36× |
+| KV 主键未命中 · kv_miss | queries | 0.053 | 4.788 | 🟩 PureDb 90.53× |
+| KV 范围 20 行 · kv_range_20 | queries | 2.706 | 16.659 | 🟩 PureDb 6.16× |
+| KV 范围 1000 行 · kv_range_1000 | queries | 95.322 | 525.776 | 🟩 PureDb 5.52× |
+| SQL 主键完整行 · sql_point | queries | 0.323 | 5.304 | 🟩 PureDb 16.44× |
+| SQL 主键覆盖投影 · sql_projection | queries | 0.256 | 5.078 | 🟩 PureDb 19.86× |
+| SQL 范围 20 行 · sql_range20 | queries | 2.305 | 14.827 | 🟩 PureDb 6.43× |
+| SQL 范围 1000 行 · sql_range1000 | queries | 106.697 | 511.499 | 🟩 PureDb 4.79× |
+| COUNT(*) · sql_count | queries | 0.195 | 18.204 | 🟩 PureDb 93.59× |
+| SUM 扫描 · sql_sum_scan | queries | 1,254.796 | 3,222.164 | 🟩 PureDb 2.57× |
+| 分组计数 · sql_group | queries | 19.665 | 4,673.675 | 🟩 PureDb 237.66× |
+| INNER JOIN · sql_join | queries | 0.951 | 10.562 | 🟩 PureDb 11.11× |
+| LEFT JOIN · sql_left_join | queries | 0.778 | 7.474 | 🟩 PureDb 9.60× |
+| JSON 表达式索引 · json_index | queries | 2.069 | 21.854 | 🟩 PureDb 10.56× |
+| JSON 整数取余计数 · json_scan | queries | 4.784 | 515.405 | 🟩 PureDb 107.74× |
+| JSONB 转换提取 · json_binary_conversion | queries | 0.846 | 6.165 | 🟩 PureDb 7.29× |
+| 八线程 KV 读取 · parallel_get_8 | queries | 0.189 | 2.061 | 🟩 PureDb 10.90× |
+| 重开并首次范围查询 · reopen_and_first_range | opens | 721.320 | 637.020 | 🟥 SQLite 1.13× |
+| 2 MiB 页缓存读取 · cache_limited_2MiB | queries | 5.840 | 11.041 | 🟩 PureDb 1.89× |
+| Full 逐条新增 · Full_single | rows | 26,346.146 | 31,760.512 | 🟩 PureDb 1.21× |
+| Full 八线程新增 · Full_concurrent8 | rows | 7,644.061 | 36,475.911 | 🟩 PureDb 4.77× |
+| Full 批量新增 · Full_batch1000 | rows | 42.384 | 57.303 | 🟩 PureDb 1.35× |
+| Full 压缩 · Full_compact | compactions | 91,024.800 | 81,425.700 | 🟥 SQLite 1.12× |
+| Full 唯一索引批量新增 · Full_batch_unique | rows | 56.382 | 91.377 | 🟩 PureDb 1.62× |
+| Full 批量更新 · Full_batch_update | rows | 38.616 | 54.922 | 🟩 PureDb 1.42× |
+| Full 批量删除 · Full_batch_delete | rows | 36.581 | 59.050 | 🟩 PureDb 1.61× |
+| Full 逐条更新 · Full_update | rows | 24,950.604 | 30,655.058 | 🟩 PureDb 1.23× |
+| Full 逐条删除 · Full_delete | rows | 25,818.259 | 24,983.782 | 🟨 接近 |
+| Full 一次更新加五次读取 · Full_mixed | write+5reads | 26,908.626 | 24,654.002 | 🟥 SQLite 1.09× |
+| Buffered 逐条新增 · Buffered_single | rows | 4.964 | 459.113 | 🟩 PureDb 92.49× |
+| Buffered 八线程新增 · Buffered_concurrent8 | rows | 8.060 | 491.507 | 🟩 PureDb 60.98× |
+| Buffered 批量新增 · Buffered_batch1000 | rows | 2.146 | 1.761 | 🟥 SQLite 1.22× |
+| Buffered 压缩 · Buffered_compact | compactions | 91,242.500 | 31,659.200 | 🟥 SQLite 2.88× |
+| Buffered 唯一索引批量新增 · Buffered_batch_unique | rows | 1.930 | 1.829 | 🟥 SQLite 1.05× |
+| Buffered 批量更新 · Buffered_batch_update | rows | 2.442 | 25.321 | 🟩 PureDb 10.37× |
+| Buffered 批量删除 · Buffered_batch_delete | rows | 1.387 | 23.193 | 🟩 PureDb 16.72× |
+| Buffered 逐条更新 · Buffered_update | rows | 5.934 | 413.941 | 🟩 PureDb 69.75× |
+| Buffered 逐条删除 · Buffered_delete | rows | 4.846 | 478.587 | 🟩 PureDb 98.75× |
+| Buffered 一次更新加五次读取 · Buffered_mixed | write+5reads | 11.379 | 448.906 | 🟩 PureDb 39.45× |
 
 | 场景 | PureDb 文件 MiB | SQLite 文件 MiB |
 | --- | --- | --- |
@@ -87,7 +87,7 @@ Full 是各自强制刷盘路径；Buffered 与 SQLite WAL/NORMAL 的 checkpoint
 | 重开并首次范围查询 | 47.895 | 30.863 |
 | 2 MiB 页缓存读取 | 47.895 | 30.863 |
 | Full 逐条新增 | 0.031 | 0.888 |
-| Full 八线程新增 | 0.031 | 1.202 |
+| Full 八线程新增 | 0.031 | 1.179 |
 | Full 批量新增 | 2.890 | 3.399 |
 | Full 压缩 | 1.445 | 4.137 |
 | Full 唯一索引批量新增 | 0.290 | 0.361 |
@@ -97,7 +97,7 @@ Full 是各自强制刷盘路径；Buffered 与 SQLite WAL/NORMAL 的 checkpoint
 | Full 逐条删除 | 0.034 | 1.021 |
 | Full 一次更新加五次读取 | 0.060 | 0.876 |
 | Buffered 逐条新增 | 0.309 | 4.234 |
-| Buffered 八线程新增 | 0.309 | 11.962 |
+| Buffered 八线程新增 | 0.309 | 11.943 |
 | Buffered 批量新增 | 2.890 | 3.399 |
 | Buffered 压缩 | 1.445 | 4.137 |
 | Buffered 唯一索引批量新增 | 0.290 | 0.361 |
@@ -113,79 +113,79 @@ Full 是各自强制刷盘路径；Buffered 与 SQLite WAL/NORMAL 的 checkpoint
 
 | 场景 | 单位 | Core | ADO.NET | SQLite C API | ADO 胜方 |
 | --- | --- | --- | --- | --- | --- |
-| point | µs/查询 | 0.720 | 1.477 | 5.564 | 🟩 PureDb 3.77× |
-| range20 | µs/查询 | 4.240 | 4.929 | 14.216 | 🟩 PureDb 2.88× |
-| group | µs/查询 | 28.510 | 45.553 | 4,494.023 | 🟩 PureDb 98.66× |
-| join | µs/查询 | 2.049 | 3.052 | 10.760 | 🟩 PureDb 3.53× |
-| json_scan | µs/查询 | 5.198 | 6.079 | 498.733 | 🟩 PureDb 82.04× |
-| jsonb | µs/查询 | 1.411 | 1.957 | 5.655 | 🟩 PureDb 2.89× |
-| insert1000 | µs/行 | 19.820 | 17.566 | 299.830 | 🟩 PureDb 17.07× |
-| batch10000 | µs/千行事务 | 4,687.560 | 4,249.620 | 1,691.550 | 🟥 SQLite 2.51× |
+| point | µs/查询 | 0.514 | 1.287 | 5.520 | 🟩 PureDb 4.29× |
+| range20 | µs/查询 | 3.305 | 3.938 | 14.307 | 🟩 PureDb 3.63× |
+| group | µs/查询 | 27.754 | 44.639 | 4,355.551 | 🟩 PureDb 97.57× |
+| join | µs/查询 | 1.595 | 2.698 | 10.814 | 🟩 PureDb 4.01× |
+| json_scan | µs/查询 | 4.909 | 6.208 | 499.320 | 🟩 PureDb 80.43× |
+| jsonb | µs/查询 | 1.256 | 1.729 | 5.796 | 🟩 PureDb 3.35× |
+| insert1000 | µs/行 | 19.058 | 17.401 | 499.423 | 🟩 PureDb 28.70× |
+| batch10000 | µs/千行事务 | 4,685.680 | 4,379.690 | 1,686.490 | 🟥 SQLite 2.60× |
 
 ### 磁盘观察：全机设备范围
 
 | 引擎 | 全机设备 | 忙碌率 % | 读 MiB/s | 写 MiB/s |
 | --- | --- | --- | --- | --- |
-| Optimized | 0 d: | 0.09 | 0.07 | 0.01 |
-| Optimized | 1 | 87.77 | 0.01 | 3.01 |
-| Optimized | 2 c: | 1.40 | 0.01 | 0.17 |
-| Optimized | _total | 29.16 | 0.08 | 3.19 |
-| SQLite | 0 d: | 0.01 | 0.00 | 0.00 |
-| SQLite | 1 | 90.18 | 0.00 | 5.65 |
-| SQLite | 2 c: | 1.71 | 0.09 | 0.27 |
-| SQLite | _total | 29.14 | 0.09 | 5.93 |
+| Optimized | 0 d: | 0.00 | 0.00 | 0.00 |
+| Optimized | 1 | 91.20 | 0.00 | 2.18 |
+| Optimized | 2 c: | 1.35 | 0.01 | 0.15 |
+| Optimized | _total | 30.85 | 0.01 | 2.33 |
+| SQLite | 0 d: | 0.00 | 0.00 | 0.00 |
+| SQLite | 1 | 90.74 | 0.00 | 4.98 |
+| SQLite | 2 c: | 1.44 | 0.01 | 0.19 |
+| SQLite | _total | 30.73 | 0.02 | 5.17 |
 
 Windows 物理设备数据为每引擎一次独立写入套件补测，不是三轮主样本的 I/O，也不纳入主成绩。
 
 设备计数包括系统服务与延迟回写，不等于引擎独占 I/O。Linux 为三轮套件期间 diskstats 增量；若内核未提供有效计数则不能排名。进程逻辑读写字节、次数、CPU 和关闭后文件列表保留在 raw JSON。
 
-实测程序集 SHA256：`A240817D6F98A3264CB24AD474A870BC1AACA56A9466411CAB12387EB7EB04F5`；.NET 10.0.13；整机 12 核；[原始结果](../benchmarks/results/latest/windows)。
+实测程序集 SHA256：`30C7DB3221A39E08DF491CB88D85EB04E6ABD226990A2C89C7E6A916E62CC510`；.NET 10.0.13；整机 12 核；[原始结果](../benchmarks/results/latest/windows)。
 
 ## Linux ARM64
 
 | 场景 | 单位 | PureDb µs | SQLite µs | 耗时胜方 |
 | --- | --- | --- | --- | --- |
-| 四进程读取 · shared_read | queries | 59.753 | 33.189 | 🟥 SQLite 1.80× |
-| 四进程原子更新 · shared_update | updates | 332.048 | 51.106 | 🟥 SQLite 6.50× |
-| KV 主键命中 · kv_get | queries | 1.100 | 4.370 | 🟩 PureDb 3.97× |
-| KV 主键未命中 · kv_miss | queries | 0.116 | 2.348 | 🟩 PureDb 20.19× |
-| KV 范围 20 行 · kv_range_20 | queries | 15.040 | 28.812 | 🟩 PureDb 1.92× |
-| KV 范围 1000 行 · kv_range_1000 | queries | 247.915 | 986.151 | 🟩 PureDb 3.98× |
-| SQL 主键完整行 · sql_point | queries | 1.095 | 3.561 | 🟩 PureDb 3.25× |
-| SQL 主键覆盖投影 · sql_projection | queries | 0.743 | 3.030 | 🟩 PureDb 4.08× |
-| SQL 范围 20 行 · sql_range20 | queries | 6.608 | 19.494 | 🟩 PureDb 2.95× |
-| SQL 范围 1000 行 · sql_range1000 | queries | 343.648 | 950.521 | 🟩 PureDb 2.77× |
-| COUNT(*) · sql_count | queries | 0.456 | 19.935 | 🟩 PureDb 43.70× |
-| SUM 扫描 · sql_sum_scan | queries | 2,710.722 | 5,069.989 | 🟩 PureDb 1.87× |
-| 分组计数 · sql_group | queries | 57.109 | 7,139.051 | 🟩 PureDb 125.01× |
-| INNER JOIN · sql_join | queries | 6.313 | 12.466 | 🟩 PureDb 1.97× |
-| LEFT JOIN · sql_left_join | queries | 5.667 | 6.935 | 🟩 PureDb 1.22× |
-| JSON 表达式索引 · json_index | queries | 5.840 | 30.493 | 🟩 PureDb 5.22× |
-| JSON 整数取余计数 · json_scan | queries | 12.927 | 672.055 | 🟩 PureDb 51.99× |
-| JSONB 转换提取 · json_binary_conversion | queries | 3.002 | 4.081 | 🟩 PureDb 1.36× |
-| 八线程 KV 读取 · parallel_get_8 | queries | 0.631 | 1.439 | 🟩 PureDb 2.28× |
-| 重开并首次范围查询 · reopen_and_first_range | opens | 655.900 | 422.380 | 🟥 SQLite 1.55× |
-| 2 MiB 页缓存读取 · cache_limited_2MiB | queries | 4.067 | 6.948 | 🟩 PureDb 1.71× |
-| Full 逐条新增 · Full_single | rows | 2,628.761 | 1,091.539 | 🟥 SQLite 2.41× |
-| Full 八线程新增 · Full_concurrent8 | rows | 407.376 | 2,262.825 | 🟩 PureDb 5.55× |
-| Full 批量新增 · Full_batch1000 | rows | 32.761 | 20.767 | 🟥 SQLite 1.58× |
-| Full 压缩 · Full_compact | compactions | 77,412.300 | 32,217.900 | 🟥 SQLite 2.40× |
-| Full 唯一索引批量新增 · Full_batch_unique | rows | 42.621 | 13.772 | 🟥 SQLite 3.09× |
-| Full 批量更新 · Full_batch_update | rows | 37.544 | 11.724 | 🟥 SQLite 3.20× |
-| Full 批量删除 · Full_batch_delete | rows | 18.984 | 10.698 | 🟥 SQLite 1.77× |
-| Full 逐条更新 · Full_update | rows | 1,072.193 | 983.539 | 🟥 SQLite 1.09× |
-| Full 逐条删除 · Full_delete | rows | 1,829.338 | 1,094.972 | 🟥 SQLite 1.67× |
-| Full 一次更新加五次读取 · Full_mixed | write+5reads | 1,917.556 | 974.903 | 🟥 SQLite 1.97× |
-| Buffered 逐条新增 · Buffered_single | rows | 60.266 | 74.201 | 🟩 PureDb 1.23× |
-| Buffered 八线程新增 · Buffered_concurrent8 | rows | 73.339 | 127.674 | 🟩 PureDb 1.74× |
-| Buffered 批量新增 · Buffered_batch1000 | rows | 14.027 | 7.498 | 🟥 SQLite 1.87× |
-| Buffered 压缩 · Buffered_compact | compactions | 67,674.000 | 23,799.100 | 🟥 SQLite 2.84× |
-| Buffered 唯一索引批量新增 · Buffered_batch_unique | rows | 10.796 | 7.718 | 🟥 SQLite 1.40× |
-| Buffered 批量更新 · Buffered_batch_update | rows | 12.880 | 9.619 | 🟥 SQLite 1.34× |
-| Buffered 批量删除 · Buffered_batch_delete | rows | 5.711 | 8.796 | 🟩 PureDb 1.54× |
-| Buffered 逐条更新 · Buffered_update | rows | 38.093 | 104.427 | 🟩 PureDb 2.74× |
-| Buffered 逐条删除 · Buffered_delete | rows | 15.938 | 123.488 | 🟩 PureDb 7.75× |
-| Buffered 一次更新加五次读取 · Buffered_mixed | write+5reads | 53.577 | 123.767 | 🟩 PureDb 2.31× |
+| 四进程读取 · shared_read | queries | 92.305 | 36.853 | 🟥 SQLite 2.50× |
+| 四进程原子更新 · shared_update | updates | 265.254 | 59.532 | 🟥 SQLite 4.46× |
+| KV 主键命中 · kv_get | queries | 1.246 | 4.543 | 🟩 PureDb 3.65× |
+| KV 主键未命中 · kv_miss | queries | 0.119 | 2.375 | 🟩 PureDb 19.91× |
+| KV 范围 20 行 · kv_range_20 | queries | 13.825 | 30.046 | 🟩 PureDb 2.17× |
+| KV 范围 1000 行 · kv_range_1000 | queries | 229.862 | 1,046.166 | 🟩 PureDb 4.55× |
+| SQL 主键完整行 · sql_point | queries | 0.887 | 3.537 | 🟩 PureDb 3.99× |
+| SQL 主键覆盖投影 · sql_projection | queries | 0.648 | 3.030 | 🟩 PureDb 4.68× |
+| SQL 范围 20 行 · sql_range20 | queries | 5.186 | 20.521 | 🟩 PureDb 3.96× |
+| SQL 范围 1000 行 · sql_range1000 | queries | 258.556 | 1,000.178 | 🟩 PureDb 3.87× |
+| COUNT(*) · sql_count | queries | 0.500 | 20.628 | 🟩 PureDb 41.23× |
+| SUM 扫描 · sql_sum_scan | queries | 2,465.234 | 5,357.262 | 🟩 PureDb 2.17× |
+| 分组计数 · sql_group | queries | 59.683 | 7,400.288 | 🟩 PureDb 123.99× |
+| INNER JOIN · sql_join | queries | 5.431 | 12.535 | 🟩 PureDb 2.31× |
+| LEFT JOIN · sql_left_join | queries | 4.889 | 7.018 | 🟩 PureDb 1.44× |
+| JSON 表达式索引 · json_index | queries | 5.156 | 31.085 | 🟩 PureDb 6.03× |
+| JSON 整数取余计数 · json_scan | queries | 13.442 | 684.088 | 🟩 PureDb 50.89× |
+| JSONB 转换提取 · json_binary_conversion | queries | 2.599 | 4.072 | 🟩 PureDb 1.57× |
+| 八线程 KV 读取 · parallel_get_8 | queries | 0.651 | 1.779 | 🟩 PureDb 2.73× |
+| 重开并首次范围查询 · reopen_and_first_range | opens | 647.320 | 506.560 | 🟥 SQLite 1.28× |
+| 2 MiB 页缓存读取 · cache_limited_2MiB | queries | 4.391 | 6.093 | 🟩 PureDb 1.39× |
+| Full 逐条新增 · Full_single | rows | 1,011.368 | 871.288 | 🟥 SQLite 1.16× |
+| Full 八线程新增 · Full_concurrent8 | rows | 254.038 | 2,102.165 | 🟩 PureDb 8.28× |
+| Full 批量新增 · Full_batch1000 | rows | 17.696 | 9.516 | 🟥 SQLite 1.86× |
+| Full 压缩 · Full_compact | compactions | 30,531.400 | 26,478.200 | 🟥 SQLite 1.15× |
+| Full 唯一索引批量新增 · Full_batch_unique | rows | 21.649 | 8.437 | 🟥 SQLite 2.57× |
+| Full 批量更新 · Full_batch_update | rows | 19.960 | 16.874 | 🟥 SQLite 1.18× |
+| Full 批量删除 · Full_batch_delete | rows | 10.210 | 7.404 | 🟥 SQLite 1.38× |
+| Full 逐条更新 · Full_update | rows | 1,070.350 | 1,165.722 | 🟩 PureDb 1.09× |
+| Full 逐条删除 · Full_delete | rows | 912.815 | 1,084.716 | 🟩 PureDb 1.19× |
+| Full 一次更新加五次读取 · Full_mixed | write+5reads | 1,356.961 | 1,175.545 | 🟥 SQLite 1.15× |
+| Buffered 逐条新增 · Buffered_single | rows | 41.018 | 100.856 | 🟩 PureDb 2.46× |
+| Buffered 八线程新增 · Buffered_concurrent8 | rows | 36.868 | 107.203 | 🟩 PureDb 2.91× |
+| Buffered 批量新增 · Buffered_batch1000 | rows | 12.141 | 3.331 | 🟥 SQLite 3.64× |
+| Buffered 压缩 · Buffered_compact | compactions | 57,012.700 | 11,694.700 | 🟥 SQLite 4.88× |
+| Buffered 唯一索引批量新增 · Buffered_batch_unique | rows | 11.689 | 2.493 | 🟥 SQLite 4.69× |
+| Buffered 批量更新 · Buffered_batch_update | rows | 11.529 | 8.298 | 🟥 SQLite 1.39× |
+| Buffered 批量删除 · Buffered_batch_delete | rows | 5.156 | 5.146 | 🟨 接近 |
+| Buffered 逐条更新 · Buffered_update | rows | 16.655 | 83.793 | 🟩 PureDb 5.03× |
+| Buffered 逐条删除 · Buffered_delete | rows | 15.357 | 70.438 | 🟩 PureDb 4.59× |
+| Buffered 一次更新加五次读取 · Buffered_mixed | write+5reads | 37.091 | 135.212 | 🟩 PureDb 3.65× |
 
 | 场景 | PureDb 文件 MiB | SQLite 文件 MiB |
 | --- | --- | --- |
@@ -211,7 +211,7 @@ Windows 物理设备数据为每引擎一次独立写入套件补测，不是三
 | 重开并首次范围查询 | 47.895 | 30.863 |
 | 2 MiB 页缓存读取 | 47.895 | 30.863 |
 | Full 逐条新增 | 0.031 | 0.888 |
-| Full 八线程新增 | 0.031 | 1.131 |
+| Full 八线程新增 | 0.031 | 1.096 |
 | Full 批量新增 | 2.890 | 3.399 |
 | Full 压缩 | 1.445 | 4.137 |
 | Full 唯一索引批量新增 | 0.290 | 0.361 |
@@ -221,7 +221,7 @@ Windows 物理设备数据为每引擎一次独立写入套件补测，不是三
 | Full 逐条删除 | 0.034 | 1.021 |
 | Full 一次更新加五次读取 | 0.060 | 0.876 |
 | Buffered 逐条新增 | 0.309 | 4.234 |
-| Buffered 八线程新增 | 0.309 | 9.401 |
+| Buffered 八线程新增 | 0.309 | 11.432 |
 | Buffered 批量新增 | 2.890 | 3.399 |
 | Buffered 压缩 | 1.445 | 4.137 |
 | Buffered 唯一索引批量新增 | 0.290 | 0.361 |
@@ -237,30 +237,32 @@ Windows 物理设备数据为每引擎一次独立写入套件补测，不是三
 
 | 场景 | 单位 | Core | ADO.NET | SQLite C API | ADO 胜方 |
 | --- | --- | --- | --- | --- | --- |
-| point | µs/查询 | 2.296 | 11.917 | 3.936 | 🟥 SQLite 3.03× |
-| range20 | µs/查询 | 9.762 | 22.580 | 19.303 | 🟥 SQLite 1.17× |
-| group | µs/查询 | 80.638 | 137.150 | 7,070.224 | 🟩 PureDb 51.55× |
-| join | µs/查询 | 7.957 | 12.566 | 13.806 | 🟩 PureDb 1.10× |
-| json_scan | µs/查询 | 16.698 | 20.919 | 669.935 | 🟩 PureDb 32.03× |
-| jsonb | µs/查询 | 6.516 | 9.824 | 3.850 | 🟥 SQLite 2.55× |
-| insert1000 | µs/行 | 32.540 | 32.779 | 78.373 | 🟩 PureDb 2.39× |
-| batch10000 | µs/千行事务 | 10,292.700 | 12,995.650 | 7,802.050 | 🟥 SQLite 1.67× |
+| point | µs/查询 | 2.485 | 9.153 | 3.861 | 🟥 SQLite 2.37× |
+| range20 | µs/查询 | 8.321 | 13.302 | 20.378 | 🟩 PureDb 1.53× |
+| group | µs/查询 | 80.627 | 132.416 | 7,425.859 | 🟩 PureDb 56.08× |
+| join | µs/查询 | 7.570 | 9.915 | 14.058 | 🟩 PureDb 1.42× |
+| json_scan | µs/查询 | 17.649 | 20.544 | 685.577 | 🟩 PureDb 33.37× |
+| jsonb | µs/查询 | 6.098 | 10.672 | 4.049 | 🟥 SQLite 2.64× |
+| insert1000 | µs/行 | 32.192 | 32.734 | 62.720 | 🟩 PureDb 1.92× |
+| batch10000 | µs/千行事务 | 10,460.260 | 10,675.490 | 2,972.800 | 🟥 SQLite 3.59× |
 
 ### 磁盘观察：全机设备范围
 
 | 套件 | 引擎 | 设备 | 设备忙碌率 % | 设备读 MiB | 设备写 MiB |
 | --- | --- | --- | --- | --- | --- |
-| queries | Optimized | mmcblk0p6 | 0.63 | 0.07 | 8.09 |
-| queries | SQLite | mmcblk0p6 | 0.37 | 0.06 | 1.46 |
-| writes | Optimized | mmcblk0p6 | 25.65 | 0.02 | 40.01 |
-| writes | SQLite | mmcblk0p6 | 52.65 | 0.03 | 139.93 |
-| processes | Optimized | mmcblk0p6 | 3.87 | 0.00 | 1.10 |
-| processes | SQLite | mmcblk0p6 | 7.53 | 0.00 | 16.64 |
+| queries | Optimized | mmcblk0p6 | 6.57 | 0.00 | 23.51 |
+| queries | SQLite | mmcblk0p6 | 6.21 | 0.00 | 16.40 |
+| writes | Optimized | mmcblk0p6 | 32.18 | 0.00 | 41.63 |
+| writes | SQLite | mmcblk0p6 | 70.78 | 0.00 | 141.25 |
+| processes | Optimized | mmcblk0p6 | 10.54 | 0.00 | 3.05 |
+| processes | SQLite | mmcblk0p6 | 17.38 | 0.00 | 17.52 |
 
 设备计数包括系统服务与延迟回写，不等于引擎独占 I/O。Linux 为三轮套件期间 diskstats 增量；若内核未提供有效计数则不能排名。进程逻辑读写字节、次数、CPU 和关闭后文件列表保留在 raw JSON。
 
-实测程序集 SHA256：`A240817D6F98A3264CB24AD474A870BC1AACA56A9466411CAB12387EB7EB04F5`；.NET 10.0.1；整机 8 核；[原始结果](../benchmarks/results/latest/linux)。
+实测程序集 SHA256：`30C7DB3221A39E08DF491CB88D85EB04E6ABD226990A2C89C7E6A916E62CC510`；.NET 10.0.13；整机 8 核；[原始结果](../benchmarks/results/latest/linux)。
 
 ## 解释和限制
 
 精确的 SQLite 计划保存在最新结果目录。CPU、内存、耗时没有全面领先；胜负计数不是业务加权总分。Full/Buffered、关闭维护、缓存初建、接口与 SQL 支持范围会影响结果。测量为冻结源码的本地发布构建；两平台使用同一份实测 DLL。GitHub 从提交重新构建时，路径和构建元数据可能改变 DLL 哈希。
+
+本轮 ARM 测试盘接近满，df 普通可用空间为 0，root 保留块仍可写，测试未发生空间不足失败；写入与设备指标不代表空闲磁盘。硬件状态与复现边界见 [测量方法](BENCHMARKS.md)。
