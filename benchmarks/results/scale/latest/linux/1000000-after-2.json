@@ -1,0 +1,225 @@
+{
+  "Engine": "PureDb",
+  "Rows": 1000000,
+  "OS": "Ubuntu 20.04.5 LTS",
+  "Architecture": "Arm64",
+  "Runtime": ".NET 10.0.13",
+  "CpuCount": 8,
+  "SQLite": "3.54.1",
+  "CoreVersion": "1.0.0-rc.1",
+  "PageCacheBudgetBytes": 67108864,
+  "PureSqlCacheBudgetBytes": 67108864,
+  "AutomaticCheckpointBytes": 0,
+  "HostSHA256": "C8A72134226154448EA6035A2C734C02E8E3638EE6A1D1B4F4C9919C6D204979",
+  "CoreSHA256": "B4E516C14F7CD187587D37C4B9AA6E9AF7C669CC2CA66B4B02FC1F3DDD1E54C0",
+  "Simd": {
+    "VectorBytes": 16,
+    "Vector128": true,
+    "Vector256": false,
+    "Avx2": false,
+    "ArmCrc32": true,
+    "AdvSimd": true
+  },
+  "MainFileBytes": 78211992,
+  "TotalFileBytes": 110152600,
+  "Samples": [
+    {
+      "Name": "insert_batches_1000",
+      "Operations": 1000000,
+      "Milliseconds": 2694.3657,
+      "CpuMilliseconds": 3205.774,
+      "AllocatedBytes": 1371443176,
+      "ManagedBytes": 96795800,
+      "RssBytes": 140865536,
+      "FileBytes": 79020512,
+      "IO": {
+        "ReadBytes": 0,
+        "WriteBytes": 0,
+        "ReadOperations": 0,
+        "WriteOperations": 0,
+        "StorageReadBytes": null,
+        "StorageWriteBytes": null
+      }
+    },
+    {
+      "Name": "range20_after_ingest",
+      "Operations": 30,
+      "Milliseconds": 69.7994,
+      "CpuMilliseconds": 69.85799999999972,
+      "AllocatedBytes": 8425728,
+      "ManagedBytes": 92444000,
+      "RssBytes": 140673024,
+      "FileBytes": 79020512,
+      "IO": {
+        "ReadBytes": 0,
+        "WriteBytes": 0,
+        "ReadOperations": 0,
+        "WriteOperations": 0,
+        "StorageReadBytes": null,
+        "StorageWriteBytes": null
+      }
+    },
+    {
+      "Name": "checkpoint",
+      "Operations": 1,
+      "Milliseconds": 815.2615,
+      "CpuMilliseconds": 553.7370000000005,
+      "AllocatedBytes": 86160,
+      "ManagedBytes": 92375440,
+      "RssBytes": 139481088,
+      "FileBytes": 111284704,
+      "IO": {
+        "ReadBytes": 0,
+        "WriteBytes": 0,
+        "ReadOperations": 0,
+        "WriteOperations": 0,
+        "StorageReadBytes": null,
+        "StorageWriteBytes": null
+      }
+    },
+    {
+      "Name": "range20_after_checkpoint",
+      "Operations": 30,
+      "Milliseconds": 9.2805,
+      "CpuMilliseconds": 9.32300000000032,
+      "AllocatedBytes": 348344,
+      "ManagedBytes": 890104,
+      "RssBytes": 118263808,
+      "FileBytes": 111284704,
+      "IO": {
+        "ReadBytes": 0,
+        "WriteBytes": 0,
+        "ReadOperations": 0,
+        "WriteOperations": 0,
+        "StorageReadBytes": null,
+        "StorageWriteBytes": null
+      }
+    },
+    {
+      "Name": "range20_hot",
+      "Operations": 10000,
+      "Milliseconds": 468.3415,
+      "CpuMilliseconds": 687.7880000000005,
+      "AllocatedBytes": 111303488,
+      "ManagedBytes": 67741816,
+      "RssBytes": 136245248,
+      "FileBytes": 111284704,
+      "IO": {
+        "ReadBytes": 0,
+        "WriteBytes": 0,
+        "ReadOperations": 0,
+        "WriteOperations": 0,
+        "StorageReadBytes": null,
+        "StorageWriteBytes": null
+      }
+    },
+    {
+      "Name": "update_range_10000",
+      "Operations": 10000,
+      "Milliseconds": 58.8802,
+      "CpuMilliseconds": 61.52800000000025,
+      "AllocatedBytes": 11796408,
+      "ManagedBytes": 52636816,
+      "RssBytes": 132349952,
+      "FileBytes": 112074724,
+      "IO": {
+        "ReadBytes": 0,
+        "WriteBytes": 0,
+        "ReadOperations": 0,
+        "WriteOperations": 0,
+        "StorageReadBytes": null,
+        "StorageWriteBytes": null
+      }
+    },
+    {
+      "Name": "delete_range_10000",
+      "Operations": 10000,
+      "Milliseconds": 50.4554,
+      "CpuMilliseconds": 50.438999999999396,
+      "AllocatedBytes": 9264272,
+      "ManagedBytes": 55919552,
+      "RssBytes": 133828608,
+      "FileBytes": 112314744,
+      "IO": {
+        "ReadBytes": 0,
+        "WriteBytes": 0,
+        "ReadOperations": 0,
+        "WriteOperations": 0,
+        "StorageReadBytes": null,
+        "StorageWriteBytes": null
+      }
+    },
+    {
+      "Name": "compact",
+      "Operations": 1,
+      "Milliseconds": 2068.9974,
+      "CpuMilliseconds": 2042.6940000000004,
+      "AllocatedBytes": 242221888,
+      "ManagedBytes": 112742792,
+      "RssBytes": 254128128,
+      "FileBytes": 110152600,
+      "IO": {
+        "ReadBytes": 0,
+        "WriteBytes": 0,
+        "ReadOperations": 0,
+        "WriteOperations": 0,
+        "StorageReadBytes": null,
+        "StorageWriteBytes": null
+      }
+    },
+    {
+      "Name": "close",
+      "Operations": 1,
+      "Milliseconds": 25.9273,
+      "CpuMilliseconds": 29.423999999999978,
+      "AllocatedBytes": 8648,
+      "ManagedBytes": 557960,
+      "RssBytes": 108269568,
+      "FileBytes": 110152600,
+      "IO": {
+        "ReadBytes": 0,
+        "WriteBytes": 0,
+        "ReadOperations": 0,
+        "WriteOperations": 0,
+        "StorageReadBytes": null,
+        "StorageWriteBytes": null
+      }
+    },
+    {
+      "Name": "reopen_and_first_range",
+      "Operations": 1,
+      "Milliseconds": 4.1708,
+      "CpuMilliseconds": 4.212999999999738,
+      "AllocatedBytes": 125984,
+      "ManagedBytes": 689008,
+      "RssBytes": 108343296,
+      "FileBytes": 110152600,
+      "IO": {
+        "ReadBytes": 0,
+        "WriteBytes": 0,
+        "ReadOperations": 0,
+        "WriteOperations": 0,
+        "StorageReadBytes": null,
+        "StorageWriteBytes": null
+      }
+    },
+    {
+      "Name": "point_10000",
+      "Operations": 10000,
+      "Milliseconds": 45.0047,
+      "CpuMilliseconds": 45.07300000000032,
+      "AllocatedBytes": 3116528,
+      "ManagedBytes": 3801680,
+      "RssBytes": 108343296,
+      "FileBytes": 110152600,
+      "IO": {
+        "ReadBytes": 0,
+        "WriteBytes": 0,
+        "ReadOperations": 0,
+        "WriteOperations": 0,
+        "StorageReadBytes": null,
+        "StorageWriteBytes": null
+      }
+    }
+  ]
+}

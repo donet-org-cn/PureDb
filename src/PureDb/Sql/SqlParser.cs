@@ -11,6 +11,7 @@ internal sealed partial class SqlParser
     private sealed record Token(string Kind, string Text);
     private readonly List<Token> _tokens = [];
     private int _pos, _parameter;
+    private int _syntaxDepth, _expressionDepth;
     private readonly bool _sqliteFile;
     private static readonly HashSet<string> Reserved = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -159,13 +160,13 @@ internal sealed partial class SqlParser
             }
 
             string symbol = c.ToString();
-            if (i + 1 < sql.Length && (sql.Substring(i, 2) is "<=" or ">=" or "<>" or "!=" or "||" or "->"))
+            if (i + 1 < sql.Length && (sql.Substring(i, 2) is "<=" or ">=" or "<>" or "!=" or "==" or "<<" or ">>" or "||" or "->"))
             {
                 symbol = sql.Substring(i, 2);
                 i++;
             }
 
-            if (!"(),;.*+-/%=<>!|".Contains(c))
+            if (!"(),;.*+-/%=<>!|&~".Contains(c))
                 throw Error($"Unexpected character {c}");
             _tokens.Add(new("symbol", symbol));
             i++;
@@ -655,6 +656,40 @@ internal sealed partial class SqlParser
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
     private Expr Expression(int min = 0)
     {
+        if (_syntaxDepth >= 128)
+            throw Error("SQL nesting exceeds 128 levels");
+        _syntaxDepth++;
+        _expressionDepth++;
+        try
+        {
+            var expression = ReadExpression(min);
+            if (_expressionDepth == 1 && expression.Args.Length > 0)
+            {
+                // 左结合链不增加递归解析深度，仍需迭代检查最终树，避免绑定时栈溢出。
+                var pending = new Stack<(Expr Expression, int Depth)>();
+                pending.Push((expression, 1));
+                while (pending.TryPop(out var item))
+                {
+                    if (item.Depth > 128)
+                        throw Error("SQL expression exceeds 128 levels");
+                    foreach (var child in item.Expression.Args)
+                        pending.Push((child, item.Depth + 1));
+                }
+            }
+            return expression;
+        }
+        finally
+        {
+            _expressionDepth--;
+            _syntaxDepth--;
+        }
+    }
+
+    /// <summary>读取一个表达式主体；所有递归入口通过统一的语法深度保护。</summary>
+    /// <param name="min">允许继续结合的最小操作符优先级。</param>
+    /// <returns>已经构建、待外层校验的表达式节点。</returns>
+    private Expr ReadExpression(int min)
+    {
         Expr left;
         if (Eat("CASE"))
         {
@@ -689,9 +724,23 @@ internal sealed partial class SqlParser
         else if (Eat("NOT"))
             left = new("NOT", Items: [Expression(3)]);
         else if (Eat("-"))
-            left = new("negate", Items: [Expression(7)]);
+        {
+            // 不能先把 2^63 解析成 double，否则最小 INTEGER 字面量会丢失存储类别。
+            if (Current.Kind == "number" && Current.Text == "9223372036854775808")
+            {
+                _pos++;
+                left = Expr.Literal(long.MinValue);
+            }
+            else
+                left = new("negate", Items: [Expression(9)]);
+        }
         else if (Eat("+"))
-            left = Expression(7);
+            left = Expression(9) with
+            {
+                BooleanLiteral = false
+            };
+        else if (Eat("~"))
+            left = new("~", Items: [Expression(9)]);
         else if (Eat("("))
         {
             left = Is("SELECT") || Is("WITH") ? new Expr("subquery")
@@ -707,9 +756,15 @@ internal sealed partial class SqlParser
         else if (Eat("NULL"))
             left = Expr.Literal(null);
         else if (Eat("TRUE"))
-            left = Expr.Literal(1L);
+            left = Expr.Literal(1L) with
+            {
+                BooleanLiteral = true
+            };
         else if (Eat("FALSE"))
-            left = Expr.Literal(0L);
+            left = Expr.Literal(0L) with
+            {
+                BooleanLiteral = true
+            };
         else if (Current.Kind == "number")
         {
             string n = _tokens[_pos++].Text;
@@ -793,10 +848,12 @@ internal sealed partial class SqlParser
             {
                 "OR" => 1,
                 "AND" => 2,
-                "=" or "!=" or "<>" or "<" or ">" or "<=" or ">=" or "IS" or "BETWEEN" or "IN" or "LIKE" => 3,
-                "||" or "->" or "->>" => 4,
-                "+" or "-" => 5,
-                "*" or "/" or "%" => 6,
+                "=" or "==" or "!=" or "<>" or "IS" or "BETWEEN" or "IN" or "LIKE" => 3,
+                "<" or ">" or "<=" or ">=" => 4,
+                "&" or "|" or "<<" or ">>" => 5,
+                "+" or "-" => 6,
+                "*" or "/" or "%" => 7,
+                "||" or "->" or "->>" => 8,
                 _ => -1
             };
             bool not = op == "NOT" && _pos + 1 < _tokens.Count && _tokens[_pos + 1].Text.ToUpperInvariant() is "IN" or "BETWEEN" or "LIKE";
@@ -805,13 +862,24 @@ internal sealed partial class SqlParser
             if (precedence < min || precedence < 0)
                 break;
             _pos++;
+            if (op == "==")
+                op = "=";
             if (not)
                 op = _tokens[_pos++].Text.ToUpperInvariant();
             if (op == "IS")
             {
                 bool negate = Eat("NOT");
-                Need("NULL");
-                left = new(negate ? "IS NOT NULL" : "IS NULL", Items: [left]);
+                if (Eat("DISTINCT"))
+                {
+                    Need("FROM");
+                    negate = !negate;
+                }
+                var right = Expression(4);
+                left = right.Op == "literal" && right.Value is null
+                    ? new(negate ? "IS NOT NULL" : "IS NULL", Items: [left])
+                    : right.BooleanLiteral
+                        ? new("IS " + (negate ? "NOT " : "") + (Equals(right.Value, 1L) ? "TRUE" : "FALSE"), Items: [left])
+                        : new(negate ? "IS NOT" : "IS", Items: [left, right]);
             }
             else if (op == "BETWEEN")
             {

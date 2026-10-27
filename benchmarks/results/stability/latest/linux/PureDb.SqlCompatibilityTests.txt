@@ -1,0 +1,1 @@
+PASS 298 extended SQL differential queries; SQLite 3.54.1: /root/puredb-validation-20261027-rc1-final/frozen/artifacts/aot/artifacts/sql-compatibility-tests/9d538316a6e34beda3aca99c4bd8c40d

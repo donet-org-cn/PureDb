@@ -6,6 +6,8 @@ namespace PureDb;
 /// <remarks>本部分管理可重建主索引检查点、按需 CRC 校验和热点页缓存。</remarks>
 public sealed partial class Database
 {
+    /// <summary>供隔离进程故障测试观察维护阶段的内部回调；普通运行保持为空。</summary>
+    internal static Action<string>? MaintenanceStage;
     private long _checkpointOffset;
     private readonly ConcurrentDictionary<long, byte> _verifiedValues = new();
     private int _verifiedCount;
@@ -76,6 +78,27 @@ public sealed partial class Database
         if (_scanOffset == _checkpointOffset && File.Exists(_path + ".pidx"))
             return;
         _file.Flush(true); // The index may only reference a durable data prefix.
+        var metadata = CheckpointMetadata();
+        // 基索引已经有序，只排序尚未写入检查点的增量，再归并，避免反复排序整个大库。
+        var entries = _primary.Range(long.MinValue, long.MaxValue)
+            .Select(pair => new DiskIndex.Item(pair.Key, pair.Value.Key, pair.Value.Offset, pair.Value.Length, pair.Value.Crc));
+        string path = _path + ".pidx";
+        DiskIndex.Write(path, _generation, _scanOffset, File.GetLastWriteTimeUtc(_path).Ticks, metadata, _primary.Count, entries);
+        MaintenanceStage?.Invoke("checkpoint-index-synced");
+        // 仅在新检查点完整写入并验证头部后切换基索引。失败时保留原有内存状态，
+        // 数据日志仍是恢复依据；切换发生在写锁内，不与读取器共享可变增量。
+        if (DiskIndex.Open(path, _generation, _scanOffset) is not { } index)
+            throw new IOException("Could not reopen the completed primary checkpoint.");
+        _primary.Load(index);
+        _verifiedValues.Clear();
+        _verifiedCount = 0;
+        _checkpointOffset = _scanOffset;
+    }
+
+    /// <summary>编码当前有效的表或键空间计数，供检查点及压缩后的索引共享。</summary>
+    /// <returns>包含非空键空间及其计数的独立元数据。</returns>
+    private byte[] CheckpointMetadata()
+    {
         var metadata = new byte[_keyCounts.Count(p => p.Value > 0) * 16];
         int p = 0;
         foreach (var pair in _keyCounts.Where(p => p.Value > 0))
@@ -85,13 +108,7 @@ public sealed partial class Database
             p += 16;
         }
 
-        // 基索引已经有序，只排序尚未写入检查点的增量，再归并，避免反复排序整个大库。
-        var entries = new DiskIndex.Item[_primary.Count];
-        int at = 0;
-        foreach (var pair in _primary.Range(long.MinValue, long.MaxValue))
-            entries[at++] = new(pair.Key, pair.Value.Key, pair.Value.Offset, pair.Value.Length, pair.Value.Crc);
-        DiskIndex.Write(_path + ".pidx", _generation, _scanOffset, File.GetLastWriteTimeUtc(_path).Ticks, metadata, entries);
-        _checkpointOffset = _scanOffset;
+        return metadata;
     }
 
     /// <summary>最近一次后台检查点的 I/O 或权限错误；成功保存后清除，不代表事务日志丢失。</summary>
@@ -172,7 +189,8 @@ public sealed partial class Database
     private sealed class PrimaryIndex : IEnumerable<KeyValuePair<long, Entry>>, IDisposable
     {
         private DiskIndex? _base;
-        private readonly Dictionary<long, Entry?> _changes = [];
+        private Dictionary<long, Entry?> _changes = [];
+        private long[]? _sortedChanges;
         // 页内直接存放不可变索引项，初始化完成后才发布标记；
         // 读取方不能观察到只写入一部分字段的 Entry 结构。
         /// <summary>主索引热点页，内联保存索引项和独立的初始化、校验标记。</summary>
@@ -221,6 +239,9 @@ public sealed partial class Database
         private int _count;
         /// <summary>磁盘基索引叠加内存增量后的有效记录数。</summary>
         public int Count => _count;
+
+        /// <summary>没有内存增量时的不可变基索引；仅能在外层读取保护期内使用。</summary>
+        internal DiskIndex? UnchangedBase => _changes.Count == 0 ? _base : null;
 
         /// <summary>载入新的不可变基索引并重置相关热点缓存和增量状态。</summary>
         /// <param name="index">要作为新基索引载入的不可变持久化索引。</param>
@@ -338,6 +359,7 @@ public sealed partial class Database
                 if (!TryGetValue(id, out _))
                     _count++;
                 _changes[id] = value;
+                _sortedChanges = null;
             }
         }
 
@@ -354,6 +376,7 @@ public sealed partial class Database
             if (!existed)
                 _count++;
             _changes[id] = entry;
+            _sortedChanges = null;
         }
 
         /// <summary>删除已知存在的记录 ID 并更新计数。</summary>
@@ -361,6 +384,7 @@ public sealed partial class Database
         public void RemoveKnown(long id)
         {
             _changes[id] = null;
+            _sortedChanges = null;
             _count--;
         }
 
@@ -372,6 +396,7 @@ public sealed partial class Database
             if (!TryGetValue(id, out _))
                 return false;
             _changes[id] = null;
+            _sortedChanges = null;
             _count--;
             return true;
         }
@@ -379,21 +404,43 @@ public sealed partial class Database
         /// <summary>将磁盘基索引与内存变更合并，枚举索引键闭区间内的有效项。</summary>
         /// <param name="min">查询闭区间的下界，包含该值。</param>
         /// <param name="max">查询闭区间的上界，包含该值。</param>
+        /// <param name="descending">是否从上界向下界惰性枚举。</param>
         /// <returns>按方法规定的顺序和可见性组织的结果集合。</returns>
-        public IEnumerable<KeyValuePair<long, Entry>> Range(long min, long max)
+        public IEnumerable<KeyValuePair<long, Entry>> Range(long min, long max, bool descending = false)
         {
-            var changes = _changes.Where(p => p.Key >= min && p.Key <= max && p.Value.HasValue).OrderBy(p => p.Key).ToArray();
-            int at = 0;
+            if (min > max)
+                yield break;
+            // 同一提交版本只排序一次长整型键，不复制整条 Entry；窄范围直接二分定位。
+            // 所有写入持有外层写锁，读取器可以安全复用已发布的不可变数组。
+            var changes = Volatile.Read(ref _sortedChanges);
+            if (changes is null)
+            {
+                changes = _changes.Keys.ToArray();
+                // 顺序批量导入通常已经有序，线性验证后即可复用；不依赖字典枚举顺序契约。
+                for (int i = 1; i < changes.Length; i++)
+                    if (changes[i - 1] > changes[i])
+                    {
+                        Array.Sort(changes);
+                        break;
+                    }
+                changes = Interlocked.CompareExchange(ref _sortedChanges, changes, null) ?? changes;
+            }
+            int at = Array.BinarySearch(changes, descending ? max : min);
+            if (at < 0)
+                at = descending ? ~at - 1 : ~at;
+            int step = descending ? -1 : 1;
+            bool InRange() => (uint)at < (uint)changes.Length && changes[at] >= min && changes[at] <= max;
             if (_base is not null)
             {
                 int begin = _base.Bound(min, false), end = _base.Bound(max, true);
-                for (int i = begin; i < end; i++)
+                foreach (var e in _base.Range(begin, end, descending))
                 {
-                    var e = _base.At(i);
-                    while (at < changes.Length && changes[at].Key < e.Key)
+                    while (InRange() && (descending ? changes[at] > e.Key : changes[at] < e.Key))
                     {
-                        var c = changes[at++];
-                        yield return new(c.Key, c.Value!.Value);
+                        long key = changes[at];
+                        at += step;
+                        if (_changes[key] is Entry value)
+                            yield return new(key, value);
                     }
 
                     if (!_changes.ContainsKey(e.Key))
@@ -401,10 +448,12 @@ public sealed partial class Database
                 }
             }
 
-            while (at < changes.Length)
+            while (InRange())
             {
-                var c = changes[at++];
-                yield return new(c.Key, c.Value!.Value);
+                long key = changes[at];
+                at += step;
+                if (_changes[key] is Entry value)
+                    yield return new(key, value);
             }
         }
 
@@ -413,7 +462,8 @@ public sealed partial class Database
         {
             _base?.Dispose();
             _base = null;
-            _changes.Clear();
+            _changes = [];
+            _sortedChanges = null;
             _hotPages.Clear();
             Volatile.Write(ref _denseHotPages, null);
             _hotPageCount = 0;
@@ -425,9 +475,8 @@ public sealed partial class Database
         public IEnumerator<KeyValuePair<long, Entry>> GetEnumerator()
         {
             if (_base is not null)
-                for (int i = 0; i < _base.Count; i++)
+                foreach (var e in _base.Range(0, _base.Count))
                 {
-                    var e = _base.At(i);
                     if (!_changes.ContainsKey(e.Key))
                         yield return new(e.Key, new(e.Id, e.Offset, e.Length, e.Crc, true));
                 }

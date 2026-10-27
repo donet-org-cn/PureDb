@@ -1,0 +1,8 @@
+PASS CRUD, CHECK, UPSERT, indexes and C# function
+PASS JSON/JSONB/JSON5 constructors, edits, paths and table functions
+PASS CTE, windows, subqueries, UNION, views, triggers, foreign keys and savepoints
+PASS source-generated catalog reopen and persisted constraints
+PASS ADO.NET typed reader and GetSchemaTable
+PASS Shared large tail and compaction generation
+PASS managed SQLite file update and import/export
+PASS 7 AOT feature groups; dynamic code=False; F:\db\artifacts\stability\final-windows-aot\artifacts\aot-tests\9b899354372e4b7d88fd5c1ff1f1714c

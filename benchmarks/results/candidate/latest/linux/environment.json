@@ -1,0 +1,36 @@
+{
+  "Platform": "Linux-5.10.110-g1cf46ce40714-dirty-aarch64-with-glibc2.29",
+  "Machine": "aarch64",
+  "CPUs": 8,
+  "Date": "2026-10-27T23:17:49+0800",
+  "Dotnet": "Microsoft.AspNetCore.App 10.0.13 [/root/puredb-validation-20261024-v8/aot/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 10.0.13 [/root/puredb-validation-20261024-v8/aot/dotnet/shared/Microsoft.NETCore.App]",
+  "ComprehensiveSHA256": "32EF185666A6ACF103EF28F3836B5CBCA64F5FC48492E72AFBDB332D9ABFFB1A",
+  "AdoHarnessSHA256": "AD3DA855814E5A8A6E78B56B25F67E82E646DB3D95F7C3F9F6F403B87A4FAF1A",
+  "Device": [
+    179,
+    6
+  ],
+  "Load": "2.77 2.95 3.36 3/849 3923421\n",
+  "MemInfo": "MemTotal:        8109588 kB\nMemFree:         1555564 kB\nMemAvailable:    5420052 kB\nBuffers:          164812 kB\nCached:          3730272 kB\nSwapCached:       156808 kB\nActive:          4126804 kB\nInactive:        2040248 kB\nActive(anon):    1404660 kB\nInactive(anon):   955128 kB\nActive(file):    2722144 kB\nInactive(file):  1085120 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       8388604 kB\nSwapFree:        5901052 kB\nDirty:              3060 kB\nWriteback:             0 kB\nAnonPages:       2130684 kB\nMapped:           307728 kB\nShmem:             87820 kB\nKReclaimable:     173288 kB\nSlab:             270864 kB\nSReclaimable:     173288 kB\nSUnreclaim:        97576 kB\nKernelStack:       13712 kB\nPageTables:        26036 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    12443396 kB\nCommitted_AS:   10448812 kB\nVmallocTotal:   262930368 kB\nVmallocUsed:       23420 kB\nVmallocChunk:          0 kB\nPercpu:            13248 kB\nCmaTotal:         131072 kB\nCmaAllocated:       4256 kB\nCmaReleased:      126816 kB\nCmaFree:           65944 kB\n",
+  "ProcessIoAvailable": false,
+  "Affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "CpuCapacity": {
+    "cpu7": 1024,
+    "cpu5": 1024,
+    "cpu3": 414,
+    "cpu1": 414,
+    "cpu6": 1024,
+    "cpu4": 1024,
+    "cpu2": 414,
+    "cpu0": 414
+  }
+}

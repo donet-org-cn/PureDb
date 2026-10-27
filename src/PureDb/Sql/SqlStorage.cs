@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("PureDb.SqliteCompatibility")]
 [assembly: InternalsVisibleTo("PureDb.CompatibilityTests")]
+[assembly: InternalsVisibleTo("PureDb.StorageTests")]
 namespace PureDb;
 
 /// <summary>SQL 层与可替换存储后端之间的内部协议；变换必须在受保护快照上原子提交。</summary>
@@ -131,4 +132,13 @@ internal interface ISqlSnapshot
     /// <param name="max">查询闭区间的上界，包含该值。</param>
     /// <returns>按方法规定的顺序和可见性组织的结果集合。</returns>
     IEnumerable<DiskIndex.Item> TableEntriesRange(int tableId, long min, long max) => TableEntries(tableId).Where(e => e.Id >= min && e.Id <= max);
+
+    /// <summary>按指定方向惰性枚举主键闭区间；普通后端可使用默认反向实现。</summary>
+    /// <param name="tableId">表在模式目录中的内部 ID。</param>
+    /// <param name="min">包含的记录 ID 下界。</param>
+    /// <param name="max">包含的记录 ID 上界。</param>
+    /// <param name="descending">是否按记录 ID 降序读取。</param>
+    /// <returns>读取保护期内有效的有序索引项。</returns>
+    IEnumerable<DiskIndex.Item> TableEntriesRange(int tableId, long min, long max, bool descending)
+        => descending ? TableEntriesRange(tableId, min, max).Reverse() : TableEntriesRange(tableId, min, max);
 }

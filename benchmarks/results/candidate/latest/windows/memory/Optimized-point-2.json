@@ -1,0 +1,13 @@
+﻿{
+  "Engine": "Optimized",
+  "Scenario": "point",
+  "Repeat": 2,
+  "ManagedLiveBytes": 35833808,
+  "PrivateBytes": 65900544,
+  "WorkingSetBytes": 91377664,
+  "PeakWorkingSetBytes": 92581888,
+  "LibrarySHA256": "B4E516C14F7CD187587D37C4B9AA6E9AF7C669CC2CA66B4B02FC1F3DDD1E54C0",
+  "DatabaseInstances": 1,
+  "PageCacheBytes": 67108864,
+  "SqlCacheBudget": 67108864
+}

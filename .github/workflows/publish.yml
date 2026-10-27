@@ -1,7 +1,7 @@
-name: Publish preview
+name: Publish NuGet
 on:
   push:
-    tags: ['v*-preview.*']
+    tags: ['v[0-9]*']
   workflow_dispatch:
 permissions:
   contents: read
@@ -33,7 +33,10 @@ jobs:
       - run: dotnet format whitespace src/PureDb.SqliteCompatibility/PureDb.SqliteCompatibility.csproj --no-restore --verify-no-changes
       - run: python scripts/prepare-sqlite.py
       - run: python scripts/test.py
+      - run: python scripts/test-io-limits.py
+      - run: dotnet tests/PureDb.StorageTests/bin/Release/net10.0/PureDb.StorageTests.dll --soak 1000000
       - run: python scripts/verify-public.py
+      - run: python scripts/verify-candidate.py
   publish:
     needs: [test, aot]
     runs-on: ubuntu-latest
@@ -62,13 +65,13 @@ jobs:
       - run: python scripts/package-aot-smoke.py --rid linux-x64
       - uses: actions/upload-artifact@v4
         with:
-          name: preview-packages
+          name: release-packages
           path: artifacts/packages/*.nupkg
       - name: Publish NuGet packages
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: dotnet nuget push 'artifacts/packages/*.nupkg' --source https://api.nuget.org/v3/index.json --api-key "$NUGET_API_KEY" --skip-duplicate
-      - name: Create GitHub prerelease
+      - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
@@ -76,5 +79,7 @@ jobs:
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
             gh release upload "$GITHUB_REF_NAME" artifacts/packages/*.nupkg --clobber
           else
-            gh release create "$GITHUB_REF_NAME" artifacts/packages/*.nupkg --verify-tag --prerelease --title "PureDb $GITHUB_REF_NAME" --notes-file CHANGELOG.md
+            options=()
+            if [[ "$GITHUB_REF_NAME" == *-* ]]; then options+=(--prerelease); fi
+            gh release create "$GITHUB_REF_NAME" artifacts/packages/*.nupkg --verify-tag "${options[@]}" --title "PureDb $GITHUB_REF_NAME" --notes-file CHANGELOG.md
           fi

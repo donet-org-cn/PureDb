@@ -1,0 +1,12 @@
+{
+  "RID": "linux-arm64",
+  "Host": "Linux-5.10.110-g1cf46ce40714-dirty-aarch64-with-glibc2.29",
+  "Version": "1.0.0-rc.1",
+  "SDK": "10.0.402",
+  "RuntimeVersion": "10.0.13",
+  "Variants": [],
+  "AotFeatureGroups": 7,
+  "AotDifferentialQueries": 298,
+  "AotWarnings": 0,
+  "ValidationOnly": true
+}

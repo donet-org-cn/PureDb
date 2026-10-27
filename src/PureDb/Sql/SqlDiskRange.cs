@@ -54,6 +54,8 @@ public sealed partial class SqlDatabase
         // 可空列、文本、REAL 和表达式索引继续使用通用查询路径。
         if (!snapshot.HasPersistentIndexes || table.Columns[plan.Column].Type != "INTEGER")
             return null;
+        if (plan.Column == table.Primary)
+            return PrimaryDiskRange(snapshot, table, plan, low, high, skip, take);
         lock (_cacheGate)
         {
             var key = (table.Id, plan.Column);
@@ -169,6 +171,112 @@ public sealed partial class SqlDatabase
 
             return result;
         }
+    }
+
+    /// <summary>直接复用原生主索引读取主键范围，不扫描全表或生成重复的二级索引。</summary>
+    /// <param name="snapshot">当前提交版本的受保护快照。</param>
+    /// <param name="table">当前表模式。</param>
+    /// <param name="plan">已验证的范围、排序和投影计划。</param>
+    /// <param name="low">比较值或 BETWEEN 下界。</param>
+    /// <param name="high">BETWEEN 上界。</param>
+    /// <param name="skip">跳过的匹配记录数。</param>
+    /// <param name="take">最多返回的记录数。</param>
+    /// <returns>独立的结果行；非数值边界交给通用路径处理。</returns>
+    private static object?[][]? PrimaryDiskRange(ISqlSnapshot snapshot, SqlTable table, SqlRangePlan plan, object? low, object? high, int skip, int take)
+    {
+        if (take == 0 || low is null || plan.Op == "BETWEEN" && high is null)
+            return [];
+        if (low is not (long or double) || plan.Op == "BETWEEN" && high is not (long or double))
+            return null;
+        double bound = low is long integer ? integer : (double)low;
+        double min = plan.Op switch
+        {
+            "=" or ">=" or "BETWEEN" => Math.Ceiling(bound),
+            ">" => Math.Floor(bound) + 1,
+            _ => 0
+        };
+        double max = plan.Op switch
+        {
+            "=" or "<=" => Math.Floor(bound),
+            "<" => Math.Ceiling(bound) - 1,
+            "BETWEEN" => Math.Floor(high is long n ? n : (double)high!),
+            _ => (1L << 40) - 1
+        };
+        min = Math.Max(0, min);
+        max = Math.Min((1L << 40) - 1, max);
+        if (min > max)
+            return [];
+        long prefix = (long)table.Id << 40;
+        bool covering = true;
+        foreach (int column in plan.Columns)
+            covering &= column == table.Primary;
+        if (snapshot is Database.Snapshot native && native.UnchangedPrimaryIndex is { } index &&
+            PrimaryBaseRange(snapshot, index, table, plan, prefix + (long)min, prefix + (long)max, skip, take, covering) is { } direct)
+            return direct;
+        var result = new List<object?[]>(Math.Min(take, 64));
+        foreach (var entry in snapshot.TableEntriesRange(table.Id, prefix + (long)min, prefix + (long)max, plan.Descending))
+        {
+            if (skip > 0)
+            {
+                skip--;
+                continue;
+            }
+            if (covering)
+            {
+                object id = SqlIntegerBoxes.Get(entry.Id - prefix);
+                var row = new object?[plan.Columns.Length];
+                Array.Fill(row, id);
+                result.Add(row);
+            }
+            else
+                result.Add(SqlCodec.DecodeProjection(snapshot.IndexValue(entry), table.Columns.Count, plan.Columns));
+            if (result.Count == take)
+                break;
+        }
+        return result.ToArray();
+    }
+
+    /// <summary>从无增量的不可变主索引直接投影分页，避免多层迭代器和中间 List 数组。</summary>
+    /// <param name="snapshot">当前受读锁保护的快照。</param>
+    /// <param name="index">与快照完全对应、没有被尾部覆盖的主索引。</param>
+    /// <param name="table">已验证的 SQL 表模式。</param>
+    /// <param name="plan">主键范围与投影计划。</param>
+    /// <param name="min">包含的原生记录 ID 下界。</param>
+    /// <param name="max">包含的原生记录 ID 上界。</param>
+    /// <param name="skip">需要跳过的记录数。</param>
+    /// <param name="take">最多投影的记录数。</param>
+    /// <param name="covering">投影是否只包含主键。</param>
+    /// <returns>独立的结果数组；键空间不符合 SQL 布局时回退原有过滤路径。</returns>
+    private static object?[][]? PrimaryBaseRange(ISqlSnapshot snapshot, DiskIndex index, SqlTable table, SqlRangePlan plan, long min, long max, int skip, int take, bool covering)
+    {
+        int begin = index.Bound(min, false), end = index.Bound(max, true);
+        if (plan.Descending)
+        {
+            end = (int)Math.Max(begin, (long)end - skip);
+            begin = (int)Math.Max(begin, (long)end - take);
+        }
+        else
+        {
+            begin = (int)Math.Min(end, (long)begin + skip);
+            end = (int)Math.Min(end, (long)begin + take);
+        }
+        var result = new object?[end - begin][];
+        long prefix = (long)table.Id << 40;
+        int at = 0;
+        foreach (var entry in index.Range(begin, end, plan.Descending))
+        {
+            if (entry.Id != table.Id)
+                return null;
+            if (covering)
+            {
+                var row = new object?[plan.Columns.Length];
+                Array.Fill(row, SqlIntegerBoxes.Get(entry.Key - prefix));
+                result[at++] = row;
+            }
+            else
+                result[at++] = SqlCodec.DecodeProjection(snapshot.IndexValue(entry), table.Columns.Count, plan.Columns);
+        }
+        return result;
     }
 
     /// <summary>释放本实例打开的持久化 SQL 范围索引。</summary>

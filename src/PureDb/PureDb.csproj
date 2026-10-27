@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <IsAotCompatible>true</IsAotCompatible>
-    <Description>A fully managed .NET 10 embedded file database with SQL, JOIN, JSON, transactions, multi-process access and an ADO.NET provider. Preview.</Description>
+    <Description>A fully managed .NET 10 embedded file database with SQL, JOIN, JSON, transactions, multi-process access, consistent backup and an ADO.NET provider. Release candidate.</Description>
   </PropertyGroup>
 
 </Project>

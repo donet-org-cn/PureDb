@@ -6,8 +6,18 @@ internal sealed partial class SqlParser
     /// <returns>包含公共表表达式、集合运算和最终分页的查询树。</returns>
     private Select ReadQuery()
     {
-        var (ctes, recursive) = ReadCtes();
-        return ReadQueryBody(ctes, recursive);
+        if (_syntaxDepth >= 128)
+            throw Error("SQL nesting exceeds 128 levels");
+        _syntaxDepth++;
+        try
+        {
+            var (ctes, recursive) = ReadCtes();
+            return ReadQueryBody(ctes, recursive);
+        }
+        finally
+        {
+            _syntaxDepth--;
+        }
     }
 
     /// <summary>解析公共表表达式定义，不消费其后的查询或增删改语句。</summary>

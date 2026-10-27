@@ -112,7 +112,7 @@ internal sealed partial class SqlValueComparer : IComparer<object?>, IEqualityCo
         return StringComparer.Ordinal.GetHashCode((string)x);
     }
 
-    /// <summary>将 NULL 或数值转为 SQL 三值布尔；当前不对文本执行 SQLite 的宽松数值转换。</summary>
+    /// <summary>按 SQLite 数值前缀规则转换三值布尔；只有 SQL NULL 保留未知。</summary>
     /// <param name = "v">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
     /// <returns>数值对应的布尔结果；SQL NULL 保留为 null。</returns>
     public static bool? Truth(object? v) => v switch
@@ -121,7 +121,7 @@ internal sealed partial class SqlValueComparer : IComparer<object?>, IEqualityCo
         bool b => b,
         long l => l != 0,
         double d => d != 0,
-        _ => throw new SqlException("Predicate requires a numeric/boolean value")
+        _ => Truth(SqliteScalarFunctions.ArithmeticValue(v))
     };
     /// <summary>将可空布尔值转换为 SQL NULL、0 或 1。</summary>
     /// <param name = "value">SQL 三值逻辑中的真、假或未知。</param>
@@ -275,7 +275,7 @@ internal sealed class SqlBinding(SqlDatabase? owner = null, SqlSession? context 
             return row => expr.Op == "IFNULL" ? args[0](row) ?? args[1](row) : SqlValueComparer.Truth(args[0](row)) == true ? args[1](row) : args[2](row);
         if (expr.Op == "JSON_EXTRACT" && expr.Args.Length == 2 && expr.Args[1].Op == "literal" && expr.Args[1].Value is string path)
             return r => SqlJsonFunctions.ExtractCached(args[0](r), path);
-        if (expr.Op is "=" or "!=" or "<>" or "<" or ">" or "<=" or ">=" or "+" or "-" or "*" or "/" or "%" or "AND" or "OR")
+        if (expr.Op is "=" or "!=" or "<>" or "<" or ">" or "<=" or ">=" or "+" or "-" or "*" or "/" or "%" or "&" or "|" or "<<" or ">>" or "IS" or "IS NOT" or "AND" or "OR")
             return r => Binary(expr.Op, args[0](r), args[1](r));
         if (expr.Op == "IS NULL")
             return r => args[0](r) is null ? 1L : 0L;
@@ -299,6 +299,8 @@ internal sealed class SqlBinding(SqlDatabase? owner = null, SqlSession? context 
     {
         left = left is SqlJson jl ? jl.Text : left;
         right = right is SqlJson jr ? jr.Text : right;
+        if (op is "IS" or "IS NOT")
+            return SqlValueComparer.Boolean(SqlValueComparer.Instance.Equals(left, right) == (op == "IS"));
         if (op is "AND" or "OR")
         {
             bool? l = SqlValueComparer.Truth(left), r = SqlValueComparer.Truth(right);
@@ -321,28 +323,7 @@ internal sealed class SqlBinding(SqlDatabase? owner = null, SqlSession? context 
             }) ? 1L : 0L;
         }
 
-        if (left is long x && right is long y)
-            return op switch
-            {
-                "+" => checked(x + y),
-                "-" => checked(x - y),
-                "*" => checked(x * y),
-                "/" => y == 0 ? null : x / y,
-                "%" => y == 0 ? null : x % y,
-                _ => throw new SqlException("Unknown operator")
-            };
-        if (left is not (long or double) || right is not (long or double))
-            throw new SqlException("Arithmetic requires numeric operands");
-        double a = Convert.ToDouble(left, CultureInfo.InvariantCulture), b = Convert.ToDouble(right, CultureInfo.InvariantCulture);
-        return op switch
-        {
-            "+" => a + b,
-            "-" => a - b,
-            "*" => a * b,
-            "/" => b == 0 ? null : a / b,
-            "%" => b == 0 ? null : a % b,
-            _ => throw new SqlException("Unknown operator")
-        };
+        return SqlNumeric.Binary(op, left, right);
     }
 
     /// <summary>递归判断表达式中是否包含受支持聚合函数。</summary>
@@ -389,12 +370,12 @@ internal sealed class SqlBinding(SqlDatabase? owner = null, SqlSession? context 
 
         int expected = op switch
         {
-            "NOT" or "negate" or "IS NULL" or "IS NOT NULL" or "LENGTH" or "LOWER" or "UPPER" => 1,
+            "NOT" or "negate" or "~" or "IS TRUE" or "IS FALSE" or "IS NOT TRUE" or "IS NOT FALSE" or "IS NULL" or "IS NOT NULL" or "LENGTH" or "LOWER" or "UPPER" => 1,
             "BETWEEN" => 3,
             "IN" or "COALESCE" => -1,
             _ => 2
         };
-        if (op is not ("NOT" or "negate" or "IS NULL" or "IS NOT NULL" or "LENGTH" or "LOWER" or "UPPER" or "BETWEEN" or "IN" or "COALESCE" or "AND" or "OR" or "=" or "!=" or "<>" or "<" or ">" or "<=" or ">=" or "LIKE" or "||" or "+" or "-" or "*" or "/" or "%"))
+        if (op is not ("NOT" or "negate" or "~" or "IS" or "IS NOT" or "IS TRUE" or "IS FALSE" or "IS NOT TRUE" or "IS NOT FALSE" or "IS NULL" or "IS NOT NULL" or "LENGTH" or "LOWER" or "UPPER" or "BETWEEN" or "IN" or "COALESCE" or "AND" or "OR" or "=" or "!=" or "<>" or "<" or ">" or "<=" or ">=" or "LIKE" or "||" or "+" or "-" or "*" or "/" or "%" or "&" or "|" or "<<" or ">>"))
             throw new SqlException($"Unsupported expression: {op}");
         if (expected >= 0 && n != expected || op == "IN" && n < 1 || op == "COALESCE" && n < 2)
             throw new SqlException("Invalid function arity");
@@ -415,6 +396,13 @@ internal sealed class SqlBinding(SqlDatabase? owner = null, SqlSession? context 
         if (SqliteScalarFunctions.Handles(op))
             return SqliteScalarFunctions.Eval(op, a);
         var cmp = SqlValueComparer.Instance;
+        if (op is "IS" or "IS NOT")
+            return Binary(op, a[0], a[1]);
+        if (op is "IS TRUE" or "IS FALSE" or "IS NOT TRUE" or "IS NOT FALSE")
+        {
+            bool matches = SqlValueComparer.Truth(a[0]) == op.EndsWith("TRUE", StringComparison.Ordinal);
+            return SqlValueComparer.Boolean(op.StartsWith("IS NOT", StringComparison.Ordinal) ? !matches : matches);
+        }
         if (op == "IS NULL")
             return a[0] is null ? 1L : 0L;
         if (op == "IS NOT NULL")
@@ -504,34 +492,7 @@ internal sealed class SqlBinding(SqlDatabase? owner = null, SqlSession? context 
             }) ? 1L : 0L;
         }
 
-        if (a.Any(x => x is not (long or double)))
-            throw new SqlException("Arithmetic requires numeric operands");
-        if (a.All(x => x is long))
-        {
-            long x = (long)a[0]!, y = a.Length > 1 ? (long)a[1]! : 0;
-            return op switch
-            {
-                "negate" => checked(-x),
-                "+" => checked(x + y),
-                "-" => checked(x - y),
-                "*" => checked(x * y),
-                "/" => y == 0 ? null : x / y,
-                "%" => y == 0 ? null : x % y,
-                _ => throw new SqlException("Unknown operator")
-            };
-        }
-
-        double dx = Convert.ToDouble(a[0], CultureInfo.InvariantCulture), dy = a.Length > 1 ? Convert.ToDouble(a[1], CultureInfo.InvariantCulture) : 0;
-        return op switch
-        {
-            "negate" => -dx,
-            "+" => dx + dy,
-            "-" => dx - dy,
-            "*" => dx * dy,
-            "/" => dy == 0 ? null : dx / dy,
-            "%" => dy == 0 ? null : dx % dy,
-            _ => throw new SqlException("Unknown operator")
-        };
+        return op == "negate" ? SqlNumeric.Negate(a[0]!) : op == "~" ? SqlNumeric.Complement(a[0]!) : SqlNumeric.Binary(op, a[0]!, a[1]!);
     }
 }
 

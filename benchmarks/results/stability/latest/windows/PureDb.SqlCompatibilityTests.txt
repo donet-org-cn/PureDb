@@ -1,0 +1,1 @@
+PASS 298 extended SQL differential queries; SQLite 3.54.1: F:\db\artifacts\stability\final-windows-aot\artifacts\sql-compatibility-tests\561bccf6fbde44ec8d98dc0ab41c0ea9

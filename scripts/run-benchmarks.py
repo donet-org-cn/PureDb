@@ -1,9 +1,11 @@
 """Serial comparison of current native PureDb and native SQLite. Use a fresh output directory."""
-import argparse, hashlib, json, os, pathlib, platform, subprocess, time
+import argparse, ctypes, hashlib, json, os, pathlib, platform, shutil, subprocess, time
 
 p=argparse.ArgumentParser();p.add_argument('output');p.add_argument('dataset');p.add_argument('--tests',action='store_true');p.add_argument('--rounds',type=int,default=3);p.add_argument('--modes',default='queries,writes,processes');p.add_argument('--memory',action='store_true');p.add_argument('--ado',action='store_true')
 
+p.add_argument('--discard-generated-writes',action='store_true')
 a=p.parse_args();root=pathlib.Path.cwd();out=root/a.output;out.mkdir(parents=True,exist_ok=True)
+if os.name=='nt':ctypes.windll.kernel32.SetErrorMode(0x8003)
 for directory in ['raw','logs','memory','ado','steady']:(out/directory).mkdir(exist_ok=True)
 assert not any((out/'raw').glob('*.json')),'Use a fresh output directory'
 dataset=(root/a.dataset).resolve()
@@ -42,6 +44,10 @@ for repeat in range(1,a.rounds+1):
         for engine in order:
             name=f'{engine}-{mode}-{repeat}';harness=binary('PureDb.Comprehensive')
             run([harness,mode,engine,dataset,out/'raw'/(name+'.json'),repeat],name)
+            if a.discard_generated_writes:
+                data=(out/'raw/data').resolve()
+                assert out.resolve() in data.parents and not (out/'raw/data').is_symlink()
+                if data.is_dir():shutil.rmtree(data)
     if a.memory:
         for scenario in ['point','range','json']:
             for engine in order:

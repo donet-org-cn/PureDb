@@ -42,11 +42,15 @@ internal sealed record SqlRangePlan(bool Supported, int Column, string Op, Expr?
     {
         SqlRangePlan No() => new(false, 0, "", null, null, [], [], null, null, false);
         bool Simple(Expr e) => e.Op is "literal" or "parameter";
-        if (select.Joins.Count > 0 || select.GroupBy.Count > 0 || select.Having is not null || select.Distinct || select.Where is null || select.Limit is not null && !Simple(select.Limit) || select.Offset is not null && !Simple(select.Offset))
+        if (table.Id <= 0 || table.Primary < 0)
+            return No();
+        if (select.Joins.Count > 0 || select.GroupBy.Count > 0 || select.Having is not null || select.Distinct || select.Limit is not null && !Simple(select.Limit) || select.Offset is not null && !Simple(select.Offset))
             return No();
         var binding = new SqlBinding();
         binding.Add(table, select.From.Alias);
-        var where = select.Where;
+        if (select.Where is null && (select.Limit is null || select.Order.Count != 1 || select.Order[0].Expr.Op != "column"))
+            return No();
+        var where = select.Where ?? new Expr(">=", Items: [new("column", table.Columns[table.Primary].Name), Expr.Literal(0L)]);
         Expr col;
         Expr low;
         Expr? high = null;

@@ -1,0 +1,164 @@
+PASS CRUD, duplicate keys, boundaries, index maintenance, reopen
+PASS randomized transactions against independent dictionary oracle
+PASS concurrent writes, read isolation, compaction and queue backpressure
+PASS compaction shrink, reopen, stale temporary file
+PASS every truncated transaction prefix recovers atomically
+PASS checksum corruption refuses open instead of deleting data
+PASS exclusive owner, cancellation, size limits, copied values, concurrent disposal
+PASS acknowledged Full writes survive process kill without disposal
+PASS bad headers, malformed checksummed frames, large values and transaction budget
+PASS slicing CRC frames match independent bitwise IEEE checksum
+PASS uncached synchronous random-access handles preserve concurrent offsets
+11 test groups passed. Artifacts: F:\db\artifacts\tests\3028195efbe745a6a810625121b7d040
+PASS SQL DDL, typed parameters, DML, aggregates, persistence
+PASS INNER/LEFT/RIGHT/FULL/CROSS joins, duplicate and NULL keys
+PASS NULL three-valued logic, LIKE, IN, DISTINCT, aliases, validation
+PASS transaction rollback, constraints and writer remains usable
+PASS shared instances tail new commits and follow compaction generations
+PASS four OS processes atomic SQL updates, concurrent compaction and visibility
+PASS shared mode process kill recovery and incompatible access rejection
+PASS JSON / JSONB columns, paths, arrows, edits, validation and persistence
+PASS abandoned process mutex repairs an interrupted append
+PASS constant SELECT, exact numeric comparisons, cached plans and index constraints
+PASS batched UNIQUE indexes, reuse after delete, projected UTF8 rows and count metadata
+PASS cached primary DML rebinding and JOIN projections match general execution
+PASS cached JSON expression index projections match general execution and invalidate
+PASS primary interval DML preserves sparse bounds, atomicity and transaction overlays
+PASS vector JSON remainder count matches general SQL including NULL and signed extremes
+PASS cached sorted group counts preserve NULL, BLOB ownership, ordering and pagination
+PASS weak JSON trees survive collection, alternating paths and concurrent readers
+17 SQL/shared test groups passed: F:\db\artifacts\sql-tests\c3a479e241514f909f151b00b17004ac
+PASS factory, connection lifecycle, prepared typed and positional parameters
+PASS reader types, DBNull, bytes/chars slices, multiple results, enumeration
+PASS DataTable.Load, DataAdapter.Fill and Update
+PASS transactions read your writes, isolation, commit and rollback
+PASS transaction conflict and failed statement never partially commit
+PASS transaction command ownership, cancellation, unsupported features
+PASS derived group/JSON caches invalidate on writes, caller BLOB isolation
+PASS empty typed schema, bulk ADO transaction, persistence and numeric normalization
+PASS derived integer predicates and JSONB scalar/composite fast paths
+PASS page-backed cached BLOBs never leak and retain comparison/constraint semantics
+PASS type-aware table budget retains fitting BLOB/JSON rows and honors zero cache
+11 ADO.NET/cache test groups passed: F:\db\artifacts\ado-tests\50d9d6bc732041f8b360596470f37059
+PASS paged primary index, boundary keys, writes, deletes and compaction
+PASS checkpoint crash tail is recovered exactly once
+PASS periodic checkpoint exists before close and SQL close prepares fresh indexes
+PASS bad checkpoint header rebuild, lazy page CRC and strict data integrity
+PASS persistent SQL ranges, limits, exact numeric bounds, invalidation and shared writers
+PASS managed SQLite export: official integrity_check, indexes, overflow, JSON and subsequent writes
+PASS native SQLite UTF16, integer serial types and blobs import; unsupported schema is atomic
+PASS paged primary hot cache publishes immutable entries across concurrent readers
+PASS primary covering projection validates index while payload reads retain CRC checks
+PASS limited persistent ranges retain exact bounds across duplicates, skew and offsets
+PASS small budget page eviction preserves concurrent values, tail growth and compaction
+PASS shared replay boundaries, every truncation byte and strict corruption rejection
+PASS checkpoint rebase, mixed deltas, descending primary ranges and randomized reopen
+PASS sparse index fences, legacy indexes and full Int64 duplicate bounds
+PASS online native backup is an atomic snapshot, never overwrites and honors cancellation
+PASS process death at every checkpoint and compaction publication boundary
+16 storage/exchange groups passed: F:\db\artifacts\storage-tests\edc9b778d27c4c63927d088b7afddbf4
+PASS direct SQLite page reads, original-handle writes, native integrity and reopen
+PASS new SQLite file, batch DDL/DML, JOIN, expression indexes and schema evolution
+PASS ADO.NET factory, parameters, Serializable commit, rollback and DataTable
+PASS exclusive byte-range locks conflict with native and managed connections
+PASS unsupported WAL, aliases, native JSONB and dynamic values fail safely
+PASS process kill at five commit boundaries, managed and original SQLite recovery
+PASS malformed hot journal is rejected before any restoration
+PASS record serial widths, UTF8, large blobs and repeated rewrites match native SQLite
+PASS incremental dirty pages, same-leaf batches, indexes, overflow and safe fallback
+PASS incremental sparse journal: five process-kill stages and both recovery engines
+10 managed SQLite compatibility test groups passed; SQLite 3.54.1. Artifacts: F:\db\artifacts\compatibility-tests\9960cc0bfbc84655820eccebd8f7c454
+PASS C# 用户函数：筛选、投影、聚合、重载、替换和连接隔离
+PASS C# 用户函数：易变函数不能被索引提前计算，异常不能留下部分写入
+PASS C# 用户函数：BLOB 所有权和可空参数转换
+PASS ADO.NET 用户函数：打开前注册、类型元数据、替换和重新打开
+PASS 用户函数的惰性求值、排序别名和并发查询
+PASS ADO.NET 空结果函数元数据与替换失效
+PASS 纯托管 SQLite 文件兼容后端复用用户函数注册和 ADO.NET
+7 feature test groups passed: F:\db\artifacts\feature-tests\ff53ee29eeab42279e0c94f4359079b7
+PASS 160 SQLite 3.54.1 differential sort queries
+PASS sort semantics: aliases, volatile functions, exceptions, parameters, stable ties, concurrency
+PASS sort plans: bounded selection, fallback boundaries, BLOB ownership
+PASS 298 extended SQL differential queries; SQLite 3.54.1: F:\db\artifacts\sql-compatibility-tests\2d96edd8758644c09802f3c421d26e2f
+PASS CRUD, CHECK, UPSERT, indexes and C# function
+PASS JSON/JSONB/JSON5 constructors, edits, paths and table functions
+PASS CTE, windows, subqueries, UNION, views, triggers, foreign keys and savepoints
+PASS source-generated catalog reopen and persisted constraints
+PASS ADO.NET typed reader and GetSchemaTable
+PASS Shared large tail and compaction generation
+PASS managed SQLite file update and import/export
+PASS 7 AOT feature groups; dynamic code=True; F:\db\artifacts\aot-tests\839947be60ec47d9b9adc059a7d0e1c6
+SQL PARITY 175/175 = 100.00%; corpus 5D8E0C5FB5FCFC638965ACE2E750A8BD3B2FA75743DF3DBC37835FE179FCC325
+PASS native/managed/schema/import/export: defaults
+PASS native/managed/schema/import/export: blob-default
+PASS native/managed/schema/import/export: check
+PASS native/managed/schema/import/export: is-and-bits
+PASS native/managed/schema/import/export: boolean-check
+PASS native/managed/schema/import/export: unique
+PASS native/managed/schema/import/export: composite
+PASS native/managed/schema/import/export: foreign
+PASS native/managed/schema/import/export: view
+PASS native/managed/schema/import/export: trigger
+PASS native/managed/page-size/encoding: 512 UTF-8
+PASS native/managed/page-size/encoding: 512 UTF-16le
+PASS native/managed/page-size/encoding: 512 UTF-16be
+PASS native/managed/page-size/encoding: 1024 UTF-8
+PASS native/managed/page-size/encoding: 1024 UTF-16le
+PASS native/managed/page-size/encoding: 1024 UTF-16be
+PASS native/managed/page-size/encoding: 2048 UTF-8
+PASS native/managed/page-size/encoding: 2048 UTF-16le
+PASS native/managed/page-size/encoding: 2048 UTF-16be
+PASS native/managed/page-size/encoding: 4096 UTF-8
+PASS native/managed/page-size/encoding: 4096 UTF-16le
+PASS native/managed/page-size/encoding: 4096 UTF-16be
+PASS native/managed/page-size/encoding: 8192 UTF-8
+PASS native/managed/page-size/encoding: 8192 UTF-16le
+PASS native/managed/page-size/encoding: 8192 UTF-16be
+PASS native/managed/page-size/encoding: 16384 UTF-8
+PASS native/managed/page-size/encoding: 16384 UTF-16le
+PASS native/managed/page-size/encoding: 16384 UTF-16be
+PASS native/managed/page-size/encoding: 32768 UTF-8
+PASS native/managed/page-size/encoding: 32768 UTF-16le
+PASS native/managed/page-size/encoding: 32768 UTF-16be
+PASS native/managed/page-size/encoding: 65536 UTF-8
+PASS native/managed/page-size/encoding: 65536 UTF-16le
+PASS native/managed/page-size/encoding: 65536 UTF-16be
+PASS cross-engine crash recovery: 512 after-journal-sync native=False
+PASS cross-engine crash recovery: 512 after-journal-sync native=True
+PASS cross-engine crash recovery: 512 after-first-page native=False
+PASS cross-engine crash recovery: 512 after-first-page native=True
+PASS cross-engine crash recovery: 512 after-database-sync native=False
+PASS cross-engine crash recovery: 512 after-database-sync native=True
+PASS cross-engine crash recovery: 512 after-commit native=False
+PASS cross-engine crash recovery: 512 after-commit native=True
+PASS cross-engine crash recovery: 65536 after-journal-sync native=False
+PASS cross-engine crash recovery: 65536 after-journal-sync native=True
+PASS cross-engine crash recovery: 65536 after-first-page native=False
+PASS cross-engine crash recovery: 65536 after-first-page native=True
+PASS cross-engine crash recovery: 65536 after-database-sync native=False
+PASS cross-engine crash recovery: 65536 after-database-sync native=True
+PASS cross-engine crash recovery: 65536 after-commit native=False
+PASS cross-engine crash recovery: 65536 after-commit native=True
+PASS sparse journal growth/truncation recovery: grow after-journal-sync native=False
+PASS sparse journal growth/truncation recovery: grow after-journal-sync native=True
+PASS sparse journal growth/truncation recovery: grow after-first-page native=False
+PASS sparse journal growth/truncation recovery: grow after-first-page native=True
+PASS sparse journal growth/truncation recovery: grow after-database-sync native=False
+PASS sparse journal growth/truncation recovery: grow after-database-sync native=True
+PASS sparse journal growth/truncation recovery: grow after-commit native=False
+PASS sparse journal growth/truncation recovery: grow after-commit native=True
+PASS sparse journal growth/truncation recovery: shrink after-journal-sync native=False
+PASS sparse journal growth/truncation recovery: shrink after-journal-sync native=True
+PASS sparse journal growth/truncation recovery: shrink after-first-page native=False
+PASS sparse journal growth/truncation recovery: shrink after-first-page native=True
+PASS sparse journal growth/truncation recovery: shrink after-database-sync native=False
+PASS sparse journal growth/truncation recovery: shrink after-database-sync native=True
+PASS sparse journal growth/truncation recovery: shrink after-commit native=False
+PASS sparse journal growth/truncation recovery: shrink after-commit native=True
+PASS 66 SQLite interoperability cases: F:\db\artifacts\sqlite-parity\7c3c1b243c114be1998761c8117bcee0
+SOAK 100000/100000, rows=50477, concurrent reads=391297
+PASS SOAK F:\db\artifacts\storage-tests\556adbcd952745dc8205081a3642c049\soak-result.json
+.NET 10.0.13; SQLite 3.54.1; CPUs=12; Microsoft Windows 10.0.26300
+Core dataset committed.
+SQL, JOIN and JSON datasets committed. Checking results against SQLite...
+PASS 134 differential SQL/JSON/JOIN queries against SQLite 3.54.1

@@ -21,6 +21,7 @@ internal sealed class DiskIndex : IDisposable
     private readonly ConcurrentQueue<int> _order = new();
     private int _cachedPageCount;
     private readonly long _start;
+    private readonly (long Key, int Ordinal)[] _fences;
     /// <summary>不可变索引中的条目数量。</summary>
     public int Count
     {
@@ -61,7 +62,8 @@ internal sealed class DiskIndex : IDisposable
     /// <param name="handle">本操作使用的安全文件句柄。</param>
     /// <param name="header">已经读取的固定格式头部字节。</param>
     /// <param name="metadata">随持久化索引头保存的辅助元数据。</param>
-    private DiskIndex(SafeFileHandle handle, byte[] header, byte[] metadata)
+    /// <param name="fences">头部 CRC 保护且已经校验序号的稀疏定位点。</param>
+    private DiskIndex(SafeFileHandle handle, byte[] header, byte[] metadata, (long Key, int Ordinal)[] fences)
     {
         _handle = handle;
         Count = BinaryPrimitives.ReadInt32LittleEndian(header.AsSpan(12));
@@ -70,6 +72,7 @@ internal sealed class DiskIndex : IDisposable
         SourceTime = BinaryPrimitives.ReadInt64LittleEndian(header.AsSpan(24));
         _start = BinaryPrimitives.ReadInt64LittleEndian(header.AsSpan(40));
         Metadata = metadata;
+        _fences = fences;
         MinKey = BinaryPrimitives.ReadInt64LittleEndian(header.AsSpan(48));
         MaxKey = BinaryPrimitives.ReadInt64LittleEndian(header.AsSpan(56));
     }
@@ -100,7 +103,27 @@ internal sealed class DiskIndex : IDisposable
             ReadExactly(handle, metadata, PageSize);
             if (Crc32.Compute(metadata) != BinaryPrimitives.ReadUInt32LittleEndian(h.AsSpan(36)))
                 return null;
-            var result = new DiskIndex(handle, h, metadata);
+            (long Key, int Ordinal)[] fences = [];
+            if (h.AsSpan(64, 8).SequenceEqual("PDBFENC1"u8))
+            {
+                int fenceCount = BinaryPrimitives.ReadInt32LittleEndian(h.AsSpan(72));
+                int stride = BinaryPrimitives.ReadInt32LittleEndian(h.AsSpan(76));
+                int expectedStride = Math.Max(1, (int)(((long)count + 127) / 128));
+                int expectedCount = count == 0 ? 0 : (count - 1) / expectedStride + 1 + (expectedStride > 1 && count > 1 ? 1 : 0);
+                if (stride != expectedStride || fenceCount != expectedCount || fenceCount > 129)
+                    return null;
+                fences = new (long, int)[fenceCount];
+                for (int i = 0; i < fences.Length; i++)
+                {
+                    long key = BinaryPrimitives.ReadInt64LittleEndian(h.AsSpan(80 + i * 12));
+                    int ordinal = BinaryPrimitives.ReadInt32LittleEndian(h.AsSpan(88 + i * 12));
+                    int expected = stride > 1 && i > 0 ? i == 1 ? 1 : (i - 1) * stride : i;
+                    if (ordinal != expected || ordinal >= count || i > 0 && key < fences[i - 1].Key)
+                        return null;
+                    fences[i] = (key, ordinal);
+                }
+            }
+            var result = new DiskIndex(handle, h, metadata, fences);
             handle = null;
             return result;
         }
@@ -122,7 +145,14 @@ internal sealed class DiskIndex : IDisposable
         ArgumentOutOfRangeException.ThrowIfNegative(ordinal);
         if (ordinal >= Count)
             throw new ArgumentOutOfRangeException(nameof(ordinal));
-        int page = ordinal / PerPage;
+        return Decode(ReadPage(ordinal / PerPage), ordinal % PerPage);
+    }
+
+    /// <summary>读取并校验一个索引页，缓存受固定页数限制。</summary>
+    /// <param name="page">从零开始的页号。</param>
+    /// <returns>完整且通过 CRC 校验的不可变页。</returns>
+    private byte[] ReadPage(int page)
+    {
         if (!_pages.TryGetValue(page, out var bytes))
         {
             bytes = new byte[PageSize];
@@ -139,8 +169,40 @@ internal sealed class DiskIndex : IDisposable
             }
         }
 
-        var b = bytes.AsSpan(ordinal % PerPage * 32, 32);
+        return bytes;
+    }
+
+    /// <summary>解码已校验页中的固定长度条目，不再逐条查询并发页字典。</summary>
+    /// <param name="bytes">已经校验的不可变页。</param>
+    /// <param name="slot">页内条目序号。</param>
+    /// <returns>条目的所有持久字段。</returns>
+    private static Item Decode(byte[] bytes, int slot)
+    {
+        var b = bytes.AsSpan(slot * 32, 32);
         return new(BinaryPrimitives.ReadInt64LittleEndian(b), BinaryPrimitives.ReadInt64LittleEndian(b[8..]), BinaryPrimitives.ReadInt64LittleEndian(b[16..]), BinaryPrimitives.ReadInt32LittleEndian(b[24..]), BinaryPrimitives.ReadUInt32LittleEndian(b[28..]));
+    }
+
+    /// <summary>逐页惰性枚举条目序号区间，同一页只定位一次；支持倒序且不复制整个区间。</summary>
+    /// <param name="begin">包含的起始条目序号。</param>
+    /// <param name="end">不包含的结束条目序号。</param>
+    /// <param name="descending">是否从最后一个条目向前读取。</param>
+    /// <returns>当前索引内按指定方向排列的条目。</returns>
+    public IEnumerable<Item> Range(int begin, int end, bool descending = false)
+    {
+        if (begin < 0 || end < begin || end > Count)
+            throw new ArgumentOutOfRangeException(nameof(begin));
+        int cachedPage = -1, step = descending ? -1 : 1;
+        byte[] bytes = [];
+        for (int i = descending ? end - 1 : begin; i >= begin && i < end; i += step)
+        {
+            int page = i / PerPage;
+            if (page != cachedPage)
+            {
+                bytes = ReadPage(page);
+                cachedPage = page;
+            }
+            yield return Decode(bytes, i % PerPage);
+        }
     }
 
     /// <summary>通过有限探测和二分查找取得键的下界或上界位置。</summary>
@@ -154,19 +216,38 @@ internal sealed class DiskIndex : IDisposable
         if (key > MaxKey || upper && key == MaxKey)
             return Count;
         int lo = 0, hi = Count;
+        long minimum = MinKey, maximum = MaxKey;
+        if (_fences.Length > 0)
+        {
+            int left = 0, right = _fences.Length;
+            while (left < right)
+            {
+                int middle = left + (right - left) / 2;
+                long value = _fences[middle].Key;
+                if (value < key || upper && value == key)
+                    left = middle + 1;
+                else
+                    right = middle;
+            }
+            if (left > 0)
+                (minimum, lo) = _fences[left - 1];
+            if (left < _fences.Length)
+                (maximum, hi) = _fences[left];
+        }
+        int start = lo, end = hi, remaining = hi - lo;
         // 已校验的探测只缩小二分查找区间。密集键和常见重复键通常只访问一至两页；
         // 倾斜分布只允许有限次额外探测，然后回退到精确二分查找。
-        double span = (double)MaxKey - MinKey;
-        if (Count >= PerPage * 2 && span >= Count / 1024d && span <= (double)Count * 16)
+        double span = (double)maximum - minimum;
+        if (remaining >= PerPage * 2 && span >= remaining / 1024d && span <= (double)remaining * 16)
         {
-            int guess = (int)Math.Clamp(((double)key - MinKey) / span * (Count - 1), 0, Count - 1);
+            int guess = lo + (int)Math.Clamp(((double)key - minimum) / span * (remaining - 1), 0, remaining - 1);
             bool Before(long value) => value < key || upper && value == key;
             if (Before(At(guess).Key))
             {
                 lo = guess + 1;
-                for (int step = 1; step <= 128 && lo < Count; step <<= 1)
+                for (int step = 1; step <= 128 && lo < end; step <<= 1)
                 {
-                    int probe = (int)Math.Min(Count - 1L, (long)guess + step);
+                    int probe = (int)Math.Min(end - 1L, (long)guess + step);
                     if (!Before(At(probe).Key))
                     {
                         hi = probe;
@@ -179,9 +260,9 @@ internal sealed class DiskIndex : IDisposable
             else
             {
                 hi = guess;
-                for (int step = 1; step <= 128 && hi > 0; step <<= 1)
+                for (int step = 1; step <= 128 && hi > start; step <<= 1)
                 {
-                    int probe = Math.Max(0, guess - step);
+                    int probe = Math.Max(start, guess - step);
                     if (Before(At(probe).Key))
                     {
                         lo = probe + 1;
@@ -230,7 +311,19 @@ internal sealed class DiskIndex : IDisposable
     /// <param name="metadata">随持久化索引头保存的辅助元数据。</param>
     /// <param name="entries">待持久化的有序索引项。</param>
     public static void Write(string path, int generation, long length, long time, byte[] metadata, IReadOnlyList<Item> entries)
+        => Write(path, generation, length, time, metadata, entries.Count, entries);
+
+    /// <summary>单次枚举有序索引项并逐页落盘，避免为大库复制完整索引数组。</summary>
+    /// <param name="path">当前数据库或索引文件路径。</param>
+    /// <param name="generation">数据文件代次。</param>
+    /// <param name="length">已提交数据文件长度。</param>
+    /// <param name="time">源数据文件的修改时间戳。</param>
+    /// <param name="metadata">随索引保存的辅助元数据。</param>
+    /// <param name="count">预期写入的索引项总数。</param>
+    /// <param name="entries">在外层读取或写入保护期内稳定的有序条目。</param>
+    public static void Write(string path, int generation, long length, long time, byte[] metadata, int count, IEnumerable<Item> entries)
     {
+        ArgumentOutOfRangeException.ThrowIfNegative(count);
         string temp = path + "." + Guid.NewGuid().ToString("N") + ".tmp";
         try
         {
@@ -239,18 +332,12 @@ internal sealed class DiskIndex : IDisposable
                 var header = new byte[PageSize];
                 "PDBIDX03"u8.CopyTo(header);
                 BinaryPrimitives.WriteInt32LittleEndian(header.AsSpan(8), generation);
-                BinaryPrimitives.WriteInt32LittleEndian(header.AsSpan(12), entries.Count);
+                BinaryPrimitives.WriteInt32LittleEndian(header.AsSpan(12), count);
                 BinaryPrimitives.WriteInt64LittleEndian(header.AsSpan(16), length);
                 BinaryPrimitives.WriteInt64LittleEndian(header.AsSpan(24), time);
                 BinaryPrimitives.WriteInt32LittleEndian(header.AsSpan(32), metadata.Length);
                 BinaryPrimitives.WriteUInt32LittleEndian(header.AsSpan(36), Crc32.Compute(metadata));
                 long start = PageSize + ((long)metadata.Length + 4095) / 4096 * 4096;
-                if (entries.Count > 0)
-                {
-                    BinaryPrimitives.WriteInt64LittleEndian(header.AsSpan(48), entries[0].Key);
-                    BinaryPrimitives.WriteInt64LittleEndian(header.AsSpan(56), entries[^1].Key);
-                }
-
                 BinaryPrimitives.WriteInt64LittleEndian(header.AsSpan(40), start);
                 BinaryPrimitives.WriteUInt32LittleEndian(header.AsSpan(4092), Crc32.Compute(header.AsSpan(0, 4092)));
                 file.Write(header);
@@ -258,12 +345,30 @@ internal sealed class DiskIndex : IDisposable
                 file.SetLength(start);
                 file.Position = start;
                 var page = new byte[PageSize];
-                for (int i = 0; i < entries.Count;)
+                using var iterator = entries.GetEnumerator();
+                long previous = long.MinValue;
+                int fenceStride = Math.Max(1, (int)(((long)count + 127) / 128)), fenceCount = 0;
+                "PDBFENC1"u8.CopyTo(header.AsSpan(64));
+                BinaryPrimitives.WriteInt32LittleEndian(header.AsSpan(76), fenceStride);
+                for (int i = 0; i < count;)
                 {
                     page.AsSpan().Clear();
-                    for (int j = 0; j < PerPage && i < entries.Count; j++, i++)
+                    for (int j = 0; j < PerPage && i < count; j++, i++)
                     {
-                        var e = entries[i];
+                        if (!iterator.MoveNext())
+                            throw new InvalidDataException("Persistent index entry count mismatch.");
+                        var e = iterator.Current;
+                        if (e.Key < previous)
+                            throw new InvalidDataException("Persistent index entries must be ordered.");
+                        if (i == 0)
+                            BinaryPrimitives.WriteInt64LittleEndian(header.AsSpan(48), e.Key);
+                        if (i % fenceStride == 0 || i == 1)
+                        {
+                            BinaryPrimitives.WriteInt64LittleEndian(header.AsSpan(80 + fenceCount * 12), e.Key);
+                            BinaryPrimitives.WriteInt32LittleEndian(header.AsSpan(88 + fenceCount * 12), i);
+                            fenceCount++;
+                        }
+                        previous = e.Key;
                         var b = page.AsSpan(j * 32, 32);
                         BinaryPrimitives.WriteInt64LittleEndian(b, e.Key);
                         BinaryPrimitives.WriteInt64LittleEndian(b[8..], e.Id);
@@ -275,7 +380,14 @@ internal sealed class DiskIndex : IDisposable
                     BinaryPrimitives.WriteUInt32LittleEndian(page.AsSpan(4092), Crc32.Compute(page.AsSpan(0, 4092)));
                     file.Write(page);
                 }
-
+                if (iterator.MoveNext())
+                    throw new InvalidDataException("Persistent index entry count mismatch.");
+                if (count > 0)
+                    BinaryPrimitives.WriteInt64LittleEndian(header.AsSpan(56), previous);
+                BinaryPrimitives.WriteInt32LittleEndian(header.AsSpan(72), fenceCount);
+                BinaryPrimitives.WriteUInt32LittleEndian(header.AsSpan(4092), Crc32.Compute(header.AsSpan(0, 4092)));
+                file.Position = 0;
+                file.Write(header);
                 file.Flush(true);
             }
 

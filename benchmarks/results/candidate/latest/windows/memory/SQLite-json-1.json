@@ -1,0 +1,13 @@
+﻿{
+  "Engine": "SQLite",
+  "Scenario": "json",
+  "Repeat": 1,
+  "ManagedLiveBytes": 274576,
+  "PrivateBytes": 26873856,
+  "WorkingSetBytes": 47689728,
+  "PeakWorkingSetBytes": 47689728,
+  "LibrarySHA256": "B4E516C14F7CD187587D37C4B9AA6E9AF7C669CC2CA66B4B02FC1F3DDD1E54C0",
+  "DatabaseInstances": 1,
+  "PageCacheBytes": 67108864,
+  "SqlCacheBudget": 0
+}

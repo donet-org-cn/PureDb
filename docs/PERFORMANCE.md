@@ -1,6 +1,8 @@
 ﻿# PureDb 与 SQLite 最新全面对比
 
-PureDb `1.0.0-preview.3` 原生格式，对照原版 SQLite 3.54.1。每平台 41 场景 × 2 引擎 × 3 轮 = 246 主样本，另有 18 个独立内存、72 个 ADO 和 6 个充分预热样本。只保留最新结果。
+当前 rc.1 请查看 [完整性能及 CPU / RSS](RC-PERFORMANCE.md)、[十万 / 百万行及文件大小](SCALE-PERFORMANCE.md)。以下数据冻结于 preview.3，用作历史对照。
+
+PureDb `1.0.0-preview.3` 原生格式，对照原版 SQLite 3.54.1。每平台 41 场景 × 2 引擎 × 3 轮 = 246 主样本，另有 18 个独立内存、72 个 ADO 和 6 个充分预热样本。
 
 | 平台 | PureDb 耗时胜 | SQLite 耗时胜 | 接近 |
 | --- | --- | --- | --- |

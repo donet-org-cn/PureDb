@@ -4,7 +4,7 @@ using System.Reflection;
 using PureDb;
 using PureDb.Benchmarks;
 
-if (OperatingSystem.IsWindows() && Environment.GetEnvironmentVariable("SQLITE_LIBRARY")is null)
+if (OperatingSystem.IsWindows() && Environment.GetEnvironmentVariable("SQLITE_LIBRARY") is null)
     Environment.SetEnvironmentVariable("SQLITE_LIBRARY", Path.GetFullPath("artifacts/sqlite/3.54.1/sqlite3.dll"));
 var folder = Path.GetFullPath("artifacts/storage-tests/" + Guid.NewGuid().ToString("N"));
 Directory.CreateDirectory(folder);
@@ -30,6 +30,16 @@ async Task Reject<T>(Func<Task> action)
 }
 
 int passed = 0;
+if (args.Length == 3 && args[0] == "--io-limit")
+{
+    await IoLimitChecks.Run(args[1], args[2]);
+    return;
+}
+if (args.Length == 2 && args[0] == "--soak")
+{
+    await SoakChecks.Run(folder, int.Parse(args[1]));
+    return;
+}
 async Task Test(string name, Func<Task> action)
 {
     await action();
@@ -39,10 +49,32 @@ async Task Test(string name, Func<Task> action)
 
 if (args.Length > 0 && args[0] == "--tail-worker")
 {
-    using var db = new Database(args[1], new() { Access = DatabaseAccess.Shared });
+    using var db = new Database(args[1], new()
+    {
+        Access = DatabaseAccess.Shared
+    });
     await db.PutAsync(10001, 9, new byte[] { 77 });
     Console.WriteLine("READY");
     await Task.Delay(Timeout.Infinite);
+    return;
+}
+
+if (args.Length == 3 && args[0] == "--maintenance-worker")
+{
+    using var db = new Database(args[1]);
+    await db.WriteAsync(Enumerable.Range(0, 1000).Select(i => i % 3 == 0 ? Mutation.Delete(i) : Mutation.Put(i, i % 7, BitConverter.GetBytes(i * 17L))).ToArray());
+    Database.MaintenanceStage = stage =>
+    {
+        if (stage != args[2])
+            return;
+        Console.WriteLine("READY");
+        Console.Out.Flush();
+        Thread.Sleep(Timeout.Infinite);
+    };
+    if (args[2].StartsWith("checkpoint"))
+        await db.CheckpointAsync();
+    else
+        await db.CompactAsync();
     return;
 }
 
@@ -50,7 +82,10 @@ await Test("paged primary index, boundary keys, writes, deletes and compaction",
 {
     string path = Path.Combine(folder, "primary.pdb");
     var oracle = new Dictionary<long, byte[]>();
-    await using (var db = new Database(path, new() { Durability = Durability.Buffered }))
+    await using (var db = new Database(path, new()
+    {
+        Durability = Durability.Buffered
+    }))
     {
         var batch = new List<Mutation>();
         for (int i = 0; i < 9000; i++)
@@ -66,7 +101,10 @@ await Test("paged primary index, boundary keys, writes, deletes and compaction",
 
     for (int pass = 0; pass < 3; pass++)
     {
-        await using var db = new Database(path, new() { Durability = Durability.Buffered });
+        await using var db = new Database(path, new()
+        {
+            Durability = Durability.Buffered
+        });
         Check(db.Count == oracle.Count, "count");
         foreach (var pair in oracle)
             Check(db.Get(pair.Key)!.Value.SequenceEqual(pair.Value), "primary data");
@@ -82,7 +120,10 @@ await Test("paged primary index, boundary keys, writes, deletes and compaction",
 await Test("checkpoint crash tail is recovered exactly once", async () =>
 {
     string path = Path.Combine(folder, "tail.pdb");
-    using (var db = new Database(path, new() { Access = DatabaseAccess.Shared }))
+    using (var db = new Database(path, new()
+    {
+        Access = DatabaseAccess.Shared
+    }))
         await db.PutAsync(1, 1, new byte[] { 5 });
     var start = new ProcessStartInfo("dotnet")
     {
@@ -101,21 +142,34 @@ await Test("checkpoint crash tail is recovered exactly once", async () =>
         await child.WaitForExitAsync();
     }
 
-    using var read = new Database(path, new() { Access = DatabaseAccess.Shared });
+    using var read = new Database(path, new()
+    {
+        Access = DatabaseAccess.Shared
+    });
     Check(read.Count == 2 && read.Get(10001)!.Value[0] == 77, "tail lost");
     read.VerifyIntegrity();
 });
 await Test("periodic checkpoint exists before close and SQL close prepares fresh indexes", async () =>
 {
     string path = Path.Combine(folder, "periodic.pdb");
-    using (var db = new Database(path, new() { Durability = Durability.Buffered, CheckpointIntervalBytes = 100 }))
+    using (var db = new Database(path, new()
+    {
+        Durability = Durability.Buffered,
+        CheckpointIntervalBytes = 100
+    }))
     {
         await db.PutAsync(1, 7, new byte[200]);
         Check(File.Exists(path + ".pidx") && db.CheckpointError is null, "periodic checkpoint");
     }
 
     string sql = Path.Combine(folder, "automatic-sql.pdb");
-    using (var db = new SqlDatabase(sql, new() { Storage = new() { Durability = Durability.Buffered } }))
+    using (var db = new SqlDatabase(sql, new()
+    {
+        Storage = new()
+        {
+            Durability = Durability.Buffered
+        }
+    }))
         await db.ExecuteAsync("CREATE TABLE t(id INTEGER PRIMARY KEY,k INTEGER); CREATE INDEX ix ON t(k); INSERT INTO t VALUES(1,10),(2,20)");
     using var read = new SqlDatabase(sql);
     Check(read.Query("SELECT id FROM t WHERE k>=10 ORDER BY k").Plan.StartsWith("PersistentIndex"), "SQL close did not prepare index");
@@ -154,14 +208,23 @@ await Test("bad checkpoint header rebuild, lazy page CRC and strict data integri
     });
     await Reject<InvalidDataException>(() =>
     {
-        using var db = new Database(path, new() { VerifyOnOpen = true });
+        using var db = new Database(path, new()
+        {
+            VerifyOnOpen = true
+        });
         return Task.CompletedTask;
     });
 });
 await Test("persistent SQL ranges, limits, exact numeric bounds, invalidation and shared writers", async () =>
 {
     string path = Path.Combine(folder, "ranges.pdb");
-    using (var db = new SqlDatabase(path, new() { Storage = new() { Durability = Durability.Buffered } }))
+    using (var db = new SqlDatabase(path, new()
+    {
+        Storage = new()
+        {
+            Durability = Durability.Buffered
+        }
+    }))
     {
         await db.ExecuteAsync("CREATE TABLE t(id INTEGER PRIMARY KEY,k INTEGER,b BLOB); CREATE INDEX ix ON t(k)");
         await db.ExecuteTransactionAsync(Enumerable.Range(0, 4000).Select(i => new SqlCommand("INSERT INTO t VALUES(@id,@k,@b)", new Dictionary<string, object?> { ["id"] = (long)i, ["k"] = (long)(i % 50), ["b"] = new byte[] { (byte)i } })).ToArray());
@@ -182,8 +245,22 @@ await Test("persistent SQL ranges, limits, exact numeric bounds, invalidation an
         Check(db.Query("SELECT id FROM t WHERE k=60").Rows.Count == 1, "compaction");
     }
 
-    using var a = new SqlDatabase(path, new() { Storage = new() { Access = DatabaseAccess.Shared, Durability = Durability.Buffered } });
-    using var b = new SqlDatabase(path, new() { Storage = new() { Access = DatabaseAccess.Shared, Durability = Durability.Buffered } });
+    using var a = new SqlDatabase(path, new()
+    {
+        Storage = new()
+        {
+            Access = DatabaseAccess.Shared,
+            Durability = Durability.Buffered
+        }
+    });
+    using var b = new SqlDatabase(path, new()
+    {
+        Storage = new()
+        {
+            Access = DatabaseAccess.Shared,
+            Durability = Durability.Buffered
+        }
+    });
     a.Query("SELECT id FROM t WHERE k=60");
     await b.ExecuteAsync("UPDATE t SET k=61 WHERE id=10");
     Check(a.Query("SELECT id FROM t WHERE k=60").Rows.Count == 0 && a.Query("SELECT id FROM t WHERE k=61").Rows.Count == 1, "shared invalidation");
@@ -191,7 +268,13 @@ await Test("persistent SQL ranges, limits, exact numeric bounds, invalidation an
 await Test("managed SQLite export: official integrity_check, indexes, overflow, JSON and subsequent writes", async () =>
 {
     string path = Path.Combine(folder, "exchange.pdb"), sqlite = Path.Combine(folder, "export.sqlite");
-    using (var db = new SqlDatabase(path, new() { Storage = new() { Durability = Durability.Buffered } }))
+    using (var db = new SqlDatabase(path, new()
+    {
+        Storage = new()
+        {
+            Durability = Durability.Buffered
+        }
+    }))
     {
         await db.ExecuteAsync("CREATE TABLE t(id INTEGER PRIMARY KEY,k INTEGER,name TEXT UNIQUE,b BLOB,j JSONB); CREATE INDEX ix ON t(k); CREATE INDEX jx ON t(json_extract(j,'$.n'))");
         var commands = Enumerable.Range(0, 9000).Select(i => new SqlCommand("INSERT INTO t VALUES(@id,@k,@name,@b,jsonb(@j))", new Dictionary<string, object?> { ["id"] = (long)i, ["k"] = (long)(i % 101), ["name"] = "中文😀'" + i, ["b"] = Enumerable.Repeat((byte)i, i % 100 == 0 ? 20000 : 12).ToArray(), ["j"] = "{\"n\":" + i + "}" })).ToArray();
@@ -226,7 +309,13 @@ await Test("managed SQLite export: official integrity_check, indexes, overflow, 
 });
 async Task ImportAndCheck(string sqlite, string pure, long expected)
 {
-    await SqlDatabase.ImportSqliteAsync(sqlite, pure, new() { Storage = new() { Durability = Durability.Buffered } });
+    await SqlDatabase.ImportSqliteAsync(sqlite, pure, new()
+    {
+        Storage = new()
+        {
+            Durability = Durability.Buffered
+        }
+    });
     using var read = new SqlDatabase(pure);
     Check((long)read.Query("SELECT COUNT(*) FROM t").Rows[0][0]! == expected, "import count");
     Check((long)read.Query("SELECT k FROM t WHERE id=100").Rows[0][0]! == 1000, "SQLite update lost");
@@ -265,9 +354,16 @@ await Test("paged primary hot cache publishes immutable entries across concurren
 {
     string path = Path.Combine(folder, "hot-pages.pdb");
     long[] ids = Enumerable.Range(0, 4096).Select(i => (long)i).Concat(new[] { long.MinValue, -1L, 16383L, 16384L, 524287L, 524288L, 1L << 50, long.MaxValue }).ToArray();
-    using (var db = new Database(path, new() { Durability = Durability.Buffered }))
+    using (var db = new Database(path, new()
+    {
+        Durability = Durability.Buffered
+    }))
         await db.WriteAsync(ids.Select(id => Mutation.Put(id, 1, BitConverter.GetBytes(id))).ToArray());
-    using (var db = new Database(path, new() { CacheBytes = 2 * 1024 * 1024, Durability = Durability.Buffered }))
+    using (var db = new Database(path, new()
+    {
+        CacheBytes = 2 * 1024 * 1024,
+        Durability = Durability.Buffered
+    }))
     {
         await Task.WhenAll(Enumerable.Range(0, 8).Select(worker => Task.Run(() =>
         {
@@ -279,21 +375,27 @@ await Test("paged primary hot cache publishes immutable entries across concurren
         })));
         await db.PutAsync(10, 2, BitConverter.GetBytes(999L));
         await db.DeleteAsync(20);
-        Check(BitConverter.ToInt64(db.Get(10)!.Value) == 999 && db.Get(20)is null, "hot cache hid mutations");
+        Check(BitConverter.ToInt64(db.Get(10)!.Value) == 999 && db.Get(20) is null, "hot cache hid mutations");
         await db.CompactAsync();
-        Check(BitConverter.ToInt64(db.Get(10)!.Value) == 999 && db.Get(20)is null, "hot cache survived generation change");
+        Check(BitConverter.ToInt64(db.Get(10)!.Value) == 999 && db.Get(20) is null, "hot cache survived generation change");
     }
 
     using (var db = new Database(path))
     {
-        Check(db.Count == ids.Length - 1 && db.Get(20)is null, "hot cache reopen");
+        Check(db.Count == ids.Length - 1 && db.Get(20) is null, "hot cache reopen");
         db.VerifyIntegrity();
     }
 });
 await Test("primary covering projection validates index while payload reads retain CRC checks", async () =>
 {
     string path = Path.Combine(folder, "covering.pdb");
-    using (var db = new SqlDatabase(path, new() { Storage = new() { Durability = Durability.Buffered } }))
+    using (var db = new SqlDatabase(path, new()
+    {
+        Storage = new()
+        {
+            Durability = Durability.Buffered
+        }
+    }))
         await db.ExecuteAsync("CREATE TABLE t(id INTEGER PRIMARY KEY,b BLOB);INSERT INTO t VALUES(1,X'010203')");
     DateTime stamp = File.GetLastWriteTimeUtc(path);
     var bytes = File.ReadAllBytes(path);
@@ -314,7 +416,13 @@ await Test("primary covering projection validates index while payload reads reta
 
     await Reject<InvalidDataException>(() =>
     {
-        using var db = new SqlDatabase(path, new() { Storage = new() { VerifyOnOpen = true } });
+        using var db = new SqlDatabase(path, new()
+        {
+            Storage = new()
+            {
+                VerifyOnOpen = true
+            }
+        });
         return Task.CompletedTask;
     });
 });
@@ -327,7 +435,13 @@ await Test("limited persistent ranges retain exact bounds across duplicates, ske
         4095 => long.MaxValue,
         _ => i < 3000 ? 7L : i % 99 - 50L
     }).ToArray();
-    using (var db = new SqlDatabase(path, new() { Storage = new() { Durability = Durability.Buffered } }))
+    using (var db = new SqlDatabase(path, new()
+    {
+        Storage = new()
+        {
+            Durability = Durability.Buffered
+        }
+    }))
     {
         await db.ExecuteAsync("CREATE TABLE t(id INTEGER PRIMARY KEY,k INTEGER NOT NULL); CREATE INDEX ix ON t(k)");
         await db.ExecuteTransactionAsync(keys.Select((key, id) => new SqlCommand("INSERT INTO t VALUES(@id,@k)", new Dictionary<string, object?> { ["id"] = (long)id, ["k"] = key })).ToArray());
@@ -379,9 +493,16 @@ await Test("small budget page eviction preserves concurrent values, tail growth 
 {
     string path = Path.Combine(folder, "cache-eviction.pdb");
     byte[] Payload(int id) => Enumerable.Repeat((byte)(id % 251), 5000 + id % 31).ToArray();
-    using (var db = new Database(path, new() { Durability = Durability.Buffered }))
+    using (var db = new Database(path, new()
+    {
+        Durability = Durability.Buffered
+    }))
         await db.WriteAsync(Enumerable.Range(0, 1024).Select(i => Mutation.Put(i, 1, Payload(i))).ToArray());
-    using (var db = new Database(path, new() { Durability = Durability.Buffered, CacheBytes = 64 * 1024 }))
+    using (var db = new Database(path, new()
+    {
+        Durability = Durability.Buffered,
+        CacheBytes = 64 * 1024
+    }))
     {
         void Read(int id) => Check(db.Get(id)!.Value.SequenceEqual(Payload(id)), "evicted page changed value");
         for (int i = 0; i < 1024; i++)
@@ -405,9 +526,101 @@ await Test("small budget page eviction preserves concurrent values, tail growth 
         db.VerifyIntegrity();
     }
 
-    using var reopened = new Database(path, new() { CacheBytes = 4096 });
+    using var reopened = new Database(path, new()
+    {
+        CacheBytes = 4096
+    });
     for (int i = 1087; i >= 0; i--)
         Check(reopened.Get(i)!.Value.SequenceEqual(Payload(i)), "single-page budget reopen");
 });
 await Test("shared replay boundaries, every truncation byte and strict corruption rejection", () => SharedReplayChecks.Run(folder));
+await Test("checkpoint rebase, mixed deltas, descending primary ranges and randomized reopen", () => MaintenanceChecks.Run(folder));
+await Test("sparse index fences, legacy indexes and full Int64 duplicate bounds", () => { IndexFenceChecks.Run(folder); return Task.CompletedTask; });
+await Test("online native backup is an atomic snapshot, never overwrites and honors cancellation", async () =>
+{
+    string source = Path.Combine(folder, "backup-source.pdb"), copy = Path.Combine(folder, "backup.pdb");
+    using (var db = new Database(source, new()
+    {
+        Access = DatabaseAccess.Shared,
+        Durability = Durability.Buffered
+    }))
+    using (var writer = new Database(source, new()
+    {
+        Access = DatabaseAccess.Shared,
+        Durability = Durability.Buffered
+    }))
+    {
+        await writer.WriteAsync(Enumerable.Range(0, 300).Select(i => Mutation.Put(i, 1, new byte[32768])).Append(Mutation.Put(-1, 1, BitConverter.GetBytes(0L))).Append(Mutation.Put(-2, 1, BitConverter.GetBytes(0L))).ToArray());
+        var writes = Task.Run(async () =>
+        {
+            for (long i = 1; i <= 100; i++)
+                await writer.WriteAsync([Mutation.Put(-1, 1, BitConverter.GetBytes(i)), Mutation.Put(-2, 1, BitConverter.GetBytes(i))]);
+        });
+        db.Backup(copy);
+        await writes;
+        using var restored = new Database(copy, new()
+        {
+            VerifyOnOpen = true
+        });
+        Check(restored.Count == 302 && BitConverter.ToInt64(restored.Get(-1)!.Value) == BitConverter.ToInt64(restored.Get(-2)!.Value), "backup mixed transaction versions");
+        restored.VerifyIntegrity();
+        await Reject<IOException>(() => { db.Backup(copy); return Task.CompletedTask; });
+        using var cancelled = new CancellationTokenSource();
+        cancelled.Cancel();
+        await Reject<OperationCanceledException>(() => { db.Backup(copy + ".cancelled", cancelled.Token); return Task.CompletedTask; });
+        Check(!File.Exists(copy + ".cancelled"), "cancelled backup was published");
+    }
+    using (var sql = new SqlDatabase(Path.Combine(folder, "backup-sql.pdb")))
+    {
+        await sql.ExecuteAsync("CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER CHECK(n>0));INSERT INTO t VALUES(1,1);BEGIN;UPDATE t SET n=2 WHERE id=1");
+        sql.Backup(copy + ".sql");
+        await sql.ExecuteAsync("ROLLBACK");
+    }
+    using var sqlCopy = new SqlDatabase(copy + ".sql");
+    Check(Equals(sqlCopy.Query("SELECT n FROM t WHERE id=1").Rows[0][0], 1L), "backup included uncommitted SQL");
+    await Reject<SqlException>(async () => await sqlCopy.ExecuteAsync("INSERT INTO t VALUES(2,0)"));
+});
+await Test("process death at every checkpoint and compaction publication boundary", async () =>
+{
+    foreach (string stage in new[] { "checkpoint-index-synced", "compact-data-synced", "compact-index-synced", "compact-data-replaced" })
+    {
+        string path = Path.Combine(folder, stage + ".pdb");
+        using (var db = new Database(path, new()
+        {
+            Durability = Durability.Buffered
+        }))
+            await db.WriteAsync(Enumerable.Range(0, 1000).Select(i => Mutation.Put(i, i % 7, BitConverter.GetBytes((long)i))).ToArray());
+        var start = new ProcessStartInfo("dotnet") { RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false };
+        start.ArgumentList.Add(Assembly.GetExecutingAssembly().Location);
+        start.ArgumentList.Add("--maintenance-worker");
+        start.ArgumentList.Add(path);
+        start.ArgumentList.Add(stage);
+        using var worker = Process.Start(start)!;
+        try
+        {
+            string? ready = await worker.StandardOutput.ReadLineAsync().WaitAsync(TimeSpan.FromSeconds(30));
+            Check(ready == "READY", "maintenance worker did not reach " + stage);
+        }
+        finally
+        {
+            if (!worker.HasExited)
+                worker.Kill(entireProcessTree: true);
+            await worker.WaitForExitAsync();
+        }
+        foreach (bool verify in new[] { false, true })
+        {
+            using var reopened = new Database(path, new()
+            {
+                VerifyOnOpen = verify
+            });
+            Check(reopened.Count == 666, "crash lost committed count: " + stage);
+            for (int i = 0; i < 1000; i++)
+            {
+                var row = reopened.Get(i);
+                Check(i % 3 == 0 ? row is null : row is not null && BitConverter.ToInt64(row.Value) == i * 17L, "crash lost committed value: " + stage);
+            }
+            reopened.VerifyIntegrity();
+        }
+    }
+});
 Console.WriteLine($"{passed} storage/exchange groups passed: {folder}");

@@ -426,6 +426,9 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     {
         /// <summary>是否支持原生持久化索引；兼容或叠加快照可关闭专用路径。</summary>
         public bool HasPersistentIndexes => true;
+
+        /// <summary>当前没有任何尾部变更的主索引；专用于一致快照内的批量投影。</summary>
+        internal DiskIndex? UnchangedPrimaryIndex => db._primary.UnchangedBase;
         /// <summary>当前数据文件的规范路径。</summary>
         public string Path => db._path;
         /// <summary>用于识别文件替换的存储代次。</summary>
@@ -474,8 +477,17 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
         /// <param name = "max">查询闭区间的上界，包含该值。</param>
         /// <returns>按方法规定的顺序和可见性组织的结果集合。</returns>
         public IEnumerable<DiskIndex.Item> TableEntriesRange(int tableId, long min, long max)
+            => TableEntriesRange(tableId, min, max, false);
+
+        /// <summary>按指定方向惰性枚举表主键区间，倒序 LIMIT 不物化整个区间。</summary>
+        /// <param name="tableId">表在模式目录中的内部 ID。</param>
+        /// <param name="min">包含的记录 ID 下界。</param>
+        /// <param name="max">包含的记录 ID 上界。</param>
+        /// <param name="descending">是否从最大记录 ID 向下读取。</param>
+        /// <returns>当前快照中按主键排序的有效索引项。</returns>
+        public IEnumerable<DiskIndex.Item> TableEntriesRange(int tableId, long min, long max, bool descending)
         {
-            foreach (var pair in db._primary.Range(min, max))
+            foreach (var pair in db._primary.Range(min, max, descending))
                 if (pair.Value.Key == tableId)
                     yield return new(tableId, pair.Key, pair.Value.Offset, pair.Value.Length, pair.Value.Crc);
         }
@@ -1124,9 +1136,11 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
     private void CompactCore()
     {
         string temp = _path + ".compact";
+        DiskIndex? replacement = null;
         try
         {
-            var entries = new Dictionary<long, Entry>();
+            var entries = new DiskIndex.Item[_primary.Count];
+            int entryCount = 0;
             using (var output = new FileStream(temp, FileMode.Create, FileAccess.Write, FileShare.None, 65536))
             {
                 WriteHeader(output, unchecked(_generation + 1));
@@ -1147,7 +1161,7 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
                     count = 0;
                 }
 
-                foreach (var (id, entry) in _primary)
+                foreach (var (id, entry) in _primary.Range(long.MinValue, long.MaxValue))
                 {
                     int needed = checked(OpHeader + entry.Length);
                     if (position + needed > frame.Length)
@@ -1157,13 +1171,20 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
                             frame = new byte[position + needed];
                     }
 
-                    var value = ReadValue(entry, id);
                     frame.AsSpan(position, OpHeader).Clear();
                     BinaryPrimitives.WriteInt64LittleEndian(frame.AsSpan(position), id);
                     BinaryPrimitives.WriteInt64LittleEndian(frame.AsSpan(position + 8), entry.Key);
                     BinaryPrimitives.WriteInt32LittleEndian(frame.AsSpan(position + 16), entry.Length);
-                    value.CopyTo(frame.AsSpan(position + OpHeader));
-                    entries[id] = new(entry.Key, output.Position + position + OpHeader, entry.Length, entry.Crc);
+                    var destination = frame.AsSpan(position + OpHeader, entry.Length);
+                    if (entry.Length > PageSize)
+                    {
+                        // 大值直接读入复用的事务帧，省去跨页记录的中间数组和逐页复制。
+                        ReadAt(ReadHandle(), destination, entry.Offset);
+                        VerifyValue(entry, destination, id);
+                    }
+                    else
+                        ReadValue(entry, id).CopyTo(destination);
+                    entries[entryCount++] = new(id, entry.Key, output.Position + position + OpHeader, entry.Length, entry.Crc);
                     position += needed;
                     count++;
                 }
@@ -1172,6 +1193,16 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
                 output.Flush(true);
             }
 
+            MaintenanceStage?.Invoke("compact-data-synced");
+            // 索引是可丢弃的旁路文件。先完成新数据及其索引，再替换数据文件；
+            // 任一阶段崩溃时，代次不匹配的索引会被拒绝并从对应日志恢复。
+            if (entryCount != entries.Length)
+                throw new InvalidDataException("Compaction entry count mismatch.");
+            long compactLength = new FileInfo(temp).Length;
+            DiskIndex.Write(_path + ".pidx", unchecked(_generation + 1), compactLength, File.GetLastWriteTimeUtc(temp).Ticks, CheckpointMetadata(), entries);
+            replacement = DiskIndex.Open(_path + ".pidx", unchecked(_generation + 1), compactLength)
+                ?? throw new IOException("Could not reopen the completed compacted index.");
+            MaintenanceStage?.Invoke("compact-index-synced");
             _handle.Dispose();
             _file.Dispose();
             for (int attempt = 0; ; attempt++)
@@ -1188,14 +1219,15 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
             }
 
             _generation = unchecked(_generation + 1);
+            MaintenanceStage?.Invoke("compact-data-replaced");
             _file = OpenFile();
             _file.Position = _file.Length;
-            _primary.Clear();
-            foreach (var item in entries)
-                _primary.SetKnown(item.Key, item.Value, false);
+            _primary.Load(replacement);
+            replacement = null;
             _scanOffset = _file.Length;
-            _checkpointOffset = 0;
+            _checkpointOffset = _scanOffset;
             _verifiedValues.Clear();
+            _verifiedCount = 0;
             _pages.Clear();
             _pageOrder.Clear();
             _cachedPages = 0;
@@ -1203,6 +1235,9 @@ public sealed partial class Database : IDisposable, IAsyncDisposable, ISqlStorag
         }
         finally
         {
+            replacement?.Dispose();
+            if (File.Exists(temp))
+                File.Delete(temp);
         }
     }
 

@@ -1,0 +1,13 @@
+{
+  "CoreSHA256": "B4E516C14F7CD187587D37C4B9AA6E9AF7C669CC2CA66B4B02FC1F3DDD1E54C0",
+  "ExtendedSqlQueries": 298,
+  "QueryDifferentialQueries": 134,
+  "SortQueries": 160,
+  "FixedSqlCorpus": 175,
+  "FileProfiles": 66,
+  "StorageGroups": 16,
+  "AotFeatureGroups": 7,
+  "AotQueries": 298,
+  "Passed": true,
+  "Scope": "Named tests and one-million-change model, not blanket production or complete SQLite certification"
+}

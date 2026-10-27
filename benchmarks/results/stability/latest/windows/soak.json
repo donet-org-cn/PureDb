@@ -1,0 +1,10 @@
+{
+  "Operations": 1000000,
+  "ConcurrentReads": 423811,
+  "ReopenPhases": 10,
+  "Rows": 80131,
+  "Milliseconds": 20948.1577,
+  "Architecture": "X64",
+  "OS": "Microsoft Windows 10.0.26300",
+  "CoreSHA256": "B4E516C14F7CD187587D37C4B9AA6E9AF7C669CC2CA66B4B02FC1F3DDD1E54C0"
+}

@@ -84,6 +84,20 @@ internal static class SqliteScalarFunctions
         return text[..at];
     }
 
+    /// <summary>按 SQLite 算术和谓词规则读取数值前缀；持久列仍执行原有严格类型约束。</summary>
+    /// <param name="value">非空 SQL 标量。</param>
+    /// <returns>保留整数或实数类别的数值；非数值文本转换为整数零。</returns>
+    internal static object ArithmeticValue(object value)
+    {
+        if (value is long or double)
+            return value;
+        value = SqlJsonFunctions.Unwrap(value)!;
+        string prefix = NumericPrefix(value, false);
+        if (prefix.IndexOfAny(['.', 'e', 'E']) < 0 && long.TryParse(prefix, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out long integer))
+            return integer;
+        return double.Parse(prefix, CultureInfo.InvariantCulture);
+    }
+
     /// <summary>执行明确的 SQLite CAST；整数溢出饱和，不通过该路径放宽持久列类型。</summary>
     /// <param name="value">已解包的 SQL 标量。</param>
     /// <param name="type">INTEGER、REAL、TEXT、BLOB 或 NUMERIC。</param>

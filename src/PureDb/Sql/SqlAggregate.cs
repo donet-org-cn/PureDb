@@ -40,7 +40,7 @@ internal sealed partial class SqlSession
                 count++;
                 if (!isReal && value is long n)
                 {
-                    sum = checked(sum + n);
+                    sum = SqlNumeric.AddSum(sum, n);
                     continue;
                 }
 
@@ -82,7 +82,7 @@ internal sealed partial class SqlSession
                 }
 
                 if (value is long n && !isReal)
-                    sum = checked(sum + n);
+                    sum = SqlNumeric.AddSum(sum, n);
                 else
                 {
                     if (!isReal)

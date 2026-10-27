@@ -84,4 +84,13 @@ using (var db = SqliteCompatibility.Open(sqlitePath, new() { LinuxExclusiveProce
 await SqlDatabase.ImportSqliteAsync(sqlitePath, FileFor("imported.pdb"));
 using (var db = new SqlDatabase(FileFor("imported.pdb"))) Check(Equals(db.Query("SELECT n FROM plain WHERE id=1").Rows[0][0], 4L), "SQLite roundtrip");
 Pass("managed SQLite file update and import/export");
+using (var native = new SqlDatabase(FileFor("backup-source.pdb")))
+{
+    await native.ExecuteAsync("CREATE TABLE b(id INTEGER PRIMARY KEY,n INTEGER);INSERT INTO b VALUES(1,5)");
+    native.Backup(FileFor("backup-copy.pdb"));
+}
+using (var restored = new SqlDatabase(FileFor("backup-copy.pdb")))
+{
+    Check(Equals(restored.Query("SELECT n FROM b WHERE id BETWEEN 0 AND 10 ORDER BY id DESC LIMIT 1").Rows[0][0], 5L), "native backup primary range");
+}
 Console.WriteLine($"PASS {groups} AOT feature groups; dynamic code={System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported}; {root}");

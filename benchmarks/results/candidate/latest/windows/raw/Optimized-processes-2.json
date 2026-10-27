@@ -1,0 +1,93 @@
+﻿{
+  "Engine": "Optimized",
+  "Mode": "processes",
+  "Runtime": "10.0.13",
+  "SQLite": "3.54.1",
+  "CPUs": 12,
+  "QueryWarmupMilliseconds": 500,
+  "QueryMeasurementMilliseconds": 750,
+  "LibrarySHA256": "B4E516C14F7CD187587D37C4B9AA6E9AF7C669CC2CA66B4B02FC1F3DDD1E54C0",
+  "DateUtc": "2026-10-27T15:18:13.2038667Z",
+  "Samples": [
+    {
+      "Engine": "Optimized",
+      "Mode": "processes",
+      "Scenario": "shared_read",
+      "Repeat": 2,
+      "Operations": 4000,
+      "Unit": "queries",
+      "Milliseconds": 127.4133,
+      "OpsPerSecond": 31393.896869479086,
+      "P50Microseconds": 0,
+      "P95Microseconds": 0,
+      "P99Microseconds": 0,
+      "LatencySamples": 0,
+      "AllocatedBytes": 259032,
+      "WorkingSetBytes": 52719616,
+      "PrivateBytes": 26083328,
+      "PeakWorkingSetBytes": 52719616,
+      "ManagedLiveBytes": 916928,
+      "CpuMilliseconds": 15.625,
+      "CpuOneCorePercent": 12.263240964640268,
+      "CpuMachinePercent": 1.0219367470533556,
+      "ReadBytes": 527,
+      "WriteBytes": 16,
+      "ReadOperations": 12,
+      "WriteOperations": 4,
+      "StorageBeforeBytes": 12762,
+      "StorageAfterBytes": 12762,
+      "WorkerCpuMilliseconds": 328.125,
+      "WorkerPeakBytesSum": 195121152,
+      "WorkerPrivateBytesSum": 95846400,
+      "WorkerReadBytes": 18184,
+      "WorkerWriteBytes": 0
+    },
+    {
+      "Engine": "Optimized",
+      "Mode": "processes",
+      "Scenario": "shared_update",
+      "Repeat": 2,
+      "Operations": 4000,
+      "Unit": "updates",
+      "Milliseconds": 768.2713,
+      "OpsPerSecond": 5206.494112171052,
+      "P50Microseconds": 0,
+      "P95Microseconds": 0,
+      "P99Microseconds": 0,
+      "LatencySamples": 0,
+      "AllocatedBytes": 254352,
+      "WorkingSetBytes": 53518336,
+      "PrivateBytes": 26079232,
+      "PeakWorkingSetBytes": 53518336,
+      "ManagedLiveBytes": 889816,
+      "CpuMilliseconds": 15.625,
+      "CpuOneCorePercent": 2.0337867625668173,
+      "CpuMachinePercent": 0.16948223021390144,
+      "ReadBytes": 583,
+      "WriteBytes": 16,
+      "ReadOperations": 12,
+      "WriteOperations": 4,
+      "StorageBeforeBytes": 12762,
+      "StorageAfterBytes": 260762,
+      "WorkerCpuMilliseconds": 578.125,
+      "WorkerPeakBytesSum": 208949248,
+      "WorkerPrivateBytesSum": 109006848,
+      "WorkerReadBytes": 9000876,
+      "WorkerWriteBytes": 248000
+    }
+  ],
+  "Files": [
+    {
+      "Path": "shared.pdb",
+      "Bytes": 248450
+    },
+    {
+      "Path": "shared.pdb.lock",
+      "Bytes": 24
+    },
+    {
+      "Path": "shared.pdb.pidx",
+      "Bytes": 12288
+    }
+  ]
+}

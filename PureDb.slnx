@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/benchmarks/">
+    <Project Path="benchmarks/PureDb.ScaleBenchmarks/PureDb.ScaleBenchmarks.csproj" />
     <Project Path="benchmarks/PureDb.DeploymentBenchmarks/PureDbHost/PureDb.Deployment.PureDb.csproj" />
     <Project Path="benchmarks/PureDb.DeploymentBenchmarks/SqliteHost/PureDb.Deployment.Sqlite.csproj" />
     <Project Path="benchmarks/PureDb.CacheBenchmarks/PureDb.CacheBenchmarks.csproj" />

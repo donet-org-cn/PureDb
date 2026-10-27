@@ -1,0 +1,23 @@
+{
+  "BeforeSHA256": "5FEBFA6BD38FC5D5E41C4AC48F79AFC3560B955657F841D4D46092623BBDCFC7",
+  "AfterSHA256": "B4E516C14F7CD187587D37C4B9AA6E9AF7C669CC2CA66B4B02FC1F3DDD1E54C0",
+  "Cases": [
+    {
+      "Writer": "before",
+      "Reader": "after",
+      "KVRows": 20000,
+      "SQLRows": 2000,
+      "LazyAndFullVerification": true,
+      "Passed": true
+    },
+    {
+      "Writer": "after",
+      "Reader": "before",
+      "KVRows": 20000,
+      "SQLRows": 2000,
+      "LazyAndFullVerification": true,
+      "Passed": true
+    }
+  ],
+  "Scope": "Native basic KV/SQL data and rebuildable indexes; new SQL schema operators are not promised on older engines"
+}

@@ -1,0 +1,12 @@
+{
+  "RID": "win-x64",
+  "Host": "Windows-11-10.0.26300-SP0",
+  "Version": "1.0.0-rc.1",
+  "SDK": "10.0.402",
+  "RuntimeVersion": "10.0.13",
+  "Variants": [],
+  "AotFeatureGroups": 7,
+  "AotDifferentialQueries": 298,
+  "AotWarnings": 0,
+  "ValidationOnly": true
+}

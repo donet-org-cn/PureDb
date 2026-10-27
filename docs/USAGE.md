@@ -110,7 +110,19 @@ Full 在确认前调用 Flush(true)，设备需正确实现刷盘语义。Buffer
 
 压缩将活跃记录写入同目录临时文件并刷盘后替换，需要额外空间并暂时阻塞操作。恢复部分的 CRC/结构损坏拒绝打开，不静默丢弃后续数据；有效检查点之前的索引页和记录在读取时校验，可设置 VerifyOnOpen=true 或调用 VerifyIntegrity() 做完整日志验证。不足完整事务的尾部会截去。进程恢复已测，完整断电/设备故障矩阵未测，不能代替备份。
 
-## 键值 API
+## 一致快照备份（rc.1）
+
+原生 KV 和 SQL 均可在数据库打开时调用同步 `Backup`。只复制当前已提交的完整日志前缀，备份可独立打开，恢复时会重建 `.pidx`；无需自行复制任何旁路索引。
+
+```csharp
+db.Backup("app-backup.pdb"); // 目标必须尚不存在，父目录必须已经存在。
+using var recovered = new SqlDatabase("app-backup.pdb",
+    new() { Storage = new() { VerifyOnOpen = true } });
+```
+
+备份期间持有当前实例的读锁，可能阻塞本实例写入和维护；其他 Shared 实例继续追加时，备份仍只读取捕获的提交前缀。显式 SQL 事务中尚未提交的变更不会进入备份。取消或 I/O 失败不发布半份目标文件；已存在的目标不会被覆盖。备份不自动证明源文件无损，必要时先调用原生 `Database.VerifyIntegrity()`，并定期演练恢复。兼容后端使用 `ExportSqlite`，不接受原生 Backup。
+
+## 键值 API 示例
 
 ```csharp
 await using var kv = new Database("cache.pdb");

@@ -159,6 +159,13 @@ internal sealed partial record Expr(string Op, object? Value = null, Expr[]? Ite
     [System.Text.Json.Serialization.JsonIgnore]
     public Expr[] Args => Items ?? [];
 
+    /// <summary>解析阶段保留 TRUE/FALSE 关键字身份，以正确识别 IS 的布尔特例。</summary>
+    [System.Text.Json.Serialization.JsonIgnore]
+    public bool BooleanLiteral
+    {
+        get; init;
+    }
+
     /// <summary>构造一个携带 SQL 标量的字面量节点。</summary>
     /// <param name = "value">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>

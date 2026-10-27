@@ -143,7 +143,9 @@ public sealed partial class SqlDatabase : IDisposable, IAsyncDisposable
             return copy;
         }
 
-        var parsed = commands.Select(c => (Statements: Parse(c.Text), Parameters: c.Parameters is null ? EmptyParameters : (IReadOnlyDictionary<string, object?>)c.Parameters.ToDictionary(p => p.Key, p => CopyParameter(p.Value), StringComparer.Ordinal))).ToArray();
+        var parsed = commands.Select(c => (Statements: Parse(c.Text), Parameters: c.Parameters is null ? EmptyParameters : c.Parameters.Count <= 8
+            ? new SqlParameterSnapshot(c.Parameters, CopyParameter)
+            : (IReadOnlyDictionary<string, object?>)c.Parameters.ToDictionary(p => p.Key, p => CopyParameter(p.Value), StringComparer.Ordinal))).ToArray();
         if (Volatile.Read(ref _sqlTransaction) is not null || parsed.Any(c => c.Statements.Any(s => s is SqlTransactionControl)))
             return ExecuteSqlControlAsync(parsed, cancellationToken);
         return _storage.TransformAsync(snapshot =>
@@ -162,6 +164,17 @@ public sealed partial class SqlDatabase : IDisposable, IAsyncDisposable
     /// <param name = "cancellationToken">取消请求；已准入写入不会因取消而返回不明确的提交结果。</param>
     /// <returns>完成时表示该操作结束的任务。</returns>
     public ValueTask CompactAsync(CancellationToken cancellationToken = default) => _storage.CompactAsync(cancellationToken);
+
+    /// <summary>备份原生存储当前已提交的数据和模式；显式 SQL 事务的未提交变更不进入备份。</summary>
+    /// <param name="destination">尚不存在的目标原生数据库路径。</param>
+    /// <param name="cancellationToken">备份发布前逐块检查的取消信号。</param>
+    /// <exception cref="NotSupportedException">当前使用可选 SQLite 文件后端，应使用该后端的导出接口。</exception>
+    public void Backup(string destination, CancellationToken cancellationToken = default)
+    {
+        if (_storage is not Database storage)
+            throw new NotSupportedException("Native backup requires the native backend; use ExportSqlite for a SQLite snapshot.");
+        storage.Backup(destination, cancellationToken);
+    }
     /// <summary>按模式记录版本读取或复用不可变 SQL 目录。</summary>
     /// <param name = "snapshot">在当前存储保护期内有效的已提交快照。</param>
     /// <returns>本次绑定、解析或查询得到的结果对象；生命周期见方法说明。</returns>
@@ -743,6 +756,7 @@ internal sealed partial class SqlSession(SqlDatabase owner, ISqlSnapshot snapsho
             "JSON" => SqlJsonFunctions.Canonical(value),
             "JSONB" => SqlJsonFunctions.Binary(value),
             "INTEGER" when value is long => value,
+            "INTEGER" when value is double integer && integer >= long.MinValue && integer < 9223372036854775808d && integer == Math.Truncate(integer) => (long)integer,
             "REAL" when value is long or double => Convert.ToDouble(value, System.Globalization.CultureInfo.InvariantCulture),
             "TEXT" when value is string => value,
             "BLOB" when value is byte[] => value,

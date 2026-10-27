@@ -1,0 +1,1631 @@
+{
+  "Version": "1.0.0-rc.1",
+  "Platforms": {
+    "Windows x64": {
+      "Sizes": {
+        "100000": {
+          "Metrics": {
+            "insert_batches_1000": {
+              "before": {
+                "Milliseconds": 394.6259,
+                "CpuMilliseconds": 484.375,
+                "AllocatedBytes": 161605984,
+                "ManagedBytes": 13366688,
+                "RssBytes": 65474560,
+                "FileBytes": 7902512,
+                "Operations": 100000,
+                "MinMilliseconds": 390.9632,
+                "MaxMilliseconds": 398.1376
+              },
+              "after": {
+                "Milliseconds": 371.8488,
+                "CpuMilliseconds": 453.125,
+                "AllocatedBytes": 156474040,
+                "ManagedBytes": 25377208,
+                "RssBytes": 66252800,
+                "FileBytes": 7902512,
+                "Operations": 100000,
+                "MinMilliseconds": 361.9144,
+                "MaxMilliseconds": 436.9206
+              },
+              "sqlite": {
+                "Milliseconds": 277.2102,
+                "CpuMilliseconds": 93.75,
+                "AllocatedBytes": 3616,
+                "ManagedBytes": 309768,
+                "RssBytes": 38825984,
+                "FileBytes": 7442056,
+                "Operations": 100000,
+                "MinMilliseconds": 229.237,
+                "MaxMilliseconds": 343.7288
+              }
+            },
+            "range20_after_ingest": {
+              "before": {
+                "Milliseconds": 314.8762,
+                "CpuMilliseconds": 218.75,
+                "AllocatedBytes": 47101528,
+                "ManagedBytes": 50320808,
+                "RssBytes": 93552640,
+                "FileBytes": 11138352,
+                "Operations": 30,
+                "MinMilliseconds": 308.4087,
+                "MaxMilliseconds": 315.9376
+              },
+              "after": {
+                "Milliseconds": 33.2219,
+                "CpuMilliseconds": 31.25,
+                "AllocatedBytes": 1214624,
+                "ManagedBytes": 11109312,
+                "RssBytes": 66220032,
+                "FileBytes": 7902512,
+                "Operations": 30,
+                "MinMilliseconds": 32.5032,
+                "MaxMilliseconds": 39.9958
+              },
+              "sqlite": {
+                "Milliseconds": 1.4538,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 87856,
+                "ManagedBytes": 374536,
+                "RssBytes": 38985728,
+                "FileBytes": 7442056,
+                "Operations": 30,
+                "MinMilliseconds": 1.2906,
+                "MaxMilliseconds": 1.6483
+              }
+            },
+            "checkpoint": {
+              "before": {
+                "Milliseconds": 115.152,
+                "CpuMilliseconds": 31.25,
+                "AllocatedBytes": 14078160,
+                "ManagedBytes": 38803816,
+                "RssBytes": 92934144,
+                "FileBytes": 14374192,
+                "Operations": 1,
+                "MinMilliseconds": 98.7264,
+                "MaxMilliseconds": 146.4529
+              },
+              "after": {
+                "Milliseconds": 228.8842,
+                "CpuMilliseconds": 46.875,
+                "AllocatedBytes": 90280,
+                "ManagedBytes": 11050216,
+                "RssBytes": 67592192,
+                "FileBytes": 11138352,
+                "Operations": 1,
+                "MinMilliseconds": 218.2296,
+                "MaxMilliseconds": 244.3625
+              },
+              "sqlite": {
+                "Milliseconds": 111.2354,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 1192,
+                "ManagedBytes": 288080,
+                "RssBytes": 39034880,
+                "FileBytes": 4694016,
+                "Operations": 1,
+                "MinMilliseconds": 85.5771,
+                "MaxMilliseconds": 129.5664
+              }
+            },
+            "range20_after_checkpoint": {
+              "before": {
+                "Milliseconds": 0.4028,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 67552,
+                "ManagedBytes": 24796384,
+                "RssBytes": 85102592,
+                "FileBytes": 14374192,
+                "Operations": 30,
+                "MinMilliseconds": 0.3736,
+                "MaxMilliseconds": 0.4151
+              },
+              "after": {
+                "Milliseconds": 5.1576,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 428144,
+                "ManagedBytes": 1169976,
+                "RssBytes": 49901568,
+                "FileBytes": 11138352,
+                "Operations": 30,
+                "MinMilliseconds": 5.1137,
+                "MaxMilliseconds": 5.4782
+              },
+              "sqlite": {
+                "Milliseconds": 0.5335,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 87352,
+                "ManagedBytes": 370272,
+                "RssBytes": 38633472,
+                "FileBytes": 4694016,
+                "Operations": 30,
+                "MinMilliseconds": 0.5154,
+                "MaxMilliseconds": 0.5388
+              }
+            },
+            "range20_hot": {
+              "before": {
+                "Milliseconds": 114.5683,
+                "CpuMilliseconds": 125,
+                "AllocatedBytes": 57697920,
+                "ManagedBytes": 46024440,
+                "RssBytes": 100982784,
+                "FileBytes": 14374192,
+                "Operations": 10000,
+                "MinMilliseconds": 109.2075,
+                "MaxMilliseconds": 136.3143
+              },
+              "after": {
+                "Milliseconds": 114.3732,
+                "CpuMilliseconds": 125,
+                "AllocatedBytes": 58507912,
+                "ManagedBytes": 13634768,
+                "RssBytes": 77295616,
+                "FileBytes": 11138352,
+                "Operations": 10000,
+                "MinMilliseconds": 106.5167,
+                "MaxMilliseconds": 135.9495
+              },
+              "sqlite": {
+                "Milliseconds": 68.8675,
+                "CpuMilliseconds": 78.125,
+                "AllocatedBytes": 19761416,
+                "ManagedBytes": 1238080,
+                "RssBytes": 46682112,
+                "FileBytes": 4694016,
+                "Operations": 10000,
+                "MinMilliseconds": 68.3904,
+                "MaxMilliseconds": 69.205
+              }
+            },
+            "update_range_10000": {
+              "before": {
+                "Milliseconds": 138.5181,
+                "CpuMilliseconds": 140.625,
+                "AllocatedBytes": 49222304,
+                "ManagedBytes": 47086776,
+                "RssBytes": 115687424,
+                "FileBytes": 15164212,
+                "Operations": 10000,
+                "MinMilliseconds": 137.2217,
+                "MaxMilliseconds": 145.3727
+              },
+              "after": {
+                "Milliseconds": 38.7032,
+                "CpuMilliseconds": 31.25,
+                "AllocatedBytes": 10806728,
+                "ManagedBytes": 20454016,
+                "RssBytes": 75014144,
+                "FileBytes": 11928372,
+                "Operations": 10000,
+                "MinMilliseconds": 38.6554,
+                "MaxMilliseconds": 39.4552
+              },
+              "sqlite": {
+                "Milliseconds": 31.2366,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 1192,
+                "ManagedBytes": 295720,
+                "RssBytes": 46694400,
+                "FileBytes": 5155488,
+                "Operations": 10000,
+                "MinMilliseconds": 23.6827,
+                "MaxMilliseconds": 32.0682
+              }
+            },
+            "delete_range_10000": {
+              "before": {
+                "Milliseconds": 80.9565,
+                "CpuMilliseconds": 78.125,
+                "AllocatedBytes": 38570664,
+                "ManagedBytes": 62907656,
+                "RssBytes": 107687936,
+                "FileBytes": 15404232,
+                "Operations": 10000,
+                "MinMilliseconds": 77.2205,
+                "MaxMilliseconds": 85.0748
+              },
+              "after": {
+                "Milliseconds": 11.0682,
+                "CpuMilliseconds": 15.625,
+                "AllocatedBytes": 8823544,
+                "ManagedBytes": 20557832,
+                "RssBytes": 71196672,
+                "FileBytes": 12168392,
+                "Operations": 10000,
+                "MinMilliseconds": 11.0646,
+                "MaxMilliseconds": 11.679
+              },
+              "sqlite": {
+                "Milliseconds": 2.6368,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 1192,
+                "ManagedBytes": 295904,
+                "RssBytes": 46702592,
+                "FileBytes": 5637528,
+                "Operations": 10000,
+                "MinMilliseconds": 2.5726,
+                "MaxMilliseconds": 2.6409
+              }
+            },
+            "compact": {
+              "before": {
+                "Milliseconds": 164.5895,
+                "CpuMilliseconds": 46.875,
+                "AllocatedBytes": 17820280,
+                "ManagedBytes": 44330256,
+                "RssBytes": 104890368,
+                "FileBytes": 13582312,
+                "Operations": 1,
+                "MinMilliseconds": 159.2063,
+                "MaxMilliseconds": 172.7923
+              },
+              "after": {
+                "Milliseconds": 272.9429,
+                "CpuMilliseconds": 93.75,
+                "AllocatedBytes": 18403680,
+                "ManagedBytes": 28859808,
+                "RssBytes": 80707584,
+                "FileBytes": 10022888,
+                "Operations": 1,
+                "MinMilliseconds": 267.3849,
+                "MaxMilliseconds": 301.1027
+              },
+              "sqlite": {
+                "Milliseconds": 192.0627,
+                "CpuMilliseconds": 15.625,
+                "AllocatedBytes": 1192,
+                "ManagedBytes": 291856,
+                "RssBytes": 46845952,
+                "FileBytes": 4227072,
+                "Operations": 1,
+                "MinMilliseconds": 174.9904,
+                "MaxMilliseconds": 192.0936
+              }
+            },
+            "close": {
+              "before": {
+                "Milliseconds": 135.3623,
+                "CpuMilliseconds": 15.625,
+                "AllocatedBytes": 18983400,
+                "ManagedBytes": 36869688,
+                "RssBytes": 86966272,
+                "FileBytes": 13258728,
+                "Operations": 1,
+                "MinMilliseconds": 111.5021,
+                "MaxMilliseconds": 225.2851
+              },
+              "after": {
+                "Milliseconds": 7.3189,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 19088,
+                "ManagedBytes": 764936,
+                "RssBytes": 53563392,
+                "FileBytes": 10022888,
+                "Operations": 1,
+                "MinMilliseconds": 7.2637,
+                "MaxMilliseconds": 7.328
+              },
+              "sqlite": {
+                "Milliseconds": 1.6718,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 1352,
+                "ManagedBytes": 292000,
+                "RssBytes": 37920768,
+                "FileBytes": 4194304,
+                "Operations": 1,
+                "MinMilliseconds": 1.6211,
+                "MaxMilliseconds": 1.9484
+              }
+            },
+            "reopen_and_first_range": {
+              "before": {
+                "Milliseconds": 185.848,
+                "CpuMilliseconds": 93.75,
+                "AllocatedBytes": 30666584,
+                "ManagedBytes": 43470736,
+                "RssBytes": 95891456,
+                "FileBytes": 12935144,
+                "Operations": 1,
+                "MinMilliseconds": 171.5984,
+                "MaxMilliseconds": 195.1718
+              },
+              "after": {
+                "Milliseconds": 1.2123,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 127400,
+                "ManagedBytes": 869416,
+                "RssBytes": 53596160,
+                "FileBytes": 10022888,
+                "Operations": 1,
+                "MinMilliseconds": 1.1278,
+                "MaxMilliseconds": 1.391
+              },
+              "sqlite": {
+                "Milliseconds": 1.0808,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 3976,
+                "ManagedBytes": 292208,
+                "RssBytes": 35983360,
+                "FileBytes": 4227072,
+                "Operations": 1,
+                "MinMilliseconds": 1.0794,
+                "MaxMilliseconds": 1.0903
+              }
+            },
+            "point_10000": {
+              "before": {
+                "Milliseconds": 11.6197,
+                "CpuMilliseconds": 15.625,
+                "AllocatedBytes": 3090704,
+                "ManagedBytes": 35175856,
+                "RssBytes": 88711168,
+                "FileBytes": 12935144,
+                "Operations": 10000,
+                "MinMilliseconds": 10.9959,
+                "MaxMilliseconds": 16.6584
+              },
+              "after": {
+                "Milliseconds": 12.4164,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 3117416,
+                "ManagedBytes": 3973544,
+                "RssBytes": 56770560,
+                "FileBytes": 10022888,
+                "Operations": 10000,
+                "MinMilliseconds": 12.1593,
+                "MaxMilliseconds": 12.5716
+              },
+              "sqlite": {
+                "Milliseconds": 58.9211,
+                "CpuMilliseconds": 62.5,
+                "AllocatedBytes": 1121464,
+                "ManagedBytes": 1414712,
+                "RssBytes": 37470208,
+                "FileBytes": 4227072,
+                "Operations": 10000,
+                "MinMilliseconds": 57.3079,
+                "MaxMilliseconds": 59.3819
+              }
+            }
+          },
+          "Files": {
+            "before": {
+              "MainFileBytes": 7110632,
+              "TotalFileBytes": 12935144
+            },
+            "after": {
+              "MainFileBytes": 7110632,
+              "TotalFileBytes": 10022888
+            },
+            "sqlite": {
+              "MainFileBytes": 4194304,
+              "TotalFileBytes": 4194304
+            }
+          }
+        },
+        "1000000": {
+          "Metrics": {
+            "insert_batches_1000": {
+              "before": {
+                "Milliseconds": 1663.299,
+                "CpuMilliseconds": 1734.375,
+                "AllocatedBytes": 1487342224,
+                "ManagedBytes": 92828512,
+                "RssBytes": 123076608,
+                "FileBytes": 79020512,
+                "Operations": 1000000,
+                "MinMilliseconds": 1614.7349,
+                "MaxMilliseconds": 1744.0519
+              },
+              "after": {
+                "Milliseconds": 1569.6532,
+                "CpuMilliseconds": 1625,
+                "AllocatedBytes": 1411538568,
+                "ManagedBytes": 89522376,
+                "RssBytes": 122347520,
+                "FileBytes": 79020512,
+                "Operations": 1000000,
+                "MinMilliseconds": 1515.9543,
+                "MaxMilliseconds": 1593.0438
+              },
+              "sqlite": {
+                "Milliseconds": 3807.7915,
+                "CpuMilliseconds": 656.25,
+                "AllocatedBytes": 3616,
+                "ManagedBytes": 309768,
+                "RssBytes": 86917120,
+                "FileBytes": 48385792,
+                "Operations": 1000000,
+                "MinMilliseconds": 3484.1318,
+                "MaxMilliseconds": 3889.6482
+              }
+            },
+            "range20_after_ingest": {
+              "before": {
+                "Milliseconds": 1519.5917,
+                "CpuMilliseconds": 1171.875,
+                "AllocatedBytes": 453140608,
+                "ManagedBytes": 330432536,
+                "RssBytes": 377630720,
+                "FileBytes": 111284704,
+                "Operations": 30,
+                "MinMilliseconds": 1506.9507,
+                "MaxMilliseconds": 1526.9116
+              },
+              "after": {
+                "Milliseconds": 36.8604,
+                "CpuMilliseconds": 46.875,
+                "AllocatedBytes": 8411680,
+                "ManagedBytes": 92638912,
+                "RssBytes": 129736704,
+                "FileBytes": 79020512,
+                "Operations": 30,
+                "MinMilliseconds": 36.0342,
+                "MaxMilliseconds": 37.8244
+              },
+              "sqlite": {
+                "Milliseconds": 1.2846,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 87856,
+                "ManagedBytes": 374536,
+                "RssBytes": 87068672,
+                "FileBytes": 48385792,
+                "Operations": 30,
+                "MinMilliseconds": 1.2727,
+                "MaxMilliseconds": 1.3101
+              }
+            },
+            "checkpoint": {
+              "before": {
+                "Milliseconds": 1368.7327,
+                "CpuMilliseconds": 234.375,
+                "AllocatedBytes": 140078160,
+                "ManagedBytes": 344089048,
+                "RssBytes": 424398848,
+                "FileBytes": 143548896,
+                "Operations": 1,
+                "MinMilliseconds": 1276.9162,
+                "MaxMilliseconds": 1501.7136
+              },
+              "after": {
+                "Milliseconds": 1292.3909,
+                "CpuMilliseconds": 140.625,
+                "AllocatedBytes": 90248,
+                "ManagedBytes": 92579832,
+                "RssBytes": 130842624,
+                "FileBytes": 111284704,
+                "Operations": 1,
+                "MinMilliseconds": 1291.0908,
+                "MaxMilliseconds": 1509.6607
+              },
+              "sqlite": {
+                "Milliseconds": 174.2157,
+                "CpuMilliseconds": 15.625,
+                "AllocatedBytes": 1192,
+                "ManagedBytes": 288080,
+                "RssBytes": 87117824,
+                "FileBytes": 46690304,
+                "Operations": 1,
+                "MinMilliseconds": 159.2007,
+                "MaxMilliseconds": 201.7464
+              }
+            },
+            "range20_after_checkpoint": {
+              "before": {
+                "Milliseconds": 0.2608,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 67552,
+                "ManagedBytes": 204081616,
+                "RssBytes": 411881472,
+                "FileBytes": 143548896,
+                "Operations": 30,
+                "MinMilliseconds": 0.2511,
+                "MaxMilliseconds": 0.2609
+              },
+              "after": {
+                "Milliseconds": 5.0236,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 377544,
+                "ManagedBytes": 1121096,
+                "RssBytes": 108408832,
+                "FileBytes": 111284704,
+                "Operations": 30,
+                "MinMilliseconds": 4.9254,
+                "MaxMilliseconds": 5.0968
+              },
+              "sqlite": {
+                "Milliseconds": 0.5094,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 87352,
+                "ManagedBytes": 370272,
+                "RssBytes": 86716416,
+                "FileBytes": 46690304,
+                "Operations": 30,
+                "MinMilliseconds": 0.495,
+                "MaxMilliseconds": 0.5195
+              }
+            },
+            "range20_hot": {
+              "before": {
+                "Milliseconds": 184.6642,
+                "CpuMilliseconds": 171.875,
+                "AllocatedBytes": 104102864,
+                "ManagedBytes": 239476192,
+                "RssBytes": 323575808,
+                "FileBytes": 143548896,
+                "Operations": 10000,
+                "MinMilliseconds": 182.0969,
+                "MaxMilliseconds": 184.9354
+              },
+              "after": {
+                "Milliseconds": 156.6452,
+                "CpuMilliseconds": 156.25,
+                "AllocatedBytes": 92263280,
+                "ManagedBytes": 77513632,
+                "RssBytes": 131682304,
+                "FileBytes": 111284704,
+                "Operations": 10000,
+                "MinMilliseconds": 155.7919,
+                "MaxMilliseconds": 162.1639
+              },
+              "sqlite": {
+                "Milliseconds": 70.1455,
+                "CpuMilliseconds": 62.5,
+                "AllocatedBytes": 19761416,
+                "ManagedBytes": 1238080,
+                "RssBytes": 94707712,
+                "FileBytes": 46690304,
+                "Operations": 10000,
+                "MinMilliseconds": 69.3307,
+                "MaxMilliseconds": 71.8972
+              }
+            },
+            "update_range_10000": {
+              "before": {
+                "Milliseconds": 1233.2214,
+                "CpuMilliseconds": 1250,
+                "AllocatedBytes": 503344744,
+                "ManagedBytes": 487816936,
+                "RssBytes": 594653184,
+                "FileBytes": 144338916,
+                "Operations": 10000,
+                "MinMilliseconds": 1229.1632,
+                "MaxMilliseconds": 1233.5159
+              },
+              "after": {
+                "Milliseconds": 30.9507,
+                "CpuMilliseconds": 31.25,
+                "AllocatedBytes": 11951920,
+                "ManagedBytes": 62773936,
+                "RssBytes": 131813376,
+                "FileBytes": 112074724,
+                "Operations": 10000,
+                "MinMilliseconds": 25.3161,
+                "MaxMilliseconds": 31.3269
+              },
+              "sqlite": {
+                "Milliseconds": 29.4833,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 1192,
+                "ManagedBytes": 295720,
+                "RssBytes": 94720000,
+                "FileBytes": 47151776,
+                "Operations": 10000,
+                "MinMilliseconds": 20.261,
+                "MaxMilliseconds": 54.7555
+              }
+            },
+            "delete_range_10000": {
+              "before": {
+                "Milliseconds": 941.6727,
+                "CpuMilliseconds": 953.125,
+                "AllocatedBytes": 470873360,
+                "ManagedBytes": 452580520,
+                "RssBytes": 566525952,
+                "FileBytes": 144578936,
+                "Operations": 10000,
+                "MinMilliseconds": 938.4385,
+                "MaxMilliseconds": 941.8072
+              },
+              "after": {
+                "Milliseconds": 13.4367,
+                "CpuMilliseconds": 15.625,
+                "AllocatedBytes": 9455752,
+                "ManagedBytes": 65948648,
+                "RssBytes": 132247552,
+                "FileBytes": 112314744,
+                "Operations": 10000,
+                "MinMilliseconds": 13.3929,
+                "MaxMilliseconds": 14.5053
+              },
+              "sqlite": {
+                "Milliseconds": 2.6419,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 1192,
+                "ManagedBytes": 295904,
+                "RssBytes": 94732288,
+                "FileBytes": 47633816,
+                "Operations": 10000,
+                "MinMilliseconds": 2.6059,
+                "MaxMilliseconds": 2.6714
+              }
+            },
+            "compact": {
+              "before": {
+                "Milliseconds": 1166.6239,
+                "CpuMilliseconds": 250,
+                "AllocatedBytes": 193088704,
+                "ManagedBytes": 405142808,
+                "RssBytes": 582488064,
+                "FileBytes": 142740376,
+                "Operations": 1,
+                "MinMilliseconds": 1095.9028,
+                "MaxMilliseconds": 1179.4705
+              },
+              "after": {
+                "Milliseconds": 1850.6326,
+                "CpuMilliseconds": 593.75,
+                "AllocatedBytes": 218368384,
+                "ManagedBytes": 158128912,
+                "RssBytes": 230772736,
+                "FileBytes": 110152600,
+                "Operations": 1,
+                "MinMilliseconds": 1784.0207,
+                "MaxMilliseconds": 2190.1439
+              },
+              "sqlite": {
+                "Milliseconds": 1454.0418,
+                "CpuMilliseconds": 296.875,
+                "AllocatedBytes": 1192,
+                "ManagedBytes": 291856,
+                "RssBytes": 95563776,
+                "FileBytes": 46284800,
+                "Operations": 1,
+                "MinMilliseconds": 1321.6869,
+                "MaxMilliseconds": 1487.5735
+              }
+            },
+            "close": {
+              "before": {
+                "Milliseconds": 539.7705,
+                "CpuMilliseconds": 140.625,
+                "AllocatedBytes": 189023664,
+                "ManagedBytes": 332647528,
+                "RssBytes": 434077696,
+                "FileBytes": 142416792,
+                "Operations": 1,
+                "MinMilliseconds": 512.9251,
+                "MaxMilliseconds": 580.1687
+              },
+              "after": {
+                "Milliseconds": 7.4885,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 43712,
+                "ManagedBytes": 805000,
+                "RssBytes": 90599424,
+                "FileBytes": 110152600,
+                "Operations": 1,
+                "MinMilliseconds": 7.2044,
+                "MaxMilliseconds": 7.6347
+              },
+              "sqlite": {
+                "Milliseconds": 6.9984,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 1352,
+                "ManagedBytes": 292000,
+                "RssBytes": 38043648,
+                "FileBytes": 46186496,
+                "Operations": 1,
+                "MinMilliseconds": 6.9249,
+                "MaxMilliseconds": 7.8251
+              }
+            },
+            "reopen_and_first_range": {
+              "before": {
+                "Milliseconds": 1132.6326,
+                "CpuMilliseconds": 687.5,
+                "AllocatedBytes": 337272840,
+                "ManagedBytes": 306126176,
+                "RssBytes": 395886592,
+                "FileBytes": 142093208,
+                "Operations": 1,
+                "MinMilliseconds": 1100.2114,
+                "MaxMilliseconds": 1133.2802
+              },
+              "after": {
+                "Milliseconds": 1.1223,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 127400,
+                "ManagedBytes": 897072,
+                "RssBytes": 90619904,
+                "FileBytes": 110152600,
+                "Operations": 1,
+                "MinMilliseconds": 1.0604,
+                "MaxMilliseconds": 1.1232
+              },
+              "sqlite": {
+                "Milliseconds": 1.1926,
+                "CpuMilliseconds": 0,
+                "AllocatedBytes": 3976,
+                "ManagedBytes": 292208,
+                "RssBytes": 36188160,
+                "FileBytes": 46219264,
+                "Operations": 1,
+                "MinMilliseconds": 1.1191,
+                "MaxMilliseconds": 1.3277
+              }
+            },
+            "point_10000": {
+              "before": {
+                "Milliseconds": 10.8936,
+                "CpuMilliseconds": 15.625,
+                "AllocatedBytes": 3190696,
+                "ManagedBytes": 266840992,
+                "RssBytes": 363245568,
+                "FileBytes": 142093208,
+                "Operations": 10000,
+                "MinMilliseconds": 10.8368,
+                "MaxMilliseconds": 11.0182
+              },
+              "after": {
+                "Milliseconds": 11.4176,
+                "CpuMilliseconds": 15.625,
+                "AllocatedBytes": 3117416,
+                "ManagedBytes": 4009264,
+                "RssBytes": 90656768,
+                "FileBytes": 110152600,
+                "Operations": 10000,
+                "MinMilliseconds": 11.3917,
+                "MaxMilliseconds": 12.9125
+              },
+              "sqlite": {
+                "Milliseconds": 57.818,
+                "CpuMilliseconds": 62.5,
+                "AllocatedBytes": 1121464,
+                "ManagedBytes": 1414712,
+                "RssBytes": 37683200,
+                "FileBytes": 46219264,
+                "Operations": 10000,
+                "MinMilliseconds": 56.2975,
+                "MaxMilliseconds": 59.8822
+              }
+            }
+          },
+          "Files": {
+            "before": {
+              "MainFileBytes": 78211992,
+              "TotalFileBytes": 142093208
+            },
+            "after": {
+              "MainFileBytes": 78211992,
+              "TotalFileBytes": 110152600
+            },
+            "sqlite": {
+              "MainFileBytes": 46186496,
+              "TotalFileBytes": 46186496
+            }
+          }
+        }
+      },
+      "AfterSHA256": "B4E516C14F7CD187587D37C4B9AA6E9AF7C669CC2CA66B4B02FC1F3DDD1E54C0",
+      "BeforeSHA256": "5FEBFA6BD38FC5D5E41C4AC48F79AFC3560B955657F841D4D46092623BBDCFC7",
+      "HostSHA256": "C8A72134226154448EA6035A2C734C02E8E3638EE6A1D1B4F4C9919C6D204979"
+    },
+    "Linux ARM64": {
+      "Sizes": {
+        "100000": {
+          "Metrics": {
+            "insert_batches_1000": {
+              "before": {
+                "Milliseconds": 684.5397,
+                "CpuMilliseconds": 1056.153,
+                "AllocatedBytes": 154270768,
+                "ManagedBytes": 22537088,
+                "RssBytes": 81448960,
+                "FileBytes": 7902512,
+                "Operations": 100000,
+                "MinMilliseconds": 631.5082,
+                "MaxMilliseconds": 748.8877
+              },
+              "after": {
+                "Milliseconds": 724.6645,
+                "CpuMilliseconds": 1157.6290000000001,
+                "AllocatedBytes": 148594960,
+                "ManagedBytes": 22652432,
+                "RssBytes": 84570112,
+                "FileBytes": 7902512,
+                "Operations": 100000,
+                "MinMilliseconds": 638.0202,
+                "MaxMilliseconds": 808.1135
+              },
+              "sqlite": {
+                "Milliseconds": 231.4069,
+                "CpuMilliseconds": 247.81399999999996,
+                "AllocatedBytes": 2288,
+                "ManagedBytes": 77368,
+                "RssBytes": 43544576,
+                "FileBytes": 7442056,
+                "Operations": 100000,
+                "MinMilliseconds": 173.7156,
+                "MaxMilliseconds": 232.173
+              }
+            },
+            "range20_after_ingest": {
+              "before": {
+                "Milliseconds": 511.0171,
+                "CpuMilliseconds": 545.981,
+                "AllocatedBytes": 48454752,
+                "ManagedBytes": 49302216,
+                "RssBytes": 105054208,
+                "FileBytes": 11138352,
+                "Operations": 30,
+                "MinMilliseconds": 503.6022,
+                "MaxMilliseconds": 523.2215
+              },
+              "after": {
+                "Milliseconds": 57.527,
+                "CpuMilliseconds": 57.575999999999794,
+                "AllocatedBytes": 1225320,
+                "ManagedBytes": 10906176,
+                "RssBytes": 85348352,
+                "FileBytes": 7902512,
+                "Operations": 30,
+                "MinMilliseconds": 55.2594,
+                "MaxMilliseconds": 65.3543
+              },
+              "sqlite": {
+                "Milliseconds": 3.6072,
+                "CpuMilliseconds": 3.649000000000001,
+                "AllocatedBytes": 87064,
+                "ManagedBytes": 185792,
+                "RssBytes": 45391872,
+                "FileBytes": 7442056,
+                "Operations": 30,
+                "MinMilliseconds": 2.6712,
+                "MaxMilliseconds": 4.1025
+              }
+            },
+            "checkpoint": {
+              "before": {
+                "Milliseconds": 144.6732,
+                "CpuMilliseconds": 102.02499999999986,
+                "AllocatedBytes": 14077344,
+                "ManagedBytes": 38565616,
+                "RssBytes": 107741184,
+                "FileBytes": 14374192,
+                "Operations": 1,
+                "MinMilliseconds": 137.7645,
+                "MaxMilliseconds": 167.7727
+              },
+              "after": {
+                "Milliseconds": 193.8166,
+                "CpuMilliseconds": 113.86400000000003,
+                "AllocatedBytes": 86192,
+                "ManagedBytes": 10845840,
+                "RssBytes": 85889024,
+                "FileBytes": 11138352,
+                "Operations": 1,
+                "MinMilliseconds": 115.646,
+                "MaxMilliseconds": 197.5751
+              },
+              "sqlite": {
+                "Milliseconds": 20.8409,
+                "CpuMilliseconds": 7.4570000000000505,
+                "AllocatedBytes": 304,
+                "ManagedBytes": 95920,
+                "RssBytes": 45510656,
+                "FileBytes": 4694016,
+                "Operations": 1,
+                "MinMilliseconds": 20.2401,
+                "MaxMilliseconds": 21.025
+              }
+            },
+            "range20_after_checkpoint": {
+              "before": {
+                "Milliseconds": 1.1431,
+                "CpuMilliseconds": 1.1820000000000164,
+                "AllocatedBytes": 66664,
+                "ManagedBytes": 24558680,
+                "RssBytes": 99868672,
+                "FileBytes": 14374192,
+                "Operations": 30,
+                "MinMilliseconds": 1.1037,
+                "MaxMilliseconds": 1.2303
+              },
+              "after": {
+                "Milliseconds": 9.7805,
+                "CpuMilliseconds": 9.840999999999894,
+                "AllocatedBytes": 396856,
+                "ManagedBytes": 938984,
+                "RssBytes": 65728512,
+                "FileBytes": 11138352,
+                "Operations": 30,
+                "MinMilliseconds": 8.8827,
+                "MaxMilliseconds": 10.3878
+              },
+              "sqlite": {
+                "Milliseconds": 0.9511,
+                "CpuMilliseconds": 0.9669999999999845,
+                "AllocatedBytes": 86464,
+                "ManagedBytes": 178112,
+                "RssBytes": 45531136,
+                "FileBytes": 4694016,
+                "Operations": 30,
+                "MinMilliseconds": 0.7782,
+                "MaxMilliseconds": 1.5716
+              }
+            },
+            "range20_hot": {
+              "before": {
+                "Milliseconds": 469.324,
+                "CpuMilliseconds": 715.8100000000004,
+                "AllocatedBytes": 60435632,
+                "ManagedBytes": 50108528,
+                "RssBytes": 117862400,
+                "FileBytes": 14374192,
+                "Operations": 10000,
+                "MinMilliseconds": 459.1048,
+                "MaxMilliseconds": 503.3555
+              },
+              "after": {
+                "Milliseconds": 421.1412,
+                "CpuMilliseconds": 590.8739999999998,
+                "AllocatedBytes": 61522280,
+                "ManagedBytes": 33812264,
+                "RssBytes": 94556160,
+                "FileBytes": 11138352,
+                "Operations": 10000,
+                "MinMilliseconds": 346.8302,
+                "MaxMilliseconds": 459.0501
+              },
+              "sqlite": {
+                "Milliseconds": 104.0693,
+                "CpuMilliseconds": 104.19100000000003,
+                "AllocatedBytes": 19760304,
+                "ManagedBytes": 1061416,
+                "RssBytes": 49516544,
+                "FileBytes": 4694016,
+                "Operations": 10000,
+                "MinMilliseconds": 103.5037,
+                "MaxMilliseconds": 105.1964
+              }
+            },
+            "update_range_10000": {
+              "before": {
+                "Milliseconds": 465.0446,
+                "CpuMilliseconds": 520.605,
+                "AllocatedBytes": 51448064,
+                "ManagedBytes": 49290552,
+                "RssBytes": 134877184,
+                "FileBytes": 15164212,
+                "Operations": 10000,
+                "MinMilliseconds": 437.3981,
+                "MaxMilliseconds": 465.4765
+              },
+              "after": {
+                "Milliseconds": 86.7089,
+                "CpuMilliseconds": 88.77500000000009,
+                "AllocatedBytes": 10708008,
+                "ManagedBytes": 13282808,
+                "RssBytes": 79810560,
+                "FileBytes": 11928372,
+                "Operations": 10000,
+                "MinMilliseconds": 73.1249,
+                "MaxMilliseconds": 87.5088
+              },
+              "sqlite": {
+                "Milliseconds": 5.7987,
+                "CpuMilliseconds": 4.653999999999996,
+                "AllocatedBytes": 304,
+                "ManagedBytes": 100392,
+                "RssBytes": 49512448,
+                "FileBytes": 5155488,
+                "Operations": 10000,
+                "MinMilliseconds": 5.7018,
+                "MaxMilliseconds": 8.7625
+              }
+            },
+            "delete_range_10000": {
+              "before": {
+                "Milliseconds": 283.3103,
+                "CpuMilliseconds": 345.0549999999994,
+                "AllocatedBytes": 39629528,
+                "ManagedBytes": 61233400,
+                "RssBytes": 122671104,
+                "FileBytes": 15404232,
+                "Operations": 10000,
+                "MinMilliseconds": 266.8693,
+                "MaxMilliseconds": 292.4876
+              },
+              "after": {
+                "Milliseconds": 34.0937,
+                "CpuMilliseconds": 34.18000000000029,
+                "AllocatedBytes": 9340448,
+                "ManagedBytes": 20557480,
+                "RssBytes": 82849792,
+                "FileBytes": 12168392,
+                "Operations": 10000,
+                "MinMilliseconds": 33.5001,
+                "MaxMilliseconds": 36.9033
+              },
+              "sqlite": {
+                "Milliseconds": 4.0451,
+                "CpuMilliseconds": 4.06899999999996,
+                "AllocatedBytes": 304,
+                "ManagedBytes": 96384,
+                "RssBytes": 49512448,
+                "FileBytes": 5637528,
+                "Operations": 10000,
+                "MinMilliseconds": 4.001,
+                "MaxMilliseconds": 4.2781
+              }
+            },
+            "compact": {
+              "before": {
+                "Milliseconds": 152.1186,
+                "CpuMilliseconds": 135.79600000000028,
+                "AllocatedBytes": 17824736,
+                "ManagedBytes": 44084032,
+                "RssBytes": 119791616,
+                "FileBytes": 13582312,
+                "Operations": 1,
+                "MinMilliseconds": 147.0481,
+                "MaxMilliseconds": 205.1298
+              },
+              "after": {
+                "Milliseconds": 250.7413,
+                "CpuMilliseconds": 235.4949999999999,
+                "AllocatedBytes": 19054664,
+                "ManagedBytes": 26375368,
+                "RssBytes": 95232000,
+                "FileBytes": 10022888,
+                "Operations": 1,
+                "MinMilliseconds": 243.2458,
+                "MaxMilliseconds": 269.4455
+              },
+              "sqlite": {
+                "Milliseconds": 73.6636,
+                "CpuMilliseconds": 41.250999999999976,
+                "AllocatedBytes": 304,
+                "ManagedBytes": 96528,
+                "RssBytes": 49643520,
+                "FileBytes": 4227072,
+                "Operations": 1,
+                "MinMilliseconds": 72.566,
+                "MaxMilliseconds": 97.3372
+              }
+            },
+            "close": {
+              "before": {
+                "Milliseconds": 132.2146,
+                "CpuMilliseconds": 124.95399999999972,
+                "AllocatedBytes": 18975488,
+                "ManagedBytes": 36638800,
+                "RssBytes": 95965184,
+                "FileBytes": 13258728,
+                "Operations": 1,
+                "MinMilliseconds": 60.5812,
+                "MaxMilliseconds": 205.9302
+              },
+              "after": {
+                "Milliseconds": 27.4264,
+                "CpuMilliseconds": 33.02099999999973,
+                "AllocatedBytes": 8648,
+                "ManagedBytes": 539520,
+                "RssBytes": 66256896,
+                "FileBytes": 10022888,
+                "Operations": 1,
+                "MinMilliseconds": 23.3229,
+                "MaxMilliseconds": 32.7035
+              },
+              "sqlite": {
+                "Milliseconds": 2.1858,
+                "CpuMilliseconds": 2.2200000000000273,
+                "AllocatedBytes": 496,
+                "ManagedBytes": 96672,
+                "RssBytes": 48214016,
+                "FileBytes": 4194304,
+                "Operations": 1,
+                "MinMilliseconds": 1.9933,
+                "MaxMilliseconds": 2.2244
+              }
+            },
+            "reopen_and_first_range": {
+              "before": {
+                "Milliseconds": 213.2282,
+                "CpuMilliseconds": 205.35500000000047,
+                "AllocatedBytes": 31235360,
+                "ManagedBytes": 44923776,
+                "RssBytes": 108371968,
+                "FileBytes": 12935144,
+                "Operations": 1,
+                "MinMilliseconds": 213.1339,
+                "MaxMilliseconds": 215.6661
+              },
+              "after": {
+                "Milliseconds": 5.1287,
+                "CpuMilliseconds": 5.193000000000211,
+                "AllocatedBytes": 125984,
+                "ManagedBytes": 669912,
+                "RssBytes": 66334720,
+                "FileBytes": 10022888,
+                "Operations": 1,
+                "MinMilliseconds": 2.9171,
+                "MaxMilliseconds": 7.5695
+              },
+              "sqlite": {
+                "Milliseconds": 0.7338,
+                "CpuMilliseconds": 0.7579999999998108,
+                "AllocatedBytes": 3088,
+                "ManagedBytes": 96880,
+                "RssBytes": 48214016,
+                "FileBytes": 4227072,
+                "Operations": 1,
+                "MinMilliseconds": 0.7239,
+                "MaxMilliseconds": 0.7458
+              }
+            },
+            "point_10000": {
+              "before": {
+                "Milliseconds": 23.7791,
+                "CpuMilliseconds": 23.824000000000524,
+                "AllocatedBytes": 3078776,
+                "ManagedBytes": 34946720,
+                "RssBytes": 107614208,
+                "FileBytes": 12935144,
+                "Operations": 10000,
+                "MinMilliseconds": 23.6286,
+                "MaxMilliseconds": 28.0398
+              },
+              "after": {
+                "Milliseconds": 44.357,
+                "CpuMilliseconds": 44.41300000000001,
+                "AllocatedBytes": 3116528,
+                "ManagedBytes": 3774544,
+                "RssBytes": 69476352,
+                "FileBytes": 10022888,
+                "Operations": 10000,
+                "MinMilliseconds": 24.6227,
+                "MaxMilliseconds": 58.7082
+              },
+              "sqlite": {
+                "Milliseconds": 41.5694,
+                "CpuMilliseconds": 41.40499999999997,
+                "AllocatedBytes": 1120608,
+                "ManagedBytes": 1219384,
+                "RssBytes": 50585600,
+                "FileBytes": 4227072,
+                "Operations": 10000,
+                "MinMilliseconds": 41.224,
+                "MaxMilliseconds": 41.983
+              }
+            }
+          },
+          "Files": {
+            "before": {
+              "MainFileBytes": 7110632,
+              "TotalFileBytes": 12935144
+            },
+            "after": {
+              "MainFileBytes": 7110632,
+              "TotalFileBytes": 10022888
+            },
+            "sqlite": {
+              "MainFileBytes": 4194304,
+              "TotalFileBytes": 4194304
+            }
+          }
+        },
+        "1000000": {
+          "Metrics": {
+            "insert_batches_1000": {
+              "before": {
+                "Milliseconds": 3088.9161,
+                "CpuMilliseconds": 3684.755,
+                "AllocatedBytes": 1480393208,
+                "ManagedBytes": 88879816,
+                "RssBytes": 135888896,
+                "FileBytes": 79020512,
+                "Operations": 1000000,
+                "MinMilliseconds": 3024.0537,
+                "MaxMilliseconds": 3124.9594
+              },
+              "after": {
+                "Milliseconds": 2694.3657,
+                "CpuMilliseconds": 3319.8219999999997,
+                "AllocatedBytes": 1373353800,
+                "ManagedBytes": 96795800,
+                "RssBytes": 138121216,
+                "FileBytes": 79020512,
+                "Operations": 1000000,
+                "MinMilliseconds": 2690.7678,
+                "MaxMilliseconds": 2836.1929
+              },
+              "sqlite": {
+                "Milliseconds": 2009.5923,
+                "CpuMilliseconds": 1514.7089999999998,
+                "AllocatedBytes": 2288,
+                "ManagedBytes": 77368,
+                "RssBytes": 88764416,
+                "FileBytes": 48385792,
+                "Operations": 1000000,
+                "MinMilliseconds": 1876.9005,
+                "MaxMilliseconds": 2174.4363
+              }
+            },
+            "range20_after_ingest": {
+              "before": {
+                "Milliseconds": 2636.2859,
+                "CpuMilliseconds": 2842.5159999999996,
+                "AllocatedBytes": 467420208,
+                "ManagedBytes": 313917088,
+                "RssBytes": 381865984,
+                "FileBytes": 111284704,
+                "Operations": 30,
+                "MinMilliseconds": 2569.3541,
+                "MaxMilliseconds": 2757.6276
+              },
+              "after": {
+                "Milliseconds": 69.7994,
+                "CpuMilliseconds": 69.85799999999972,
+                "AllocatedBytes": 8425728,
+                "ManagedBytes": 92444000,
+                "RssBytes": 140673024,
+                "FileBytes": 79020512,
+                "Operations": 30,
+                "MinMilliseconds": 67.538,
+                "MaxMilliseconds": 78.2613
+              },
+              "sqlite": {
+                "Milliseconds": 2.6324,
+                "CpuMilliseconds": 2.6709999999998217,
+                "AllocatedBytes": 87064,
+                "ManagedBytes": 185792,
+                "RssBytes": 90611712,
+                "FileBytes": 48385792,
+                "Operations": 30,
+                "MinMilliseconds": 2.612,
+                "MaxMilliseconds": 2.6549
+              }
+            },
+            "checkpoint": {
+              "before": {
+                "Milliseconds": 763.3563,
+                "CpuMilliseconds": 494.98299999999927,
+                "AllocatedBytes": 140077344,
+                "ManagedBytes": 343841416,
+                "RssBytes": 434073600,
+                "FileBytes": 143548896,
+                "Operations": 1,
+                "MinMilliseconds": 756.1493,
+                "MaxMilliseconds": 790.7133
+              },
+              "after": {
+                "Milliseconds": 815.2615,
+                "CpuMilliseconds": 553.7370000000005,
+                "AllocatedBytes": 86160,
+                "ManagedBytes": 92375440,
+                "RssBytes": 139890688,
+                "FileBytes": 111284704,
+                "Operations": 1,
+                "MinMilliseconds": 801.1055,
+                "MaxMilliseconds": 831.7786
+              },
+              "sqlite": {
+                "Milliseconds": 32.1419,
+                "CpuMilliseconds": 9.383000000000038,
+                "AllocatedBytes": 304,
+                "ManagedBytes": 95920,
+                "RssBytes": 90726400,
+                "FileBytes": 46690304,
+                "Operations": 1,
+                "MinMilliseconds": 32.0582,
+                "MaxMilliseconds": 60.7805
+              }
+            },
+            "range20_after_checkpoint": {
+              "before": {
+                "Milliseconds": 2.2733,
+                "CpuMilliseconds": 2.3909999999996217,
+                "AllocatedBytes": 66664,
+                "ManagedBytes": 203834480,
+                "RssBytes": 424144896,
+                "FileBytes": 143548896,
+                "Operations": 30,
+                "MinMilliseconds": 0.8187,
+                "MaxMilliseconds": 2.8739
+              },
+              "after": {
+                "Milliseconds": 19.7506,
+                "CpuMilliseconds": 19.824999999999818,
+                "AllocatedBytes": 348344,
+                "ManagedBytes": 890104,
+                "RssBytes": 118263808,
+                "FileBytes": 111284704,
+                "Operations": 30,
+                "MinMilliseconds": 9.2805,
+                "MaxMilliseconds": 24.3016
+              },
+              "sqlite": {
+                "Milliseconds": 1.0556,
+                "CpuMilliseconds": 0.9939999999999145,
+                "AllocatedBytes": 86464,
+                "ManagedBytes": 178112,
+                "RssBytes": 90746880,
+                "FileBytes": 46690304,
+                "Operations": 30,
+                "MinMilliseconds": 0.952,
+                "MaxMilliseconds": 1.134
+              }
+            },
+            "range20_hot": {
+              "before": {
+                "Milliseconds": 473.3302,
+                "CpuMilliseconds": 737.1450000000004,
+                "AllocatedBytes": 97208896,
+                "ManagedBytes": 231668048,
+                "RssBytes": 316055552,
+                "FileBytes": 143548896,
+                "Operations": 10000,
+                "MinMilliseconds": 391.202,
+                "MaxMilliseconds": 532.0875
+              },
+              "after": {
+                "Milliseconds": 468.3415,
+                "CpuMilliseconds": 639.1320000000005,
+                "AllocatedBytes": 110744160,
+                "ManagedBytes": 49372776,
+                "RssBytes": 132538368,
+                "FileBytes": 111284704,
+                "Operations": 10000,
+                "MinMilliseconds": 425.7289,
+                "MaxMilliseconds": 470.8866
+              },
+              "sqlite": {
+                "Milliseconds": 120.4247,
+                "CpuMilliseconds": 120.69999999999982,
+                "AllocatedBytes": 19760304,
+                "ManagedBytes": 1061416,
+                "RssBytes": 94715904,
+                "FileBytes": 46690304,
+                "Operations": 10000,
+                "MinMilliseconds": 116.2516,
+                "MaxMilliseconds": 122.1677
+              }
+            },
+            "update_range_10000": {
+              "before": {
+                "Milliseconds": 2369.9561,
+                "CpuMilliseconds": 2715.729000000001,
+                "AllocatedBytes": 543423936,
+                "ManagedBytes": 495540728,
+                "RssBytes": 611844096,
+                "FileBytes": 144338916,
+                "Operations": 10000,
+                "MinMilliseconds": 2272.548,
+                "MaxMilliseconds": 2433
+              },
+              "after": {
+                "Milliseconds": 67.4313,
+                "CpuMilliseconds": 70.86499999999978,
+                "AllocatedBytes": 11796408,
+                "ManagedBytes": 52753944,
+                "RssBytes": 131276800,
+                "FileBytes": 112074724,
+                "Operations": 10000,
+                "MinMilliseconds": 58.8802,
+                "MaxMilliseconds": 79.435
+              },
+              "sqlite": {
+                "Milliseconds": 5.9512,
+                "CpuMilliseconds": 4.954000000000178,
+                "AllocatedBytes": 304,
+                "ManagedBytes": 100392,
+                "RssBytes": 94732288,
+                "FileBytes": 47151776,
+                "Operations": 10000,
+                "MinMilliseconds": 5.7537,
+                "MaxMilliseconds": 6.2904
+              }
+            },
+            "delete_range_10000": {
+              "before": {
+                "Milliseconds": 1963.0632,
+                "CpuMilliseconds": 2181.0930000000008,
+                "AllocatedBytes": 532463928,
+                "ManagedBytes": 465518288,
+                "RssBytes": 605036544,
+                "FileBytes": 144578936,
+                "Operations": 10000,
+                "MinMilliseconds": 1893.4054,
+                "MaxMilliseconds": 1990.9428
+              },
+              "after": {
+                "Milliseconds": 32.4468,
+                "CpuMilliseconds": 32.501000000000204,
+                "AllocatedBytes": 9279392,
+                "ManagedBytes": 55919552,
+                "RssBytes": 132673536,
+                "FileBytes": 112314744,
+                "Operations": 10000,
+                "MinMilliseconds": 24.8255,
+                "MaxMilliseconds": 50.4554
+              },
+              "sqlite": {
+                "Milliseconds": 4.449,
+                "CpuMilliseconds": 4.492000000000189,
+                "AllocatedBytes": 304,
+                "ManagedBytes": 96384,
+                "RssBytes": 94732288,
+                "FileBytes": 47633816,
+                "Operations": 10000,
+                "MinMilliseconds": 4.0418,
+                "MaxMilliseconds": 4.7264
+              }
+            },
+            "compact": {
+              "before": {
+                "Milliseconds": 934.8734,
+                "CpuMilliseconds": 808.3859999999986,
+                "AllocatedBytes": 222434896,
+                "ManagedBytes": 434004448,
+                "RssBytes": 537047040,
+                "FileBytes": 142740376,
+                "Operations": 1,
+                "MinMilliseconds": 924.4356,
+                "MaxMilliseconds": 969.7508
+              },
+              "after": {
+                "Milliseconds": 2068.9974,
+                "CpuMilliseconds": 2042.6940000000004,
+                "AllocatedBytes": 242221888,
+                "ManagedBytes": 112742792,
+                "RssBytes": 254128128,
+                "FileBytes": 110152600,
+                "Operations": 1,
+                "MinMilliseconds": 1983.7492,
+                "MaxMilliseconds": 2163.5073
+              },
+              "sqlite": {
+                "Milliseconds": 819.4996,
+                "CpuMilliseconds": 637.895,
+                "AllocatedBytes": 328,
+                "ManagedBytes": 104752,
+                "RssBytes": 95617024,
+                "FileBytes": 46284800,
+                "Operations": 1,
+                "MinMilliseconds": 773.8762,
+                "MaxMilliseconds": 834.061
+              }
+            },
+            "close": {
+              "before": {
+                "Milliseconds": 412.2069,
+                "CpuMilliseconds": 399.6080000000002,
+                "AllocatedBytes": 189015776,
+                "ManagedBytes": 332411056,
+                "RssBytes": 491008000,
+                "FileBytes": 142416792,
+                "Operations": 1,
+                "MinMilliseconds": 377.1455,
+                "MaxMilliseconds": 448.7677
+              },
+              "after": {
+                "Milliseconds": 18.3072,
+                "CpuMilliseconds": 24.29699999999957,
+                "AllocatedBytes": 8648,
+                "ManagedBytes": 557960,
+                "RssBytes": 108269568,
+                "FileBytes": 110152600,
+                "Operations": 1,
+                "MinMilliseconds": 16.2906,
+                "MaxMilliseconds": 25.9273
+              },
+              "sqlite": {
+                "Milliseconds": 9.0323,
+                "CpuMilliseconds": 9.088999999999942,
+                "AllocatedBytes": 496,
+                "ManagedBytes": 96696,
+                "RssBytes": 94130176,
+                "FileBytes": 46186496,
+                "Operations": 1,
+                "MinMilliseconds": 8.731,
+                "MaxMilliseconds": 9.4829
+              }
+            },
+            "reopen_and_first_range": {
+              "before": {
+                "Milliseconds": 1873.0249,
+                "CpuMilliseconds": 1921.3289999999997,
+                "AllocatedBytes": 342556840,
+                "ManagedBytes": 336340784,
+                "RssBytes": 399753216,
+                "FileBytes": 142093208,
+                "Operations": 1,
+                "MinMilliseconds": 1817.5613,
+                "MaxMilliseconds": 1886.2906
+              },
+              "after": {
+                "Milliseconds": 2.7339,
+                "CpuMilliseconds": 2.778999999998632,
+                "AllocatedBytes": 125984,
+                "ManagedBytes": 688376,
+                "RssBytes": 108343296,
+                "FileBytes": 110152600,
+                "Operations": 1,
+                "MinMilliseconds": 2.71,
+                "MaxMilliseconds": 4.1708
+              },
+              "sqlite": {
+                "Milliseconds": 1.078,
+                "CpuMilliseconds": 1.099999999999909,
+                "AllocatedBytes": 3088,
+                "ManagedBytes": 96904,
+                "RssBytes": 94130176,
+                "FileBytes": 46219264,
+                "Operations": 1,
+                "MinMilliseconds": 1.0284,
+                "MaxMilliseconds": 1.1174
+              }
+            },
+            "point_10000": {
+              "before": {
+                "Milliseconds": 22.4738,
+                "CpuMilliseconds": 24.833999999998923,
+                "AllocatedBytes": 3178768,
+                "ManagedBytes": 266580208,
+                "RssBytes": 394764288,
+                "FileBytes": 142093208,
+                "Operations": 10000,
+                "MinMilliseconds": 20.6865,
+                "MaxMilliseconds": 69.3585
+              },
+              "after": {
+                "Milliseconds": 30.872,
+                "CpuMilliseconds": 30.905000000000655,
+                "AllocatedBytes": 3116528,
+                "ManagedBytes": 3797112,
+                "RssBytes": 108343296,
+                "FileBytes": 110152600,
+                "Operations": 10000,
+                "MinMilliseconds": 24.8602,
+                "MaxMilliseconds": 45.0047
+              },
+              "sqlite": {
+                "Milliseconds": 69.4826,
+                "CpuMilliseconds": 69.39299999999957,
+                "AllocatedBytes": 1120608,
+                "ManagedBytes": 1219408,
+                "RssBytes": 96567296,
+                "FileBytes": 46219264,
+                "Operations": 10000,
+                "MinMilliseconds": 68.0136,
+                "MaxMilliseconds": 70.4572
+              }
+            }
+          },
+          "Files": {
+            "before": {
+              "MainFileBytes": 78211992,
+              "TotalFileBytes": 142093208
+            },
+            "after": {
+              "MainFileBytes": 78211992,
+              "TotalFileBytes": 110152600
+            },
+            "sqlite": {
+              "MainFileBytes": 46186496,
+              "TotalFileBytes": 46186496
+            }
+          }
+        }
+      },
+      "AfterSHA256": "B4E516C14F7CD187587D37C4B9AA6E9AF7C669CC2CA66B4B02FC1F3DDD1E54C0",
+      "BeforeSHA256": "5FEBFA6BD38FC5D5E41C4AC48F79AFC3560B955657F841D4D46092623BBDCFC7",
+      "HostSHA256": "C8A72134226154448EA6035A2C734C02E8E3638EE6A1D1B4F4C9919C6D204979"
+    }
+  }
+}

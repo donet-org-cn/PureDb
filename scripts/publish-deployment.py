@@ -1,5 +1,5 @@
 """Publish isolated PureDb/SQLite hosts in three deployment modes and run real AOT tests."""
-import argparse, hashlib, json, os, pathlib, platform, shutil, subprocess, sys, xml.etree.ElementTree as ET
+import argparse, hashlib, json, os, pathlib, platform, re, shutil, subprocess, sys, xml.etree.ElementTree as ET
 
 root = pathlib.Path(__file__).resolve().parents[1]
 p = argparse.ArgumentParser()
@@ -65,6 +65,7 @@ for engine, host in ([] if a.validate_only else [('PureDb', 'PureDbHost'), ('SQL
                          'AllPublishedBytes': sum(f['Bytes'] for f in files), 'Files': files})
 
 environment = os.environ.copy(); environment['SQLITE_LIBRARY'] = str(a.sqlite.resolve())
+validated_queries = 0
 for name in ['PureDb.AotTests', 'PureDb.SqlCompatibilityTests']:
     target = output / name
     print('AOT TEST', name, a.rid, flush=True)
@@ -73,11 +74,16 @@ for name in ['PureDb.AotTests', 'PureDb.SqlCompatibilityTests']:
     with (output / (name + '.run.log')).open('w', encoding='utf-8') as stream:
         subprocess.run([str(executable)], cwd=output, env=environment, stdout=stream, stderr=subprocess.STDOUT, check=True)
     content = (output / (name + '.run.log')).read_text(encoding='utf-8')
-    assert 'dynamic code=False' in content if name == 'PureDb.AotTests' else '230 extended SQL differential queries' in content
+    if name == 'PureDb.AotTests':
+        assert 'dynamic code=False' in content
+    else:
+        match = re.search(r'PASS (\d+) extended SQL differential queries', content)
+        assert match and int(match.group(1)) >= 298, content
+        validated_queries = int(match.group(1))
 
 manifest = {'RID': a.rid, 'Host': platform.platform(), 'Version': ET.parse(root/'Directory.Build.props').findtext('.//Version'), 'SDK': subprocess.check_output([a.dotnet, '--version'], text=True).strip(),
             'RuntimeVersion': '10.0.13', 'Variants': variants,
-            'AotFeatureGroups': 7, 'AotDifferentialQueries': 230, 'AotWarnings': 0, 'ValidationOnly': a.validate_only}
+            'AotFeatureGroups': 7, 'AotDifferentialQueries': validated_queries, 'AotWarnings': 0, 'ValidationOnly': a.validate_only}
 (output / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
 (output / 'PUBLISH_COMPLETE').write_text('Validated AOT binaries and separate engine deployment closures\n')
 print('DEPLOYMENT_PUBLISH_COMPLETE', flush=True)

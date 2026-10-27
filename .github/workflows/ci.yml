@@ -28,7 +28,9 @@ jobs:
       - run: dotnet format whitespace src/PureDb.SqliteCompatibility/PureDb.SqliteCompatibility.csproj --no-restore --verify-no-changes
       - run: python scripts/prepare-sqlite.py
       - run: python scripts/test.py
+      - run: python scripts/test-io-limits.py
       - run: python scripts/verify-public.py
+      - run: python scripts/verify-candidate.py
       - run: dotnet pack src/PureDb -c Release --no-build -o artifacts/packages
       - run: dotnet pack src/PureDb.SqliteCompatibility -c Release --no-build -o artifacts/packages
       - run: python scripts/verify-packages.py

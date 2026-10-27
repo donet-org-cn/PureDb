@@ -42,7 +42,7 @@ internal static class SharedReplayChecks
                 Append(truncated, frame.AsSpan(0, cut));
                 await db.PutAsync(3, 3, new byte[] { 7 });
                 Check(db.Get(1)!.Value[0] == 9 && db.Get(3)!.Value[0] == 7, "Shared truncation lost acknowledged prefix");
-                Check((db.Get(2)is not null) == (cut == frame.Length), "Shared partial frame became visible");
+                Check((db.Get(2) is not null) == (cut == frame.Length), "Shared partial frame became visible");
                 db.VerifyIntegrity();
             }
 

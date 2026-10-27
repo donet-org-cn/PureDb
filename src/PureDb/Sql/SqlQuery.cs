@@ -119,7 +119,7 @@ internal sealed partial class SqlSession
             if (column == table.Primary && snapshot.HasPersistentIndexes && !HasMutations && value is long or double && (op != "BETWEEN" || high is long or double))
             {
                 plan = "PrimaryKeyRangeSeek";
-                return PrimaryRangeRows(table, op, value, high, ordered && order.Count > 0 && order[0].Descending);
+                return PrimaryRangeRows(table, op, value, high, ordered && order.Count > 0 && order[0].Descending, where, alias, parameters);
             }
 
             return Data(table).Seek(column, op, value, high, ordered && order.Count > 0 && order[0].Descending);
@@ -143,8 +143,11 @@ internal sealed partial class SqlSession
     /// <param name = "value">待处理的标量或参数实例，受当前接口的类型约束。</param>
     /// <param name = "high">待计算或转换的 SQL 标量；SQL NULL 使用 null。</param>
     /// <param name = "descending">是否按降序枚举结果。</param>
+    /// <param name="where">完整谓词，用于收紧同一主键上的其他简单范围条件。</param>
+    /// <param name="alias">当前数据源别名。</param>
+    /// <param name="parameters">当前调用的参数。</param>
     /// <returns>计算或查找得到的结果；未找到或 SQL NULL 情况按方法说明返回 null。</returns>
-    private IEnumerable<object?[]> PrimaryRangeRows(SqlTable table, string op, object value, object? high, bool descending)
+    private IEnumerable<object?[]> PrimaryRangeRows(SqlTable table, string op, object value, object? high, bool descending, Expr? where, string alias, IReadOnlyDictionary<string, object?> parameters)
     {
         double bound = value is long n ? n : (double)value;
         double min = op switch
@@ -162,12 +165,56 @@ internal sealed partial class SqlSession
         };
         min = Math.Max(0, min);
         max = Math.Min((1L << 40) - 1, max);
+        if (where?.Op == "AND")
+        {
+            // UPDATE/DELETE 常见的半开区间必须同时使用两个端点。
+            // 只读取常量或参数，不提前执行用户函数，也不跳过最终完整谓词校验。
+            bool Simple(Expr e) => e.Op is "literal" or "parameter" || e.Op == "negate" && e.Args[0].Op == "literal";
+            var binding = new SqlBinding();
+            foreach (var term in Conjuncts(where))
+            {
+                if (term.Op is not ("=" or "<" or ">" or "<=" or ">=" or "BETWEEN"))
+                    continue;
+                var column = term.Args[0];
+                var expression = term.Args[1];
+                string comparison = term.Op;
+                if (column.Op != "column" && comparison != "BETWEEN")
+                {
+                    (column, expression) = (expression, column);
+                    comparison = comparison switch
+                    {
+                        "<" => ">",
+                        ">" => "<",
+                        "<=" => ">=",
+                        ">=" => "<=",
+                        _ => comparison
+                    };
+                }
+                if (!string.Equals(OwnColumn(column, alias), table.Columns[table.Primary].Name, StringComparison.OrdinalIgnoreCase) || !Simple(expression) || comparison == "BETWEEN" && !Simple(term.Args[2]))
+                    continue;
+                object? endpoint = binding.Bind(expression, parameters)([]);
+                object? upper = comparison == "BETWEEN" ? binding.Bind(term.Args[2], parameters)([]) : null;
+                if (endpoint is null || comparison == "BETWEEN" && upper is null)
+                    yield break;
+                if (endpoint is not (long or double) || comparison == "BETWEEN" && upper is not (long or double))
+                    continue;
+                double edge = endpoint is long number ? number : (double)endpoint;
+                if (comparison is "=" or ">=" or "BETWEEN")
+                    min = Math.Max(min, Math.Ceiling(edge));
+                if (comparison == ">")
+                    min = Math.Max(min, Math.Floor(edge) + 1);
+                if (comparison is "=" or "<=")
+                    max = Math.Min(max, Math.Floor(edge));
+                if (comparison == "<")
+                    max = Math.Min(max, Math.Ceiling(edge) - 1);
+                if (comparison == "BETWEEN")
+                    max = Math.Min(max, Math.Floor(upper is long upperInteger ? upperInteger : (double)upper!));
+            }
+        }
         if (min > max)
             yield break;
         long prefix = (long)table.Id << 40;
-        var entries = snapshot.TableEntriesRange(table.Id, prefix + (long)min, prefix + (long)max);
-        if (descending)
-            entries = entries.Reverse();
+        var entries = snapshot.TableEntriesRange(table.Id, prefix + (long)min, prefix + (long)max, descending);
         foreach (var entry in entries)
             yield return SqlCodec.Decode(snapshot.IndexValue(entry), table.Columns.Count);
     }
@@ -261,7 +308,7 @@ internal sealed partial class SqlSession
                 {
                     long sum = 0;
                     foreach (long value in values.Cast<long>())
-                        sum = checked(sum + value);
+                        sum = SqlNumeric.AddSum(sum, value);
                     return sum;
                 }
 

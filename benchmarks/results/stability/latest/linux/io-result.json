@@ -1,0 +1,9 @@
+{
+  "Scope": "Real Linux EFBIG during a partially written transaction, not physical power loss or actual ENOSPC",
+  "LimitBytes": 8388608,
+  "PartialFileBytes": 8388608,
+  "AcknowledgedPrefixPreserved": true,
+  "PartialTransactionRejected": true,
+  "FaultedWriterRejectedNextCommit": true,
+  "ReopenIntegrityAndNextCommit": true
+}

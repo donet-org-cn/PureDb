@@ -66,10 +66,11 @@ internal static class SqliteSchema
             },
             "negate" => "(-" + E(0) + ")",
             "NOT" => "(NOT " + E(0) + ")",
-            "IS NULL" or "IS NOT NULL" => "(" + E(0) + " " + expression.Op + ")",
+            "~" => "(~" + E(0) + ")",
+            "IS NULL" or "IS NOT NULL" or "IS TRUE" or "IS FALSE" or "IS NOT TRUE" or "IS NOT FALSE" => "(" + E(0) + " " + expression.Op + ")",
             "BETWEEN" => "(" + E(0) + " BETWEEN " + E(1) + " AND " + E(2) + ")",
             "IN" => "(" + E(0) + " IN (" + string.Join(',', args.Skip(1).Select(Expression)) + "))",
-            "+" or "-" or "*" or "/" or "%" or "||" or "=" or "!=" or "<>" or "<" or ">" or "<=" or ">=" or "AND" or "OR" or "LIKE" => "(" + E(0) + " " + expression.Op + " " + E(1) + ")",
+            "+" or "-" or "*" or "/" or "%" or "&" or "|" or "<<" or ">>" or "||" or "IS" or "IS NOT" or "=" or "!=" or "<>" or "<" or ">" or "<=" or ">=" or "AND" or "OR" or "LIKE" => "(" + E(0) + " " + expression.Op + " " + E(1) + ")",
             "parameter" or "star" or "composite" or "case" or "casebase" or "raise" => throw new NotSupportedException("Unsupported SQLite schema expression: " + expression.Op),
             _ when expression.Op.All(c => char.IsAsciiLetterOrDigit(c) || c == '_') => expression.Op + "(" + string.Join(',', args.Select(Expression)) + ")",
             _ => throw new NotSupportedException("Unsupported SQLite schema expression: " + expression.Op)

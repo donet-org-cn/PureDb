@@ -1,5 +1,7 @@
 # SQL 与 SQLite 文件兼容性验收报告
 
+以下冻结于 preview.3。当前 rc.1 已验证的 SQL 数值 / 运算语义、66 个文件 profile 及稳定性证据见 [发布评估](PRODUCTION-READINESS.md)；当前语法边界见 [SQL 清单](SQL-SUPPORT.md)。
+
 版本 `1.0.0-preview.3`；SQLite 3.54.1；Windows x64 与指定 Linux ARM64 主机；.NET 10.0.13。两类兼容性分别验收。
 
 本报告的通过率分母是公开、固定、可复现的测试用例，不是 SQLite 全部语法或真实世界全部文件。“达到 95%”仅能在明确分母内检验；当前不宣称整体 SQLite 兼容性达到 95%。

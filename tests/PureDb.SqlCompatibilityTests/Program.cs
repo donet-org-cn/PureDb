@@ -31,7 +31,7 @@ void Compare(string sql, SqlDatabase? database = null)
         expected.Add(statement.Values());
     Check(actual.Rows.Count == expected.Count, "行数不一致: " + sql);
     for (int i = 0; i < expected.Count; i++)
-        Check(actual.Rows[i].Length == expected[i].Length && actual.Rows[i].Zip(expected[i]).All(p => p.First is byte[] a && p.Second is byte[] b ? a.SequenceEqual(b) : p.First is double x && p.Second is double y ? Math.Abs(x - y) < 1e-10 : Equals(p.First, p.Second)), "结果不一致: " + sql + " at " + i + " actual=" + FormatRow(actual.Rows[i]) + " expected=" + FormatRow(expected[i]));
+        Check(actual.Rows[i].Length == expected[i].Length && actual.Rows[i].Zip(expected[i]).All(p => p.First is byte[] a && p.Second is byte[] b ? a.SequenceEqual(b) : p.First is double x && p.Second is double y ? x.Equals(y) || Math.Abs(x - y) < 1e-10 : Equals(p.First, p.Second)), "结果不一致: " + sql + " at " + i + " actual=" + FormatRow(actual.Rows[i]) + " expected=" + FormatRow(expected[i]));
     comparisons++;
 }
 
@@ -601,6 +601,37 @@ catch (SqlException)
 }
 
 await db.ExecuteAsync("ROLLBACK;DROP TABLE function_check");
+// 大整数边界同时验证数值及 typeof，覆盖常量、行投影与主键 DML 三条路径。
+foreach (string expression in new[]
+{
+    "-9223372036854775808", "9223372036854775807+1", "-9223372036854775808-1",
+    "3037000500*3037000500", "-(-9223372036854775808)", "-9223372036854775808/-1",
+    "-9223372036854775808%-1", "5.9%2.1", "-5.9%2", "9007199254740993%2.0",
+    "5%0.5", "9223372036854775807>9223372036854775806.0", "9007199254740993=9007199254740992.0",
+    "1e308*1e308", "-1e308*1e308", "(1e308*1e308)-(1e308*1e308)", "(1e308*1e308)/(1e308*1e308)"
+}) Compare($"SELECT {expression},typeof({expression})");
+foreach (string expression in new[]
+{
+    "NULL IS NULL", "NULL IS 0", "1 IS 1.0", "1 IS NOT '1'", "NULL IS NOT NULL",
+    "NULL IS DISTINCT FROM 1", "1 IS NOT DISTINCT FROM 1.0", "NULL IS NOT DISTINCT FROM NULL",
+    "2 IS TRUE", "2 IS NOT TRUE", "0 IS FALSE", "NULL IS FALSE", "NULL IS NOT FALSE",
+    "'1tail' IS TRUE", "'bad' IS FALSE", "2 IS (TRUE)", "2 IS +TRUE", "2 IS TRUE+1",
+    "'3.0'+1", "'3'+1", "'bad'+1", "X'3132'+1", "'1e2'*2", "NOT 'bad'", "NOT '1tail'",
+    "1||2+3", "1+2||3", "2*3||4", "~1", "~NULL", "~'3.5'", "3&5", "3|4",
+    "1<<63", "1<<64", "-1>>64", "8<<-1", "8>>-1", "1<<-9223372036854775808",
+    "1|2&4", "1+2<<3", "1==1.0", "2=1<1", "NULL&3", "2 IS NULL+1",
+    "2 IS DISTINCT FROM TRUE", "2 IS NOT DISTINCT FROM TRUE"
+}) Compare($"SELECT {expression},typeof({expression})");
+await Both("CREATE TABLE integer_edges(id INTEGER PRIMARY KEY,n INTEGER);INSERT INTO integer_edges VALUES(1,9223372036854775807),(2,-9223372036854775808),(3,9007199254740993)");
+Compare("SELECT id,n+1,typeof(n+1),n/-1,n%-1,-n,n%2.0 FROM integer_edges ORDER BY id");
+await Both("UPDATE integer_edges SET n=n%2.0 WHERE id=3");
+Compare("SELECT id,n,typeof(n) FROM integer_edges ORDER BY id");
+foreach (string expression in new[] { new string('(', 500) + "1" + new string(')', 500), string.Join('+', Enumerable.Repeat("1", 5000)) })
+{
+    try { db.Query("SELECT " + expression); throw new Exception("Deep SQL was accepted"); }
+    catch (SqlException) { }
+    Compare("SELECT 1+2");
+}
 db.Dispose();
 using (var reopened = new SqlDatabase(Path.Combine(root, "test.puredb"), new() { Storage = new() { Durability = Durability.Buffered } }))
 {
