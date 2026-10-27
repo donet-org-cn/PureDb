@@ -1,6 +1,6 @@
 ﻿# PureDb — 纯 .NET 10 文件数据库
 
-[![CI](https://github.com/hnlyf168/PureDb/actions/workflows/ci.yml/badge.svg)](https://github.com/hnlyf168/PureDb/actions/workflows/ci.yml)
+[![CI](https://github.com/donet-org-cn/PureDb/actions/workflows/ci.yml/badge.svg)](https://github.com/donet-org-cn/PureDb/actions/workflows/ci.yml)
 [![NuGet](https://img.shields.io/nuget/vpre/PureDb.svg)](https://www.nuget.org/packages/PureDb)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -92,7 +92,7 @@ SQLite 能力依据官方 [SQL 文档](https://www.sqlite.org/lang.html)、[自�
 
 SQL 固定公开语料 **175 条**、SQLite 文件正向 profile 与崩溃恢复 **64 组**，Windows x64 和 Linux ARM64 分别验证。分母、通过率和未覆盖能力见 [兼容性报告](docs/COMPATIBILITY-REPORT.md)；这不是整体 SQLite 兼容性 95% 的声明。文件模式性能单独见 [兼容后端专项](docs/SQLITE-FILE-PERFORMANCE.md)。
 
-![全部 41 项对比](https://raw.githubusercontent.com/hnlyf168/PureDb/main/docs/images/preview.3/all-performance.png)
+![全部 41 项对比](https://raw.githubusercontent.com/donet-org-cn/PureDb/main/docs/images/preview.3/all-performance.png)
 
 [博客园独立文章：实现原理、功能对照、真实性能图与限制](docs/CNBLOGS-preview.3.md)。
 
